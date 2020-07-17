@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="address" inherit_id="website_sale.address" priority="10">
+        <!-- Adds the interior and exterior number, changes street for street_name -->
+        <xpath expr="//label[@for='street']/.." position="replace">
+            <div t-attf-class="form-group #{error.get('street_name') and 'has-error' or ''} col-md-12 div_street_name">
+                <label class="control-label" for="street_name">Street</label>
+                <input type="text" name="street_name" class="form-control" t-att-value="'street_name' in checkout and checkout['street_name']" />
+            </div>
+            <div t-attf-class="form-group #{error.get('street_number') and 'has-error' or ''} col-md-6 col-xs-6 div_street_number">
+                <label class="control-label" for="street_number">Exterior Number</label>
+                <input type="text" name="street_number" class="form-control" t-att-value="'street_number' in checkout and checkout['street_number']" />
+            </div>
+            <div t-attf-class="form-group #{error.get('street_number2') and 'has-error' or ''} col-md-6 col-xs-6 div_street_number2">
+                <label class="control-label label-optional" for="street_number2">Interior Number</label>
+                <input type="text" name="street_number2" class="form-control" t-att-value="'street_number2' in checkout and checkout['street_number2']" />
+            </div>
+            <div class="clearfix" />
+        </xpath>
+        <!-- xpath that adds the specific country fields -->
+        <xpath expr="//label[@for='street2']/.." position="replace">
+            <div t-attf-class="form-group #{error.get('l10n_mx_edi_colony') and 'has-error' or ''} col-md-6 col-xs-6 div_l10n_mx_edi_colony">
+                <label class="control-label label-optional" for="l10n_mx_edi_colony">Colony</label>
+                <input type="text" name="l10n_mx_edi_colony" class="form-control" t-att-value="'l10n_mx_edi_colony' in checkout and checkout['l10n_mx_edi_colony']" />
+            </div>
+            <div t-attf-class="form-group #{error.get('l10n_mx_edi_locality') and 'has-error' or ''} col-md-6 col-xs-6 div_l10n_mx_edi_locality">
+                <label class="control-label label-optional" for="l10n_mx_edi_locality">Locality</label>
+                <input type="text" name="l10n_mx_edi_locality" class="form-control" t-att-value="'l10n_mx_edi_locality' in checkout and checkout['l10n_mx_edi_locality']" />
+            </div>
+        </xpath>
+    </template>
+
+    <template id="portal_my_details" inherit_id="portal.portal_my_details">
+        <xpath expr="//label[@for='street']/.." position="replace">
+            <div t-attf-class="form-group #{error.get('street_name') and 'has-error' or ''} col-md-12 div_street_name">
+                <label class="control-label" for="street_name">Street</label>
+                <input type="text" name="street_name" class="form-control" t-att-value="'street_name' in partner and partner['street_name']" />
+            </div>
+            <div t-attf-class="form-group #{error.get('street_number') and 'has-error' or ''} col-md-6 col-xs-6 div_street_number">
+                <label class="control-label" for="street_number">Exterior Number</label>
+                <input type="text" name="street_number" class="form-control" t-att-value="'street_number' in partner and partner['street_number']" />
+            </div>
+            <div t-attf-class="form-group #{error.get('street_number2') and 'has-error' or ''} col-md-6 col-xs-6 div_street_number2">
+                <label class="control-label label-optional" for="street_number2">Interior Number</label>
+                <input type="text" name="street_number2" class="form-control" t-att-value="'street_number2' in partner and partner['street_number2']" />
+            </div>
+            <div t-attf-class="form-group #{error.get('l10n_mx_edi_colony') and 'has-error' or ''} col-md-6 col-xs-6 div_l10n_mx_edi_colony">
+                <label class="control-label label-optional" for="l10n_mx_edi_colony">Colony</label>
+                <input type="text" name="l10n_mx_edi_colony" class="form-control" t-att-value="'l10n_mx_edi_colony' in partner and partner['l10n_mx_edi_colony']" />
+            </div>
+            <div t-attf-class="form-group #{error.get('l10n_mx_edi_locality') and 'has-error' or ''} col-md-6 col-xs-6 div_l10n_mx_edi_locality">
+                <label class="control-label label-optional" for="l10n_mx_edi_locality">Locality</label>
+                <input type="text" name="l10n_mx_edi_locality" class="form-control" t-att-value="'l10n_mx_edi_locality' in partner and partner['l10n_mx_edi_locality']" />
+            </div>
+            <div class="clearfix" />
+        </xpath>
+    </template>
+</odoo>

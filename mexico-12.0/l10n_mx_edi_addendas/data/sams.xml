@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="sams" name="Addenda SAMS">
+        <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+            <t t-set="num_seg" t-value="23"/>
+            <t t-set="supplier_code" t-value="'--Supplier code here--'"/>
+            <t t-set="partner_shipping" t-value="record.partner_shipping_id if record.fields_get(['partner_shipping_id']) else partner_id.commercial_partner_id if record.partner_id.type != 'invoice' else record.partner_id"/>
+            <Documento t-raw="'UNB+UNOB:1+{customer_rfc}:ZZ+925485MX00:8+061231:1000+{folio}\'UNH+1+INVOIC:D:01B:UN:AMC002\'BGM+380+{folio}+9\'DTM+137:{date_time}:204\'FTX+ZZZ+++{amount2text}\'RFF+ON:{order_number}\'DTM+171:{po_date}:102\'RFF+BT:{serie}\'NAD+BY+7507003100001::9++{customer_address}\'RFF+GN:{customer_rfc}\'NAD+SU+++{supplier_address}\'RFF+GN:{supplier_rfc}\'RFF+IA:{supplier_code}\'NAD+ST+7507003163884::9++{delivery_address}\'CUX+2:MXN:4\'PAT+1++5:3:D:{due_days}\'{line_details}\'UNS+S\'CNT+2:{num_lines}\'MOA+9:{total}\'MOA+79:{sub_t}\'MOA+125:{sub_t}\'{amount_tax}MOA+124:{amount_taxed}\'UNT+{segmento}+1\'UNZ+1+{folio}\''.format(
+                    folio=record._l10n_mx_get_serie_and_folio(record.number)['folio'] or '',
+                date_time='{date}{time}'.format(date=record.date_invoice.strftime('%Y%m%d'), time=(record.l10n_mx_edi_time_invoice or '000000').replace(':', '')),
+                    order_number=record.name or '0',
+                    po_date=record.x_addenda_sams or '0',
+                    amount2text=record.l10n_mx_edi_amount_to_text(),
+                    serie=record._l10n_mx_get_serie_and_folio(record.number)['serie'] or '',
+                    delivery_address=''.join(['{street}+{city}+{zip}'.format(street=partner_shipping.street.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n').strip()[:35] if partner_shipping.street else '', city=record.company_id.partner_id.city.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if partner_shipping.city else '', zip=partner_shipping.zip.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if partner_shipping.zip else '')]),
+                    customer_address=''.join(['{street}+{city}+{zip}'.format(street=record.company_id.partner_id.street.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n').strip()[:35] if record.company_id.partner_id.street else '', city=record.company_id.partner_id.city.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if record.company_id.partner_id.city else '', zip=record.company_id.partner_id.zip.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if record.company_id.partner_id.zip else '')]),
+                    customer_rfc=record.l10n_mx_edi_cfdi_customer_rfc,
+                    supplier_address=''.join(['{street}+{city}+{zip}'.format(street=record.commercial_partner_id.street.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n').strip()[:35] if record.commercial_partner_id.street else '', city=record.commercial_partner_id.city.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if record.commercial_partner_id.city else '', zip=record.commercial_partner_id.zip.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if record.commercial_partner_id.zip else '')]),
+                    supplier_rfc=record.l10n_mx_edi_cfdi_supplier_rfc,
+                    due_days=(record.date_due - record.date_invoice).days,
+                    line_details=''.join(['LIN+{iteration}++{l_barcode}:SRV::9\'IMD+F++:::{name}\'QTY+47:{qty}:EA\'MOA+203:{l_total}\'PRI+AAA:{p_unit}::::EA\'TAX+7+VAT+++:::{l_tax}+B\'MOA+124:{l_price_tax}\''.format(iteration=iteration+1, l_barcode=l.product_id.barcode or '0', name=l.name, qty=l.quantity, l_total=l.price_subtotal, p_unit=l.price_unit, l_tax=l.invoice_line_tax_ids.amount, l_price_tax=l.price_tax) for iteration,l in enumerate(record.invoice_line_ids)]),
+                    num_lines=len(record.invoice_line_ids.ids),
+                    total=record.amount_total or 0.0,
+                    sub_t=record.amount_untaxed or 0.0,
+                    amount_tax=''.join(['TAX+7+VAT+++:::{percent}+B\''.format(percent=t.tax_id.amount) for t in record.tax_line_ids]),
+                    amount_taxed=record.amount_tax or 0.0,
+                    segmento=num_seg+len(record.tax_line_ids)+len(record.invoice_line_ids.ids)*7,
+                    supplier_code=supplier_code
+                )">
+            </Documento>
+        </cfdi:Addenda>
+    </template>
+
+    <record id="sams" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_sams" model="ir.model">
+        <field name="name">Addenda SAMS</field>
+        <field name="transient">Addenda sams</field>
+        <field name="model">x_addenda.sams</field>
+        <field name="info">Addend sams documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_sams_order_date" model="ir.model.fields">
+        <field name="name">x_po_date</field>
+        <field name="field_description">Date Purchase Order</field>
+        <field name="ttype">date</field>
+        <field name="required">1</field>
+        <field name="help">The date of the purchase order </field>
+        <field name="model_id" ref="wizard_sams"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_sam_field" model="ir.model.fields">
+        <field name="name">x_addenda_sams</field>
+        <field name="field_description">Addenda SAMS</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate fields in addenda wizard</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Fields in company-->
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_sams_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda SAMS</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.sams'].browse(model._context['active_id'])
+wizard_fields = [wizard.x_po_date.strftime('%Y%m%d')]
+invoice.write({'x_addenda_sams': '|'.join(wizard_fields)})
+        </field>
+    </record>
+
+    <!--
+            View of the wizard itself that set the values this view need to hold all
+            the help information necessary if needed
+    -->
+    <record id="wizard_sams_view" model="ir.ui.view">
+        <field name="name">x_addenda.sams.view</field>
+        <field name="model">x_addenda.sams</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>The corresponding XML will appears with the addenda information.
+                        This information is taken from the fields that are explicitly included
+                        in the invoice, and for the case that the information is not in a specific
+                        field, it is necessary to fill the fields here.</p>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_po_date"/>
+                    </group>
+                    <group string="Sales information">
+                        <div>
+                            <p>This information is getting from the sale order. If there's not an order related to this invoice, you can fill this information in the following invoice fields:</p>
+                            <ul>
+                                <li><b><i>Date Purchase Order</i></b>: The date of the purchase order.</li>
+                            </ul>
+                        </div>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_sams_values" type="action" string="Set Values"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+            Simple action view that is called from the invoice to open the set wizard.
+    -->
+    <record id="action_addenda_sams" model="ir.actions.act_window">
+        <field name="name">Addenda SAMS</field>
+        <field name="res_model">x_addenda.sams</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_sams_view"/>
+    </record>
+
+    <!--
+            Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invice_addenda_sams" model="ir.ui.view">
+        <field name="name">account.invoice.form.sams</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_sams" type="action"
+                                string="Addenda SAMS"
+                                context="{'invoice_id': id}"
+                                attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                                />
+        </xpath>
+            </field>
+    </record>
+
+</odoo>

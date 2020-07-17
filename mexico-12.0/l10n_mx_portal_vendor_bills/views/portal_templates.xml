@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_purchase_upload_attachment" name="Portal: Upload Attachments to Purchase Order" inherit_id="purchase.portal_my_purchase_order">
+        <xpath expr="//div[hasclass('card-body')]" position="after">
+            <t t-set="partner_id" t-value="order.partner_id"/>
+            <div class="panel-body">
+                <form t-attf-action="/purchase/order_attachments/{{order.id}}"
+                    class="s_upload_attachments container-fluid mt32"
+                    data-success_page="/purchase/order-attachment-thank-you"
+                    enctype="multipart/form-data"
+                    method="post"
+                    t-att-data-form_field_order_id="order.id"
+                    t-att-data-model_name="order.id">
+                    <div class="form-group form-field o_website_form_custom o_website_form_required_custom col-md-3">
+                        <label class="control-label" for="xml">XML</label>
+                        <input accept=".xml" class="form-control o_website_form_input" name="xml" required="" type="file"/>
+                    </div>
+                    <div class="form-group form-field o_website_form_custom o_website_form_required_custom col-md-3">
+                        <label class="control-label" for="pdf">PDF</label>
+                        <input accept=".pdf" class="form-control o_website_form_input" name="pdf" required="" type="file"/>
+                    </div>
+                    <div t-att-class="'form-group form-field o_website_form_custom o_website_form_required_custom col-md-3' if partner_id.l10n_mx_edi_is_indirect else 'form-group form-field o_website_form_custom col-md-3'">
+                        <label class="control-label" for="purchase_order">Purchase Order</label>
+                        <input class="form-control o_website_form_input"
+                            name="purchase_order"
+                            t-att-required="'' if partner_id.l10n_mx_edi_is_indirect else False"
+                            type="file"/>
+                    </div>
+                    <div t-att-class="'form-group form-field o_website_form_custom o_website_form_required_custom col-md-3' if partner_id.l10n_mx_edi_is_indirect else 'form-group form-field o_website_form_custom col-md-3'">
+                        <label class="control-label" for="ack_receipt">Acknowledgment of receipt</label>
+                        <input class="form-control o_website_form_input"
+                            name="receipt"
+                            t-att-required="'' if partner_id.l10n_mx_edi_is_indirect else False"
+                            type="file"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12 text-left nopadding">
+                            <button class="btn_upload_attachments btn btn-primary btn-lg nomargin">Upload</button>
+                            <span id="o_website_form_result"/>
+                        </div>
+                    </div>
+                    <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+                </form>
+            </div>
+        </xpath>
+    </template>
+
+    <record id="attachments_uploaded" model="website.page">
+        <field name="name">Thank you!</field>
+        <field name="type">qweb</field>
+        <field name="url">/purchase/order-attachment-thank-you</field>
+        <field name="website_indexed" eval="False"/>
+        <field name="website_published">True</field>
+        <field name="key">l10n_mx_portal_vendor_bills.attachments_uploaded</field>
+        <field name="arch" type="xml">
+            <t name="Thank" t-name="l10n_mx_portal_vendor_bills.attachments_uploaded">
+                <t t-call="website.layout">
+                  <div id="wrap">
+                    <div class="oe_structure" id="oe_structure_website_thank_you_1"/>
+                    <div class="container">
+                        <h1>Thanks!</h1>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="alert alert-success">Your documents were received correctly.
+                                    <button class="close" data-dismiss="alert" type="button">&amp;times;</button></div>
+                                <p>
+                                    <t t-as="att" t-foreach="attachments">
+                                        <div class="alert alert-success" t-field="att.name"/>
+                                    </t>
+                                </p>
+                                <p class="mt64">If you have a problem, do not hesitate to contact us by phone:</p>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <i class="fa fa-phone"/>:
+                                        <span t-field="res_company.phone"/></li>
+                                    <li>
+                                        <i class="fa fa-envelope"/>:
+                                        <span t-field="res_company.email"/></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <t t-call="website.company_description"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure" id="oe_structure_website_thank_you_2"/>
+                  </div>
+                </t>
+            </t>
+        </field>
+    </record>
+    <record id="attachments_uploaded_page" model="website.page">
+        <field name="url">/purchase/order-attachment-thank-you</field>
+        <field name="view_id" ref="attachments_uploaded" />
+    </record>
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payment_document_factoring_mx" inherit_id="account.report_payment_receipt_document">
+        <xpath expr="//div[@t-if='o.partner_type']" position="replace">
+            <div class="col-6" t-if="o.partner_type">
+                <t t-if="o.partner_type == 'customer'">
+                    <strong>Customer: </strong>
+                </t>
+                <t t-if="o.partner_type == 'supplier'">
+                    <strong>Vendor: </strong>
+                </t>
+                <t t-if="o.l10n_mx_edi_factoring_id">
+                    <span t-field="o.l10n_mx_edi_factoring_id"/>
+                </t>
+                <t t-if="not o.l10n_mx_edi_factoring_id">
+                    <span t-field="o.partner_id"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,58 @@
+language: python
+
+sudo: false
+cache:
+  apt: true
+  directories:
+    - $HOME/.cache/pip
+
+addons:
+  apt:
+    packages:
+      - expect-dev
+      - python-lxml
+      - python-simplejson
+      - python-yaml
+      - swig  # Required for m2crypto
+      - python-m2crypto
+      - xmlstarlet
+      - xsltproc
+      - xmlstarlet
+      - openssl
+      - poppler-utils
+      - antiword
+
+python:
+  - "3.6"
+env:
+  global:
+  - LINT_CHECK="0" TESTS="0"
+  - VERSION="12.0" ODOO_REPO="vauxoo/odoo"
+  - COUNTRY="MX"
+  - secure: "wgsz2YZCsPgpoljgjp53LQjx7Zmcc3NcTcEttzc5NjePBB7EoX5rqdTNBATCGnamOo+tN7vdrG0xIHpe5z1jvqTOK7uoirAQ/70aONsGV3vBLS+XN5AN9ANX1RCQW3WrlbtbS6OomVr9X0ho5NXj1wIfwBetqZDjVB7rlcxin78P4pcc0SlV7H8fau6OCIAzsGppxC5Y9LxagD7HnxuOnxxnRBLxBjSkUE489yqKyIthoZQHj70wQwLlM8Lc3TeHZLs0jHIzH56L/W1F/z/aNhJDjah1KEGhCW3iA9ClgzRWQG45ijKapAcNr9saG96SqgTz/djBySCGeCDHJucVc8dlmXc1AitW/2F6+uDXPmQRMKRDkciriJah6mYF5Ae0EOYdhb7taNiPerb46uZxAWFridPqRm/gRa7YbqbMuM1lcOCmrJ/4OEk/EBh7ZBR9OGcdKTxLzhe+Kx8TLGn99+VCDL/GtYx82JhsYCRqLrT3qKtWdy+3glEQEf+fkSINCc/EmhZdlzlHCKE7dt7tPAzi7Rf93ptfqPw6qpLqQYDEGD9tYAPGlgSBg/Qpy8ieOzeyuRS3yAaSb9GVAV61lgtAAXxDLZxisKr61bBsAo6jR4HUPowhnkw5rCtd0eHeaHA7om8qS1hQvS5M0T3RSRS4r0viuk/i4CON5gsBN7U="
+  - secure: "I17UhKmCW1Tp5xNoJDzNyNGpQmeWiMa1hdE+MLHSJVbci4ui2iWRZm3OF/dzOd41PNRzyhZLbLhAtfl5fGMBRlxjhV59X82LXJIckyX6coaM8j55zkrrVVGl/a6XGWvG3NgqP+4VF+dKOF+nX9NZ8+J6gy9VvfJ8lJBuvsJDalocS+8GjRMm2AlprUhdJFv/AWTXVeTQq6NPB5YruZ1cyR/8rCnbkf0Xrjvl1BcUF+gw+bd1yk3ng4HxBi/GnBHjyKtWoXiumdmugCUaE0Pn6kvFff5tsvTCQPrvvpylpyBbKsG6TJSdDlbXJINeTOxxzD53SJ32PTb41lmNl/Ji6GrXNoDRPY4m4tClgkmgjOEpl01+0LNQWsqfxtdblNT4nnhSU5IO1U2K+zyIvtGbEideSQPsY8OqQ1GZgIphpfyxclpK+Xq5Tt28dR0PnN+zLTGD5hk60ok5/pYukVeMCD+AnaW3XTaj7BGZdzaU7LQQhacgCPriywvKiVm4CfpmokimBKkN98ULNrljA1tq/DQF0CHfPgh55XdIFPRlEAcm/b3oD5EdfEe3xVTbdNo5bzFNKPoXZmuY72V0m2J7sdCCUF2FLI9tLln8/d9MZIoJR81vTujtx6IYxK2wJv64Nl7FjXxl7rzXdtOfVIFHlhc47ZYVICF5dCROw5y4ObY="
+  matrix:
+  - LINT_CHECK="1"
+  - TESTS="1" PHANTOMJS_VERSION="2.1.1"
+
+install:
+  - source ${TRAVIS_BUILD_DIR}/variables.sh
+  - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+
+script:
+  - source ${TRAVIS_BUILD_DIR}/variables.sh
+  - export INCLUDE="company_country,$(cd ${TRAVIS_BUILD_DIR} && git ls-tree --name-only -d HEAD | tr '\n' ',')l10n_mx_edi_external_trade,l10n_mx_edi_customer_bills"
+    # Exclude doc folder
+  - sed -i "s/exclude \= /exclude \= doc,/g" ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_flake8*.cfg
+    # Disable file-not-used because is loaded from hook: Remove this line after fix https://github.com/Vauxoo/pylint-odoo/issues/133
+  - sed -i "/file-not-used/d" ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg
+
+  - travis_run_tests
+  - if [[ "${LINT_CHECK}" == "1" ]]; then cp ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint.cfg && sed -i s/class-camelcase,/class-camelcase,deprecated-openerp-xml-node,old-api7-method-defined,/g ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint.cfg && travis_run_tests; fi
+  - if [[ "${LINT_CHECK}" == "1" ]]; then pylint --load-plugins=pylint.extensions.docparams -d all -e parameter_documentation ${TRAVIS_BUILD_DIR}/*;fi; echo "exit 0"
+
+after_success:
+  - source ${TRAVIS_BUILD_DIR}/variables.sh
+  - travis_after_tests_success

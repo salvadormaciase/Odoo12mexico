@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_payment_third_parties
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-10 17:30+0000\n"
+"PO-Revision-Date: 2019-09-10 17:30+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_payment_third_parties
+#: model:ir.actions.act_window,name:l10n_mx_edi_payment_third_parties.attach_xmls_wizard_thirds_action
+#: model:ir.ui.menu,name:l10n_mx_edi_payment_third_parties.menu_atach_xmls_third_wizard
+msgid "Attach Thirds Documents"
+msgstr "Adjuntar Documentos de Terceros"
+
+#. module: l10n_mx_edi_payment_third_parties
+#: code:addons/l10n_mx_edi_payment_third_parties/wizards/attach_xmls_wizard.py:45
+#, python-format
+msgid "CFDI Thirds"
+msgstr "CFDI Terceros"
+
+#. module: l10n_mx_edi_payment_third_parties
+#: model:ir.model,name:l10n_mx_edi_payment_third_parties.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_payment_third_parties
+#: model:ir.model,name:l10n_mx_edi_payment_third_parties.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_mx_edi_payment_third_parties
+#: model:ir.model,name:l10n_mx_edi_payment_third_parties.model_account_register_payments
+msgid "Register payments on multiple invoices"
+msgstr "Registrar pagos en múltiples facturas"
+
+#. module: l10n_mx_edi_payment_third_parties
+#: code:addons/l10n_mx_edi_payment_third_parties/wizards/attach_xmls_wizard.py:33
+#, python-format
+msgid "This invoice was generated with a CFDI from thirds"
+msgstr "Esta factura fue generada por un CFDI de terceros"
+
+#. module: l10n_mx_edi_payment_third_parties
+#: model:ir.model,name:l10n_mx_edi_payment_third_parties.model_attach_xmls_wizard
+msgid "attach.xmls.wizard"
+msgstr "attach.xmls.wizard"

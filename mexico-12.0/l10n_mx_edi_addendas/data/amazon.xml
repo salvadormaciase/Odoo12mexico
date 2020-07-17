@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="amazon" name="Amazon">
+        <amazon:ElementosAmazon  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amazon="http://www.amazon.com.mx/AmazonAddenda" xsi:schemaLocation="http://www.amazon.com.mx/AmazonAddenda http://repository.edicomnet.com/schemas/mx/cfd/addenda/AmazonAddenda.xsd">
+            <amazon:TextoLibre t-raw="record.comment"/>
+            <t t-if="record.type == 'out_invoice'">
+                <amazon:LosAtributos identificacionUnica="1" nombreDelAtributo="AmazonPO" t-att-valorDelAtributo="record.name"/>
+            </t>
+            <t t-if="record.type == 'out_refund'">
+                <t t-set="attribute" t-value="record.name.split('|') if record.name else []"/>
+                <t t-set="attribute_name" t-value="attribute[0].upper() if attribute and attribute[0] else ''"/>
+                <t t-if="attribute and attribute_name == 'RET'">
+                    <amazon:LosAtributos identificacionUnica="1" nombreDelAtributo="ReturnID" t-att-valorDelAtributo="attribute[1] if len(attribute) == 2 else ''"/>
+                </t>
+                <t t-if="attribute and attribute_name == 'COOP'">
+                    <amazon:LosAtributos identificacionUnica="1" nombreDelAtributo="COOPInvoiceNumber" t-att-valorDelAtributo="attribute[1] if len(attribute) == 2 else ''"/>
+                </t>
+                <t t-if="attribute and (attribute_name == 'PQV' or attribute_name == 'PPV' or attribute_name == 'QPD')">
+                    <amazon:LosAtributos identificacionUnica="1" nombreDelAtributo="AmazonPO" t-att-valorDelAtributo="attribute[1] if len(attribute) == 2 else ''"/>
+                    <t t-if="attribute_name == 'QPD'">
+                        <amazon:LosAtributos identificacionUnica="2" nombreDelAtributo="QPD" valorDelAtributo="Y"/>
+                    </t>
+                </t>
+            </t>
+        </amazon:ElementosAmazon>
+    </template>
+
+    <record id="amazon" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+</odoo>

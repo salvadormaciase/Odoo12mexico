@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+        <record model="ir.ui.view" id="view_account_invoice_line_invoice_broker_form">
+            <field name="name">view.account.invoice.line.invoice.broker.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']//tree/field[@name='invoice_line_tax_ids']" position="after">
+                    <field
+                        name="x_l10n_mx_edi_invoice_broker_id"
+                        domain="[('type','=','in_invoice'),('state','in',('open','paid'))]"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

@@ -1,0 +1,245 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_partner_blocklist
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-27 15:52+0000\n"
+"PO-Revision-Date: 2020-01-27 15:52+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_partner_blocklist
+#: selection:res.partner,l10n_mx_in_blocklist:0
+msgid "Blocked"
+msgstr "Bloqueado"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model,name:l10n_mx_partner_blocklist.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_dof_definitive_release
+msgid "DOF date definitive publication"
+msgstr "Fecha de publicación DOF definitivos"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_dof_distorted_release
+msgid "DOF date publication of distorted"
+msgstr "Fecha de publicación DOF desvirtuados"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_dof_favorable_sentence_release
+msgid "DOF favorable sentence date publication"
+msgstr "Fecha de publicación DOF sentencia favorable"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_dof_favorable_sentence
+msgid "DOF favorable sentence trade number and date"
+msgstr "Fecha y número de oficio DOF sentencia favorable"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_global_definitive
+msgid "Definitive trade number and date"
+msgstr "Fecha y número de oficio definitivos"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_global_distorted
+msgid "Distorted Trade number and date"
+msgstr "Fecha y número de oficio desvirtuados"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_id
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model,name:l10n_mx_partner_blocklist.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist___last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: l10n_mx_partner_blocklist
+#: selection:res.partner,l10n_mx_in_blocklist:0
+msgid "No information"
+msgstr "Sin información"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_number
+msgid "Number"
+msgstr "Número"
+
+#. module: l10n_mx_partner_blocklist
+#: selection:res.partner,l10n_mx_in_blocklist:0
+msgid "Ok"
+msgstr "Ok"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.actions.server,name:l10n_mx_partner_blocklist.cron_partner_blacklist_process_ir_actions_server
+#: model:ir.cron,cron_name:l10n_mx_partner_blocklist.cron_partner_blacklist_process
+#: model:ir.cron,name:l10n_mx_partner_blocklist.cron_partner_blacklist_process
+msgid "Partner Blacklist Process"
+msgstr "Proceso de Lista de Bloqueo de Socio"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.actions.server,name:l10n_mx_partner_blocklist.partner_blocklist_status_server_action
+msgid "Partner Blocklist Status"
+msgstr "Estado de Lista de Bloqueo del Socio"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_l10n_mx_in_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_users_l10n_mx_in_blocklist
+msgid "Partner State"
+msgstr "Estado del Socio"
+
+#. module: l10n_mx_partner_blocklist
+#: code:addons/l10n_mx_partner_blocklist/models/partner_blacklist.py:74
+#, python-format
+msgid "Partner blocklist URL: None URL"
+msgstr "URL de la lista de bloqueo del socio: None URL"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_global_presumption
+msgid "Presumption trade number and date"
+msgstr "Fecha y número de oficio de presuntos"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_dof_presumption
+msgid "Presumption trade number and date from DOF"
+msgstr "Fecha y numero de oficio DOF presuntos"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_presumption
+msgid "Presumption trade number and date from SAT"
+msgstr "Fecha y número de oficio de SAT presuntos"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model,name:l10n_mx_partner_blocklist.model_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de Compra"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model,name:l10n_mx_partner_blocklist.model_sale_order
+msgid "Quotation"
+msgstr "Cotización"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_definitive_release
+msgid "SAT date definitive publication"
+msgstr "Fecha de publicación SAT definitivos"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_presumption_release
+msgid "SAT date presumptions publication"
+msgstr "Fecha de publicación SAT presuntos"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_distorted_release
+msgid "SAT date publication of distorted"
+msgstr "Fecha de publicación SAT desvirtuados"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_favorable_sentence_release
+msgid "SAT favorable sentence date publication"
+msgstr "Fecha de publicación SAT sentencia favorable"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_favorable_sentence
+msgid "SAT favorable sentence trade number and date"
+msgstr "Fecha y número de folio de SAT sentencia favorable"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_taxpayer_name
+msgid "Taxpayer Name"
+msgstr "Nombre del Contribuyente"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_taxpayer_status
+msgid "Taxpayer Status"
+msgstr "Situación del Contribuyente"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,help:l10n_mx_partner_blocklist.field_res_partner_blacklist_taxpayer_status
+msgid "Taxpayer Status, if the status is set it means the taxpayer status is 'Definitivo' and this partner is not in a legal situation"
+msgstr "Situación del Contribuyente, si este campo esta lleno quiere decir que la situación es 'Definitivo' y que este contribuyente no esta es una situación legal"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,help:l10n_mx_partner_blocklist.field_res_partner_l10n_mx_in_blocklist
+#: model:ir.model.fields,help:l10n_mx_partner_blocklist.field_res_users_l10n_mx_in_blocklist
+msgid "This field is set as 'Blocked' if the partner is in the Definitive list published buy the SAT, 'Ok' if the partner is not in the list or 'No information' if the partner has not being consulted yet."
+msgstr "Este campo estará 'Bloqueado' si el socio esta el la lista de Definitivos publicada por el SAT, 'OK' si el socio no esta en la lista o 'Sin información' si no se encuentra información sobre este socio."
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,help:l10n_mx_partner_blocklist.field_res_partner_blacklist_dof_definitive_release
+msgid "This is the date when the DOF published in its website the definitive"
+msgstr "Esta es la fecha en la que el DOF publica los definitivos en su página web"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,help:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_definitive_release
+msgid "This is the date when the SAT published in its website the definitive"
+msgstr "Esta es la fecha en la que SAT publica los definitivos en su página web"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,help:l10n_mx_partner_blocklist.field_res_partner_blacklist_sat_presumption_release
+msgid "This is the date when the SAT published in its website the presumed"
+msgstr "Esta es la fecha en la que el SAT publica los presuntos en su página web"
+
+#. module: l10n_mx_partner_blocklist
+#: code:addons/l10n_mx_partner_blocklist/models/account_invoice.py:15
+#: code:addons/l10n_mx_partner_blocklist/models/purchase.py:15
+#: code:addons/l10n_mx_partner_blocklist/models/sale.py:15
+#, python-format
+msgid "The SAT provides a block list with all the VATs whose owners have committed some illegality the selected partner is on that list. If you sell/buy to this customer, the SAT could audit your company. To avoid this error you can go to the partner and set the \"Partner State\" field as OK"
+msgstr "El SAT proporciona una lista con todos los RFC cuyos dueños han cometido algún tipo de ilegalidad y el socio que ha seleccionado esta en esta lista. Si vende o compra a esta socio, el SAT podría auditar su empresa. Si aún desea evitar este mensaje puede ir al registro del socio y colocar el campo \"Estado del Socio\" como OK"
+
+#. module: l10n_mx_partner_blocklist
+#: code:addons/l10n_mx_partner_blocklist/models/partner_blacklist.py:97
+#, python-format
+msgid "Unexpected: "
+msgstr "Error inesperado: "
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model.fields,field_description:l10n_mx_partner_blocklist.field_res_partner_blacklist_vat
+msgid "Vat"
+msgstr "RFC"
+
+#. module: l10n_mx_partner_blocklist
+#: model:ir.model,name:l10n_mx_partner_blocklist.model_res_partner_blacklist
+msgid "res.partner.blacklist"
+msgstr "res.partner.blacklist"

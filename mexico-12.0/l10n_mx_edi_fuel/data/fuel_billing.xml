@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_fuel_fuel_billing" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="*" position="inside">
+            <t t-if="fuel_lines">
+                <t t-if="record.type == 'out_invoice' and record.company_id.l10n_mx_edi_isepi">
+                    <t t-call="l10n_mx_edi_fuel.l10n_mx_edi_fuel_ecc"/>
+                </t>
+                <t t-set="partner_service_station" t-value="[id for id,tag in record.partner_id.category_id.get_xml_id().items() if tag.startswith('l10n_mx_edi_fuel')]"/>
+                <t t-if="(record.type == 'out_refund' and record.company_id.l10n_mx_edi_isepi and partner_service_station) or (record.type == 'out_invoice' and not record.company_id.l10n_mx_edi_isepi)">
+                    <t t-call="l10n_mx_edi_fuel.l10n_mx_edi_fuel_cc"/>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

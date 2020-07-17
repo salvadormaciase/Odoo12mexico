@@ -1,0 +1,111 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_tpe
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 01:23+0000\n"
+"PO-Revision-Date: 2018-11-14 01:23+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_tpe
+#: selection:product.template,l10n_mx_edi_tpe_track:0
+msgid "Airway"
+msgstr "Aérea"
+
+#. module: l10n_mx_edi_tpe
+#: selection:account.invoice,l10n_mx_edi_tpe_transit_type:0
+msgid "Arrival"
+msgstr "Arribo"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,help:l10n_mx_edi_tpe.field_product_template__l10n_mx_edi_tpe_track
+msgid "Attribute required to express if it is via Air, Maritime or Terrestrial."
+msgstr "Atributo requerido para expresar si es vía Aérea, Marítima o Terrestre."
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,help:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_transit_date
+msgid "Attribute required to express the date of arrival or departure of the means of transport used. It is expressed in the form aaaa-mm-dd"
+msgstr "Atributo requerida para expresar la fecha de llegada o salida de los medios de transporte usado. Esto es expresado en la forma aaa-mm-dd"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,help:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_transit_time
+msgid "Attribute required to express the time of arrival or departure of the means of transport used. It is expressed in the form hh:mm:ss"
+msgstr "Atributo requerido para expresar la hora de llegada o salida de los medios de transporte usados. Esto es expresado en la forma hh:mm:ss"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,help:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_transit_type
+msgid "Attribute required to incorporate the operation performed"
+msgstr "Atributo requerido para incorporar la operación realizada"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,help:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_partner_id
+msgid "Attribute required to indicate the transport company of entry into national territory or transfer to the outside"
+msgstr "Atributo requerido para indicar la empresa de transporte de entrada dentro del territorio nacional o transferencia hacia el exterior."
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model,name:l10n_mx_edi_tpe.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_mx_edi_tpe
+#: selection:account.invoice,l10n_mx_edi_tpe_transit_type:0
+msgid "Departure"
+msgstr "Salida"
+
+#. module: l10n_mx_edi_tpe
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_tpe.view_l10n_mx_edi_complement_tpe_invoice_form_inherit
+msgid "Foreign Passanger Tourist"
+msgstr "Turista Pasajero Extranjero"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model,name:l10n_mx_edi_tpe.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model,name:l10n_mx_edi_tpe.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: l10n_mx_edi_tpe
+#: selection:product.template,l10n_mx_edi_tpe_track:0
+msgid "Seaway"
+msgstr "Marítima"
+
+#. module: l10n_mx_edi_tpe
+#: selection:product.template,l10n_mx_edi_tpe_track:0
+msgid "Terrestrial"
+msgstr "Terrestre"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,field_description:l10n_mx_edi_tpe.field_product_template__l10n_mx_edi_tpe_track
+msgid "Track"
+msgstr "Vía"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,field_description:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_transit_date
+msgid "Transit Date"
+msgstr "Fecha de Tránsito"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,field_description:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_transit_time
+msgid "Transit Time"
+msgstr "Hora de Tránsito"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,field_description:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_transit_type
+msgid "Transit Type"
+msgstr "Tipo de Tránsito"
+
+#. module: l10n_mx_edi_tpe
+#: model:ir.model.fields,field_description:l10n_mx_edi_tpe.field_account_invoice__l10n_mx_edi_tpe_partner_id
+msgid "Transport Company"
+msgstr "Empresa de Transporte"

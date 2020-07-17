@@ -1,0 +1,188 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_send_multi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-04 01:35+0000\n"
+"PO-Revision-Date: 2019-12-04 01:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_send_multi
+#: model:mail.template,subject:l10n_mx_edi_send_multi.email_template_wizard_mass_invoice_sending
+msgid "${object.company_id.name}"
+msgstr ""
+
+#. module: l10n_mx_edi_send_multi
+#: model:mail.template,report_name:l10n_mx_edi_send_multi.email_template_wizard_mass_invoice_sending
+msgid "${object.l10n_mx_edi_is_required() and object.l10n_mx_edi_cfdi_name and object.l10n_mx_edi_cfdi_name.replace('.xml', '.pdf') or (object.state in ('open','in_payment','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')}"
+msgstr ""
+
+#. module: l10n_mx_edi_send_multi
+#: code:addons/l10n_mx_edi_send_multi/wizard/mass_invoice_sending.py:72
+#, python-format
+msgid "%s Payment Reminder"
+msgstr "Recordatorio de pago"
+
+#. module: l10n_mx_edi_send_multi
+#: model:mail.template,body_html:l10n_mx_edi_send_multi.email_template_wizard_mass_invoice_sending
+msgid "<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hi!\n"
+"        <br/>\n"
+"        You can now check your invoices or download the PDF files that we attached in this email, with their respective supports for review.\n"
+"        % set record = ctx.get('record')\n"
+"        <br/><br/>\n"
+"        <p class=\"or-text\" style=\"padding: 0; margin: 15px 0;\">\n"
+"            Invoice list:\n"
+"            <br style=\"margin: 0; padding: 0;\"/>\n"
+"        % for inv in ctx.get('invoices'):\n"
+"            Invoice <strong>${inv.number}</strong> - amounting in <strong>${format_amount(inv.amount_total, inv.currency_id)}</strong>\n"
+"            <br style=\"margin: 0; padding: 0;\"/>\n"
+"        % endfor\n"
+"        </p>\n"
+"        <br/><br/>\n"
+"        If you have any questions, do not hesitate to contact us.\n"
+"    </p>\n"
+"</div>\n"
+"        "
+msgstr "<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hola!\n"
+"        <br/>\n"
+"        Puede verificar sus facturas o descargar los archivos PDF que adjuntamos en este correo electrónico, con sus respectivos soportes para su revisión.\n"
+"        % set record = ctx.get('record')\n"
+"        <br/><br/>\n"
+"        <p class=\"or-text\" style=\"padding: 0; margin: 15px 0;\">\n"
+"            Lista de facturas:\n"
+"            <br style=\"margin: 0; padding: 0;\"/>\n"
+"        % for inv in ctx.get('invoices'):\n"
+"            Factura <strong>${inv.number}</strong> - amounting in <strong>${format_amount(inv.amount_total, inv.currency_id)}</strong>\n"
+"            <br style=\"margin: 0; padding: 0;\"/>\n"
+"        % endfor\n"
+"        </p>\n"
+"        <br/><br/>\n"
+"        Si tiene alguna pregunta, no dude en contactarnos.\n"
+"    </p>\n"
+"</div>\n"
+
+#. module: l10n_mx_edi_send_multi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_send_multi.wizard_mass_invoice_sending_view_form
+msgid "Attach a file"
+msgstr "Adjuntar un archivo"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__attachment_ids
+msgid "Attachments"
+msgstr "Adjuntos"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,help:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__attachment_ids
+msgid "Attachments are linked to a document through model / res_id and to the message through this field."
+msgstr "Los adjuntos se asocian a un documento mediante el modelo / res_id y al mensaje mediante este campo."
+
+#. module: l10n_mx_edi_send_multi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_send_multi.wizard_mass_invoice_sending_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__body
+msgid "Contents"
+msgstr "Contenidos"
+
+#. module: l10n_mx_edi_send_multi
+#: code:addons/l10n_mx_edi_send_multi/wizard/mass_invoice_sending.py:67
+#, python-format
+msgid "Could not send mail to partner because it does not have any email address defined"
+msgstr "No se pudo enviar correo al socio porque no tiene ninguna dirección de correo electrónico definida"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: l10n_mx_edi_send_multi
+#: code:addons/l10n_mx_edi_send_multi/wizard/mass_invoice_sending.py:70
+#, python-format
+msgid "Follow-up email sent to %s\n"
+" %s"
+msgstr "Correo electrónico de seguimiento enviado a %s\n"
+" %s"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__invoice_ids
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.actions.act_window,name:l10n_mx_edi_send_multi.invoice_send
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_send_multi.wizard_mass_invoice_sending_view_form
+msgid "Mass Invoice Sending"
+msgstr "Envío Masivo De Facturas"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model,name:l10n_mx_edi_send_multi.model_wizard_mass_invoice_sending
+msgid "Mass invoice sending"
+msgstr "Envío masivo de facturas"
+
+#. module: l10n_mx_edi_send_multi
+#: code:addons/l10n_mx_edi_send_multi/wizard/mass_invoice_sending.py:50
+#, python-format
+msgid "Please select invoices that belongs to only one customer.\n"
+"This feature works only with a set of invoices that belong to 1 customer at a time, please pre-filter accordingly."
+msgstr "Seleccione las facturas que pertenecen a un solo cliente.\n"
+"Esta función solo funciona con un conjunto de facturas que pertenecen a 1 cliente a la vez, prefiltre en consecuencia."
+
+#. module: l10n_mx_edi_send_multi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_send_multi.wizard_mass_invoice_sending_view_form
+msgid "Send"
+msgstr "Enviar"
+
+#. module: l10n_mx_edi_send_multi
+#: model:ir.model.fields,field_description:l10n_mx_edi_send_multi.field_wizard_mass_invoice_sending__template_id
+msgid "Use template"
+msgstr "Usar plantilla"
+

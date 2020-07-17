@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_mx_edi_complement_np_invoice_form_inherit" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.complement.np.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_info']" position="inside">
+                <group>
+                    <group string="Notary Public">
+                        <field name="l10n_mx_edi_np_partner_id"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

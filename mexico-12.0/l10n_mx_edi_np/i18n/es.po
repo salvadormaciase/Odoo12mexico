@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_np
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 01:51+0000\n"
+"PO-Revision-Date: 2018-11-14 01:51+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_np
+#: model:ir.model.fields,field_description:l10n_mx_edi_np.field_account_invoice__l10n_mx_edi_np_partner_id
+msgid "Buyer"
+msgstr "Adquiriente"
+
+#. module: l10n_mx_edi_np
+#: model:ir.model.fields,help:l10n_mx_edi_np.field_account_invoice__l10n_mx_edi_np_partner_id
+msgid "Buyer or buyers information"
+msgstr "Información de adquiriente o adquirientes"
+
+#. module: l10n_mx_edi_np
+#: model:ir.model,name:l10n_mx_edi_np.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_np
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_np.view_l10n_mx_edi_complement_np_invoice_form_inherit
+msgid "Notary Public"
+msgstr "Notario Público"
+
+#. module: l10n_mx_edi_np
+#: model:base.automation,name:l10n_mx_edi_np.l10n_mx_edi_np_set_inactive
+#: model:ir.actions.server,name:l10n_mx_edi_np.l10n_mx_edi_np_partner_other_address
+msgid "Set inactive when invoice signed"
+msgstr "Desactivar cuando la factura esta timbrada"
+
+#. module: l10n_mx_edi_np
+#: model:res.partner.category,name:l10n_mx_edi_np.l10n_mx_edi_np_partnership
+msgid "co-ownership / conjugal partnership"
+msgstr "co-propiedad / sociedad conyugal"

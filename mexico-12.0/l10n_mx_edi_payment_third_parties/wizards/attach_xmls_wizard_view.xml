@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="attach_xmls_wizard_thirds_action" model="ir.actions.act_window">
+        <field name="name">Attach Thirds Documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name='res_model'>attach.xmls.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="l10n_mx_edi_vendor_bills.attach_xmls_wizard_form_view"/>
+        <field name="context">{'l10n_mx_edi_invoice_type': 'out', 'tree_view_ref': 'account.invoice_tree', 'form_view_ref': 'account.invoice_form', 'l10n_mx_edi_cfdi_third': True}</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem action="attach_xmls_wizard_thirds_action" id="menu_atach_xmls_third_wizard" name="Attach Thirds Documents" parent="account.menu_finance_receivables"/>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_account_payment_form_inh_l10n_mx_cancellation">
+        <field name="name">view.account.payment.form.inh.l10n.mx.cancellation</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="l10n_mx_edi.view_account_payment_form_inh_l10n_mx"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_mx_edi_origin']" position="before">
+                <label for="l10n_mx_edi_cancellation_date" attrs="{'invisible':['|', ('l10n_mx_edi_sat_status', '!=', 'cancelled'), ('l10n_mx_edi_cancellation_date', '=', False)]}"/>
+                <div attrs="{'invisible':['|', ('l10n_mx_edi_sat_status', '!=', 'cancelled'), ('l10n_mx_edi_cancellation_date', '=', False)]}">
+                    <field name="l10n_mx_edi_cancellation_date" class="oe_inline"/>&amp;nbsp;
+                    <field name="l10n_mx_edi_cancellation_time" class="oe_inline"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_payment_from_invoices_inh">
+        <field name="name">account.register.payments.wizard</field>
+        <field name="model">account.register.payments</field>
+        <field name="inherit_id" ref="account.view_account_payment_from_invoices"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='communication']" position="after">
+                <field name="l10n_mx_edi_origin"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_payment_invoice_form">
+        <field name="name">account.payment.invoice.form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='communication']" position="after">
+                <field name="l10n_mx_edi_origin"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,174 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_addendas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-13 21:44+0000\n"
+"PO-Revision-Date: 2018-11-13 21:44+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">MX EDI addendas</span>"
+msgstr "<span class=\"o_form_label\">Adendas</span>"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "AAM"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "AHMSA"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
+msgid "Addenda"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Agnico"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Bosh"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Calsonic Kansei"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Chrysler"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model,name:l10n_mx_edi_addendas.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Edumex"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Encinas"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Envases"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Faurecia"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Femsa"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Flextronics"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Ford"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
+msgid "Install Selected Addenda"
+msgstr "Instalar Addenda Seleccionada"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
+msgid "Installed Addendas"
+msgstr "Adendas Instaladas"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.field_res_config_settings__l10n_mx_addenda
+msgid "L10N Mx Addenda"
+msgstr "Addenda"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Mabe"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Nestle"
+msgstr "Nestlé"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Nissan"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "PepsiCo"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Porcelanite"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Sanmina"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
+msgid "Select which addenda you will need from the\n"
+"                                list. (PAC)."
+msgstr "Seleccione de la lista la adenda que\n"
+"necesite. (PAC)."
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Sidel"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Vallen"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_ui_view
+msgid "Views"
+msgstr "Vistas"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.actions.act_window,help:l10n_mx_edi_addendas.action_ui_view
+msgid "Views allows you to personalize each view of Odoo. You can add new fields, move fields, rename them or delete the ones that you do not need."
+msgstr "La entrada 'Vistas' le permite personalizar cada vista de Odoo. Puede añadir nuevos campos, moverlos, renombrarlos o borrar los que no necesite"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "ZF Mexico"
+msgstr "ZF México"
+

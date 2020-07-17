@@ -1,0 +1,25 @@
+<odoo>
+    <template id="cfdiv33_inherit" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Conceptos']" position="before">
+            <t t-set="sale_order" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') or False"/>
+            <t t-set="pickings" t-value="sale_order.mapped('picking_ids').filtered(lambda pick: pick.state == 'done') if sale_order else False"/>
+        </xpath>
+        <xpath expr="//*[local-name()='Concepto']" position="before">
+            <t t-set="moves" t-value="pickings.mapped('move_ids_without_package').filtered(lambda p: p.product_id == line.product_id) if pickings else False"/>
+            <t t-set="units" t-value="moves.mapped('move_line_ids') if moves else False"/>
+         </xpath>
+         <xpath expr="//*[local-name()='Concepto']" position="inside">
+             <t t-foreach="units" t-as="unit">
+                <t t-set="unit_value" t-value="'%.*f' % (decimal_precision, subtotal_wo_discount(line)/line.quantity) if line.quantity else 0.0"/>
+                <cfdi:Parte xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                    t-att-ClaveProdServ="line.product_id.l10n_mx_edi_code_sat_id.code"
+                    t-att-NoIdentificacion="unit.lot_id.name"
+                    t-att-Cantidad="unit.qty_done"
+                    t-att-Unidad="record._get_string_cfdi(line.uom_id.name, 20)"
+                    t-att-Descripcion="record._get_string_cfdi(line.name, 1000)"
+                    t-att-ValorUnitario="unit_value"
+                    t-att-Importe="'%.*f' % (decimal_precision, float(unit_value) * unit.qty_done)"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

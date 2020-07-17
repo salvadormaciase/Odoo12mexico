@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_ine_xml">
+        <t t-set="doc" t-value="record.with_context({'lang':'es_MX'})" />
+            <t t-if="record.l10n_mx_edi_ine_process_type">
+                <cfdi:Complemento
+                xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <ine:INE
+                    xsi:schemaLocation="http://www.sat.gob.mx/ine http://www.sat.gob.mx/sitio_internet/cfd/ine/ine11.xsd"
+                    xmlns:ine="http://www.sat.gob.mx/ine"
+                    Version="1.1"
+                    t-att-TipoProceso="dict(doc.fields_get()['l10n_mx_edi_ine_process_type']['selection'])[record.l10n_mx_edi_ine_process_type] or ''"
+                    t-att-TipoComite="dict(doc.fields_get()['l10n_mx_edi_ine_committee_type']['selection'])[record.l10n_mx_edi_ine_committee_type] if record.l10n_mx_edi_ine_committee_type and record.l10n_mx_edi_ine_process_type == 'ordinary' else None"
+                    t-att-IdContabilidad="record.l10n_mx_edi_ine_accounting if record.l10n_mx_edi_ine_process_type == 'ordinary' and record.l10n_mx_edi_ine_committee_type == 'national_executive' else None">
+                        <t t-if="record.l10n_mx_edi_ine_committee_type != 'national_executive'">
+                            <t t-foreach="record.l10n_mx_edi_ine_entity_ids" t-as="line">
+                                <ine:Entidad
+                                t-att-ClaveEntidad="line.l10n_mx_edi_ine_entity_id.code.replace('QUE', 'QTO') if line.l10n_mx_edi_ine_entity_id else None"
+                                t-att-Ambito="dict(line.fields_get()['l10n_mx_edi_ine_scope']['selection'])[line.l10n_mx_edi_ine_scope] if line.l10n_mx_edi_ine_scope and record.l10n_mx_edi_ine_process_type != 'ordinary' else None">
+                                   <t t-if="record.l10n_mx_edi_ine_process_type != 'ordinary' or (record.l10n_mx_edi_ine_process_type == 'ordinary' and record.l10n_mx_edi_ine_committee_type == 'state_executive')">
+                                        <t t-set="accounting_ids" t-value="line.l10n_mx_edi_ine_accounting.split(',') if line.l10n_mx_edi_ine_accounting else []"/>
+                                        <t t-foreach="accounting_ids" t-as="accounting">
+                                            <ine:Contabilidad t-att-IdContabilidad="accounting.strip()"></ine:Contabilidad>
+                                        </t>
+                                    </t>
+                                </ine:Entidad>
+                            </t>
+                        </t>
+                    </ine:INE>
+                </cfdi:Complemento>
+            </t>
+    </template>
+    <template id="template_xml_ine" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="*" position="inside">
+            <t t-call="l10n_mx_edi_ine.l10n_mx_edi_ine_xml" t-lang="es_MX"/>
+        </xpath>
+    </template>
+</odoo>

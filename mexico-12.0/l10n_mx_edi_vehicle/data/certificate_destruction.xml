@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_certificate_destruction" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="*" position="inside">
+            <t t-if="record.company_id.l10n_mx_edi_complement_type == 'destruction' and record.l10n_mx_edi_serie_cd">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <destruccion:certificadodedestruccion
+                        xmlns:destruccion="http://www.sat.gob.mx/certificadodestruccion"
+                        Version="1.0"
+                        t-att-Serie="record.l10n_mx_edi_serie_cd.upper().replace('_', ' ')"
+                        t-att-NumFolDesVeh="record.l10n_mx_edi_folio_cd">
+                        <destruccion:VehiculoDestruido
+                            t-att-Marca="record.l10n_mx_edi_vehicle_id.model_id.brand_id.name"
+                            t-att-TipooClase="record.l10n_mx_edi_vehicle_id.tag_ids[0].name if record.l10n_mx_edi_vehicle_id.tag_ids else None"
+                            t-att-Año="record.l10n_mx_edi_vehicle_id.model_year"
+                            t-att-Modelo="record.l10n_mx_edi_vehicle_id.model_id.name"
+                            t-att-NIV="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_niv"
+                            t-att-NumSerie="record.l10n_mx_edi_vehicle_id.vin_sn"
+                            t-att-NumPlacas="record.l10n_mx_edi_vehicle_id.license_plate"
+                            t-att-NumMotor="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_motor"
+                            t-att-NumFolTarjCir="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_circulation_no"/>
+                        <t t-if="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing">
+                            <destruccion:InformacionAduanera
+                                t-att-NumPedImp="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing"
+                                t-att-Fecha="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing_date"
+                                t-att-Aduana="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_aduana"/>
+                        </t>
+                    </destruccion:certificadodedestruccion>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>

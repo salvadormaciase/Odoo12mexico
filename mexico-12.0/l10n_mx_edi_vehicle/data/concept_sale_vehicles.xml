@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_concept_sale_vehicle" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Concepto']" position="inside">
+            <t t-if="record.company_id.l10n_mx_edi_complement_type == 'sale' and record.l10n_mx_edi_vehicle_id and record.l10n_mx_edi_vehicle_id.odometer == 0">
+                <cfdi:ComplementoConcepto
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <ventavehiculos:VentaVehiculos
+                        xmlns:ventavehiculos="http://www.sat.gob.mx/ventavehiculos"
+                        version="1.1"
+                        t-att-ClaveVehicular="record.l10n_mx_edi_vehicle_id.license_plate"
+                        t-att-Niv="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_niv">
+                        <t t-if="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing">
+                            <ventavehiculos:InformacionAduanera
+                                t-att-numero="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing"
+                                t-att-fecha="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing_date"
+                                t-att-aduana="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_aduana"/>
+                        </t>
+                        <t t-set="extra_part" t-value="[id for id,type in record.env['fleet.service.type'].search([]).get_xml_id().items() if type == 'l10n_mx_edi_cd.l10n_mx_edi_fleet_service_extra']"/>
+                        <t t-set="parts" t-value="record.env['fleet.vehicle.cost'].search([('vehicle_id', '=', record.l10n_mx_edi_vehicle_id.id),('cost_subtype_id', '=', extra_part[0])]) if extra_part else []"/>
+                        <t t-if="parts">
+                            <t t-foreach="parts" t-as="part">
+                                <t t-set="part_desc" t-value="part.description.split('/') if part.description else []"/>
+                                <t t-if="part_desc">
+                                    <t t-set="quantity" t-value="part_desc[0] if part_desc[0].isdigit() else 0.00"/>
+                                    <ventavehiculos:Parte
+                                        t-att-cantidad="quantity if quantity else 0.00"
+                                        t-att-unidad="part_desc[1] if len(part_desc) &gt; 1 and part_desc[1] else None"
+                                        t-att-noIdentificacion="part_desc[2] if len(part_desc) &gt; 2 and part_desc[2] else None"
+                                        t-att-descripcion="part.cost_subtype_id.name"
+                                        t-att-valorUnitario="part.amount * float(quantity) if quantity else 0.00"
+                                        t-att-importe="part.amount">
+                                        <t t-if="len(part_desc) &gt; 3 and part_desc[3]">
+                                            <ventavehiculos:InformacionAduanera
+                                                t-att-numero="part_desc[3]"
+                                                t-att-fecha="part.date if part.date else None"
+                                                t-att-aduana="part_desc[4] if len(part_desc) &gt; 4 and part_desc[4] else None"/>
+                                        </t>
+                                    </ventavehiculos:Parte>
+                                </t>
+                            </t>
+                        </t>
+                    </ventavehiculos:VentaVehiculos>
+                </cfdi:ComplementoConcepto>
+            </t>
+        </xpath>
+    </template>
+</odoo>

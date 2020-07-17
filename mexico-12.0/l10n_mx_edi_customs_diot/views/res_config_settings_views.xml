@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_customs" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.customs</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='l10n_mx_edi_certificates']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" title="The parameters to Customs.">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Customs</span>
+                        <div class="text-muted">
+                            Configure data to customs.
+                        </div>
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="l10n_mx_edi_customs_partner_id" class="col-lg-3 o_light_label"/>
+                                <field name="l10n_mx_edi_customs_partner_id" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

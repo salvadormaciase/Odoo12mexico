@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- list view definition -->
+    <record id="view_res_partner_blacklist_list" model="ir.ui.view">
+        <field name="name">res.partner.blacklist.list</field>
+        <field name="model">res.partner.blacklist</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Blacklist">
+                <field name="vat"/>
+                <field name="taxpayer_name"/>
+                <field name="taxpayer_status"/>
+                <field name="sat_definitive_release"/>
+                <field name="dof_definitive_release"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- form view configuration -->
+    <record id="view_res_partner_blacklist_form" model="ir.ui.view">
+        <field name="name">res.partner.blacklist.form</field>
+        <field name="model">res.partner.blacklist</field>
+        <field name="arch" type="xml">
+            <form string="Partner Blacklist">
+                <sheet>
+                    <group>
+                        <group string="Taxpayer Info">
+                            <field name="number"/>
+                            <field name="vat"/>
+                            <field name="taxpayer_name"/>
+                            <field name="taxpayer_status"/>
+                        </group>
+                        <group string="Global Publications">
+                            <field name="global_presumption"/>
+                            <!-- <field name="global_distorted"/> -->
+                            <field name="global_definitive"/>
+                        </group>
+                        <group string="SAT Publications">
+                            <field name="sat_presumption"/>
+                            <field name="sat_presumption_release"/>
+                            <field name="sat_definitive_release"/>
+                        </group>
+                        <group string="DOF Publications">
+                            <field name="dof_presumption"/>
+                            <field name="dof_definitive_release"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- search view configuration -->
+    <record id="view_res_partner_blacklist_search" model="ir.ui.view">
+        <field name="name">res.partner.blacklist.search</field>
+        <field name="model">res.partner.blacklist</field>
+        <field name="arch" type="xml">
+            <search string="Partner Blacklist">
+                <group expand="0" string="Extended Filters...">
+                    <field name="vat"/>
+                    <field name="taxpayer_name"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <record id="res_partner_blacklist_action" model="ir.actions.act_window">
+        <field name="name">Partner Blacklist</field>
+        <field name="res_model">res.partner.blacklist</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="search_view_id"></field> -->
+        <field name="view_id" ref="view_res_partner_blacklist_list"/>
+    </record>
+    <menuitem
+        id="res_partner_blacklist_menu"
+        name="Partner Blacklist"
+        action="res_partner_blacklist_action"
+        parent="contacts.res_partner_menu_contacts"
+        sequence="1000"/>
+     <menuitem
+        id="res_partner_blacklist_menu"
+        name="Partner Blacklist"
+        action="res_partner_blacklist_action"
+        parent="contacts.menu_contacts"
+        sequence="1000"/>
+
+</odoo>

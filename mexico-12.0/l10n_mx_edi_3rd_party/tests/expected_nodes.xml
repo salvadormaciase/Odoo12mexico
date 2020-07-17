@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<expected_nodes xmlns:terceros="http://www.sat.gob.mx/terceros">
+
+    <!-- Case 1 -->
+    <terceros:PorCuentadeTerceros
+        version="1.1"
+        rfc="EKU9003173C9"
+        nombre="Roger Scott">
+        <terceros:InformacionFiscalTercero
+            calle="Campobasso Norte"
+            noExterior="3206"
+            noInterior="9000"
+            referencia="Fraccionamiento Montecarlo"
+            municipio="001"
+            estado="SON"
+            pais="MEX"
+            codigoPostal="85134"/>
+        <terceros:InformacionAduanera
+            numero="15  48  3009  0001234"
+            fecha="2015-01-01"
+            aduana="Mexico City's customs"/>
+        <terceros:Impuestos/>
+    </terceros:PorCuentadeTerceros>
+
+    <!-- Case 2 -->
+    <terceros:PorCuentadeTerceros
+        version="1.1"
+        rfc="EKU9003173C9"
+        nombre="Roger Scott">
+        <terceros:InformacionFiscalTercero
+            calle="Campobasso Norte"
+            noExterior="3206"
+            noInterior="9000"
+            referencia="Fraccionamiento Montecarlo"
+            municipio="001"
+            estado="SON"
+            pais="MEX"
+            codigoPostal="85134"/>
+        <terceros:Parte
+            cantidad="1.0"
+            unidad="Unit s"
+            noIdentificacion="M-Wir"
+            descripcion="M-Wir  Mouse, Wireless"
+            valorUnitario="12.50"
+            importe="12.50">
+            <terceros:InformacionAduanera
+                numero="15  48  3009  0001234"
+                fecha="2015-01-01"
+                aduana="Mexico City's customs"/>
+        </terceros:Parte>
+        <terceros:Parte
+            cantidad="1.0"
+            unidad="Unit s"
+            noIdentificacion="RAM-SR5"
+            descripcion="RAM-SR5  RAM SR5"
+            valorUnitario="85.00"
+            importe="85.00"/>
+        <terceros:Parte
+            cantidad="1.0"
+            unidad="Unit s"
+            noIdentificacion="C-Case"
+            descripcion="C-Case  Computer Case"
+            valorUnitario="25.00"
+            importe="25.00"/>
+        <terceros:Parte
+            cantidad="1.0"
+            unidad="Unit s"
+            noIdentificacion="HDD-SH1"
+            descripcion="HDD-SH1  HDD SH-1"
+            valorUnitario="975.00"
+            importe="975.00"/>
+        <terceros:Parte
+            cantidad="1.0"
+            unidad="Unit s"
+            noIdentificacion="MBi9"
+            descripcion="MBi9  Motherboard I9P57"
+            valorUnitario="1950.00"
+            importe="1950.00"/>
+        <terceros:Parte
+            cantidad="1.0"
+            unidad="Unit s"
+            noIdentificacion="CPUi5"
+            descripcion="CPUi5  Processor Core i5 2 70 Ghz"
+            valorUnitario="2100.00"
+            importe="2100.00"/>
+        <terceros:Parte
+            cantidad="1.0"
+            unidad="Unit(s)"
+            noIdentificacion="CARD"
+            descripcion="[CARD] Graphics Card"
+            valorUnitario="885.00"
+            importe="885.00"/>
+        <terceros:Impuestos>
+            <terceros:Retenciones>
+                <terceros:Retencion
+                    impuesto="ISR"
+                    importe="68.80"/>
+            </terceros:Retenciones>
+            <terceros:Traslados>
+                <terceros:Traslado
+                    impuesto="IVA"
+                    tasa="0.160000"
+                    importe="110.08"/>
+            </terceros:Traslados>
+        </terceros:Impuestos>
+    </terceros:PorCuentadeTerceros>
+
+    <!-- Case 3 -->
+    <terceros:PorCuentadeTerceros
+        version="1.1"
+        rfc="EKU9003173C9"
+        nombre="Roger Scott">
+        <terceros:InformacionFiscalTercero
+            calle="Campobasso Norte"
+            noExterior="3206"
+            noInterior="9000"
+            referencia="Fraccionamiento Montecarlo"
+            municipio="001"
+            estado="SON"
+            pais="MEX"
+            codigoPostal="85134"/>
+        <terceros:CuentaPredial
+            numero="CP1234"/>
+        <terceros:Impuestos/>
+    </terceros:PorCuentadeTerceros>
+
+</expected_nodes>

@@ -1,0 +1,73 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_addendas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-01 01:41+0000\n"
+"PO-Revision-Date: 2018-11-01 01:41+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_edumex_view
+msgid "<b>Incoming Code:</b>"
+msgstr "<b>Código de Entrada:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_edumex
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_edumex
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_edumex_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_edumex
+msgid "Addenda Edumex"
+msgstr "Adenda Edumex"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_edumex_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_edumex_incoming_code
+msgid "Incoming Code"
+msgstr "Código de Entrada"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_edumex_view
+msgid "Set Values"
+msgstr "Establecer Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_edumex_values
+msgid "Set Values for Addenda edumex"
+msgstr "Establecer Valores para Adenda edumex"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_edumex_defaults
+msgid "Set default values for the addenda Edumex"
+msgstr "Establecer valores por defecto para la adenda Edumex"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_edumex_incoming_code
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_edumex_view
+msgid "The code given to the product when it arrives at stock location. This code is provided by the supplier."
+msgstr "El código asignado al producto cuando entra en almacén. Este código es suministrado por el proveedor."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_edumex_view
+msgid "The necessary nodes for the implementation of the Addenda of\n"
+"                        Edumex, S.A. de C.V. are:"
+msgstr "Los nodos necesarios para la implementación de la adenda de\n"
+"                        Edumex, S.A. de C.V. son:"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_edumex_field
+msgid "Used to store the field x_incoming_code"
+msgstr "Utilizado para almacenar el campo x_incoming_code"
+

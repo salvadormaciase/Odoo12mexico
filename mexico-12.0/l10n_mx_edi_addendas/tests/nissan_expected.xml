@@ -1,0 +1,46 @@
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <t_Ubicacion
+        msgfija="EL PAGO DE ESTA FACTURA ES EN UNA SOLA EXHIBICION, LUGAR DE EXPEDICION ARTEAGA CO"
+        mensaje="MATERIAL LIBRE DE OXIDO"
+        txmoneda="1.0000"
+        SHA1="b3f199ed4aac4d6f5d6fe64476f9838c2b459fbd"
+        MD5="123fa4443321653627ec6533634d9c52"
+        noInterior="8098"
+        referencia="User billing mx"
+        callent="Elsie Drive"
+        municent="Franklin"
+        codPosEnt="26807"
+        noExterior="325"
+        factura="0"
+        serie="0"
+        noCuenta="6789"
+        noPedCli="0"
+        observacion="FORMA DE PAGO: Efectivo"
+        conducto="0"
+        descuento="0"
+        kilos="10.00"
+        libras="22.05"
+        codcli="0"
+        seguro="0"
+        Moneda2="02"
+        moneda="USD"
+        cCadena=""/>
+    <t_InfAdicional>
+        <Detalle
+            codigo="FURN_7800"
+            QUANT="1.0"
+            VALORUNIT="450.0"
+            TOTAL="450.0"
+            DOCUMENTO=""
+            SERIE=""
+            noIdentificlodi="Desk Combination"
+            descit="0"
+            descripclodi="[FURN_7800] Desk Combination Desk combination, black-brown: chair + desk + drawer."
+            obsitem="0"
+            tes="502"
+            nroran="123"
+            item="001"
+            ctdtar="12"
+            tarimas="1234"/>
+    </t_InfAdicional>
+</cfdi:Addenda>

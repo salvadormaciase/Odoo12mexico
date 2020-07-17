@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_voucher_xml" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Receptor']" position="after">
+            <t t-set="voucher_products" t-value="record.invoice_line_ids.filtered(lambda r: r.l10n_mx_edi_voucher_id and r.price_subtotal == 0)"/>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-if="voucher_products">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <valesdedespensa:ValesDeDespensa
+                        xmlns:valesdedespensa="http://www.sat.gob.mx/valesdedespensa"
+                        version="1.0"
+                        tipoOperacion="monedero electrónico"
+                        t-att-registroPatronal="record.partner_id.ref or False"
+                        t-att-numeroDeCuenta="record.l10n_mx_edi_partner_bank_id.acc_number"
+                        t-att-total="sum(voucher_products.mapped('price_unit'))">
+                        <valesdedespensa:Conceptos>
+                            <t t-foreach="voucher_products" t-as="person">
+                                <valesdedespensa:Concepto
+                                    t-att-identificador="person.l10n_mx_edi_voucher_id.ref"
+                                    t-att-fecha="('T').join(('{:%Y-%m-%d}'.format(record.date_invoice), record.l10n_mx_edi_time_invoice))"
+                                    t-att-rfc="person.l10n_mx_edi_voucher_id.l10n_mx_edi_get_customer_rfc()"
+                                    t-att-curp="person.l10n_mx_edi_voucher_id.l10n_mx_edi_curp"
+                                    t-att-nombre="person.l10n_mx_edi_voucher_id.name"
+                                    t-att-numSeguridadSocial="person.l10n_mx_edi_voucher_id.l10n_mx_edi_voucher_nss"
+                                    t-att-importe="person.price_unit"/>
+                            </t>
+                        </valesdedespensa:Conceptos>
+                    </valesdedespensa:ValesDeDespensa>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+        <xpath expr="//*[local-name()='Conceptos']/t" position="attributes">
+             <attribute name="t-foreach">record.invoice_line_ids - voucher_products</attribute>
+        </xpath>
+        <xpath expr="//*[local-name()='Comprobante']" position="attributes">
+            <attribute name="t-att-SubTotal">'%.2f' % (float(amount_untaxed) - sum(record.invoice_line_ids.filtered('l10n_mx_edi_voucher_id').mapped('price_subtotal')))</attribute>
+            <attribute name="t-att-Total">'%.2f' % (float(amount_total) - sum(record.invoice_line_ids.filtered('l10n_mx_edi_voucher_id').mapped('price_subtotal')))</attribute>
+        </xpath>
+    </template>
+</odoo>

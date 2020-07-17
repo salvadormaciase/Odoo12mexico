@@ -1,0 +1,648 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_customs_diot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-30 14:23+0000\n"
+"PO-Revision-Date: 2019-05-30 14:23+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+msgid "19 24 3420 9000104"
+msgstr ""
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_cc_id
+msgid "Account Cc"
+msgstr "Cuenta CC"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_dta_id
+msgid "Account Dta"
+msgstr "Cuenta DTA"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_igi_id
+msgid "Account Igi"
+msgstr "Cuenta IGI"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_other_taxes_id
+msgid "Account Other Taxes"
+msgstr "Cuenta de Otros Impuestos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_other_id
+msgid "Account PRV-CNT"
+msgstr "Cuenta PRV-CNT"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_other_taxes_id
+msgid "Account that will be used for Other Taxes line."
+msgstr "Cuenta que será utilizada para las líneas de Otros Impuestos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_cc_id
+msgid "Account that will be used for the CC line."
+msgstr "Cuenta que será utilizada para las líneas de CC"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_dta_id
+msgid "Account that will be used for the DTA line."
+msgstr "Cuenta que será utilizada para la linea de DTA"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_igi_id
+msgid "Account that will be used for the IGI line."
+msgstr "Cuenta que será utilizada para la linea de IGI"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__account_other_id
+msgid "Account that will be used for the PRV and CNT line."
+msgstr "Cuenta que será utilizada para la línea de PRV y CNC"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_needaction
+msgid "Action Needed"
+msgstr "Acción Necesaria"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__amount_total
+msgid "Amount Total"
+msgstr "Importe total"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__prv
+msgid "Application pre-validation"
+msgstr "Prevalidación"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_attachment_count
+msgid "Attachment Count"
+msgstr "Conteo de archivos adjuntos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_base
+msgid "Base"
+msgstr ""
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__partner_id
+msgid "Broker"
+msgstr "Agente Aduanal"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__cc
+msgid "Cc"
+msgstr "CC"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__cnt
+msgid "Cnt"
+msgstr "CNT"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model,name:l10n_mx_edi_customs_diot.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model,name:l10n_mx_edi_customs_diot.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.res_config_settings_view_form_inherit_customs
+msgid "Configure data to customs."
+msgstr "Configure data para pedimentos."
+
+#. module: l10n_mx_edi_customs_diot
+#: selection:l10n_mx_edi.customs,state:0
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__cnt
+msgid "Consideration for pre-validation purposes"
+msgstr "Contraprestación para efectos de la prevalidación"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model,name:l10n_mx_edi_customs_diot.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_id
+msgid "Custom"
+msgstr "Pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__date
+msgid "Custom Date, will be used in the invoice to create."
+msgstr "Fecha del pedimento, será utilizada en la factura a crear."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__payment_date
+msgid "Custom Payment Date, will be used in the payment to create, use only if the payment date is different to the customs date, then if is empty, will be used the customs date."
+msgstr "Fecha de pago del Pedimento, será utilizado en el pago a crear, se necesita solo si la fecha de pago es diferente a la fecha del pedimento, por lo tanto si esta vacía, será utilizada la fecha del pedimento."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_extra_id
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_id
+msgid "Custom in which this invoice income in the company."
+msgstr "Pedimento en el cual esta factura entro en la compañía"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.actions.act_window,name:l10n_mx_edi_customs_diot.action_l10n_mx_edi_invoice_customs_form
+#: model:ir.ui.menu,name:l10n_mx_edi_customs_diot.l10n_mx_edi_menu_invoice_customs
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.l10n_mx_edi_customs_tree
+msgid "Customs"
+msgstr "Pedimentos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_extra_id
+msgid "Customs Extra"
+msgstr "Extra de Pedimentos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+msgid "Customs Invoice"
+msgstr "Facturas de Pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__name
+msgid "Customs Number"
+msgstr "Número de Pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_res_company__l10n_mx_edi_customs_partner_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_res_config_settings__l10n_mx_edi_customs_partner_id
+msgid "Customs Partner"
+msgstr "Proveedor para pedimentos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_res_partner__l10n_mx_edi_customs_patent
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_res_users__l10n_mx_edi_customs_patent
+msgid "Customs Patent"
+msgstr "Patente Aduanal"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__dta
+msgid "Customs Procedure Law"
+msgstr "Derecho de Trámite Aduanero"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_total
+msgid "Customs Total"
+msgstr "Total Pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:164
+#, python-format
+msgid "Customs invoice"
+msgstr "Factura de Pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__invoice_extra_ids
+msgid "Customs related with this invoice, for extra expenses."
+msgstr "Pedimento relacionado a esta factura, para gastos extras."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__invoice_ids
+msgid "Customs related with this invoice."
+msgstr "Pedimento relacionado con esta factura"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: l10n_mx_edi_customs_diot
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:280
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:308
+#, python-format
+msgid "Difference adjustment"
+msgstr "Ajuste de diferencia"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: l10n_mx_edi_customs_diot
+#: selection:l10n_mx_edi.customs,state:0
+msgid "Done"
+msgstr "Listo"
+
+#. module: l10n_mx_edi_customs_diot
+#: selection:l10n_mx_edi.customs,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__state
+msgid "Draft when you are just creating it, confirmed to block it anddone it will affect the DIOT"
+msgstr "Borrador cuando solo se ha creado, confirmado para bloquearlo y listo para afectar al DIOT"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__dta
+msgid "Dta"
+msgstr "DTA"
+
+#. module: l10n_mx_edi_customs_diot
+#: sql_constraint:l10n_mx_edi.customs:0
+msgid "El nombre debe ser único !"
+msgstr ""
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__name
+msgid "Example: 19 24 3420 9000104"
+msgstr "Ejemplo: 19 24 3420 9000104"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+msgid "Extra Expenses"
+msgstr "Gastos extra"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canales)"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Empresas)"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_freight
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__freight
+msgid "Freight"
+msgstr "Fletes"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+msgid "General"
+msgstr ""
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__igi
+msgid "General Importation Tax"
+msgstr "Impuesto General de Importación"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__amount_total
+msgid "Get the amount total of the invoices related."
+msgstr "Obtiene el monto total de las facturas relacionadas."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_unread
+msgid "If checked new messages require your attention."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si se encuentra marcado, algunos mensajes tienen error de envío."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_res_partner__l10n_mx_edi_customs_patent
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_res_users__l10n_mx_edi_customs_patent
+msgid "If this partner is a broker, specific the patent number. Will be used to assign automatically the broker in the customs."
+msgstr "Si esta empresa es un agente aduanal, especifique su número de patente. Será utilizado para asignar automáticamente el agente aduanal en los pedimentos."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__igi
+msgid "Igi"
+msgstr "IGI"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model,name:l10n_mx_edi_customs_diot.model_l10n_mx_edi_customs
+msgid "In MX customs == Pedimento, this is a model to\n"
+"    administer such information in order to relate the proper VAT with the\n"
+"    Invoices"
+msgstr ""
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__partner_id
+msgid "Indicate the broker of this customs."
+msgstr "Indica el agente aduanal de este pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model,name:l10n_mx_edi_customs_diot.model_account_invoice
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__invoice_ids
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__invoice_extra_ids
+msgid "Invoice Extra"
+msgstr "Factura Extra"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__sat_invoice_id
+msgid "Invoice generated to this custom."
+msgstr "Factura generada por este pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:180
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+#, python-format
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__iva
+msgid "Iva"
+msgstr "IVA"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__journal_invoice_id
+msgid "Journal Invoice"
+msgstr "Diario de Factura"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__journal_payment_id
+msgid "Journal Payment"
+msgstr "Diario de Pago"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__journal_invoice_id
+msgid "Journal to use in the invoice to create."
+msgstr "Diario a utilizar en la factura a crear"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__journal_payment_id
+msgid "Journal used to pay this custom."
+msgstr "Diario a utilizar para pagar el pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__key_custom
+msgid "Key Custom"
+msgstr "Cve. Pedimento"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjuntos principales"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de Envío de Mensaje"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_has_error_counter
+msgid "Number of error"
+msgstr "Número de error"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leidos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_base
+msgid "On invoices with customs saves the amount total less the freight."
+msgstr "En facturas con pedimento guarda el total de la factura menos los fletes."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_customs_total
+msgid "On invoices with customs saves the amount total in the company currency based in the customs rate."
+msgstr "En facturas con pedimento guarda el total en moneda de la compañía basado en el tipo de cambio del pedimento."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__operation
+msgid "Operation"
+msgstr "Operación"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__other_increments
+msgid "Other Increments"
+msgstr "Otros Incrementables"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__other_taxes
+msgid "Other Taxes"
+msgstr "Otros Impuestos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__payment_date
+msgid "Payment Date"
+msgstr "Fecha de pago"
+
+#. module: l10n_mx_edi_customs_diot
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:282
+#, python-format
+msgid "Payment SAT"
+msgstr "Pago SAT"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__prv
+msgid "Prv"
+msgstr "PRV"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__rate
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__regime
+msgid "Regime"
+msgstr "Regimen"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+msgid "Revert"
+msgstr "Revertir"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__sat_invoice_id
+msgid "Sat Invoice"
+msgstr "Factura SAT"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__sat_partner_id
+msgid "Sat Partner"
+msgstr "Proveedor SAT"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_account_invoice__l10n_mx_edi_freight
+msgid "Freight cost in the invoice if was imported."
+msgstr "Costo del flete en la factura si fue importada."
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__state
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__sat_partner_id
+msgid "Supplier that will be used to create the SAT invoice."
+msgstr "Proveedor que será utilizado para crear la factura del SAT"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:product.category,name:l10n_mx_edi_customs_diot.l10n_mx_edi_product_category_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: l10n_mx_edi_customs_diot
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:280
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:316
+#, python-format
+msgid "Tax Freight"
+msgstr "Impuesto de Fletes"
+
+#. module: l10n_mx_edi_customs_diot
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:273
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:308
+#, python-format
+msgid "Tax Other Increments"
+msgstr "Impuesto Otros Incrementables"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:product.product,name:l10n_mx_edi_customs_diot.l10n_mx_edi_tax_product
+#: model:product.template,name:l10n_mx_edi_customs_diot.l10n_mx_edi_tax_product_product_template
+msgid "Taxable Base - Importation Tax"
+msgstr "Base Imponible - Impuesto de Importación"
+
+#. module: l10n_mx_edi_customs_diot
+#: code:addons/l10n_mx_edi_customs_diot/models/customs.py:140
+#, python-format
+msgid "The name must be unique !"
+msgstr "El nombre debe ser único !"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.res_config_settings_view_form_inherit_customs
+msgid "The parameters to Customs."
+msgstr "Parámetros para pedimentos"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_res_company__l10n_mx_edi_customs_partner_id
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_res_config_settings__l10n_mx_edi_customs_partner_id
+msgid "This partner will be used to send the tax entries for extra customs costs. Example: Tax for IGI, DTA, etc."
+msgstr "Este proveedor será utilizado para enviar las entradas de IVA para costos extras del pedimento. Ejemplo: IVA de IGI, DTA, etc."
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.l10n_mx_edi_customs_tree
+msgid "Total"
+msgstr ""
+
+#. module: l10n_mx_edi_customs_diot
+#: model:product.product,uom_name:l10n_mx_edi_customs_diot.l10n_mx_edi_tax_product
+#: model:product.template,uom_name:l10n_mx_edi_customs_diot.l10n_mx_edi_tax_product_product_template
+msgid "Unit(s)"
+msgstr "Unidad(es)"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes por leer"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de mensajes sin leer"
+
+#. module: l10n_mx_edi_customs_diot
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_customs_diot.customs_form
+msgid "Validate"
+msgstr "Validar"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,field_description:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:ir.model.fields,help:l10n_mx_edi_customs_diot.field_l10n_mx_edi_customs__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicaciones del sitio web"
+
+#. module: l10n_mx_edi_customs_diot
+#: model:product.product,weight_uom_name:l10n_mx_edi_customs_diot.l10n_mx_edi_tax_product
+#: model:product.template,weight_uom_name:l10n_mx_edi_customs_diot.l10n_mx_edi_tax_product_product_template
+msgid "kg"
+msgstr ""

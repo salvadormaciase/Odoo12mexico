@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_supplier_defaults
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-21 23:10+0000\n"
+"PO-Revision-Date: 2019-06-21 23:10+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_supplier_defaults.report_supplier_defaults_purchaseorder_document
+msgid "<strong>Payment Way:</strong>"
+msgstr "<strong>Forma de Pago:</strong>"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_supplier_defaults.report_supplier_defaults_purchaseorder_document
+msgid "<strong>Usage:</strong>"
+msgstr "<strong>Uso:</strong>"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model,name:l10n_mx_edi_supplier_defaults.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,help:l10n_mx_edi_supplier_defaults.field_purchase_order__l10n_mx_edi_payment_method_id
+msgid "Info field to indicate which payment method the supplier will use to invoice the purchase order."
+msgstr "Campo informativo para indicar que método de pago utilizará el proveedor para facturar la orden de compra."
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,help:l10n_mx_edi_supplier_defaults.field_purchase_order__l10n_mx_edi_usage
+msgid "Info field to indicate which usage the supplier will use to invoice the purchase order."
+msgstr "Campo informativo para indicar que uso el proveedor utilizará para facturar la orden de compra."
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model,name:l10n_mx_edi_supplier_defaults.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,field_description:l10n_mx_edi_supplier_defaults.field_purchase_order__l10n_mx_edi_payment_method_id
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_supplier_defaults.view_supplier_defaults
+msgid "Payment Way"
+msgstr "Forma de pago"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model,name:l10n_mx_edi_supplier_defaults.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,help:l10n_mx_edi_supplier_defaults.field_res_partner__l10n_mx_edi_supplier_payment_method_id
+#: model:ir.model.fields,help:l10n_mx_edi_supplier_defaults.field_res_users__l10n_mx_edi_supplier_payment_method_id
+msgid "This payment method will be used by default in purchase orders and vendor bills."
+msgstr "Este método de pago se utilizará por defecto en las ordenes de compra y las facturas de proveedor."
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,help:l10n_mx_edi_supplier_defaults.field_res_partner__l10n_mx_edi_supplier_usage
+#: model:ir.model.fields,help:l10n_mx_edi_supplier_defaults.field_res_users__l10n_mx_edi_supplier_usage
+msgid "This usage will be used instead of the default one for purchase orders and vendor bills."
+msgstr "Este uso se utilizaré en lugar del predeterminado para las ordenes de compra y las facturas de proveedor."
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,field_description:l10n_mx_edi_supplier_defaults.field_purchase_order__l10n_mx_edi_usage
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_supplier_defaults.view_supplier_defaults
+msgid "Usage"
+msgstr "Uso"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,field_description:l10n_mx_edi_supplier_defaults.field_res_partner__l10n_mx_edi_supplier_payment_method_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_supplier_defaults.field_res_users__l10n_mx_edi_supplier_payment_method_id
+msgid "Vendor Payment Way"
+msgstr "Forma de pago de proveedores"
+
+#. module: l10n_mx_edi_supplier_defaults
+#: model:ir.model.fields,field_description:l10n_mx_edi_supplier_defaults.field_res_partner__l10n_mx_edi_supplier_usage
+#: model:ir.model.fields,field_description:l10n_mx_edi_supplier_defaults.field_res_users__l10n_mx_edi_supplier_usage
+msgid "Vendor Usage"
+msgstr "Uso de proveedores"

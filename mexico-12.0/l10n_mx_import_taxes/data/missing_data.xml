@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!--Fields in invoice line-->
+    <record model="ir.model.fields" id="field_account_invoice_l10n_mx_edi_invoice_broker_id">
+        <field name="name">x_l10n_mx_edi_invoice_broker_id</field>
+        <field name="field_description">Overseas Invoice</field>
+        <field name="ttype">many2one</field>
+        <field name="help">This is the source invoice upon taxes are included in this line and that were paid by the broker on behalf of the company</field>
+        <field name="model_id" ref="account.model_account_invoice_line"/>
+        <field name="relation">account.invoice</field>
+        <field name="domain">[('type', '=', 'in_invoice')]</field>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="base_automation_create_entry_lines_for_import_taxes" model="base.automation">
+        <field name="name">[l10n_mx_import_taxes] Create Entry Lines on Invoice for Import Taxes</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="trigger">on_write</field>
+        <field name="active" eval="True"/>
+        <field name="filter_pre_domain">[('state', '=', 'draft')]</field>
+        <field name="filter_domain">[('state', '=', 'open')]</field>
+        <field name="code">
+def get_import_tax_base_amount_lines(inv):
+    """Appends two lines for each one of the lines where the quantity is
+    zero, as the value of the lines added are need in cash basis taxes to
+    properly compute the taxes paid"""
+    res = []
+    aml_obj = env['account.move.line'].with_context(
+        check_move_validity=False, recompute=False)
+
+    lines_2_create = []
+    for line in inv.invoice_line_ids.filtered(
+            lambda l: not l.quantity and l.invoice_line_tax_ids and
+            l.x_l10n_mx_edi_invoice_broker_id):
+        if line.x_l10n_mx_edi_invoice_broker_id == inv:
+            inv.message_post(body='The invoice "Overseas Invoice" can not be '
+                'the same that the invoice related')
+            continue
+        tax_ids = env['account.tax']
+        for tax in line.invoice_line_tax_ids:
+            tax_ids |= tax
+            for child in tax.children_tax_ids:
+                if child.type_tax_use != 'none':
+                    tax_ids |= child
+
+        price = round(line.price_unit, inv.company_id.currency_id.decimal_places)
+        partner_id = line.x_l10n_mx_edi_invoice_broker_id.\
+            commercial_partner_id.id or inv.commercial_partner_id.id
+        move_line_dict = {
+            'name': line.name.split('\n')[0][:64],
+            'move_id': line.invoice_id.move_id.id,
+            'company_id': line.invoice_id.company_id.id,
+            'quantity': line.quantity,
+            'debit': price &gt; 0 and price,
+            'credit': price &lt; 0 and -price,
+            'account_id': line.account_id.id,
+            'product_id': line.product_id.id,
+            'invoice_id': inv.id,
+            'tax_ids': tax_ids,
+            'partner_id': partner_id,
+        }
+        first_line = aml_obj.new(move_line_dict)
+        first_line = aml_obj._convert_to_write(first_line._cache)
+        aml_obj.create(first_line)
+
+        price = -price
+
+        ml_dict = dict(
+            move_line_dict,
+            tax_ids=[],
+            debit=price &gt; 0 and price,
+            credit=price &lt; 0 and -price)
+        lines_2_create.append(ml_dict)
+
+    if lines_2_create:
+        # Let us keep the Invoice Journal Entry as it was
+        posted = False
+        if inv.move_id.state == 'posted':
+            posted = True
+            inv.move_id.button_cancel()
+        for ml_dict in lines_2_create:
+            aml_obj.create(ml_dict)
+        if posted:
+            inv.move_id.post()
+    return True
+
+for inv in records.filtered(
+        lambda i: i.move_id and i.type == 'in_invoice' and i.state == 'open' and
+        not len(i.move_id.line_ids.mapped('partner_id')) &gt; 1):
+    get_import_tax_base_amount_lines(inv)
+        </field>
+    </record>
+</odoo>

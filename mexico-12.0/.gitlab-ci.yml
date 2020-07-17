@@ -1,0 +1,98 @@
+image: vauxoo/odoo-80-image-shippable-auto
+stages:
+  - test
+  - test_build
+  - build
+
+lint:
+  stage: test
+  tags:
+    - lint
+  variables:
+    LINT_CHECK: "1"
+    TESTS: "0"
+  script:
+    - source variables.sh
+    - git clone https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+    - export PATH=${HOME}/maintainer-quality-tools/travis:${HOME}/gitlab_tools:${PATH}
+    - pip3 install deployv-addon-gitlab-tools
+    - deployvcmd gitlab_tools check_keys
+    - source ${REPO_REQUIREMENTS}/virtualenv/nodejs/bin/activate
+    - source /usr/local/rvm/scripts/rvm
+    - source ${REPO_REQUIREMENTS}/virtualenv/python${TRAVIS_PYTHON_VERSION}/bin/activate
+    - export PATH=${HOME}/gitlab_tools:${PATH}
+    - export TRAVIS_BUILD_DIR=$(pwd)
+    - export INCLUDE="company_country,$(cd ${TRAVIS_BUILD_DIR} && ls -d -t -U -m */ | tr -d ' /\n')"
+    - travis_install_nightly
+    - sed -i "s/exclude \= /exclude \= doc,/g" ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_flake8*.cfg
+    - sed -i "/file-not-used/d" ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg
+    - cp ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint.cfg && sed -i s/class-camelcase,/class-camelcase,deprecated-openerp-xml-node,old-api7-method-defined,/g ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint.cfg
+    - pylint --load-plugins=pylint.extensions.docparams -d all -e parameter_documentation ${TRAVIS_BUILD_DIR}/*; echo "exit 0"
+    - travis_run_tests
+
+test:
+  stage: test
+  coverage: '/^TOTAL.*\s+(\d+\%)$/'
+  tags:
+    - odoo
+    - test
+  variables:
+    LINT_CHECK: "0"
+    TESTS: "1"
+    PHANTOMJS_VERSION: "2.1.1"
+  script:
+    - source variables.sh
+    - export TRAVIS_BUILD_DIR=$(pwd)
+    - export INCLUDE="company_country,$(cd ${TRAVIS_BUILD_DIR} && ls -d -t -U -m */ | tr -d ' /\n')"
+    - pip3 install deployv-addon-gitlab-tools
+    - deployvcmd gitlab_tools check_keys
+    - source ${REPO_REQUIREMENTS}/virtualenv/nodejs/bin/activate
+    - source /usr/local/rvm/scripts/rvm
+    - source ${REPO_REQUIREMENTS}/virtualenv/python${TRAVIS_PYTHON_VERSION}/bin/activate
+    - git clone https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
+    - export PATH=${HOME}/maintainer-quality-tools/travis:${HOME}/gitlab_tools:${PATH}
+    - travis_install_nightly
+    - sed -i "s/exclude \= /exclude \= doc,/g" ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_flake8*.cfg
+    - sed -i "/file-not-used/d" ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg
+    - travis_run_tests
+    - travis_after_tests_success || true
+    - coverage html --rcfile=${CI_PROJECT_DIR}/.coveragerc -d $CI_COMMIT_REF_SLUG || true
+    - coverage report -m --show-missing --rcfile=${TRAVIS_BUILD_DIR}/.coveragerc || true
+  artifacts:
+    paths:
+      - $CI_COMMIT_REF_SLUG
+
+publish_coverage:
+  image: quay.io/vauxoo/dockerv
+  stage: test_build
+  dependencies:
+    - test
+  script:
+    - deployvcmd gitlab_tools push_coverage
+  environment:
+    name: coverage
+    url: https://coverage.vauxoo.com/${CI_COMMIT_REF_SLUG}-${CI_PROJECT_NAME}
+
+publish_coverage:
+  image: quay.io/vauxoo/dockerv
+  stage: test_build
+  dependencies:
+    - test
+  script:
+    - deployvcmd gitlab_tools push_coverage
+  environment:
+    name: coverage
+    url: https://coverage.vauxoo.com/${CI_COMMIT_REF_SLUG}-${CI_PROJECT_NAME}
+
+build:
+  stage: build
+  image: quay.io/vauxoo/dockerv:latest
+  tags:
+    - build
+
+  script:
+    - source variables.sh
+    - export INSTALL="company_country,$(cd ${TRAVIS_BUILD_DIR} && ls -d -t -U -m */ | tr -d ' /\n')"
+    - deployvcmd gitlab_tools check_keys
+    - deployvcmd gitlab_tools test_images
+

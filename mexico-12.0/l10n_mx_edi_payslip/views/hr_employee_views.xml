@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_hr_employee_form_inherit_l10n_mx">
+        <field name="name">view.hr.employee.form.inherit.l10n_mx</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='public']/group" position="inside">
+                <group string="Payroll CFDI">
+                    <field name="ssnid"/>
+                    <field name="l10n_mx_edi_is_assimilated"/>
+                    <field name="l10n_mx_edi_syndicated"/>
+                    <field name="l10n_mx_edi_risk_rank"/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Loans">
+                    <group>
+                        <field name="loan_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="monthly_withhold"/>
+                                <field name="payment_term"/>
+                                <field name="payslips_count"/>
+                                <field name="loan_type"/>
+                                <field name="number_fonacot"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_l10n_mx_loan_form" model="ir.ui.view">
+        <field name="name">view.l10n_mx.loan.form</field>
+        <field name="model">hr.employee.loan</field>
+        <field name="arch" type="xml">
+            <form string="Loans">
+                <sheet string="Loan">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_payslips_view"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                            type="object"
+                            attrs="{'invisible': [('payslips_count', '=', 0)]}">
+                            <field name="payslips_count" widget="statinfo" string="Payslips"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="monthly_withhold"/>
+                            <field name="payment_term"/>
+                        </group>
+                        <group>
+                            <field name="loan_type"/>
+                            <field name="number_fonacot"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_l10n_mx_loan_tree" model="ir.ui.view">
+        <field name="name">view.l10n_mx.loan.tree</field>
+        <field name="model">hr.employee.loan</field>
+        <field name="arch" type="xml">
+            <tree string="Loan">
+                <field name="name"/>
+                <field name="monthly_withhold"/>
+                <field name="payment_term"/>
+                <field name="payslips_count"/>
+                <field name="loan_type"/>
+                <field name="number_fonacot"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_l10n_mx_loan_method" model="ir.actions.act_window">
+        <field name="name">Loan</field>
+        <field name="res_model">hr.employee.loan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="l10n_mx_loan" name="Loans" parent="hr.menu_human_resources_configuration" sequence="50"
+        action='action_l10n_mx_loan_method'
+    />
+</odoo>

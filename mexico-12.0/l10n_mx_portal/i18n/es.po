@@ -1,0 +1,65 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-25 18:25+0000\n"
+"PO-Revision-Date: 2019-04-25 18:25+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.sale_order_mx_portal_template
+msgid "<i class=\"fa fa-download\"/> Generate Invoice"
+msgstr "<i class=\"fa fa-download\"/> Generar Factura"
+
+#. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.email_sent
+msgid "Change"
+msgstr "Cambiar"
+
+#. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.website_e_invoices
+msgid "Download XML"
+msgstr "Descargar XML"
+
+#. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.sale_order_mx_portal_template
+msgid "Generate Invoice"
+msgstr "Generar Factura"
+
+#. module: l10n_mx_portal
+#: model:ir.model,name:l10n_mx_portal.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_portal
+#: code:addons/l10n_mx_portal/controllers/main.py:33
+#, python-format
+msgid "Please define your VAT, after try to generate the invoice again."
+msgstr "Por favor, define tu RFC, después reintenta generar tu factura de nuevo."
+
+#. module: l10n_mx_portal
+#: code:addons/l10n_mx_portal/models/account_invoice.py:39
+#, python-format
+msgid "Re-invoiced from %s"
+msgstr "Re-Facturada de %s"
+
+#. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.email_sent
+msgid "The invoice has been sent"
+msgstr "La factura fue enviada"
+
+#. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.email_sent
+msgid "Your Details"
+msgstr "Sus detalles"
+
+

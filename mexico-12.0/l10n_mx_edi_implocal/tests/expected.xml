@@ -1,0 +1,75 @@
+<cfdi:Comprobante
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd"
+Version="3.3"
+Sello=""
+Fecha=""
+Folio=""
+Serie=""
+FormaPago="01"
+NoCertificado="30001000000400002434"
+    Certificado="MIIFuzCCA6OgAwIBAgIUMzAwMDEwMDAwMDA0MDAwMDI0MzQwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWRpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMTkwNjE3MTk0NDE0WhcNMjMwNjE3MTk0NDE0WjCB4jEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gWElRQjg5MTExNlFFNDEeMBwGA1UEBRMVIC8gWElRQjg5MTExNk1HUk1aUjA1MR4wHAYDVQQLExVFc2N1ZWxhIEtlbXBlciBVcmdhdGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCN0peKpgfOL75iYRv1fqq+oVYsLPVUR/GibYmGKc9InHFy5lYF6OTYjnIIvmkOdRobbGlCUxORX/tLsl8Ya9gm6Yo7hHnODRBIDup3GISFzB/96R9K/MzYQOcscMIoBDARaycnLvy7FlMvO7/rlVnsSARxZRO8Kz8Zkksj2zpeYpjZIya/369+oGqQk1cTRkHo59JvJ4Tfbk/3iIyf4H/Ini9nBe9cYWo0MnKob7DDt/vsdi5tA8mMtA953LapNyCZIDCRQQlUGNgDqY9/8F5mUvVgkcczsIgGdvf9vMQPSf3jjCiKj7j6ucxl1+FwJWmbvgNmiaUR/0q4m2rm78lFAgMBAAGjHTAbMAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgbAMA0GCSqGSIb3DQEBCwUAA4ICAQBcpj1TjT4jiinIujIdAlFzE6kRwYJCnDG08zSp4kSnShjxADGEXH2chehKMV0FY7c4njA5eDGdA/G2OCTPvF5rpeCZP5Dw504RZkYDl2suRz+wa1sNBVpbnBJEK0fQcN3IftBwsgNFdFhUtCyw3lus1SSJbPxjLHS6FcZZ51YSeIfcNXOAuTqdimusaXq15GrSrCOkM6n2jfj2sMJYM2HXaXJ6rGTEgYmhYdwxWtil6RfZB+fGQ/H9I9WLnl4KTZUS6C9+NLHh4FPDhSk19fpS2S/56aqgFoGAkXAYt9Fy5ECaPcULIfJ1DEbsXKyRdCv3JY89+0MNkOdaDnsemS2o5Gl08zI4iYtt3L40gAZ60NPh31kVLnYNsmvfNxYyKp+AeJtDHyW9w7ftM0Hoi+BuRmcAQSKFV3pk8j51la+jrRBrAUv8blbRcQ5BiZUwJzHFEKIwTsRGoRyEx96sNnB03n6GTwjIGz92SmLdNl95r9rkvp+2m4S6q1lPuXaFg7DGBrXWC8iyqeWE2iobdwIIuXPTMVqQb12m1dAkJVRO5NdHnP/MpqOvOgLqoZBNHGyBg4Gqm4sCJHCxA1c8Elfa2RQTCk0tAzllL4vOnI1GHkGJn65xokGsaU4B4D36xh7eWrfj4/pgWHmtoDAYa8wzSwo2GVCZOs+mtEgOQB91/g=="
+CondicionesDePago="30 Net Days"
+SubTotal="450.00"
+TipoCambio= ""
+Moneda="USD"
+Total="522.00"
+TipoDeComprobante="I"
+MetodoPago="PPD"
+LugarExpedicion="85134">
+    <cfdi:Emisor Rfc="EKU9003173C9" Nombre="YourCompany" RegimenFiscal="601"/>
+    <cfdi:Receptor Rfc="XEXX010101000" Nombre="Deco Addict" UsoCFDI="P01"/>
+    <cfdi:Conceptos>
+        <cfdi:Concepto
+            ClaveProdServ="01010101"
+            NoIdentificacion="TEST"
+            Cantidad="1.000000"
+            ClaveUnidad="LH"
+            Unidad="Hour(s)"
+            Descripcion="[TEST] Virtual Home Staging"
+            ValorUnitario="450.00"
+            Importe="450.00">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado
+                        Base="450.00"
+                        Impuesto="002"
+                        TipoFactor="Tasa"
+                        TasaOCuota="0.160000"
+                        Importe="72.00"/>
+                </cfdi:Traslados>
+                <cfdi:Retenciones>
+                    <cfdi:Retencion
+                        Base="450.00"
+                        Impuesto="001"
+                        TipoFactor="Tasa"
+                        TasaOCuota="0.100000"
+                        Importe="45.00"/>
+                </cfdi:Retenciones>
+           </cfdi:Impuestos>
+        </cfdi:Concepto>
+    </cfdi:Conceptos>
+    <cfdi:Impuestos TotalImpuestosTrasladados="72.00" TotalImpuestosRetenidos="45.00">
+        <cfdi:Traslados>
+            <cfdi:Traslado Importe="72.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+            <cfdi:Retencion Importe="45.00" Impuesto="001"/>
+        </cfdi:Retenciones>
+    </cfdi:Impuestos>
+    <cfdi:Complemento>
+         <implocal:ImpuestosLocales
+             xmlns:implocal="http://www.sat.gob.mx/implocal"
+             xsi:schemaLocation="http://www.sat.gob.mx/implocal http://www.sat.gob.mx/sitio_internet/cfd/implocal/implocal.xsd"
+             version="1.0"
+             TotaldeRetenciones="0.00"
+             TotaldeTraslados="13.50">
+             <implocal:TrasladosLocales ImpLocTrasladado="IVA(16%) VENTAS (copy)" TasadeTraslado="10.000000" Importe="45.00"/>
+         </implocal:ImpuestosLocales>
+         <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital"
+             xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd"
+             Version="1.1"
+             SelloCFD="fIhXjA6OwnFFRHty20yvL2WuTHkXdNsesuh2odK0TTHZ3uUy2j8KPaRIqD9LOoalWP7o2KV9DrODsXnHUmSjvuJWEm6lMTHqs+0apswGPlx+cRv2YfukK3OD2sPS2hVXlVCunYyjtNstY6/9lVZ+FTPxrnWE/RXTTWYG5fqFdNeDjZXn+xgPC3XdaNNY5aKV0fQmytm/sycTQjiLouDKB6fhcOX/zweYtwzNr/zTO59oSnrOWcbgO6ezM8dNZkir3khEA6v2p3PnXF1iBiyxiLo3jre3kWUvh2F36+mhVNm8Rp49CQzK5sYysH9/Cr+qDX6S9pVZxRZNQnRkjriAVg==" NoCertificadoSAT="20001000000300022323" RfcProvCertif="FIN1203015JA" UUID="B5E71D00-266E-4F73-8898-5BA441B81C57" FechaTimbrado="2019-01-07T12:48:50" SelloSAT="JjvmtR6KFeAiJ2wUBORIdQJd1ad9GhAa21b/qWdEyMeQiSfsRDgTdvZYkxmJ0nxBOYzeLL2iYfdvbrZmyE1shFSaU9j/KZw8EZOc8sybcherYpZUKqLabsj4Rl4n11YDJcElLKVfbJyeg73kvJjyvMbZWmEAFstaMjBBE5kxsq0Jw+5fEH5AC0LxnFaPc0OE63GU1PaVgP8tvaAiWVLfReLuwE2gRo2T9dIbppq+gMCl90DtJ145Y44lUKTX1TxIQdRzxNT2G2MNBuDcNIF3sXLLJH9NpyjPILEcvU2g8R9FORynxU5xAyYIDb6Yb/LglSHqvSzFum9pyei+jhvt3w=="/>
+    </cfdi:Complemento>
+</cfdi:Comprobante>

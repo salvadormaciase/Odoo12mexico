@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+    <Header
+        GR="IC002"
+        PONumber="369796"
+        OINumber="INV/2018/0932"
+        MBanco="--MXN bank name here--"
+        CuentaBancariaMN="--MXN bank number here--"
+        CLABEMN="--MXN bank CLABE here--"
+        CuentaBancariaDL="--USD bank number here--"
+        CLABEDL="--USD bank CLABE here--"/>
+    <BillTo
+        Calle="325 Street Parent"
+        Colonia="Colony Test 2"
+        CP="26807"
+        Ciudad="City Test 2"
+        Estado="West Virginia"/>
+    <ShipTo
+        Calle="325 Elsie Drive"
+        Colonia="Colony Test 1"
+        CP="26807"
+        Ciudad="City Test 1"
+        Estado="West Virginia"
+        NombreCliente="Deco Addict"/>
+    <Detail>
+        <Linea
+            noLinea="1"
+            NumParteABSA="FURN_7800"
+            NumParteNestle="SP-002"/>
+    </Detail>
+</cfdi:Addenda>

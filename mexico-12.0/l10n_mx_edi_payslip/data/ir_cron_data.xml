@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <record id="ir_cron_create_mx_allocation" model="ir.cron">
+        <field name="name">Mexico: Create legal allocations</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+        <field name="state">code</field>
+        <field name="code">
+holiday = env.ref('l10n_mx_edi_payslip.mexican_holiday')
+employees = env['hr.employee'].search([("address_home_id.country_id.l10n_mx_edi_code","=","MEX")])
+contracts = env['hr.contract'].search([
+  ('state', '=', 'open'),
+  ('employee_id', 'in', employees.ids)])
+date_mx = env['l10n_mx_edi.certificate'].sudo().get_mx_current_datetime()
+for contract in contracts.filtered(lambda con: con.date_start.day == date_mx.day and con.date_start.month == date_mx.month and con.date_start.year != date_mx.year):
+  days =  contract.get_current_holidays()
+  if not days:
+    continue
+  model.search([('employee_id', '=', contract.employee_id.id), ('name', '!=', date_mx.year), ('state', '=', 'validate')]).sudo().action_refuse()
+  if model.search([('employee_id', '=', contract.employee_id.id), ('name', '=', date_mx.year)]):
+    continue
+  allocation = model.create({
+    'name': date_mx.year,
+    'holiday_status_id': holiday.id,
+    'number_of_days': days,
+    'mode': 'employee',
+    'employee_id': contract.employee_id.id,
+    'state': 'draft',
+  })
+  allocation.sudo().action_confirm()
+  allocation.sudo().action_approve()
+        </field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="True"/>
+        <field name="active" eval="False"/>
+    </record>
+    <record id="ir_cron_update_si_contract" model="ir.cron">
+        <field name="name">Mexico: Actualizar Salario Integrado</field>
+        <field name="model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+model.update_integrated_salary()
+        </field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="True"/>
+        <field name="active" eval="False"/>
+    </record>
+</odoo>

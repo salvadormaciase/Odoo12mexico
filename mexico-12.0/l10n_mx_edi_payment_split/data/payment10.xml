@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_payment_multicurrency_payments" inherit_id="l10n_mx_edi.payment10">
+        <xpath expr="//t[@t-set='amount_insoluto']" position="after">
+            <t t-set="payment_currency_amount" t-value="sum(abs(aml.amount_currency if record.currency_id != record.company_id.currency_id else aml.balance) for aml in invoice.payment_move_line_ids.filtered(lambda x: x.payment_id == record))"/>
+            <t t-set="inv_rate" t-value="('%.6f' % (amount_payment / payment_currency_amount + 0.000001)) if (payment_currency_amount and record.currency_id != invoice.currency_id) else False"/>
+        </xpath>
+        <xpath expr="(//*[local-name()='Pago'])" position="attributes">
+            <attribute name="t-att-CtaOrdenante">None if not pay_account_ord or pay_account_ord.strip().upper().startswith(('N.A', 'N/A', 'N|A')) else pay_account_ord</attribute>
+        </xpath>
+        <xpath expr="//t[@t-set='amount_payment']" position="after">
+            <t t-set="moves" t-value="[p.get('move_id') for p in amount]"/>
+            <t t-set="amount_initial" t-value="[p for p in invoice._get_payments_vals() if p.get('journal_name') == 'Saldos Iniciales']"/>
+            <t t-set="amount_payment" t-value="amount_payment - sum([data.get('amount', 0.0) for data in amount_initial])"/>
+        </xpath>
+        <xpath expr="(//*[local-name()='DoctoRelacionado'])" position="attributes">
+            <attribute name="t-att-NumParcialidad">len(invoice.payment_ids.filtered(lambda p: p.state not in ('draft', 'cancelled') and not p.move_line_ids.mapped('move_id.reverse_entry_id')).ids) + len(amount_initial)</attribute>
+        </xpath>
+    </template>
+</odoo>

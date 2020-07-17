@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="l10n_mx_edi_show_button_cancel" model="res.groups">
+        <field name="name">Show Cancel Button</field>
+    </record>
+    <record id="allow_cancel_with_reversal_move" model="res.groups">
+        <field name="name">Enable cancellation with reversed entry</field>
+    </record>
+
+</odoo>
