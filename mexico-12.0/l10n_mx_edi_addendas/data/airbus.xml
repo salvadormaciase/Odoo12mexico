@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="airbus" name="Airbus">
+        <t t-set="code_company" t-value="{'EME930203ET3': '1100', 'EMP110817U86': '1120'}"/>
+        <t t-set="canceled" t-value="record.get_cfdi_related()"/>
+        <t t-set="extra_values" t-value="record.x_addenda_airbus.split('|') if record.x_addenda_airbus else ['', '', '', '', '', '']"/>
+        <t t-set="type_file" t-value="{'application/msword': 'xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx', 'application/pdf': 'pdf', 'image/jpeg': 'jpg'}"/>
+        <t t-set="customs" t-value="','.join(set(record.invoice_line_ids.filtered('l10n_mx_edi_customs_number').mapped('l10n_mx_edi_customs_number'))) if 'l10n_mx_edi_customs_number' in record.invoice_line_ids else None"/>
+        <R:Airbus
+            version="1.0"
+            t-att-codigoEmpresa="code_company.get(record.partner_id.vat)"
+            t-att-tipoDocumentoFiscal="'ND' if (canceled and canceled['type'] == '02') or record.type == 'in_refund' else record.type.replace('out_invoice', 'FA').replace('out_refund', 'NC')"
+            t-att-moneda="record.currency_id.name"
+            t-att-concepto="extra_values[0]"
+            t-att-descripcionFact="extra_values[1]"
+            xmlns:R="http://www.edivolt.com/ns/AirbusR">
+            <t t-if="canceled and canceled['type'] == '04'">
+                <R:Cancelaciones>
+                    <t t-foreach="canceled['related']" t-as="number">
+                        <R:CancelaSustituye
+                            t-att-UUID="number"/>
+                    </t>
+                </R:Cancelaciones>
+            </t>
+            <R:Solicitante
+                t-att-eMail="record.partner_id.email"/>
+            <R:Proveedor
+                numProveedor="--Supplier num here--"/>
+            <t t-if="record.comment">
+                <R:Notas>
+                    <R:Nota
+                        t-att-datos="record.comment"/>
+                </R:Notas>
+            </t>
+            <t t-set="fname" t-value="'Addenda Airbus - %s' % (record.id)"/>
+            <t t-set="atts" t-value="record.env['ir.attachment'].search([
+                ('res_model', '=', record._name),
+                ('name', '=', fname),
+                ('res_id', '=', record.id),
+                ])"/>
+            <t t-if="atts">
+                <R:Archivos>
+                    <R:Archivo
+                        t-att-tipo="type_file.get(atts.mimetype) or None"
+                        t-att-datos="atts.datas"/>
+                </R:Archivos>
+            </t>
+            <R:Partidas>
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <t t-set="supplier_info" t-value="line.sudo().product_id.seller_ids.filtered(
+                        lambda s:
+                        s.name == record.commercial_partner_id
+                        and s.product_id == line.product_id)[:1]"/>
+                    <t t-set="tax" t-value="line.invoice_line_tax_ids"/>
+                    <t t-set="tasa" t-value="'%.2f' % abs(tax.amount if tax.amount_type == 'fixed' else (tax.amount / 100.0)) if len(tax) == 1 else 0.00"/>
+                    <R:Partida
+                        t-att-ordenCompraNum="extra_values[2]"
+                        t-att-posicionOC="line.x_addenda_sap_sequence"
+                        t-att-recepcionNum="extra_values[3]"
+                        t-att-descripcion="record._get_string_cfdi(line.name, 255)"
+                        t-att-numMaterial="line.x_addenda_sap_code"
+                        t-att-cantidad="line.quantity"
+                        t-att-unidadMedida="line.x_addenda_sap_uom"
+                        t-att-precioUnitario="'%.2f' % line.price_unit"
+                        t-att-montoLinea="'%.2f' % (line.price_unit * line.quantity)"
+                        t-att-codigoImpuesto="'W2' if tasa == '0.16' else 'W0'"
+                        t-att-notaEntrega="extra_values[4]"/>
+                </t>
+            </R:Partidas>
+            <t t-if="customs">
+                <R:AgenteAduanal
+                    t-att-tipoOperation="extra_values[5]"
+                    t-att-pedimento="customs"/>
+            </t>
+        </R:Airbus>
+    </template>
+
+    <record id="airbus" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_airbus" model="ir.model">
+        <field name="name">Addenda Airbus</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_addenda.airbus</field>
+        <field name="info">Addend Airbus documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_airbus_concept" model="ir.model.fields">
+        <field name="name">x_concept</field>
+        <field name="field_description">Concept</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('ADMON REC.HUM.', 'ADMON REC.HUM.'),
+            ('ADMON. PERSONAL', 'ADMON. PERSONAL'),
+            ('ARTS. LIMPIEZA', 'ARTS. LIMPIEZA'),
+            ('ARTS. PROMOCION', 'ARTS. PROMOCION'),
+            ('ASES. LABORAL', 'ASES. LABORAL'),
+            ('CALIBRACIONES', 'CALIBRACIONES'),
+            ('CONS REC. HUM.', 'CONS REC. HUM.'),
+            ('CONS SEG.HIGIENE', 'CONS SEG.HIGIENE'),
+            ('CONSULT. SAP', 'CONSULT. SAP'),
+            ('CONTROL AVIAR', 'CONTROL AVIAR'),
+            ('CURSOS IT', 'CURSOS IT'),
+            ('EQUIPO IT', 'EQUIPO IT'),
+            ('EQUIPO OFICINA', 'EQUIPO OFICINA'),
+            ('EVENTOS Y EXPO', 'EVENTOS Y EXPO'),
+            ('FLETE AGUA', 'FLETE AGUA'),
+            ('INSUMOS COMEDOR', 'INSUMOS COMEDOR'),
+            ('LIMPIEZA EDIF.', 'LIMPIEZA EDIF.'),
+            ('MANTTO AUTOS', 'MANTTO AUTOS'),
+            ('MANTTO EQUIPOS', 'MANTTO EQUIPOS'),
+            ('MANTTO INST.', 'MANTTO INST.'),
+            ('OTROS', 'OTROS'),
+            ('PAPELERIA', 'PAPELERIA'),
+            ('PARTES/REFACC.', 'PARTES/REFACC.'),
+            ('REC. RESIDUOS', 'REC. RESIDUOS'),
+            ('REGALOS', 'REGALOS'),
+            ('RENTA AUTOS', 'RENTA AUTOS'),
+            ('RENTA CASA', 'RENTA CASA'),
+            ('RENTA EQ. IT', 'RENTA EQ. IT'),
+            ('RENTA PURIF.', 'RENTA PURIF.'),
+            ('RENTA STANDS', 'RENTA STANDS'),
+            ('SER.CONSULTORIA', 'SER.CONSULTORIA'),
+            ('SERV LIMP. AERO.', 'SERV LIMP. AERO.'),
+            ('SERV TRANSPORTE', 'SERV TRANSPORTE'),
+            ('SERV. CAFÉ', 'SERV. CAFÉ'),
+            ('SERV. CAPACITAC', 'SERV. CAPACITAC'),
+            ('SERV. COMEDOR', 'SERV. COMEDOR'),
+            ('SERV. EQ.OFICINA', 'SERV. EQ.OFICINA'),
+            ('SERV. FUMIGACION', 'SERV. FUMIGACION'),
+            ('SERV. SOFTWARE', 'SERV. SOFTWARE'),
+            ('SERV. TRANSPORTE', 'SERV. TRANSPORTE'),
+            ('SERV.ADUANALES', 'SERV.ADUANALES'),
+            ('SERV.AUDIO/VIDEO', 'SERV.AUDIO/VIDEO'),
+            ('SERV.CONTABLES', 'SERV.CONTABLES'),
+            ('SERV.LEGALES', 'SERV.LEGALES'),
+            ('SERV.LOGISTICA', 'SERV.LOGISTICA'),
+            ('SERV.SEGURIDAD', 'SERV.SEGURIDAD'),
+            ('SERV/SUM TALLER', 'SERV/SUM TALLER'),
+            ('SERV/SUMINIST.IT', 'SERV/SUMINIST.IT'),
+            ('SERVICIO MEDICO', 'SERVICIO MEDICO'),
+            ('SERVICIOS RH', 'SERVICIOS RH'),
+            ('SREV.RELOC.', 'SREV.RELOC.'),
+            ('SUM. GENERAL', 'SUM. GENERAL'),
+            ('SUM/MAN.EQ.TALLER', 'SUM/MAN.EQ.TALLER'),
+            ('SUMINIST.TALLER', 'SUMINIST.TALLER'),
+            ('SUSCRIPCIONES', 'SUSCRIPCIONES'),
+            ('TRANSP. PERSONAL', 'TRANSP. PERSONAL'),
+            ]
+        </field>
+        <field name="required">1</field>
+        <field name="help">Concept that is being invoiced, according to the catalog defined by Airbus.</field>
+        <field name="model_id" ref="wizard_airbus"/>
+    </record>
+    <record id="wizard_airbus_description" model="ir.model.fields">
+        <field name="name">x_description</field>
+        <field name="field_description">Description</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="size">20</field>
+        <field name="help">
+            It is a text that briefly describes the invoice. Being a field
+            short, the provider should make sure to clearly indicate the
+            concept.</field>
+        <field name="model_id" ref="wizard_airbus"/>
+    </record>
+    <record id="wizard_airbus_purchase_order" model="ir.model.fields">
+        <field name="name">x_purchase_order</field>
+        <field name="field_description">Purchase Order</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="size">10</field>
+        <field name="help">It is the purchase order number in the customer system.</field>
+        <field name="model_id" ref="wizard_airbus"/>
+    </record>
+    <record id="wizard_airbus_reception_num" model="ir.model.fields">
+        <field name="name">x_reception_num</field>
+        <field name="field_description">Reception Number</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="size">10</field>
+        <field name="help">It is receiving number in the customer system.</field>
+        <field name="model_id" ref="wizard_airbus"/>
+    </record>
+    <record id="wizard_airbus_delivery_num" model="ir.model.fields">
+        <field name="name">x_delivery_num</field>
+        <field name="field_description">Delivery Number</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help">It is the remission number or delivery note of the supplier.</field>
+        <field name="model_id" ref="wizard_airbus"/>
+    </record>
+    <record id="wizard_airbus_type_operation" model="ir.model.fields">
+        <field name="name">x_type_operation</field>
+        <field name="field_description">Type Operation</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[
+            ('IMPORTACION', 'IMPORTACIÓN'),
+            ('EXPORTACION', 'EXPORTACIÓN'),
+            ]
+        </field>
+        <field name="required">0</field>
+        <field name="help">The type of operation is indicated, if it is IMPORT or EXPORT. Required for expense accounts / notes position.</field>
+        <field name="model_id" ref="wizard_airbus"/>
+    </record>
+    <record id="wizard_airbus_attached_file" model="ir.model.fields">
+        <field name="name">x_attached_file</field>
+        <field name="field_description">Attached file</field>
+        <field name="ttype">binary</field>
+        <field name="required">0</field>
+        <field name="store">1</field>
+        <field name="help">Indicate the attached file if necessary.</field>
+        <field name="model_id" ref="wizard_airbus"/>
+    </record>
+    <record id="wizard_airbus_invoice_line_ids" model="ir.model.fields">
+        <field name="name">x_invoice_line_ids</field>
+        <field name="field_description">Invoice Lines</field>
+        <field name="ttype">many2many</field>
+        <field name="model_id" ref="wizard_airbus"/>
+        <field name="relation">account.invoice.line</field>
+    </record>
+
+
+    <!--Fields in invoice-->
+    <record id="invoice_airbus_field" model="ir.model.fields">
+        <field name="name">x_addenda_airbus</field>
+        <field name="field_description">Addenda Airbus</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate wizard fields</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+    <!--Fields in invoice line-->
+    <record id="invoice_line_sap_sequence" model="ir.model.fields">
+        <field name="name">x_addenda_sap_sequence</field>
+        <field name="field_description">Sap Sequence</field>
+        <field name="ttype">char</field>
+        <field name="size">3</field>
+        <field name="help">Position of the item in the purchase order. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+    <record id="invoice_line_sap_code" model="ir.model.fields">
+        <field name="name">x_addenda_sap_code</field>
+        <field name="field_description">Material</field>
+        <field name="ttype">char</field>
+        <field name="help">Airbus material number, when it is material or consumables. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+    <record id="invoice_line_sap_uom" model="ir.model.fields">
+        <field name="name">x_addenda_sap_uom</field>
+        <field name="field_description">UoM</field>
+        <field name="ttype">char</field>
+        <field name="help">Airbus Helicopters unit of measure. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+
+    <!--Fields on product supplierinfo-->
+    <record id="product_supplierinfo_sap_uom" model="ir.model.fields">
+        <field name="name">x_addenda_uom_code</field>
+        <field name="field_description">UoM Code</field>
+        <field name="ttype">char</field>
+        <field name="help">The unit of measure's code as handled by the supplier.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'product.supplierinfo')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_airbus_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda Airbus</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.airbus'].browse(model._context['active_id'])
+wizard_fields = [wizard.x_concept, wizard.x_description, wizard.x_purchase_order, wizard.x_reception_num, wizard.x_delivery_num, wizard.x_type_operation]
+wizard_fields = [j or '' for j in wizard_fields]
+invoice.write({'x_addenda_airbus': '|'.join(wizard_fields)})
+
+# Create supplier info for addenda values, if theyre not already created
+for line in invoice.invoice_line_ids:
+    if not any([line.x_addenda_sap_code,
+                line.x_addenda_sap_uom]):
+        continue
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == invoice.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 1000)[:1]
+    if supplier_info:
+        supplier_info.write({
+            'product_code': line.x_addenda_sap_code,
+            'x_addenda_uom_code': line.x_addenda_sap_uom,
+        })
+    else:
+        supplier_info.create({
+            'name': invoice.commercial_partner_id.id,
+            'product_tmpl_id': line.product_id.product_tmpl_id.id,
+            'product_id': line.product_id.id,
+            'sequence': 1000,
+            'product_code': line.x_addenda_sap_code,
+            'x_addenda_uom_code': line.x_addenda_sap_uom,
+        })
+
+# Create attachment
+if wizard.x_attached_file:
+    fname = ("Addenda Airbus - %s" % (invoice.id))
+    atts = env['ir.attachment'].sudo().search([
+        ('res_model', '=', invoice._name),
+        ('name', '=', fname),
+        ('res_id', '=', invoice.id),
+    ])
+    mimetype = atts._compute_mimetype({'datas': wizard.x_attached_file})
+    if atts:
+        atts.write({'datas': b64encode(wizard.x_attached_file), 'mimetype': mimetype})
+    else:
+        data_attach = {
+            'name': fname,
+            'datas': b64encode(wizard.x_attached_file),
+            'type': 'binary',
+            'mimetype': mimetype,
+            'res_model': invoice._name,
+            'res_id': invoice.id,
+        }
+        atts.create(data_attach)
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_airbus_view" model="ir.ui.view">
+        <field name="name">x_addenda.airbus.view</field>
+        <field name="model">x_addenda.airbus</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>
+                        The necessary nodes for the implementation of the Addenda of Airbus are:
+                    </p>
+                    <ul>
+                        <li>
+                            <p><b>Concept:</b></p>
+                            <p>Concept that is being invoiced, according to the catalog defined by Airbus.</p>
+                        </li>
+                        <li>
+                            <p><b>Description:</b></p>
+                            <p>Text that briefly describes the invoice.</p>
+                        </li>
+                        <li>
+                            <p><b>Purchase Order:</b></p>
+                            <p>The number of the customer's purchase order. This value is taken from the invoice's field "Reference/Description".</p>
+                        </li>
+                        <li>
+                            <p><b>Reception Number:</b></p>
+                            <p>It is receiving number in the customer system.</p>
+                        </li>
+                        <li>
+                            <p><b>Delivery Number:</b></p>
+                            <p>It is the remission number or delivery note of the supplier.</p>
+                        </li>
+                        <li>
+                            <p><b>Lines:</b></p>
+                            <p><i>Sap Sequence:</i> Position of the item in the purchase order.</p>
+                            <p><i>Material:</i> Airbus material number, when it is material or consumables (optional).</p>
+                            <p><i>UoM:</i> Airbus Helicopters unit of measure.</p>
+                        </li>
+                        <li>
+                            <p><b>Attached File (xls, xlsx, pdf, jpg):</b></p>
+                            <p>Indicate the attached file if necessary (optional).</p>
+                        </li>
+                        <li>
+                            <p><b>Type Operation:</b></p>
+                            <p>Required for expense accounts / notes position with customs (optional).</p>
+                        </li>
+                        <li>
+                            <p><b>Custom:</b></p>
+                            <p>The number of the invoice's pedimentos. This value is taken from the invoice line's field "Customs number" (optional).</p>
+                        </li>
+                    </ul>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_concept"/>
+                        <field name="x_description"/>
+                        <field name="x_purchase_order"/>
+                        <field name="x_reception_num"/>
+                        <field name="x_delivery_num"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="x_attached_file"/>
+                    </group>
+                </group>
+                <group string="Lines">
+                    <field name="x_invoice_line_ids" nolabel="1">
+                        <tree editable="1" create="0" delete="0">
+                            <field name="name" string="Line" readonly="1"/>
+                            <field name="x_addenda_sap_sequence"/>
+                            <field name="x_addenda_sap_code"/>
+                            <field name="x_addenda_sap_uom"/>
+                        </tree>
+                    </field>
+                </group>
+                <group>
+                    <group>
+                        <field name="x_type_operation"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_airbus_values"
+                    type="action" string="Set Values" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the wizard
+    After default values are set.
+    -->
+    <record id="action_addenda_airbus" model="ir.actions.act_window">
+        <field name="name">Addenda Airbus</field>
+        <field name="res_model">x_addenda.airbus</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_airbus_view"/>
+    </record>
+
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_addenda_airbus_defaults" model="ir.actions.server">
+        <field name="name">Set default values for the addenda Airbus</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+context = {
+    'invoice_id': record.id,
+    'default_x_purchase_order': record.name,
+    'default_x_invoice_line_ids': record.invoice_line_ids.ids,
+}
+wizard_values = record.x_addenda_airbus and record.x_addenda_airbus.split('|')
+# If the wizard has been run before, fill it with its previows values
+if wizard_values:
+    context.update({
+        'default_x_concept': wizard_values[0],
+        'default_x_description': wizard_values[1],
+        'default_x_reception_num': wizard_values[2],
+        'default_x_delivery_num': wizard_values[3],
+        'default_x_type_operation': wizard_values[5],
+    })
+
+# Set default SAP values if available as supplier info
+for line in record.invoice_line_ids:
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == record.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 1000)[:1]
+    line.write({
+        'x_addenda_sap_sequence': line.x_addenda_sap_sequence,
+        'x_addenda_sap_code': line.x_addenda_sap_code or supplier_info.product_code,
+        'x_addenda_sap_uom': line.x_addenda_sap_uom or supplier_info.x_addenda_uom_code,
+    })
+
+action = env.ref('l10n_mx_edi_addendas.action_addenda_airbus').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_airbus" model="ir.ui.view">
+        <field name="name">account.invoice.form.airbus</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_airbus_defaults" type="action"
+                        string="Addenda Airbus"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -609,13 +609,20 @@ for value in table:
         <field name="category_id" ref="hr_salary_rule_category_perception_mx_exempt"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = inputs.pe_029 and inputs.pe_029.amount</field>
+        <field name="amount_python_compute">
+minimum_wage = contract.company_id.l10n_mx_edi_minimum_wage
+holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
+result = contract.l10n_mx_edi_food_voucher
+if contract.schedule_pay == '02':
+    if holidays:
+        hours_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_hours or 0.0
+        result = result / sum([line.hour_to - line.hour_from for line in contract.resource_calendar_id.attendance_ids]) * hours_work
+elif contract.schedule_pay == '04':
+    ausencias = worked_days.dict.get('AUSENCIA') and worked_days.AUSENCIA.number_of_days or 0
+    result = result / 15 * (15 - holidays - ausencias)
+result = minimum_wage * 7 if result >= (minimum_wage * 7) else result
+        </field>
         <field name="note">Sólo mediante monedero del SAT son 7 SM elevado al año como importe exento, el excedente es gravado</field>
-    </record>
-    <record id="hr_rule_input_perception_029_e" model="hr.rule.input">
-        <field name="code">pe_029</field>
-        <field name="name">Vales de despensa</field>
-        <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_029_e"/>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_029_g" model="hr.salary.rule">
         <field name="name">Vales de despensa</field>
@@ -624,13 +631,20 @@ for value in table:
         <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = inputs.pg_029 and inputs.pg_029.amount</field>
+        <field name="amount_python_compute">
+minimum_wage = contract.company_id.l10n_mx_edi_minimum_wage
+result = contract.l10n_mx_edi_food_voucher
+holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
+if contract.schedule_pay == '02':
+    if holidays:
+        hours_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_hours or 0.0
+        result = result / sum([line.hour_to - line.hour_from for line in contract.resource_calendar_id.attendance_ids]) * hours_work
+elif contract.schedule_pay == '04':
+    ausencias = worked_days.dict.get('AUSENCIA') and worked_days.AUSENCIA.number_of_days or 0
+    result = result / 15 * (15 - holidays - ausencias)
+result = result - minimum_wage * 7 if result >= minimum_wage * 7 else 0
+        </field>
         <field name="note">Sólo mediante monedero del SAT son 7 SM elevado al año como importe exento, el excedente es gravado</field>
-    </record>
-    <record id="hr_rule_input_perception_029_g" model="hr.rule.input">
-        <field name="code">pg_029</field>
-        <field name="name">Vales de despensa</field>
-        <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_029_g"/>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_030_g" model="hr.salary.rule">
         <field name="name">Vales de restaurante</field>
@@ -803,6 +817,62 @@ for value in table:
         <field name="code">pg_038</field>
         <field name="name">Otros ingresos por salarios</field>
         <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_038_g"/>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_perception_productivity_g" model="hr.salary.rule">
+        <field name="name">Premios eficiencia</field>
+        <field name="sequence" eval="38010"/>
+        <field name="code">PG1038</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0
+if not worked_days.dict.get('AUSENCIA') and payslip.env['hr.payslip'].browse(payslip.id).payslip_run_id.l10n_mx_edi_productivity_bonus:
+    slips = payslip.payslip_run_id.slip_ids.filtered(lambda sl: 'AUSENCIA' not in sl.worked_days_line_ids.mapped('code'))
+    result = payslip.payslip_run_id.l10n_mx_edi_productivity_bonus / len(slips)
+        </field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_perception_attendance_bonus_g" model="hr.salary.rule">
+        <field name="name">Premio de Asistencia</field>
+        <field name="sequence" eval="38020"/>
+        <field name="code">PGA038</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+ausencias = worked_days.dict.get('AUSENCIA') and worked_days.AUSENCIA.number_of_days or False
+holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
+result = contract.l10n_mx_edi_attendance_bonus
+if not ausencias and contract.schedule_pay == '02':
+    if holidays:
+        hours_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_hours or 0.0
+        result = result / sum([line.hour_to - line.hour_from for line in contract.resource_calendar_id.attendance_ids]) * hours_work
+elif contract.schedule_pay == '04':
+    if ausencias:
+        result = contract.l10n_mx_edi_attendance_bonus
+    result = result / 15 * (15 - holidays)
+        </field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_perception_punctuality_bonus_g" model="hr.salary.rule">
+        <field name="name">Premio de Puntualidad</field>
+        <field name="sequence" eval="38030"/>
+        <field name="code">PGP038</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+ausencias = worked_days.dict.get('AUSENCIA') and worked_days.AUSENCIA.number_of_days or False
+holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
+result = contract.l10n_mx_edi_punctuality_bonus
+if not ausencias and contract.schedule_pay == '02':
+    if holidays:
+        hours_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_hours or 0.0
+        result = result / sum([line.hour_to - line.hour_from for line in contract.resource_calendar_id.attendance_ids]) * hours_work
+elif contract.schedule_pay == '04':
+    if ausencias:
+        result = contract.l10n_mx_edi_punctuality_bonus
+    result = result / 15 * (15 - holidays)
+        </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_039_e" model="hr.salary.rule">
         <field name="name">Jubilaciones, pensiones o haberes de retiro</field>
@@ -1076,8 +1146,7 @@ if not employee.l10n_mx_edi_is_assimilated:
 
     sbc = contract.l10n_mx_edi_sdi_total
     uma = contract.company_id.l10n_mx_edi_uma
-    days_schedule = {'01': 1, '02': 7, '03': 14, '04': 15, '05': 30, '06': 60}
-    days_work = days_schedule.get(contract.schedule_pay, 0)
+    days_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_days or 0.0
     salary = days_work * sbc
 
     result = 0.02375 * salary
@@ -2913,8 +2982,7 @@ result = 0
 if not employee.l10n_mx_edi_is_assimilated:
     sbc = contract.l10n_mx_edi_integrated_salary
     uma = contract.company_id.l10n_mx_edi_uma
-    days_schedule = {'01': 1, '02': 7, '03': 14, '04': 15, '05': 30, '06': 60}
-    days_work = days_schedule.get(contract.schedule_pay, 0)
+    days_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_days or 0.0
     specie_fixed = uma * 0.204 * days_work
     specie_excess = ((sbc - (uma * 3)) * 0.011 * days_work) if (sbc - (uma * 3)) &gt; 0 else 0
     aux = sbc * days_work

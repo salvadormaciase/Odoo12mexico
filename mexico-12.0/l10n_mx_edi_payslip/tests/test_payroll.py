@@ -323,7 +323,7 @@ class HRPayroll(TransactionCase):
             'date_to': '%s-%s-15' % (time.strftime('%Y'), time.strftime('%m')),
             'worked_days_line_ids': [(0, 0, {
                 'name': 'Normal Working Days',
-                'code': 'TESTNW',
+                'code': 'WORK100',
                 'number_of_days': 15,
                 'number_of_hours': 40,
                 'contract_id': self.contract.id,

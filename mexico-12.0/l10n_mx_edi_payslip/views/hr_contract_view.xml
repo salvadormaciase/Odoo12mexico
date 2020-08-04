@@ -30,6 +30,9 @@
             <xpath expr="//field[@name='schedule_pay']" position="after">
                 <field name="l10n_mx_edi_infonavit_type"/>
                 <field name='l10n_mx_edi_infonavit_rate' attrs="{'invisible':[('l10n_mx_edi_infonavit_type', '=', False)]}"/>
+                <field name="l10n_mx_edi_food_voucher"/>
+                <field name="l10n_mx_edi_punctuality_bonus"/>
+                <field name="l10n_mx_edi_attendance_bonus"/>
             </xpath>
         </field>
     </record>

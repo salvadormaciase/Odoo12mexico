@@ -404,6 +404,36 @@ In the wizard is provided the information corresponding to each field needed.
 The attribute SuppCode were added in the Addenda. Please be sure to set up this value in the company.
 The barcode in product is required for this addenda.
 
+Airbus
+------
+
+This addenda is added automatically if the partner has the addenda selected. A 
+button with name ``ADDENDA AIRBUS`` is added in the invoice view.
+
+Uses the following values:
+
+- **Concept**: Concept that is being invoiced, according to the catalog defined by Airbus.
+- **Description**: Text that briefly describes the invoice.
+- **Purchase Order**: The number of the customer's purchase order. This value is taken from the invoice's field 
+  "Reference/Description".
+- **Reception Number**: It is receiving number in the customer system.
+- **Delivery Number**: It is the remission number or delivery note of the supplier.
+- **Lines**: 
+  * *Sap Sequence*: Position of the item in the purchase order.
+  * *Material*: Airbus material number, when it is material or consumables (optional).
+  * *UoM*: Airbus Helicopters unit of measure.
+- **Attached File (xls, xlsx, pdf, jpg)**: Indicate the attached file if necessary (optional).
+- **Type Operation**: Required for expense accounts / notes position with customs (optional).
+- **Custom**: The number of the invoice's pedimentos. This value is taken from the invoice line's field 
+  "Customs number" (optional).
+
+Some values are static and will need to be set up per issuer on the template:
+
+- **Num Supplier**: Number, assigned to partner, as found in SAP. It is
+  enclosed in double-hyphens. For instance, the field is found as: 
+  ``--Supplier num here--``.
+
+
 Technical:
 ==========
 
@@ -426,6 +456,7 @@ Contributors
 * Julio Serna Hernández <julio@vauxoo.com>
 * Arturo Flores <arturo@vauxoo.com>
 * Luis González <lgonzalez@vauxoo.com>
+* Deivis Laya <deivis@vauxoo.com>
 
 Maintainer
 ----------

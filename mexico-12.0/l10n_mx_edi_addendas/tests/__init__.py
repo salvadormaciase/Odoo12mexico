@@ -3,6 +3,7 @@
 from . import test_addenda_aam
 from . import test_addenda_agnico
 from . import test_addenda_ahmsa
+from . import test_addenda_airbus
 from . import test_addenda_edumex
 from . import test_addenda_envases
 from . import test_addenda_ford

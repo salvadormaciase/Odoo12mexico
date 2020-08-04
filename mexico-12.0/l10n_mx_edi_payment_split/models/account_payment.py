@@ -562,6 +562,7 @@ class AccountPayment(models.Model):
                     self._get_counterpart_move_line_vals(inv))
                 counterpart_aml_dict['currency_id'] = currency_id.id
                 counterpart_aml_dict['account_id'] = inv.account_id.id
+                counterpart_aml_dict['partner_id'] = inv.partner_id.commercial_partner_id.id
                 counterpart_aml = aml_obj.create(counterpart_aml_dict)
                 all_counterpart |= counterpart_aml
 

@@ -229,18 +229,23 @@ class AccountInvoice(models.Model):
                 'company_id': inv.company_id,
                 'quantity': 1,
                 'debit': 0,
-                'credit': adv_amount,
+                'credit': inv.currency_id._convert(
+                    adv_amount, inv.company_id.currency_id, inv.company_id, inv.date_invoice),
                 'account_id': account.id,
                 'invoice_id': inv,
                 'partner_id': inv.partner_id,
+                'currency_id': inv.currency_id if inv.currency_id != inv.company_id.currency_id else False,
+                'amount_currency': -adv_amount if inv.currency_id != inv.company_id.currency_id else 0,
             }
             first_line = aml_obj.new(move_line_dict)
             first_line = aml_obj._convert_to_write(first_line._cache)
             aml_obj.create(first_line)
             move_line_dict.update({
-                'debit': adv_amount,
+                'debit': inv.currency_id._convert(
+                    adv_amount, inv.company_id.currency_id, inv.company_id, inv.date_invoice),
                 'credit': 0,
                 'account_id': inv.company_id.l10n_mx_edi_product_advance_id.property_account_income_id,
+                'amount_currency': adv_amount if inv.currency_id != inv.company_id.currency_id else 0,
             })
             second_line = aml_obj.new(move_line_dict)
             second_line = aml_obj._convert_to_write(second_line._cache)

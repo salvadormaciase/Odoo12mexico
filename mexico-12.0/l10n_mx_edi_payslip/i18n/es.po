@@ -753,6 +753,11 @@ msgid "Amount paid for overtime"
 msgstr "Cantidad pagada por horas extras"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_food_voucher
+msgid "Amount to be paid in food voucher each payment period."
+msgstr "Cantidad a pagar en vales de despensa cada período de pago."
+
+#. module: l10n_mx_edi_payslip
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_012
 msgid "Anticipo de salarios"
 msgstr ""
@@ -776,6 +781,11 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_023
 msgid "Aportaciones voluntarias"
 msgstr ""
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_attendance_bonus
+msgid "Attendance bonus"
+msgstr "Bono de asistencia"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_cfdi_string
@@ -1285,6 +1295,11 @@ msgid "Fondo de Ahorro"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_food_voucher
+msgid "Food Voucher Amount"
+msgstr "Monto Vales de Despensa"
+
+#. module: l10n_mx_edi_payslip
 #: selection:hr.contract,schedule_pay:0
 msgid "Fortnightly"
 msgstr "Quincenal"
@@ -1368,6 +1383,16 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee_loan__number_fonacot
 msgid "If comes from Fonacot, indicate the number."
 msgstr "Si viene de Fonacot, indica el número."
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_attendance_bonus
+msgid "If the company offers attendance bonus, indicate the bonus amount by week."
+msgstr "Si la empresa ofrece bono de asistencia, indique el bono semanal."
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_punctuality_bonus
+msgid "If the company offers punctuality bonus, indicate the bonus amount by week."
+msgstr "Si la empresa ofrece bono de puntualidad, indique el bono semanal."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee_loan__active
@@ -1658,7 +1683,7 @@ msgstr "Maternidad"
 #: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:601
 #, python-format
 msgid "Message: "
-msgstr ""
+msgstr "Mensaje: "
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_res_company__l10n_mx_edi_uma
@@ -2070,6 +2095,11 @@ msgid "Please, you set the minimum wage in Mexico to that you can calculate the 
 msgstr "Por favor, establezca el salario mínimo en México para que pueda calcular la nómina"
 
 #. module: l10n_mx_edi_payslip
+#: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_perception_productivity_g
+msgid "Premios eficiencia"
+msgstr "Premios eficiencia"
+
+#. module: l10n_mx_edi_payslip
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_perception_049_g
 msgid "Premios por asistencia"
 msgstr ""
@@ -2119,9 +2149,19 @@ msgid "Print"
 msgstr "Imprimir"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_run__l10n_mx_edi_productivity_bonus
+msgid "Productivity Bonus"
+msgstr "Bono de Productividad"
+
+#. module: l10n_mx_edi_payslip
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_009
 msgid "Préstamos provenientes del Fondo Nacional de la Vivienda para los Trabajadores"
 msgstr ""
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_punctuality_bonus
+msgid "Punctuality bonus"
+msgstr "Bono de puntualidad"
 
 #. module: l10n_mx_edi_payslip
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_015
@@ -2345,6 +2385,11 @@ msgstr "Sindicalizado"
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_form_l10n_mx
 msgid "Technical CFDI Information"
 msgstr "Información técnica del CFDI"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_run__l10n_mx_edi_productivity_bonus
+msgid "The amount to distribute to the employees in the payslips."
+msgstr "El monto a distribuir a los empleados en la nómina."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_cfdi_name

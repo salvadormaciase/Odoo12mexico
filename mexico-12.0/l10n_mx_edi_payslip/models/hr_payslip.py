@@ -1115,8 +1115,10 @@ class HrPayslip(models.Model):
         result = super(HrPayslip, self).get_worked_day_lines(
             contracts=contracts, date_from=date_from, date_to=date_to)
         res = []
+        number_of_hours = 0
         for line in result:
             if line.get('code') == 'WORK100':
+                number_of_hours += line.get('number_of_hours')
                 continue
             res.append(line)
         for contract in contracts.filtered(
@@ -1150,6 +1152,7 @@ class HrPayslip(models.Model):
                 'sequence': 1,
                 'code': 'WORK100',
                 'number_of_days': work_data['days'] + 1 - current_leave_days,
+                'number_of_hours': number_of_hours,
                 'contract_id': contract.id,
             }
 
@@ -1273,6 +1276,15 @@ class HrContract(models.Model):
         "\n- If the type is a fixed story, the value of this field must be "
         "greater than zero. In addition, the amount of this deduction must "
         "correspond to the payment period.")
+    l10n_mx_edi_food_voucher = fields.Float(
+        'Food Voucher Amount',
+        help='Amount to be paid in food voucher each payment period.')
+    l10n_mx_edi_punctuality_bonus = fields.Float(
+        'Punctuality bonus', help='If the company offers punctuality bonus, indicate the bonus amount by week.',
+        track_visibility='onchange')
+    l10n_mx_edi_attendance_bonus = fields.Float(
+        'Attendance bonus', help='If the company offers attendance bonus, indicate the bonus amount by week.',
+        track_visibility='onchange')
 
     @api.depends()
     def _compute_sdi_total(self):
@@ -1496,6 +1508,8 @@ class HrPayslipRun(models.Model):
         'Payment Date', required=True,
         default=time.strftime('%Y-%m-01'), help='Save the payment date that '
         'will be added on all payslip created with this batch.')
+    l10n_mx_edi_productivity_bonus = fields.Float(
+        'Productivity Bonus', help='The amount to distribute to the employees in the payslips.')
 
     @api.multi
     def action_payslips_done(self):

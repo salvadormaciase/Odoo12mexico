@@ -29,7 +29,7 @@ msgstr ""
 #: code:addons/l10n_mx_edi_send_multi/wizard/mass_invoice_sending.py:72
 #, python-format
 msgid "%s Payment Reminder"
-msgstr "Recordatorio de pago"
+msgstr "%s Recordatorio de pago"
 
 #. module: l10n_mx_edi_send_multi
 #: model:mail.template,body_html:l10n_mx_edi_send_multi.email_template_wizard_mass_invoice_sending

@@ -62,6 +62,8 @@ The Complement have 6 nodes to be added when is generated
   - Scheduled Pay
   - Wage
   - Integrated Salary
+  - Infonavit type and amount
+  - Food Voucher Amount
 
 **Percepciones**
 

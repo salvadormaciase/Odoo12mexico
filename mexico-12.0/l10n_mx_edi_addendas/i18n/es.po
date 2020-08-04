@@ -1,19 +1,90 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#    * l10n_mx_edi_addendas
+#	* l10n_mx_edi_addendas
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-13 21:44+0000\n"
-"PO-Revision-Date: 2018-11-13 21:44+0000\n"
+"POT-Creation-Date: 2020-07-15 14:41+0000\n"
+"PO-Revision-Date: 2020-07-15 14:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_description
+msgid "\n"
+"            It is a text that briefly describes the invoice. Being a field\n"
+"            short, the provider should make sure to clearly indicate the\n"
+"            concept."
+msgstr "\n"
+"            Es un texto que describe brevemente la factura. Al ser un campo\n"
+"            corto, el proveedor debe asegurarse de indicar claramente el \n"
+"            concepto."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Attached File (xls, xlsx, pdf, jpg):</b>"
+msgstr "<b>Archivo adjunto (xls, xlsx, pdf, jpg):</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Concept:</b>"
+msgstr "<b>Concepto:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Custom:</b>"
+msgstr "<b>Pedimento:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Delivery Number:</b>"
+msgstr "<b>Numero de entrega:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Description:</b>"
+msgstr "<b>Descripción:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Lines:</b>"
+msgstr "<b>Lineas:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Purchase Order:</b>"
+msgstr "<b>Orden de Compra:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Reception Number:</b>"
+msgstr "<b>Numero de recepción:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<b>Type Operation:</b>"
+msgstr "<b>Tipo de Operación:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<i>Material:</i> Airbus material number, when it is material or consumables (optional)."
+msgstr "<i>Material:</i> Número de material de Airbus, cuando es material o consumibles (opcional)."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<i>Sap Sequence:</i> Position of the item in the purchase order."
+msgstr "<i>Sap Secuencia:</i> Posición de la partida en la orden de compra."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "<i>UoM:</i> Airbus Helicopters unit of measure."
+msgstr "<i>UoM:</i> Unidad de medida Airbus Helicopters."
 
 #. module: l10n_mx_edi_addendas
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
@@ -26,14 +97,47 @@ msgid "AAM"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "ADMON REC.HUM."
+msgstr "ADMON REC.HUM."
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "ADMON. PERSONAL"
+msgstr "ADMON. PERSONAL"
+
+#. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "AHMSA"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "ARTS. LIMPIEZA"
+msgstr "ARTS. LIMPIEZA"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "ARTS. PROMOCION"
+msgstr "ARTS. PROMOCION"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "ASES. LABORAL"
+msgstr "ASES. LABORAL"
+
+#. module: l10n_mx_edi_addendas
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
 msgid "Addenda"
-msgstr ""
+msgstr "Adenda"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_airbus
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_airbus
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_airbus_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_airbus
+msgid "Addenda Airbus"
+msgstr "Addenda Airbus"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -42,8 +146,63 @@ msgstr ""
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Airbus"
+msgstr "Airbus"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_line_sap_uom
+msgid "Airbus Helicopters unit of measure. This value has to be set on each invoice line."
+msgstr "Unidad de medida Airbus Helicopters. Este valor debe establecerse en cada línea de factura."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_line_sap_code
+msgid "Airbus material number, when it is material or consumables. This value has to be set on each invoice line."
+msgstr "Número de material de Airbus, cuando es material o consumibles. Este valor debe establecerse en cada línea de factura."
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Amazon"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_attached_file
+msgid "Attached file"
+msgstr "Archivo Adjunto"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Bosh"
 msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "CALIBRACIONES"
+msgstr "CALIBRACIONES"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "CONS REC. HUM."
+msgstr "CONS REC. HUM."
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "CONS SEG.HIGIENE"
+msgstr "CONS SEG.HIGIENE"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "CONSULT. SAP"
+msgstr "CONSULT. SAP"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "CONTROL AVIAR"
+msgstr "CONTROL AVIAR"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "CURSOS IT"
+msgstr "CURSOS IT"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -51,14 +210,65 @@ msgid "Calsonic Kansei"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Chrysler"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Comercial City Fresko"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_concept
+msgid "Concept"
+msgstr "Concepto"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_concept
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "Concept that is being invoiced, according to the catalog defined by Airbus."
+msgstr "Concepto que esta siendo facturado, según el catálogo definido por Airbus."
+
+#. module: l10n_mx_edi_addendas
 #: model:ir.model,name:l10n_mx_edi_addendas.model_res_config_settings
 msgid "Config Settings"
 msgstr "Opciones de Configuración"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_delivery_num
+msgid "Delivery Number"
+msgstr "Número de entrega"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "EQUIPO IT"
+msgstr "EQUIPO IT"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "EQUIPO OFICINA"
+msgstr "EQUIPO OFICINA"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "EVENTOS Y EXPO"
+msgstr "EVENTOS Y EXPO"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_type_operation:0
+msgid "EXPORTACIÓN"
+msgstr "EXPORTACIÓN"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -74,6 +284,11 @@ msgstr ""
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Envases"
 msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "FLETE AGUA"
+msgstr "FLETE AGUA"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -96,6 +311,26 @@ msgid "Ford"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_type_operation:0
+msgid "IMPORTACIÓN"
+msgstr "IMPORTACIÓN"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "INSUMOS COMEDOR"
+msgstr "INSUMOS COMEDOR"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "Indicate the attached file if necessary (optional)."
+msgstr "Indique el archivo adjunto si es necesario (opcional)."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_attached_file
+msgid "Indicate the attached file if necessary."
+msgstr "Indique el archivo adjunto si es necesario."
+
+#. module: l10n_mx_edi_addendas
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
 msgid "Install Selected Addenda"
 msgstr "Instalar Addenda Seleccionada"
@@ -106,14 +341,71 @@ msgid "Installed Addendas"
 msgstr "Adendas Instaladas"
 
 #. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_invoice_line_ids
+msgid "Invoice Lines"
+msgstr "Líneas de factura"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_reception_num
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "It is receiving number in the customer system."
+msgstr "Está recibiendo un número en el sistema del cliente."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_purchase_order
+msgid "It is the purchase order number in the customer system."
+msgstr "Es el número de orden de compra en el sistema del cliente."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_delivery_num
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "It is the remission number or delivery note of the supplier."
+msgstr "Es el número de remisión o el albarán de entrega del proveedor."
+
+#. module: l10n_mx_edi_addendas
 #: model:ir.model.fields,field_description:l10n_mx_edi_addendas.field_res_config_settings__l10n_mx_addenda
 msgid "L10N Mx Addenda"
 msgstr "Addenda"
 
 #. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "LIMPIEZA EDIF."
+msgstr "LIMPIEZA EDIF."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "Line"
+msgstr "Línea"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "MANTTO AUTOS"
+msgstr "MANTTO AUTOS"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "MANTTO EQUIPOS"
+msgstr "MANTTO EQUIPOS"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "MANTTO INST."
+msgstr "MANTTO INST."
+
+#. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Mabe"
-msgstr ""
+msgstr "Mabe"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_line_sap_code
+msgid "Material"
+msgstr "Material"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -126,6 +418,21 @@ msgid "Nissan"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "OTROS"
+msgstr "OTROS"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "PAPELERIA"
+msgstr "PAPELERIA"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "PARTES/REFACC."
+msgstr "PARTES/REFACC."
+
+#. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "PepsiCo"
 msgstr ""
@@ -136,6 +443,191 @@ msgid "Porcelanite"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_line_sap_sequence
+msgid "Position of the item in the purchase order. This value has to be set on each invoice line."
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_purchase_order
+msgid "Purchase Order"
+msgstr "Orden de compra"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "REC. RESIDUOS"
+msgstr "REC. RESIDUOS"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "REGALOS"
+msgstr "REGALOS"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "RENTA AUTOS"
+msgstr "RENTA AUTOS"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "RENTA CASA"
+msgstr "RENTA CASA"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "RENTA EQ. IT"
+msgstr "RENTA EQ. IT"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "RENTA PURIF."
+msgstr "RENTA PURIF."
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "RENTA STANDS"
+msgstr "RENTA STANDS"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_reception_num
+msgid "Reception Number"
+msgstr "Número de recepción"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "Required for expense accounts / notes position with customs (optional)."
+msgstr "Requerido para la posición de cuentas de gastos / notas con aduanas (opcional)."
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "SAMS"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SER.CONSULTORIA"
+msgstr "SER.CONSULTORIA"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV LIMP. AERO."
+msgstr "SERV LIMP. AERO."
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV TRANSPORTE"
+msgstr "SERV TRANSPORTE"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV. CAFÉ"
+msgstr "SERV. CAFÉ"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV. CAPACITAC"
+msgstr "SERV. CAPACITAC"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV. COMEDOR"
+msgstr "SERV. COMEDOR"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV. EQ.OFICINA"
+msgstr "SERV. EQ.OFICINA"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV. FUMIGACION"
+msgstr "SERV. FUMIGACION"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV. SOFTWARE"
+msgstr "SERV. SOFTWARE"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV. TRANSPORTE"
+msgstr "SERV. TRANSPORTE"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV.ADUANALES"
+msgstr "SERV.ADUANALES"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV.AUDIO/VIDEO"
+msgstr "SERV.AUDIO/VIDEO"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV.CONTABLES"
+msgstr "SERV.CONTABLES"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV.LEGALES"
+msgstr "SERV.LEGALES"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV.LOGISTICA"
+msgstr "SERV.LOGISTICA"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV.SEGURIDAD"
+msgstr "SERV.SEGURIDAD"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV/SUM TALLER"
+msgstr "SERV/SUM TALLER"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERV/SUMINIST.IT"
+msgstr "SERV/SUMINIST.IT"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERVICIO MEDICO"
+msgstr "SERVICIO MEDICO"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SERVICIOS RH"
+msgstr "SERVICIOS RH"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SREV.RELOC."
+msgstr "SREV.RELOC."
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SUM. GENERAL"
+msgstr "SUM. GENERAL"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SUM/MAN.EQ.TALLER"
+msgstr "SUM/MAN.EQ.TALLER"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SUMINIST.TALLER"
+msgstr "SUMINIST.TALLER"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "SUSCRIPCIONES"
+msgstr "SUSCRIPCIONES"
+
+#. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Sanmina"
 msgstr ""
@@ -144,13 +636,90 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
 msgid "Select which addenda you will need from the\n"
 "                                list. (PAC)."
-msgstr "Seleccione de la lista la adenda que\n"
+msgstr "Seleccione de la lista la addenda que\n"
 "necesite. (PAC)."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_line_sap_sequence
+msgid "Sap Sequence"
+msgstr "Sap Secuencia"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_chrysler_view
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "Set Values"
+msgstr "Establecer Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_airbus_values
+msgid "Set Values Addenda Airbus"
+msgstr "Establecer Valores en Addenda Airbus"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_airbus_defaults
+msgid "Set default values for the addenda Airbus"
+msgstr "Establecer valores predeterminados para la addenda Airbus"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Sidel"
 msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.airbus,x_concept:0
+msgid "TRANSP. PERSONAL"
+msgstr "TRANSP. PERSONAL"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "Text that briefly describes the invoice."
+msgstr "Texto que describe brevemente la factura."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "The necessary nodes for the implementation of the Addenda of Airbus are:"
+msgstr "Los nodos necesarios para la implementación de la Addenda de Airbus son:"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "The number of the customer's purchase order. This value is taken from the invoice's field \"Reference/Description\"."
+msgstr "El número de la orden de compra del cliente. Este valor se toma del campo de la factura \"Referencia/Descripción \"."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+msgid "The number of the invoice's pedimentos. This value is taken from the invoice line's field \"Customs number\" (optional)."
+msgstr "El número de los pedimentos de la factura. Este valor se toma del campo de la línea de factura \"Número de aduana\" (opcional)."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_type_operation
+msgid "The type of operation is indicated, if it is IMPORT or EXPORT. Required for expense accounts / notes position."
+msgstr "Se indica el tipo de operación, si es IMPORTACIÓN o EXPORTACIÓN. Requerido para cuentas de gastos / notas de cargo."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.product_supplierinfo_sap_uom
+msgid "The unit of measure's code as handled by the supplier."
+msgstr "El código de la unidad de medida manejado por el proveedor."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_type_operation
+msgid "Type Operation"
+msgstr "Tipo de Operación"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_line_sap_uom
+msgid "UoM"
+msgstr "UoM"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.product_supplierinfo_sap_uom
+msgid "UoM Code"
+msgstr "Código UoM"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_airbus_field
+msgid "Used to concatenate wizard fields"
+msgstr "Se usa para concatenar campos del asistente"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -169,6 +738,10 @@ msgstr "La entrada 'Vistas' le permite personalizar cada vista de Odoo. Puede a�
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Yanfeng"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
 msgid "ZF Mexico"
 msgstr "ZF México"
-

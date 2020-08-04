@@ -405,6 +405,25 @@ class TestMxEdiAdvanceInvoice(InvoiceTransactionCase):
             float_compare(invoice.l10n_mx_edi_total_discount, advance.amount_untaxed, precision_digits=0),
             'The amount in the advance is different to the discount applied.')
 
+    def test_09_case_b_multicurrency(self):
+        """Ensure that multi-currency advance is applied correctly"""
+        tax_py = self.tax_positive.copy({
+            'amount_type': 'code',
+            'python_compute': 'result = base_amount * 0.16'
+        })
+        invoice = self.create_invoice(currency_id=self.usd.id)
+        invoice.invoice_line_ids.invoice_line_tax_ids = [(6, 0, tax_py.ids)]
+        invoice.tax_line_ids.unlink()
+        invoice.compute_taxes()
+        invoice.company_id.sudo().l10n_mx_edi_advance = 'B'
+        self.advance_national.taxes_id = [(6, 0, self.tax_positive.ids)]
+        self._create_advance_and_apply(invoice, self.usd, invoice.amount_total / 2)
+        invoice.refresh()
+        self.assertTrue(invoice.l10n_mx_edi_total_discount, 'Discount not applied on the invoice.')
+        invoice.action_invoice_open()
+        invoice2 = invoice.copy()
+        self.assertFalse(invoice2.has_outstanding, 'The invoice has advances, but is not correct.')
+
     def _create_advance_and_apply(self, invoice, adv_currency, adv_amount):
         advance = self.invoice_model.advance(
             invoice.partner_id, adv_amount, adv_currency)

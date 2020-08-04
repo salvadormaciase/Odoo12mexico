@@ -231,7 +231,7 @@ class L10nMXEdiCustoms(models.Model):
                     'quantity': 1,
                     'price_unit': sum([record.prv, record.cnt]),
                 }))
-            if not join_lines and record.cc:
+            if record.cc:
                 invoice_line_ids.append((0, 0, {
                     'account_id': record.account_other_id.id,
                     'name': 'CC',
@@ -263,8 +263,7 @@ class L10nMXEdiCustoms(models.Model):
                     'price_unit': record.igi,
                 }))
             total_lines = sum([
-                record.cc / .16, record.dta, record.igi,
-                record.other_increments, record.freight])
+                record.cc, record.dta, record.igi, record.freight, record.other_increments])
             for invoice in record.invoice_ids:
                 invoice_line_ids.append((0, 0, {
                     'product_id': product_tax.id,
@@ -321,7 +320,7 @@ class L10nMXEdiCustoms(models.Model):
                     'account_id': difference_account,
                     'name': _('Difference adjustment'),
                     'quantity': 0,
-                    'price_unit': (record.amount_total - inv.amount_total) / 0.16, # noqa
+                    'price_unit': (record.amount_total - inv.amount_total) / 0.16,
                     'invoice_line_tax_ids': [(6, 0, imp_local)],
                 })]
                 inv.compute_taxes()

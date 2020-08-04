@@ -145,6 +145,7 @@
             </xpath>
             <xpath expr="//field[@name='credit_note']" position="before">
                 <field name="l10n_mx_edi_payment_date"/>
+                <field name="l10n_mx_edi_productivity_bonus"/>
             </xpath>
         </field>
     </record>

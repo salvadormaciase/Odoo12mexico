@@ -14,6 +14,7 @@ class ResConfigSettings(models.TransientModel):
 
     l10n_mx_addenda = fields.Selection([
         ('amazon', 'Amazon'),
+        ('airbus', 'Airbus'),
         ('chrysler', 'Chrysler'),
         ('ford', 'Ford'),
         ('porcelanite', 'Porcelanite'),
