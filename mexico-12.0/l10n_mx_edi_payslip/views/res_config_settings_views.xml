@@ -22,6 +22,14 @@
                                 <label for="l10n_mx_edi_umi" class="col-md-3 o_light_label"/>
                                 <field name="l10n_mx_edi_umi" class="oe_inline"/>
                             </div>
+                            <div class="row">
+                                <label for="l10n_mx_edi_vacation_bonus" class="col-md-3 o_light_label"/>
+                                <field name="l10n_mx_edi_vacation_bonus" class="oe_inline"/>
+                            </div>
+                            <div class="row">
+                                <label for="l10n_mx_edi_dynamic_name" class="col-md-3 o_light_label"/>
+                                <field name="l10n_mx_edi_dynamic_name" class="oe_inline"/>
+                            </div>
                         </div>
                     </div>
                 </div>

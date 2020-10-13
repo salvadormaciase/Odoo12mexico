@@ -53,9 +53,12 @@ The Complement have 6 nodes to be added when is generated
   - Fiscal Regime
   - Department
   - Job Title
-  - Risk Rank
+  - Risk Rank: Could be empty if is set the employer registration,
+    and the value comes from it.
   - Bank Account Number
   - Working Address
+  - Employer Registration: If the company has multiple employer
+    registrations, could be defined this value for each employee.
 
   From contract
 
@@ -157,6 +160,17 @@ The Complement have 6 nodes to be added when is generated
   must be added in the payslip the records that will be added in
   this node. Else, not must be added any record in the payslip
   inabilities.
+
+Extra Features
+--------------
+
+**Make the Perception/Deduction dynamic**
+
+  The attribute ``Concepto`` on ``Perceptions`` and ``Deductions`` is open, and could
+  be used the name assigned by the SAT, for example ``Comisiones`` or the value that the company
+  prefers, for example ``Comisión por ventas en el mes``, in that case must be marked the option
+  ``Dynamic Concepts`` on the company settings for payroll, and will to take the name assigned
+  on the payroll inputs.
 
 Installation
 ============

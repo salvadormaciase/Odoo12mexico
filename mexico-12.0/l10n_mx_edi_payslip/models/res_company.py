@@ -1,4 +1,3 @@
-# coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
@@ -15,3 +14,11 @@ class ResCompany(models.Model):
         'Mexican UMA', help='Indicates the current UMA in Mexico')
     l10n_mx_edi_umi = fields.Float(
         'Mexican UMI', help='Indicates the current UMI in Mexico')
+    l10n_mx_edi_vacation_bonus = fields.Selection([
+        ('on_holidays', 'On Holidays'),
+        ('on_anniversary', 'On Anniversary'),
+    ], 'Vacation Bonus', default='on_holidays', help='Indicate when the company will to pay the vacation bonus.')
+    l10n_mx_edi_dynamic_name = fields.Boolean(
+        'Dynamic concepts?', help='If true, the payslip concepts based on inputs could be dynamic.\nFor example: '
+        'If employee will to receive 100 MXN by concept of sale commissions, the commission input could have the '
+        'name "Commissions for SO12345", and that name will be set on the CFDI.')

@@ -16,6 +16,21 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.bed_bath
+msgid "0.00"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.bed_bath
+msgid "0.000"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.bed_bath
+msgid "00000"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
 #: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_description
 msgid "\n"
 "            It is a text that briefly describes the invoice. Being a field\n"
@@ -112,6 +127,11 @@ msgid "AHMSA"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.bed_bath
+msgid "AJ"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
 #: selection:x_addenda.airbus,x_concept:0
 msgid "ARTS. LIMPIEZA"
 msgstr "ARTS. LIMPIEZA"
@@ -130,6 +150,29 @@ msgstr "ASES. LABORAL"
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.res_config_settings_view_form
 msgid "Addenda"
 msgstr "Adenda"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_bed_bath
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_bed_bath
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_bed_bath_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_bed_bath
+msgid "Addenda Bed Bath"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_bed_bath_reception
+msgid "Additional Reference Code"
+msgstr "Código de referencia adicional"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_bed_bath_reception_folio
+msgid "Additional Reference Number"
+msgstr "Número de referencia adicional"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_bed_bath_reception_folio
+msgid "Additional reference number"
+msgstr "Número de referencia adicional"
 
 #. module: l10n_mx_edi_addendas
 #: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_airbus
@@ -162,6 +205,16 @@ msgstr "Número de material de Airbus, cuando es material o consumibles. Este va
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Amazon"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Approval number"
+msgstr "Número de aprobación"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Bed Bath"
 msgstr ""
 
 #. module: l10n_mx_edi_addendas
@@ -211,8 +264,14 @@ msgstr ""
 
 #. module: l10n_mx_edi_addendas
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_bed_bath_view
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Check number"
+msgstr "Verificación de número"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -239,6 +298,21 @@ msgstr "Concepto que esta siendo facturado, según el catálogo definido por Air
 #: model:ir.model,name:l10n_mx_edi_addendas.model_res_config_settings
 msgid "Config Settings"
 msgstr "Opciones de Configuración"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_bed_bath_po_date
+msgid "Date Purchase Order"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Document number (remission)"
+msgstr "Número de documento (remisión)"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Document number that is replaced"
+msgstr "Número de documento que es reemplazado"
 
 #. module: l10n_mx_edi_addendas
 #: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_delivery_num
@@ -342,8 +416,14 @@ msgstr "Adendas Instaladas"
 
 #. module: l10n_mx_edi_addendas
 #: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_airbus_invoice_line_ids
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_bed_bath_invoice_line_ids
 msgid "Invoice Lines"
 msgstr "Líneas de factura"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Invoice Number"
+msgstr "Número de Factura"
 
 #. module: l10n_mx_edi_addendas
 #: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_airbus_reception_num
@@ -373,11 +453,13 @@ msgid "LIMPIEZA EDIF."
 msgstr "LIMPIEZA EDIF."
 
 #. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_bed_bath_view
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
 msgid "Line"
 msgstr "Línea"
 
 #. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_bed_bath_view
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
 msgid "Lines"
 msgstr "Líneas"
@@ -401,6 +483,11 @@ msgstr "MANTTO INST."
 #: selection:res.config.settings,l10n_mx_addenda:0
 msgid "Mabe"
 msgstr "Mabe"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Merchandise Receipt Folio"
+msgstr "Folio de Recepción de Mercancías"
 
 #. module: l10n_mx_edi_addendas
 #: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_line_sap_code
@@ -431,6 +518,16 @@ msgstr "PAPELERIA"
 #: selection:x_addenda.airbus,x_concept:0
 msgid "PARTES/REFACC."
 msgstr "PARTES/REFACC."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_bed_bath_order_number
+msgid "Order Number"
+msgstr "Número de Orden"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Order number (buyer)"
+msgstr "Número de orden (comprador)"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -496,6 +593,21 @@ msgstr "Número de recepción"
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
 msgid "Required for expense accounts / notes position with customs (optional)."
 msgstr "Requerido para la posición de cuentas de gastos / notas con aduanas (opcional)."
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.bed_bath,x_additional_ref_code:0
+msgid "Property account"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_bed_bath_order_number
+msgid "Purchase order number that supports the receipt of merchandise. This number is displayed in the portal."
+msgstr "Número de orden de compra que soporta la recepción de la mercancía. Este número se muestra en el portal."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.bed_bath
+msgid "RETENIDO"
+msgstr ""
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -646,6 +758,7 @@ msgstr "Sap Secuencia"
 
 #. module: l10n_mx_edi_addendas
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_airbus_view
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_bed_bath_view
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_chrysler_view
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
 msgid "Set Values"
@@ -656,10 +769,21 @@ msgstr "Establecer Valores"
 msgid "Set Values Addenda Airbus"
 msgstr "Establecer Valores en Addenda Airbus"
 
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_bed_bath_values
+msgid "Set Values Addenda Bed Bath"
+msgstr "Establecer Valores en Addenda Bed Bath"
+
 #. module: l10n_mx_edi_addendas
 #: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_airbus_defaults
 msgid "Set default values for the addenda Airbus"
 msgstr "Establecer valores predeterminados para la addenda Airbus"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_bed_bath_defaults
+msgid "Set default values for the addenda Bed Bath"
+msgstr "Establecer valores predeterminados para la addenda Bed Bath"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0
@@ -718,8 +842,24 @@ msgstr "Código UoM"
 
 #. module: l10n_mx_edi_addendas
 #: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_airbus_field
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_bed_bath_field
 msgid "Used to concatenate wizard fields"
 msgstr "Se usa para concatenar campos del asistente"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.bed_bath
+msgid "TRANSFERIDO"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_bed_bath_po_date
+msgid "The date of the purchase order."
+msgstr "Fecha de la orden de compra."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_bed_bath_view
+msgid "The necessary nodes for the implementation of the Addenda of Bed Bath"
+msgstr "Nodos necesarios para la implementación de la addenda de Bed Bath"
 
 #. module: l10n_mx_edi_addendas
 #: selection:res.config.settings,l10n_mx_addenda:0

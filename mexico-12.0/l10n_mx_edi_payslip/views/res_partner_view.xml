@@ -8,6 +8,7 @@
             <xpath expr="//field[@name='phone']" position="before">
                 <field name="vat" string="VAT"/>
                 <field name="l10n_mx_edi_curp"/>
+                <field name="property_account_position_id" string="Regimen Type"/>
             </xpath>
         </field>
     </record>

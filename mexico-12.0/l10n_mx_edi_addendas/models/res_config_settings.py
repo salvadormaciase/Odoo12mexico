@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from os import listdir
@@ -15,7 +14,9 @@ class ResConfigSettings(models.TransientModel):
     l10n_mx_addenda = fields.Selection([
         ('amazon', 'Amazon'),
         ('airbus', 'Airbus'),
+        ('bed_bath', 'Bed Bath'),
         ('chrysler', 'Chrysler'),
+        ('dunosusa', 'Dunosusa'),
         ('ford', 'Ford'),
         ('porcelanite', 'Porcelanite'),
         ('bosh', 'Bosh'),

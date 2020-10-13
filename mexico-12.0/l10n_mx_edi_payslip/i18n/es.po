@@ -47,6 +47,11 @@ msgid "<span class=\"o_form_label\">Mexican Payroll</span>"
 msgstr "<span class=\"o_form_label\">Nómina mexicana</span>"
 
 #. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_extra_by_employees
+msgid "<span colspan=\"4\" nolabel=\"1\">This wizard will assign all selected employee(s) on the extras.</span>"
+msgstr "<span colspan=\"4\" nolabel=\"1\">Este asistente asignará todos los empleados seleccionados en las extras.</span>"
+
+#. module: l10n_mx_edi_payslip
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.report_payslip_document_details_by_rule
 msgid "<span> to </span>"
 msgstr "<span> a </span>"
@@ -69,7 +74,7 @@ msgstr "<span> | Fecha de Emisión:</span>"
 #. module: l10n_mx_edi_payslip
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.l10n_mx_edi_report_payslip
 msgid "<span> | Employer registration:</span>"
-msgstr "<span> | Registro de empleador:</span>"
+msgstr "<span> | Registro Patronal:</span>"
 
 #. module: l10n_mx_edi_payslip
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.l10n_mx_edi_report_payslip
@@ -262,6 +267,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra_perception__accumulable_income
 msgid "Accumulable Income"
 msgstr "Ingresos acumulables"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_action_title_ids
@@ -716,6 +726,11 @@ msgid "Alimentos en bienes (Servicios de comedor y comida) Art 94 último párra
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model,name:l10n_mx_edi_payslip.model_l10n_mx_edi_employer_registration
+msgid "Allow define all the employer registration from the company"
+msgstr "Permite definir los registros patronales de cada compañía"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model,name:l10n_mx_edi_payslip.model_hr_payslip_report_detail
 msgid "Allow define the dates to get payslip details"
 msgstr ""
@@ -726,8 +741,10 @@ msgid "Allow register the loans in each employee (Fonacot)"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra_detail__amount
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__amount
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__amount
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__amount
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.l10n_mx_edi_report_payslip
 msgid "Amount"
 msgstr "Importe"
@@ -751,6 +768,13 @@ msgstr "Cantidad por la incapacidad"
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_overtime__amount
 msgid "Amount paid for overtime"
 msgstr "Cantidad pagada por horas extras"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__amount
+msgid "Amount to assign on each payslip.\n"
+"Note: If the input could be taxed/exempt, only is need define the amount total."
+msgstr "Monto a asignar en cada nómina.\n"
+"Nota: Si la entrada puede ser exenta y grabada, solo es necesario definir el monto total."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_food_voucher
@@ -781,6 +805,32 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_023
 msgid "Aportaciones voluntarias"
 msgstr ""
+
+#. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_payslip_extra_form
+msgid "Approve"
+msgstr "Aprobar"
+
+#. module: l10n_mx_edi_payslip
+#: selection:hr.payslip.extra,state:0
+msgid "Approved"
+msgstr "Aprobado"
+
+#. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_extra_by_employees
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_extras
+msgid "Assign"
+msgstr "Asignar"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.actions.act_window,name:l10n_mx_edi_payslip.action_hr_payslip_assign_extra_employees
+msgid "Assign Employees"
+msgstr "Asignar Empleados"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_attachment_count
+msgid "Attachment Count"
+msgstr "Conteo de archivos adjuntos"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_attendance_bonus
@@ -890,7 +940,9 @@ msgid "Caja de ahorro"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_extras
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_report_detail
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_payslip_extra_form
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1058,6 +1110,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__create_uid
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__create_uid
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_report_detail__create_uid
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__create_uid
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__create_uid
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__create_uid
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -1069,6 +1124,9 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__create_date
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__create_date
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_report_detail__create_date
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__create_date
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__create_date
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__create_date
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__create_date
 msgid "Created on"
 msgstr "Creado el"
@@ -1102,6 +1160,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_cfdi_customer_rfc
 msgid "Customer RFC"
 msgstr "RFC del cliente"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra__date
+msgid "Date"
+msgstr "Fecha"
 
 #. module: l10n_mx_edi_payslip
 #: selection:hr.contract,schedule_pay:0
@@ -1163,6 +1226,23 @@ msgid "Descuento por incapacidad"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra__detail_ids
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra_detail__detail
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__detail
+msgid "Detail"
+msgstr "Detalle"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model,name:l10n_mx_edi_payslip.model_hr_payslip_extra_detail
+msgid "Detail for each extra inputs"
+msgstr "Detalle por cada entrada extra"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model,name:l10n_mx_edi_payslip.model_l10n_mx_edi_hr_payslip_extras_line
+msgid "Detail to each input"
+msgstr "Detalle por cada entrada"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.ui.menu,name:l10n_mx_edi_payslip.menu_payslip_reports_details_by_rule
 msgid "Details by Rule"
 msgstr "Detalles por Regla"
@@ -1189,6 +1269,9 @@ msgstr "Enfermedad en general"
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__display_name
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__display_name
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_report_detail__display_name
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__display_name
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__display_name
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__display_name
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
@@ -1197,6 +1280,17 @@ msgstr "Nombre mostrado"
 #: selection:hr.payslip.overtime,overtime_type:0
 msgid "Double"
 msgstr "Doble"
+
+#. module: l10n_mx_edi_payslip
+#: selection:hr.payslip.extra,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_res_company__l10n_mx_edi_dynamic_name
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_res_config_settings__l10n_mx_edi_dynamic_name
+msgid "Dynamic concepts?"
+msgstr "¿Conceptos Dinámicos?"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model,name:l10n_mx_edi_payslip.model_mail_template
@@ -1211,6 +1305,8 @@ msgstr "Asistente de redacción de correo electrónico"
 #. module: l10n_mx_edi_payslip
 #: model:ir.model,name:l10n_mx_edi_payslip.model_hr_employee
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee_loan__employee_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra_detail__employee_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__employee_id
 msgid "Employee"
 msgstr "Empleado"
 
@@ -1222,13 +1318,33 @@ msgstr "Contrato de empleado"
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee_loan__employee_id
 msgid "Employee for this loan"
-msgstr ""
+msgstr "Empleado para este préstamo"
 
 #. module: l10n_mx_edi_payslip
 #: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:879
 #, python-format
 msgid "Employee has not a contract and is required"
 msgstr "El empleado no tiene un contrato y se requiere"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__employee_id
+msgid "Employee in the slip."
+msgstr "Empleado en la nómina"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra_employees__employee_ids
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_extra_by_employees
+msgid "Employees"
+msgstr "Empleados"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.actions.act_window,name:l10n_mx_edi_payslip.action_employer_registration
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee__l10n_mx_edi_employer_registration_id
+#: model:ir.ui.menu,name:l10n_mx_edi_payslip.grp_employer_registration
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_employer_registration_form
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_employer_registration_tree
+msgid "Employer Registration"
+msgstr "Registro Patronal"
 
 #. module: l10n_mx_edi_payslip
 #: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:331
@@ -1240,6 +1356,15 @@ msgstr ""
 #. module: l10n_mx_edi_payslip
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_014
 msgid "Errores"
+msgstr ""
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.actions.act_window,name:l10n_mx_edi_payslip.action_payslip_extra
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra_detail__extra_id
+#: model:ir.ui.menu,name:l10n_mx_edi_payslip.grp_payslip_extra
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_payslip_extra_form
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_payslip_extra_tree
+msgid "Extra"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
@@ -1273,6 +1398,11 @@ msgid "Fiscal Folio"
 msgstr "Folio Fiscal"
 
 #. module: l10n_mx_edi_payslip
+#: selection:hr.contract,l10n_mx_edi_salary_type:0
+msgid "Fixed"
+msgstr "Fijo"
+
+#. module: l10n_mx_edi_payslip
 #: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:1260
 #: selection:hr.contract,l10n_mx_edi_infonavit_type:0
 #, python-format
@@ -1283,6 +1413,21 @@ msgstr "Monto Fijo"
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_cfdi_uuid
 msgid "Folio in electronic payroll, is returned by SAT when send to stamp."
 msgstr "Folio en nómina electrónica, es devuelto por SAT cuando envía a el sello."
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canales)"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Empresas)"
 
 #. module: l10n_mx_edi_payslip
 #: selection:hr.employee.loan,loan_type:0
@@ -1305,9 +1450,19 @@ msgid "Fortnightly"
 msgstr "Quincenal"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model,name:l10n_mx_edi_payslip.model_hr_payslip_extra_employees
+msgid "Generate payslip extras for all selected employees"
+msgstr "Generara entradas extras para todos los empleados seleccionados"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model,name:l10n_mx_edi_payslip.model_hr_payslip_employees
 msgid "Generate payslips for all selected employees"
 msgstr "Generar las nóminas para todos los empleados seleccionados"
+
+#. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_payslip_extra_form
+msgid "Get Employees"
+msgstr "Obtener Empleados"
 
 #. module: l10n_mx_edi_payslip
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_perception_002_e
@@ -1344,6 +1499,9 @@ msgstr "Horas"
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__id
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__id
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_report_detail__id
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__id
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__id
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__id
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__id
 msgid "ID"
 msgstr ""
@@ -1380,19 +1538,34 @@ msgid "ISR ajustado por subsidio"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado hay nuevos mensajes que requieren su atención."
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si se encuentra marcado, algunos mensajes tienen error de envío."
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee_loan__number_fonacot
 msgid "If comes from Fonacot, indicate the number."
 msgstr "Si viene de Fonacot, indica el número."
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee__l10n_mx_edi_employer_registration_id
+msgid "If the company has multiple employer registration, define the correct for this employee."
+msgstr "Si la compañía tiene multiples registros patronales, defina el correcto para este empleado."
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_attendance_bonus
-msgid "If the company offers attendance bonus, indicate the bonus amount by week."
-msgstr "Si la empresa ofrece bono de asistencia, indique el bono semanal."
+msgid "If the company offers attendance bonus, indicate the bonus amount by payment period."
+msgstr "Si la empresa ofrece bono de asistencia, indique el bono por periodo de pago."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_punctuality_bonus
-msgid "If the company offers punctuality bonus, indicate the bonus amount by week."
-msgstr "Si la empresa ofrece bono de puntualidad, indique el bono semanal."
+msgid "If the company offers punctuality bonus, indicate the bonus amount by payment period."
+msgstr "Si la empresa ofrece bono de puntualidad, indique el bono por periodo de pago."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee_loan__active
@@ -1428,6 +1601,14 @@ msgstr "Si la nómina incluye otros pagos, y uno de estos registros tiene el có
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee__l10n_mx_edi_is_assimilated
 msgid "If this employee is assimilated, must be used this option, to get the correct rules on their payslips"
 msgstr "Si este empleado es asimilable, debe usar esta opción, para obtener correctamente las reglas salariales de sus nóminas"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_res_company__l10n_mx_edi_dynamic_name
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_res_config_settings__l10n_mx_edi_dynamic_name
+msgid "If true, the payslip concepts based on inputs could be dynamic.\n"
+"For example: If employee will to receive 100 MXN by concept of sale commissions, the commission input could have the name \"Commissions for SO12345\", and that name will be set on the CFDI."
+msgstr "Si es verdadero, los conceptos de nómina basados en entradas manuales pueden ser dinámicos.\n"
+"Por ejemplo: Si el empleado va a recibir 100 MXN por concepto de comisiones de venta, la entrada de comisión puede tener el nombre \"Comisiones de SO12345\", y ese será el nombre a colocar en el CFDI."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_extra_perception__amount_total
@@ -1468,6 +1649,18 @@ msgid "Indeminizaciones"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__slip_ids
+msgid "Indicate the amount to assign in each payslip."
+msgstr "Indica el monto a asignar en cada nómina"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__detail
+msgid "Indicate the detail for this input.\n"
+"Example: Commission SO1234"
+msgstr "Indique el detalle para esta entrada.\n"
+"Ejemplo: Comisión SO1234"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee__loan_ids
 msgid "Indicate the loans for the employee. Will be considered on the payslips."
 msgstr "Indica los préstamos para el empleado. Serán considerados en las nóminas."
@@ -1481,6 +1674,12 @@ msgstr "Indique a qué percepción se agregarán estos atributos en el nodo XML"
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_extra_perception__node
 msgid "Indicate what is the record purpose, if will be used to add in node \"JubilacionPensionRetiro\" or in \"SeparacionIndemnizacion\""
 msgstr "Indique cuál es el propósito del registro, si se usará para agregar en el nodo \"JubilacionPensionRetiro\" o \"SeparacionIndemnizacion\""
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_res_company__l10n_mx_edi_vacation_bonus
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_res_config_settings__l10n_mx_edi_vacation_bonus
+msgid "Indicate when the company will to pay the vacation bonus."
+msgstr "Indica cuando es que la compañía pagará la prima vacacional."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee_loan__monthly_withhold
@@ -1539,12 +1738,33 @@ msgstr ""
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_holidays
 msgid "Initial number of days for holidays. The minimum is 6 days."
-msgstr ""
+msgstr "Número inicial de vacaciones. El mínimo son 6 días"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model,name:l10n_mx_edi_payslip.model_l10n_mx_edi_hr_payslip_extras
+msgid "Input and detail to write in the payslips related."
+msgstr "Entrada y detalle a escribir en la nómina relacionada."
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra__input_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__input_id
+msgid "Input to define in the payslips"
+msgstr "Entrada a definir en la nómina"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_integrated_salary
 msgid "Integrated Salary"
 msgstr "Salario Integrado"
+
+#. module: l10n_mx_edi_payslip
+#: selection:hr.employee.loan,loan_type:0
+msgid "Internal Discount"
+msgstr "Descuento Interno"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee__l10n_mx_edi_is_assimilated
@@ -1558,6 +1778,7 @@ msgstr "Indica que la nómina ha sido enviada"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee__l10n_mx_edi_risk_rank
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__job_risk_id
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.l10n_mx_edi_job_risk_form_view
 msgid "Job Risk"
 msgstr "Riesgo de trabajo"
@@ -1606,6 +1827,9 @@ msgstr "Dejarlo vacío para utilizar la fecha actual."
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability____last_update
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime____last_update
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_report_detail____last_update
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration____last_update
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras____last_update
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line____last_update
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
@@ -1622,6 +1846,9 @@ msgstr "Ultimo Salario"
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__write_uid
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__write_uid
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_report_detail__write_uid
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__write_uid
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__write_uid
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__write_uid
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__write_uid
 msgid "Last Updated by"
 msgstr "Última actualización por"
@@ -1633,6 +1860,9 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__write_date
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__write_date
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_report_detail__write_date
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__write_date
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__write_date
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__write_date
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
@@ -1669,6 +1899,11 @@ msgid "MATERNITY"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjuntos principales"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_action_titles__market_value
 msgid "Market Value"
 msgstr "Valor de mercado"
@@ -1679,11 +1914,21 @@ msgid "Maternity"
 msgstr "Maternidad"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de Envío de Mensaje"
+
+#. module: l10n_mx_edi_payslip
 #: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:564
 #: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:601
 #, python-format
 msgid "Message: "
 msgstr "Mensaje: "
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_ids
+msgid "Messages"
+msgstr "Mensajes"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_res_company__l10n_mx_edi_uma
@@ -1706,6 +1951,11 @@ msgstr "Salario mínimo mexicano"
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_res_config_settings__l10n_mx_edi_minimum_wage
 msgid "Mexican minimum salary"
 msgstr "Salario mínimo mexicano"
+
+#. module: l10n_mx_edi_payslip
+#: selection:hr.contract,l10n_mx_edi_salary_type:0
+msgid "Mixed"
+msgstr "Mixto"
 
 #. module: l10n_mx_edi_payslip
 #: selection:hr.payslip,l10n_mx_edi_source_resource:0
@@ -1738,6 +1988,8 @@ msgid "Monthly Withhold"
 msgstr "Retención Mensual"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra__name
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__name
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__name
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.l10n_mx_edi_report_payslip
 msgid "Name"
@@ -1809,6 +2061,11 @@ msgid "Number for this record, if comes from Fonacot, use \"No. Credito\""
 msgstr "Número para este registro, si viene de Fonacot utilice el \"No. Credito\""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee_loan__payslips_count
 msgid "Number of Payslips"
 msgstr "Número de Nóminas"
@@ -1829,6 +2086,21 @@ msgid "Number of days in which the employee performed overtime in the period"
 msgstr "Número de días en que el empleado hizo horas extras en el período"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_has_error_counter
+msgid "Number of error"
+msgstr "Número de error"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: l10n_mx_edi_payslip
 #: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:1259
 #: selection:hr.contract,l10n_mx_edi_infonavit_type:0
 #, python-format
@@ -1839,6 +2111,21 @@ msgstr "Cantidad de salarios mínimos"
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_overtime__hours
 msgid "Number of overtime hours worked in the period"
 msgstr "Número de horas extras trabajadas en el período"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leídos"
+
+#. module: l10n_mx_edi_payslip
+#: selection:res.company,l10n_mx_edi_vacation_bonus:0
+msgid "On Anniversary"
+msgstr "En Aniversario"
+
+#. module: l10n_mx_edi_payslip
+#: selection:res.company,l10n_mx_edi_vacation_bonus:0
+msgid "On Holidays"
+msgstr "En Vacaciones"
 
 #. module: l10n_mx_edi_payslip
 #: selection:hr.contract,schedule_pay:0
@@ -2000,6 +2287,11 @@ msgid "Payslip Details by Rule"
 msgstr "Reporte de Detalle por Reglas"
 
 #. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_extras
+msgid "Payslip Extras"
+msgstr "Extras de nómina"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip__input_line_ids
 msgid "Payslip Inputs"
 msgstr "Entradas de nómina"
@@ -2058,7 +2350,7 @@ msgstr "Porcentaje"
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_job_risk__percentage
 msgid "Percentage for this risk, is used in the payroll rules."
-msgstr ""
+msgstr "Porcentaje del riesgo, es utilizado en las reglas salariales."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_vacation_bonus
@@ -2204,6 +2496,11 @@ msgid "Refers to the status of the payslip inside the SAT system."
 msgstr "Se refiere al estado de la boleta de pago en el sistema del SAT."
 
 #. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.res_partner_view_form_private_inherit
+msgid "Regimen Type"
+msgstr "Tipo de régimen"
+
+#. module: l10n_mx_edi_payslip
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_other_payment_001
 msgid "Reintegro de ISR pagado en exceso - siempre que no haya sido enterado al SAT"
 msgstr ""
@@ -2263,6 +2560,11 @@ msgstr "Entidad SNCF"
 #: model:ir.model,name:l10n_mx_edi_payslip.model_hr_salary_rule
 msgid "Salary Rule"
 msgstr "Regla de Salario"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_salary_type
+msgid "Salary type"
+msgstr "Tipo de salario"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_payment_date
@@ -2337,9 +2639,29 @@ msgid "Simples"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__payslip_id
+msgid "Slip"
+msgstr "Nómina"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras_line__payslip_id
+msgid "Slip to add the extra input."
+msgstr "Nómina a agregar en la entrada."
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__slip_ids
+msgid "Slips"
+msgstr "Nóminas"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_source_resource
 msgid "Source Resource"
 msgstr "Fuente del Recurso"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra__state
+msgid "State"
+msgstr "Estado"
 
 #. module: l10n_mx_edi_payslip
 #: selection:hr.payslip,l10n_mx_edi_sat_status:0
@@ -2385,6 +2707,11 @@ msgstr "Sindicalizado"
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_form_l10n_mx
 msgid "Technical CFDI Information"
 msgstr "Información técnica del CFDI"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_salary_type
+msgid "The action that updates automatically the SDI variable each bimester could discard contracts based on this field."
+msgstr "La acción que actualiza el SDI variable automáticamente cada bimestre puede descartar contratos basado en este campo."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_run__l10n_mx_edi_productivity_bonus
@@ -2437,6 +2764,11 @@ msgid "The customer tax identification number."
 msgstr "El número de identificación fiscal del cliente."
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_extra__state
+msgid "The extra must be approved to allow pay this on the employee payslips"
+msgstr "El extra debe estar aprobado para permitir pagar este extra en la nómina del empleado"
+
+#. module: l10n_mx_edi_payslip
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.res_config_settings_view_form_inherit_l10n_mx_edi_payslip
 msgid "The parameters to configure the payslips."
 msgstr "Los parámetros para configurar la nómina"
@@ -2478,6 +2810,21 @@ msgstr "El monto total reportado en el cfdi."
 #, python-format
 msgid "The xsd file to validate the XML structure was not found"
 msgstr ""
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_extra__date
+msgid "This extra will be paid on the payslip for this period"
+msgstr "Este extra será pagado en la nómina de este periodo"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_hr_payslip_extras__input_id
+msgid "This input will be added in all the payslips related."
+msgstr "Esta entrada será añadida en todas las nóminas relacionadas."
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_extra__input_id
+msgid "This input will be set on the payslip inputs for the employees related."
+msgstr "Esta entrada será colocada en las nóminas relacionadas a este empleado."
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_time_payslip
@@ -2528,9 +2875,25 @@ msgid "Unit work"
 msgstr "Unidad obra"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes por leer"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de mensajes sin leer"
+
+#. module: l10n_mx_edi_payslip
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_contract_form_inherit_l10n_mx
 msgid "Update"
 msgstr "Actualizar"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.actions.act_window,name:l10n_mx_edi_payslip.l10n_mx_edi_update_extras
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_form_l10n_mx
+msgid "Update Extras"
+msgstr "Actualizar Extras"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_inability_line_ids
@@ -2554,6 +2917,7 @@ msgstr "Usado en el CFDI para expresar el salario que se integra con los pagos r
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_employee__l10n_mx_edi_risk_rank
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__job_risk_id
 msgid "Used in the XML to express the key according to the Class in which the employers must register, according to the activities carried out by their workers, as provided in article 196 of the Regulation on Affiliation Classification of Companies, Collection and Inspection, or in accordance with the regulations Of the Social Security Institute of the worker."
 msgstr "Utilizado en el XML para expresar la clave según la Clase en la que los empleadores deben registrarse, de acuerdo con las actividades realizadas por sus trabajadores, según lo dispuesto en el artículo 196 del Reglamento de Clasificación de Afiliación de Empresas, Cobro e Inspección, o de conformidad con las regulaciones del Instituto de Seguridad Social del trabajador."
 
@@ -2614,6 +2978,12 @@ msgid "Vacaciones (parte proporcional)"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_res_company__l10n_mx_edi_vacation_bonus
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_res_config_settings__l10n_mx_edi_vacation_bonus
+msgid "Vacation Bonus"
+msgstr "Bono de vacaciones"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_vacation_bonus
 msgid "Vacation bonus (%)"
 msgstr "Bono de vacaciones (%)"
@@ -2657,6 +3027,16 @@ msgstr "Valor a deducir del pago del empleado por el concepto de INFONAVIT. Esto
 "- Si el tipo es un monto fijo, el valor de este campo debe ser mayor que cero. Además, el monto de esta deducción debe corresponderse con el período de pago."
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__name
+msgid "Value to set in the \"RegistroPatronal\" attribute."
+msgstr "Valor a colocar en el atributo \"RegistroPatronal\"."
+
+#. module: l10n_mx_edi_payslip
+#: selection:hr.contract,l10n_mx_edi_salary_type:0
+msgid "Variable"
+msgstr ""
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_sdi_variable
 msgid "Variable SDI"
 msgstr "SDI variable"
@@ -2671,6 +3051,16 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_other_payment_003
 msgid "Viáticos - entregados al trabajador"
 msgstr ""
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_l10n_mx_edi_employer_registration__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicaciones del sitio web"
 
 #. module: l10n_mx_edi_payslip
 #: selection:hr.contract,schedule_pay:0
@@ -2702,3 +3092,4 @@ msgstr "Año"
 #, python-format
 msgid "You have perceptions with code 039 and 044. You can only have one of them."
 msgstr "Tienes percepciones con los códigos 039 y 044. Solo puedes tener uno de ellos."
+

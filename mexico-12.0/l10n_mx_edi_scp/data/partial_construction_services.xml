@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="partial_construction_service" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__servicioparcial">"http://www.sat.gob.mx/servicioparcialconstruccion" if record.l10n_mx_edi_property else False</attribute>
+        </xpath>
         <xpath expr="*" position="inside">
             <t t-if="record.l10n_mx_edi_property">
                 <cfdi:Complemento

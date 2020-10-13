@@ -87,7 +87,7 @@
                                     <PLZ:OtrMetodoPago
                                         t-att-MetPagoPol="'99' if cfdi.l10n_mx_edi_payment_method_id.code in other else cfdi.l10n_mx_edi_payment_method_id.code or '99'"
                                         t-att-Fecha="cfdi.payment_date"
-                                        t-att-Benef="(cfdi.partner_id.name if cfdi.payment_type == 'outbound' else company.name)[:300]"
+                                        t-att-Benef="((cfdi.partner_id.name if cfdi.payment_type == 'outbound' else company.name) or 'NA')[:300]"
                                         t-att-RFC="(cfdi if cfdi.payment_type == 'outbound' else company).partner_id.l10n_mx_edi_get_customer_rfc()"
                                         t-att-Monto="'%.2f' % cfdi.amount"
                                         t-att-Moneda="cfdi.currency_id.name if cfdi.currency_id.name != 'MXN' else False"

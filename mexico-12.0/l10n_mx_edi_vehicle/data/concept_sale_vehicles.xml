@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="l10n_mx_edi_concept_sale_vehicle" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__ventavehiculos">"http://www.sat.gob.mx/ventavehiculos" if record.company_id.l10n_mx_edi_complement_type == 'sale' and record.l10n_mx_edi_vehicle_id and record.l10n_mx_edi_vehicle_id.odometer == 0 else False</attribute>
+        </xpath>
         <xpath expr="//*[local-name()='Concepto']" position="inside">
             <t t-if="record.company_id.l10n_mx_edi_complement_type == 'sale' and record.l10n_mx_edi_vehicle_id and record.l10n_mx_edi_vehicle_id.odometer == 0">
                 <cfdi:ComplementoConcepto

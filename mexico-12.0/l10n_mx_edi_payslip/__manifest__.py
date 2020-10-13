@@ -1,4 +1,3 @@
-# coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -25,7 +24,9 @@
         "data/hr_holidays_data.xml",
         "data/mail_template.xml",
         "data/ir_cron_data.xml",
+        "wizards/hr_payslip_extra_view.xml",
         "views/hr_payslip_view.xml",
+        "views/hr_payslip_extra_view.xml",
         "views/hr_contract_view.xml",
         "views/hr_employee_views.xml",
         "views/hr_payslip_report.xml",
@@ -39,6 +40,7 @@
         "data/fiscal_position_data.xml",
         "data/payroll_structure_data.xml",
         "wizards/payslip_reports_view.xml",
+        "wizards/payslip_extra_inputs_view.xml",
     ],
     "js": [],
     "css": [],

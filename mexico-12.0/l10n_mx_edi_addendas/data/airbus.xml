@@ -8,6 +8,7 @@
         <t t-set="type_file" t-value="{'application/msword': 'xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx', 'application/pdf': 'pdf', 'image/jpeg': 'jpg'}"/>
         <t t-set="customs" t-value="','.join(set(record.invoice_line_ids.filtered('l10n_mx_edi_customs_number').mapped('l10n_mx_edi_customs_number'))) if 'l10n_mx_edi_customs_number' in record.invoice_line_ids else None"/>
         <R:Airbus
+            t-if="extra_values[3] != ''"
             version="1.0"
             t-att-codigoEmpresa="code_company.get(record.partner_id.vat)"
             t-att-tipoDocumentoFiscal="'ND' if (canceled and canceled['type'] == '02') or record.type == 'in_refund' else record.type.replace('out_invoice', 'FA').replace('out_refund', 'NC')"
@@ -274,56 +275,60 @@
         <field name="code">
 invoice = env['account.invoice'].browse(model._context['invoice_id'])
 wizard = env['x_addenda.airbus'].browse(model._context['active_id'])
-wizard_fields = [wizard.x_concept, wizard.x_description, wizard.x_purchase_order, wizard.x_reception_num, wizard.x_delivery_num, wizard.x_type_operation]
-wizard_fields = [j or '' for j in wizard_fields]
-invoice.write({'x_addenda_airbus': '|'.join(wizard_fields)})
+if wizard.x_reception_num:
+    wizard_fields = [wizard.x_concept, wizard.x_description, wizard.x_purchase_order, wizard.x_reception_num, wizard.x_delivery_num, wizard.x_type_operation]
+    wizard_fields = [j or '' for j in wizard_fields]
+    invoice.write({'x_addenda_airbus': '|'.join(wizard_fields)})
 
-# Create supplier info for addenda values, if theyre not already created
-for line in invoice.invoice_line_ids:
-    if not any([line.x_addenda_sap_code,
-                line.x_addenda_sap_uom]):
-        continue
-    supplier_info = line.sudo().product_id.seller_ids.filtered(
-        lambda s:
-        s.name == invoice.commercial_partner_id
-        and s.product_id == line.product_id
-        and s.sequence == 1000)[:1]
-    if supplier_info:
-        supplier_info.write({
-            'product_code': line.x_addenda_sap_code,
-            'x_addenda_uom_code': line.x_addenda_sap_uom,
-        })
-    else:
-        supplier_info.create({
-            'name': invoice.commercial_partner_id.id,
-            'product_tmpl_id': line.product_id.product_tmpl_id.id,
-            'product_id': line.product_id.id,
-            'sequence': 1000,
-            'product_code': line.x_addenda_sap_code,
-            'x_addenda_uom_code': line.x_addenda_sap_uom,
-        })
+    # Create supplier info for addenda values, if theyre not already created
+    for line in invoice.invoice_line_ids:
+        if not any([line.x_addenda_sap_code,
+                    line.x_addenda_sap_uom]):
+            continue
+        supplier_info = line.sudo().product_id.seller_ids.filtered(
+            lambda s:
+            s.name == invoice.commercial_partner_id
+            and s.product_id == line.product_id
+            and s.sequence == 1000)[:1]
+        if supplier_info:
+            supplier_info.write({
+                'product_code': line.x_addenda_sap_code,
+                'x_addenda_uom_code': line.x_addenda_sap_uom,
+            })
+        else:
+            supplier_info.create({
+                'name': invoice.commercial_partner_id.id,
+                'product_tmpl_id': line.product_id.product_tmpl_id.id,
+                'product_id': line.product_id.id,
+                'sequence': 1000,
+                'product_code': line.x_addenda_sap_code,
+                'x_addenda_uom_code': line.x_addenda_sap_uom,
+            })
 
-# Create attachment
-if wizard.x_attached_file:
-    fname = ("Addenda Airbus - %s" % (invoice.id))
-    atts = env['ir.attachment'].sudo().search([
-        ('res_model', '=', invoice._name),
-        ('name', '=', fname),
-        ('res_id', '=', invoice.id),
-    ])
-    mimetype = atts._compute_mimetype({'datas': wizard.x_attached_file})
-    if atts:
-        atts.write({'datas': b64encode(wizard.x_attached_file), 'mimetype': mimetype})
-    else:
-        data_attach = {
-            'name': fname,
-            'datas': b64encode(wizard.x_attached_file),
-            'type': 'binary',
-            'mimetype': mimetype,
-            'res_model': invoice._name,
-            'res_id': invoice.id,
-        }
-        atts.create(data_attach)
+    # Create attachment
+    if wizard.x_attached_file:
+        fname = ("Addenda Airbus - %s" % (invoice.id))
+        atts = env['ir.attachment'].sudo().search([
+            ('res_model', '=', invoice._name),
+            ('name', '=', fname),
+            ('res_id', '=', invoice.id),
+        ])
+        mimetype = atts._compute_mimetype({'datas': wizard.x_attached_file})
+        if atts:
+            atts.write({'datas': b64encode(wizard.x_attached_file), 'mimetype': mimetype})
+        else:
+            data_attach = {
+                'name': fname,
+                'datas': b64encode(wizard.x_attached_file),
+                'type': 'binary',
+                'mimetype': mimetype,
+                'res_model': invoice._name,
+                'res_id': invoice.id,
+            }
+            atts.create(data_attach)
+xml_signed = invoice.l10n_mx_edi_cfdi
+if xml_signed:
+    invoice.l10n_mx_edi_append_addenda(xml_signed)
         </field>
     </record>
 
@@ -450,8 +455,9 @@ if wizard_values:
     context.update({
         'default_x_concept': wizard_values[0],
         'default_x_description': wizard_values[1],
-        'default_x_reception_num': wizard_values[2],
-        'default_x_delivery_num': wizard_values[3],
+        'default_x_purchase_order': wizard_values[2],
+        'default_x_reception_num': wizard_values[3],
+        'default_x_delivery_num': wizard_values[4],
         'default_x_type_operation': wizard_values[5],
     })
 
@@ -485,7 +491,7 @@ action['context'] = context
                 <button name="l10n_mx_edi_addendas.action_addenda_airbus_defaults" type="action"
                         string="Addenda Airbus"
                         context="{'invoice_id': id}"
-                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        attrs="{'invisible': [('state', 'not in', ['draft', 'open'])]}"
                         />
             </xpath>
         </field>

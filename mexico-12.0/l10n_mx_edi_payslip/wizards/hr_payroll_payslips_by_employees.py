@@ -1,4 +1,3 @@
-# coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
@@ -21,4 +20,5 @@ class HrPayslipEmployees(models.TransientModel):
                 'l10n_mx_edi_payment_date', False),
             'number': payslips[0].payslip_run_id.name,
         })
+        payslips.l10n_mx_edi_update_extras()
         return res

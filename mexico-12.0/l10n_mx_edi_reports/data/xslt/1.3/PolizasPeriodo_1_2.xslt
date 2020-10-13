@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:PLZ="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo">
 	<!--En esta sección se define la inclusión de las plantillas de utilerías para colapsar espacios -->
-	<xsl:include href="http://www.sat.gob.mx/esquemas/utilerias.xslt"/>
+	<xsl:include href="utilerias.xslt"/>
 	<!-- Con el siguiente método se establece que la salida deberá ser en texto -->
 	<xsl:output method="text" version="1.0" encoding="UTF-8" indent="no"/>
 	<!-- Aquí iniciamos el procesamiento de la cadena original con su | inicial y el terminador || -->

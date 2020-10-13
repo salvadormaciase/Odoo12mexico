@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
@@ -48,7 +47,7 @@ class IrAttachment(models.Model):
                 attachments_skipped |= attach
                 continue
             # used _write to avoid loop when calling method from write
-            attach._write({'l10n_mx_edi_cfdi_uuid': tfd_node.get('UUID')})
+            attach._write({'l10n_mx_edi_cfdi_uuid': tfd_node.get('UUID', '').upper().strip()})
             if not model.l10n_mx_edi_cfdi_name:
                 model.l10n_mx_edi_cfdi_name = attach.name
         (self - uuid_attachments + attachments_skipped)._write({

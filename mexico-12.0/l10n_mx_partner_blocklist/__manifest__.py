@@ -1,4 +1,3 @@
-# coding: utf-8
 # Copyright 2020 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {

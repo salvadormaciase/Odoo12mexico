@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="l10n_mx_edi_certificate_destruction" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__destruccion">"http://www.sat.gob.mx/certificadodestruccion" if record.l10n_mx_edi_serie_cd else False</attribute>
+        </xpath>
         <xpath expr="*" position="inside">
             <t t-if="record.company_id.l10n_mx_edi_complement_type == 'destruction' and record.l10n_mx_edi_serie_cd">
                 <cfdi:Complemento

@@ -1,4 +1,3 @@
-# coding: utf-8
 
 from odoo import fields
 from odoo.addons.l10n_mx_edi.tests.common import InvoiceTransactionCase

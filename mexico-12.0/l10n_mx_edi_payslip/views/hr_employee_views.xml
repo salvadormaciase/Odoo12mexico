@@ -10,7 +10,8 @@
                     <field name="ssnid"/>
                     <field name="l10n_mx_edi_is_assimilated"/>
                     <field name="l10n_mx_edi_syndicated"/>
-                    <field name="l10n_mx_edi_risk_rank"/>
+                    <field name="l10n_mx_edi_employer_registration_id"/>
+                    <field name="l10n_mx_edi_risk_rank" attrs="{'invisible': [('l10n_mx_edi_employer_registration_id', '!=', False)]}"/>
                 </group>
             </xpath>
             <xpath expr="//notebook" position="inside">
@@ -53,11 +54,16 @@
                             <field name="payment_term"/>
                         </group>
                         <group>
+                            <field name="employee_id"/>
                             <field name="loan_type"/>
                             <field name="number_fonacot"/>
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                   <field name="message_follower_ids" widget="mail_followers"/>
+                   <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -67,6 +73,7 @@
         <field name="model">hr.employee.loan</field>
         <field name="arch" type="xml">
             <tree string="Loan">
+                <field name="employee_id"/>
                 <field name="name"/>
                 <field name="monthly_withhold"/>
                 <field name="payment_term"/>
@@ -88,4 +95,50 @@
         id="l10n_mx_loan" name="Loans" parent="hr.menu_human_resources_configuration" sequence="50"
         action='action_l10n_mx_loan_method'
     />
+
+    <record id="view_employer_registration_form" model="ir.ui.view">
+        <field name="name">view.employer.registration.form</field>
+        <field name="model">l10n_mx_edi.employer.registration</field>
+        <field name="arch" type="xml">
+            <form string="Employer Registration">
+                <sheet string="Employer Registration">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="job_risk_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                   <field name="message_follower_ids" widget="mail_followers"/>
+                   <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_employer_registration_tree" model="ir.ui.view">
+        <field name="name">view.employer.registration.tree</field>
+        <field name="model">l10n_mx_edi.employer.registration</field>
+        <field name="arch" type="xml">
+            <tree string="Employer Registration">
+                <field name="name"/>
+                <field name="job_risk_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_employer_registration" model="ir.actions.act_window">
+        <field name="name">Employer Registration</field>
+        <field name="res_model">l10n_mx_edi.employer.registration</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="grp_employer_registration" name="Employer Registration" parent="hr.menu_human_resources_configuration"
+        sequence="50" action='action_employer_registration'/>
+
 </odoo>

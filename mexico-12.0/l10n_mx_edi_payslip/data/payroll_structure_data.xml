@@ -1,5 +1,18 @@
 <?xml version="1.0" ?>
 <odoo noupdate="1">
+    <record id="payroll_structure_data_05" model="hr.payroll.structure">
+        <field name='name'>PTU</field>
+        <field name='code'>PTU</field>
+        <field eval="[(6, 0, [
+            ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_perception_003_e'),
+            ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_perception_003_g'),
+            ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_isr'),
+            ref('hr_rule_l10n_mx_payroll_other_payment_002_ptu'),
+            ref('hr_rule_l10n_mx_payroll_deduction_071_ptu'),
+            ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_other_payment_aux_002'),
+            ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_002'),
+            ref('hr_rule_net_salary_0'),])]" name="rule_ids"/>
+    </record>
     <record id="payroll_structure_data_04" model="hr.payroll.structure">
         <field name='name'>Liquidación CFDI</field>
         <field name='code'>CFDI_LIQUIDACION</field>
@@ -120,6 +133,7 @@
             ref('hr_rule_l10n_mx_payroll_deduction_002'),
             ref('hr_rule_l10n_mx_payroll_deduction_003'),
             ref('hr_rule_l10n_mx_payroll_deduction_004'),
+            ref('hr_rule_l10n_mx_payroll_deduction_004_internal_discount'),
             ref('hr_rule_l10n_mx_payroll_deduction_005'),
             ref('hr_rule_l10n_mx_payroll_deduction_006'),
             ref('hr_rule_l10n_mx_payroll_deduction_007'),

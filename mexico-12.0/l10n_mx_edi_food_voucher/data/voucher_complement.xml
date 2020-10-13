@@ -4,6 +4,9 @@
         <xpath expr="//*[local-name()='Receptor']" position="after">
             <t t-set="voucher_products" t-value="record.invoice_line_ids.filtered(lambda r: r.l10n_mx_edi_voucher_id and r.price_subtotal == 0)"/>
         </xpath>
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__valesdedespensa">"http://www.sat.gob.mx/valesdedespensa" if record.invoice_line_ids.filtered(lambda r: r.l10n_mx_edi_voucher_id and r.price_subtotal == 0) else False</attribute>
+        </xpath>
         <xpath expr="*" position="inside">
             <t t-if="voucher_products">
                 <cfdi:Complemento

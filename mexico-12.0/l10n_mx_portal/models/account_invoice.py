@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from odoo import api, models, _
 from odoo.tools import date_utils

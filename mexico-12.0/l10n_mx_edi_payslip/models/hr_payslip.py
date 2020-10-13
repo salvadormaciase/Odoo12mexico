@@ -1,4 +1,3 @@
-# coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from __future__ import division
 
@@ -885,7 +884,8 @@ class HrPayslip(models.Model):
             'record': self,
             'company': self.company_id or self.contract_id.company_id,
             'employee': self.employee_id,
-            'payslip_type': 'O',
+            'payslip_type': 'O' if self.struct_id == self.env.ref(
+                'l10n_mx_edi_payslip.payroll_structure_data_01') else 'E',
             'number_of_days': int(sum(self.worked_days_line_ids.mapped(
                 'number_of_days'))),
             'date_start': self.contract_id.date_start,
@@ -1170,6 +1170,34 @@ class HrPayslip(models.Model):
             return True
         return False
 
+    def l10n_mx_edi_name(self, input):
+        self.ensure_one()
+        if not self.company_id.l10n_mx_edi_dynamic_name:
+            return input.name
+        inputs = input.salary_rule_id.input_ids
+        if not inputs:
+            return input.name
+        return self.input_line_ids.filtered(lambda l: l.code == inputs[0].code)[0].name or input[0].name
+
+    def l10n_mx_edi_update_extras(self):
+        """Update the extra inputs defined for the employees"""
+        extras = self.env['hr.payslip.extra'].search([
+            ('state', '=', 'approved'),
+            ('date', '>=', self.mapped('payslip_run_id').date_start or self[0].date_from),
+            ('date', '<=', self.mapped('payslip_run_id').date_end or self[0].date_to)])
+        for slip in self.filtered('contract_id'):
+            slip_extras = extras.mapped('detail_ids').filtered(
+                lambda e: e.employee_id == slip.employee_id and e.amount)
+            slip.input_line_ids.filtered(lambda l: l.code in slip_extras.mapped('extra_id.input_id.code')).unlink()
+            for extra, _records in groupby(slip_extras, lambda r: r.extra_id):
+                slip.input_line_ids = [(0, 0, {
+                    'name': extra.input_id.name,
+                    'amount': sum(slip_extras.filtered(lambda e: e.extra_id == extra).mapped('amount')),
+                    'code': extra.input_id.code,
+                    'contract_id': slip.contract_id.id,
+                })]
+            slip.compute_sheet()
+
 
 class HrEmployee(models.Model):
 
@@ -1194,6 +1222,10 @@ class HrEmployee(models.Model):
         'hr.employee.loan', 'employee_id', 'Loans',
         help='Indicate the loans for the employee. Will be considered on the '
         'payslips.')
+    l10n_mx_edi_employer_registration_id = fields.Many2one(
+        'l10n_mx_edi.employer.registration', 'Employer Registration',
+        help='If the company has multiple employer registration, define the '
+        'correct for this employee.')
 
     @api.multi
     def get_cfdi_employee_data(self, contract):
@@ -1280,11 +1312,17 @@ class HrContract(models.Model):
         'Food Voucher Amount',
         help='Amount to be paid in food voucher each payment period.')
     l10n_mx_edi_punctuality_bonus = fields.Float(
-        'Punctuality bonus', help='If the company offers punctuality bonus, indicate the bonus amount by week.',
-        track_visibility='onchange')
+        'Punctuality bonus', track_visibility='onchange',
+        help='If the company offers punctuality bonus, indicate the bonus amount by payment period.')
     l10n_mx_edi_attendance_bonus = fields.Float(
-        'Attendance bonus', help='If the company offers attendance bonus, indicate the bonus amount by week.',
-        track_visibility='onchange')
+        'Attendance bonus', track_visibility='onchange',
+        help='If the company offers attendance bonus, indicate the bonus amount by payment period.')
+    l10n_mx_edi_salary_type = fields.Selection([
+        ('0', 'Fixed'),
+        ('1', 'Variable'),
+        ('2', 'Mixed'),
+    ], 'Salary type', help='The action that updates automatically the SDI variable each bimester could discard '
+        'contracts based on this field.')
 
     @api.depends()
     def _compute_sdi_total(self):
@@ -1321,12 +1359,12 @@ class HrContract(models.Model):
             payslips = payslips.search([
                 ('contract_id', '=', record.id), ('state', '=', 'done'),
                 ('date_from', '>=', date_from), ('date_to', '<=', date_to)])
-            work100 = sum(payslips.mapped('worked_days_line_ids').filtered(
+            worked = sum(payslips.mapped('worked_days_line_ids').filtered(
                 lambda work: work.code == 'WORK100').mapped('number_of_days'))
-            inputs = sum(payslips.mapped('line_ids').filtered(lambda input: input.category_id in categories).mapped(
-                'total'))
-            record.l10n_mx_edi_sdi_variable = ((inputs - (record.wage * 2)) / work100) if work100 else 0
-            # TODO - hay que saber si se obtuvieron extras?
+            inputs = sum(payslips.mapped('line_ids').filtered(
+                lambda input: input.category_id in categories and not (input.code.endswith(
+                    '001') or input.code.endswith('046'))).mapped('total'))
+            record.l10n_mx_edi_sdi_variable = (inputs / worked) if worked else 0
 
     @api.onchange('wage', 'l10n_mx_edi_vacation_bonus', 'l10n_mx_edi_christmas_bonus', 'l10n_mx_edi_holidays')
     def _onchange_integrated_salary(self):

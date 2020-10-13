@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:PLZ="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:contelec_td="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE" targetNamespace="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:import namespace="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE" schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE/CatalogosParaEsqContE.xsd"/>
+	<xs:import namespace="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogosParaEsqContE" schemaLocation="CatalogosParaEsqContE.xsd"/>
 	<xs:element name="Polizas">
 		<xs:annotation>
 			<xs:documentation>Estándar de pólizas del periodo que se entrega como parte de la contabilidad electrónica.</xs:documentation>

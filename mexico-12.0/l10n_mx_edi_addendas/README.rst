@@ -244,7 +244,7 @@ Now, the addenda requires to fill this fields:
 
 - **Date Purchase Order**: this is the date of the purchase order.
 
-- **Order Number**: this is the number of the pruchase order.
+- **Order Number**: this is the number of the purchase order.
 
 - **Lines**: these are the products from the invoice line with theirs supplier
   code. You can set the product's supplier code from here or from the Providers 
@@ -432,6 +432,86 @@ Some values are static and will need to be set up per issuer on the template:
 - **Num Supplier**: Number, assigned to partner, as found in SAP. It is
   enclosed in double-hyphens. For instance, the field is found as: 
   ``--Supplier num here--``.
+
+Bed Bath
+--------
+
+This addenda require to configure some additional values in the Client:
+
+- **Internal Reference**: this is the 'Internal Reference' field found in the
+  'Sales & Purchase' tag of the client's record. Here you will set the GLN of
+  the client.
+
+- **Notes**: this is the 'Notes' field found in the 'Shipping Address' of the
+  client. Here you will set the GLN of the shipping address, if this field is
+  not set the GLN for the shipping address in the addenda will be the same as
+  the client itself.
+
+Now, the addenda requires to fill this fields:
+
+- **Additional Reference Code**: this is the attribute to specify the code of
+  Additional references and the possible values are:
+
+  - *AAE*: Property account
+  - *CK*: Check number
+  - *ACE*: Document number (Referral)
+  - *ATZ*: Approval number.
+  - *AWR*: Number of document that is replaced
+  - *ON*: Order number (buyer)
+  - *DQ*: Merchandise receipt sheet
+  - *IV*: Invoice Number
+
+- **Additional Reference Number**: this is to express the additional reference
+  number and it is related to the selection of the previous field.
+
+- **Date Purchase Order**: this is the date of the purchase order.
+
+- **Order Number**: this is the number of the purchase order.
+
+- **Lines**: these are the products from the invoice line with theirs supplier
+  code. You can set the product's supplier code from here or from the Providers 
+  in the 'Purchase' tag in the product configuration. This is the product GLNI
+  code.
+
+Dunosusa (Del Panadero)
+-----------------------
+
+This addenda require to configure some additional values in the Client:
+
+- **Internal Reference**: this is the 'Internal Reference' field found in the
+  'Sales & Purchase' tag of the client's record. Here you will set the GLN of
+  the client.
+
+- **Notes**: this is the 'Notes' field found in the 'Shipping Address' of the
+  client. Here you will set the GLN of the shipping address, if this field is
+  not set the GLN for the shipping address in the addenda will be the same as
+  the client itself.
+
+Now, the addenda requires to fill this fields:
+
+- **Additional Reference Code**: this is the attribute to specify the code of
+  Additional references and the possible values are:
+
+  - *AAE*: Property account
+  - *CK*: Check number
+  - *ACE*: Document number (Referral)
+  - *ATZ*: Approval number.
+  - *AWR*: Number of document that is replaced
+  - *ON*: Order number (buyer)
+  - *DQ*: Merchandise receipt sheet
+  - *IV*: Invoice Number
+
+- **Additional Reference Number**: this is to express the additional reference
+  number and it is related to the selection of the previous field.
+
+- **Date Purchase Order**: this is the date of the purchase order.
+
+- **Order Number**: this is the number of the purchase order.
+
+- **Lines**: these are the products from the invoice line with theirs supplier
+  code. You can set the product's supplier code from here or from the Providers
+  in the 'Purchase' tag in the product configuration. This is the product GLNI
+  code.
 
 
 Technical:

@@ -2,6 +2,9 @@
 <odoo>
 
     <template id="fiscal_legend_template" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__leyendasFisc">"http://www.sat.gob.mx/leyendasFiscales" if record.l10n_mx_edi_legend_ids else False</attribute>
+        </xpath>
         <xpath expr="*" position="inside">
             <t t-if="record.l10n_mx_edi_legend_ids">
                 <cfdi:Complemento

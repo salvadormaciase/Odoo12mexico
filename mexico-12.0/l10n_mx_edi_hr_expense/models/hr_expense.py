@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import re
@@ -558,7 +557,7 @@ class HrExpense(models.Model):
         "Count CFDI's", track_visibility='onchange')
     l10n_mx_edi_invoice_id = fields.Many2one(
         'account.invoice', 'Invoice', help='Invoice created with this expense',
-        readonly=True, copy=False)
+        readonly=True, copy=False, index=True)
     l10n_mx_edi_document_type = fields.Selection(
         [('in_invoice', 'Vendor Bill'), ('in_refund', 'Vendor Credit Note')],
         'Document Type', help="Save the document type in the CFDI.")

@@ -50,4 +50,21 @@ model.update_integrated_salary()
         <field name="doall" eval="True"/>
         <field name="active" eval="False"/>
     </record>
+    <record id="ir_cron_update_sdiv_contract" model="ir.cron">
+        <field name="name">Mexico: Actualizar Salario Diario Integrado Variable</field>
+        <field name="model_id" ref="hr_contract.model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">
+contracts = env['hr.contract'].search([
+    ('state', '=', 'open'),
+])
+contracts.compute_integrated_salary_variable()
+        </field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">2</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="True"/>
+        <field name="active" eval="False"/>
+    </record>
 </odoo>

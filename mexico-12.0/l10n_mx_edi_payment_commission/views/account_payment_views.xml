@@ -12,4 +12,18 @@
             </xpath>
         </field>
     </record>
+    <record model="ir.ui.view" id="view_account_reg_payment_form_commission_l10n_mx">
+        <field name="name">view.account.reg.payment.form.commission.l10n.mx</field>
+        <field name="model">account.register.payments</field>
+        <field name="inherit_id" ref="account.view_account_payment_from_invoices"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//group" position="inside">
+                    <group attrs="{'invisible': [('payment_difference_handling','=','open')]}">
+                        <field name="l10n_mx_edi_is_commission"/>
+                    </group>
+                </xpath>
+            </data>
+        </field>
+    </record>
 </odoo>

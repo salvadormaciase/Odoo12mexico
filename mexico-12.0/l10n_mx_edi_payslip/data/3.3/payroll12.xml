@@ -2,7 +2,7 @@
 <odoo>
     <template id="payroll12">
         <cfdi:Comprobante
-            xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd http://www.sat.gob.mx/nomina12 http://www.sat.gob.mx/sitio_internet/cfd/nomina/nomina12.xsd"
+             xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/nomina12 http://www.sat.gob.mx/sitio_internet/cfd/nomina/nomina12.xsd"
              xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:nomina12="http://www.sat.gob.mx/nomina12"
@@ -61,9 +61,10 @@
                     t-att-TotalPercepciones="'%.2f' % total_perceptions"
                     t-att-TotalDeducciones="'%.2f' % total_deductions if total_deductions else False"
                     t-att-TotalOtrosPagos="'%.2f' % total_other if total_other else False">
+                    <t t-set="employer_register" t-value="record._get_string_cfdi((company.company_registry if not employee.l10n_mx_edi_employer_registration_id else employee.l10n_mx_edi_employer_registration_id.name) or '', 20) if contract_type not in ('09', '10', '99') else False"/>
                     <nomina12:Emisor
                         t-att-Curp="company.partner_id.l10n_mx_edi_curp"
-                        t-att-RegistroPatronal="record._get_string_cfdi(company.company_registry or '', 20)"
+                        t-att-RegistroPatronal="employer_register"
                         t-att-RfcPatronOrigen="company.vat">
                         <t t-if="record.l10n_mx_edi_source_resource">
                             <nomina12:EntidadSNCF
@@ -73,9 +74,9 @@
                     </nomina12:Emisor>
                     <nomina12:Receptor
                         t-att-Curp="customer.l10n_mx_edi_curp"
-                        t-att-NumSeguridadSocial="employee.ssnid"
-                        t-att-FechaInicioRelLaboral="date_start"
-                        t-att-Antigüedad="seniority_emp"
+                        t-att-NumSeguridadSocial="employee.ssnid if employer_register else False"
+                        t-att-FechaInicioRelLaboral="date_start if employer_register else False"
+                        t-att-Antigüedad="seniority_emp if employer_register else False"
                         t-att-TipoContrato="contract_type"
                         t-att-Sindicalizado="emp_syndicated"
                         t-att-TipoJornada="working_day"
@@ -83,12 +84,12 @@
                         t-att-NumEmpleado="employee.id"
                         t-att-Departamento="record._get_string_cfdi(employee.department_id.name or '')"
                         t-att-Puesto="record._get_string_cfdi(employee.job_id.name or '')"
-                        t-att-RiesgoPuesto="employee.l10n_mx_edi_risk_rank.code"
+                        t-att-RiesgoPuesto="(employee.l10n_mx_edi_risk_rank if not employee.l10n_mx_edi_employer_registration_id else employee.l10n_mx_edi_employer_registration_id.job_risk_id).code if employer_register else False"
                         t-att-PeriodicidadPago="employee.contract_id.schedule_pay if payslip_type != 'E' else 99"
-                        t-att-Banco="employee.bank_account_id.bank_id.l10n_mx_edi_code if len((employee.bank_account_id.acc_number or '')) != 18 else False"
-                        t-att-CuentaBancaria="employee.bank_account_id.acc_number"
+                        t-att-Banco="employee.bank_account_id.sudo().bank_id.l10n_mx_edi_code if len((employee.bank_account_id.sudo().acc_number or '')) != 18 else False"
+                        t-att-CuentaBancaria="employee.bank_account_id.sudo().acc_number"
                         t-att-SalarioBaseCotApor="employee.contract_id.wage"
-                        t-att-SalarioDiarioIntegrado="emp_diary_salary"
+                        t-att-SalarioDiarioIntegrado="emp_diary_salary if employer_register else False"
                         t-att-ClaveEntFed="employee.address_id.state_id.code">
                         <t t-foreach="outsourcing" t-as="out">
                             <nomina12:SubContratacion
@@ -106,7 +107,7 @@
                             <nomina12:Percepcion
                                 t-att-TipoPercepcion="perception.code[-3:]"
                                 t-att-Clave="perception.salary_rule_id.l10n_mx_edi_code or perception.code"
-                                t-att-Concepto="record._get_string_cfdi(perception.name or '')"
+                                t-att-Concepto="record._get_string_cfdi(record.l10n_mx_edi_name(perception) or '')"
                                 t-att-ImporteGravado="perception.total if perception.category_id == category_taxed else '0.0'"
                                 t-att-ImporteExento="perception.total if perception.category_id == category_exempt else '0.0'">
                                 <t t-if="perception.code[2:] == '045'">
@@ -152,7 +153,7 @@
                                 <nomina12:Deduccion
                                     t-att-TipoDeduccion="deduction.code[-3:]"
                                     t-att-Clave="deduction.salary_rule_id.l10n_mx_edi_code or deduction.code"
-                                    t-att-Concepto="record._get_string_cfdi(deduction.name or '')"
+                                    t-att-Concepto="record._get_string_cfdi(record.l10n_mx_edi_name(deduction) or '')"
                                     t-att-Importe="'%.2f' % abs(deduction.total)"/>
                             </t>
                         </nomina12:Deducciones>

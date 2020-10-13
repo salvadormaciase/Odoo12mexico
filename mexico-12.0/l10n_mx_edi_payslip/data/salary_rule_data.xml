@@ -332,11 +332,17 @@ result = exempt if result &gt;= exempt else result
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
-daily_wage = contract.wage / 30
-uma = contract.company_id.l10n_mx_edi_uma
-result = daily_wage * holidays * .25
-result = uma * 15 if result >= (uma * 15) else result
+vacation_bonus = payslip.company_id.l10n_mx_edi_vacation_bonus
+result = holidays = 0
+if not vacation_bonus or vacation_bonus == 'on_holidays':
+    holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
+elif vacation_bonus == 'on_anniversary' and payslip.date_from.month == contract.date_start.month and payslip.date_from.day != contract.date_start.year and payslip.date_from.day &lt;= contract.date_start.day &lt;= payslip.date_to.day:
+    holidays = contract.get_current_holidays()
+if holidays:
+    daily_wage = contract.wage / 30
+    uma = contract.company_id.l10n_mx_edi_uma
+    result = daily_wage * holidays * contract.l10n_mx_edi_vacation_bonus / 100
+    result = uma * 15 if result >= (uma * 15) else result
         </field>
         <field name="note">Sólo 15 dias de SM son exentos, el excedente es gravado</field>
     </record>
@@ -348,11 +354,17 @@ result = uma * 15 if result >= (uma * 15) else result
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
-daily_wage = contract.wage / 30
-uma = contract.company_id.l10n_mx_edi_uma
-result = daily_wage * holidays * .25
-result = result - uma * 15 if result >= uma * 15 else 0
+vacation_bonus = payslip.company_id.l10n_mx_edi_vacation_bonus
+result = holidays = 0
+if not vacation_bonus or vacation_bonus == 'on_holidays':
+    holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
+elif vacation_bonus == 'on_anniversary' and payslip.date_from.month == contract.date_start.month and payslip.date_from.day != contract.date_start.year and payslip.date_from.day &lt;= contract.date_start.day &lt;= payslip.date_to.day:
+    holidays = contract.get_current_holidays()
+if holidays:
+    daily_wage = contract.wage / 30
+    uma = contract.company_id.l10n_mx_edi_uma
+    result = daily_wage * holidays * contract.l10n_mx_edi_vacation_bonus / 100
+    result = result - uma * 15 if result >= uma * 15 else 0
         </field>
         <field name="note">Sólo 15 dias de SM son exentos, el excedente es gravado</field>
     </record>
@@ -826,11 +838,16 @@ result = result - minimum_wage * 7 if result >= minimum_wage * 7 else 0
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = 0
-if not worked_days.dict.get('AUSENCIA') and payslip.env['hr.payslip'].browse(payslip.id).payslip_run_id.l10n_mx_edi_productivity_bonus:
-    slips = payslip.payslip_run_id.slip_ids.filtered(lambda sl: 'AUSENCIA' not in sl.worked_days_line_ids.mapped('code'))
-    result = payslip.payslip_run_id.l10n_mx_edi_productivity_bonus / len(slips)
+result = inputs.pgpe_038 and inputs.pgpe_038.amount
+if not worked_days.dict.get('FALTA_INJUSTIFICADA') and payslip.env['hr.payslip'].browse(payslip.id).payslip_run_id.l10n_mx_edi_productivity_bonus:
+    slips = payslip.payslip_run_id.slip_ids.filtered(lambda sl: 'FALTA_INJUSTIFICADA' not in sl.worked_days_line_ids.mapped('code'))
+    result += payslip.payslip_run_id.l10n_mx_edi_productivity_bonus / len(slips)
         </field>
+    </record>
+    <record id="hr_rule_input_perception_productivity_038_g" model="hr.rule.input">
+        <field name="code">pgpe_038</field>
+        <field name="name">Premios eficiencia</field>
+        <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_productivity_g"/>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_attendance_bonus_g" model="hr.salary.rule">
         <field name="name">Premio de Asistencia</field>
@@ -840,17 +857,10 @@ if not worked_days.dict.get('AUSENCIA') and payslip.env['hr.payslip'].browse(pay
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-ausencias = worked_days.dict.get('AUSENCIA') and worked_days.AUSENCIA.number_of_days or False
-holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
-result = contract.l10n_mx_edi_attendance_bonus
-if not ausencias and contract.schedule_pay == '02':
-    if holidays:
-        hours_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_hours or 0.0
-        result = result / sum([line.hour_to - line.hour_from for line in contract.resource_calendar_id.attendance_ids]) * hours_work
-elif contract.schedule_pay == '04':
-    if ausencias:
-        result = contract.l10n_mx_edi_attendance_bonus
-    result = result / 15 * (15 - holidays)
+result = 0
+absence = worked_days.dict.get('FALTA_INJUSTIFICADA') and worked_days.FALTA_INJUSTIFICADA.number_of_days or False
+if not absence:
+    result = contract.l10n_mx_edi_attendance_bonus
         </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_punctuality_bonus_g" model="hr.salary.rule">
@@ -861,17 +871,11 @@ elif contract.schedule_pay == '04':
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-ausencias = worked_days.dict.get('AUSENCIA') and worked_days.AUSENCIA.number_of_days or False
-holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
-result = contract.l10n_mx_edi_punctuality_bonus
-if not ausencias and contract.schedule_pay == '02':
-    if holidays:
-        hours_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_hours or 0.0
-        result = result / sum([line.hour_to - line.hour_from for line in contract.resource_calendar_id.attendance_ids]) * hours_work
-elif contract.schedule_pay == '04':
-    if ausencias:
-        result = contract.l10n_mx_edi_punctuality_bonus
-    result = result / 15 * (15 - holidays)
+result = 0
+absence = worked_days.dict.get('FALTA_INJUSTIFICADA') and worked_days.FALTA_INJUSTIFICADA.number_of_days or False
+delay = True if worked_days.dict.get('RETARDO') else False
+if not absence and not delay:
+    result = contract.l10n_mx_edi_punctuality_bonus
         </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_039_e" model="hr.salary.rule">
@@ -1147,6 +1151,7 @@ if not employee.l10n_mx_edi_is_assimilated:
     sbc = contract.l10n_mx_edi_sdi_total
     uma = contract.company_id.l10n_mx_edi_uma
     days_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_days or 0.0
+    days_work += worked_days.dict.get('FALTA_INJUSTIFICADA') and worked_days.FALTA_INJUSTIFICADA.number_of_days or 0.0
     salary = days_work * sbc
 
     result = 0.02375 * salary
@@ -1343,6 +1348,34 @@ result = -1 * (income_period * efective_rate)
         <field name="code">d_004</field>
         <field name="name">Otros</field>
         <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_004"/>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_deduction_004_internal_discount" model="hr.salary.rule">
+        <field name="name">Descuento Interno</field>
+        <field name="sequence" eval="57001"/>
+        <field name="code">DI004</field>
+        <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0
+for loan in employee.loan_ids.filtered(lambda l: l.loan_type == 'internal' and l.payslips_count &lt; l.payment_term):
+    payment_daily = (loan.monthly_withhold / 30)
+    if contract.schedule_pay ==  '01':
+        result += payment_daily
+    elif contract.schedule_pay ==  '02':
+        result += payment_daily * 7
+    elif contract.schedule_pay == '03':
+        result += payment_daily * 14
+    elif contract.schedule_pay == '04':
+        result += payment_daily * 15
+    elif contract.schedule_pay == '05':
+        result += contract.wage
+    elif contract.schedule_pay == '06':
+        result += contract.wage * 2
+    elif contract.schedule_pay == '10':
+        result += contract.wage * 10
+result = -result
+        </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_deduction_005" model="hr.salary.rule">
         <field name="name">Aportaciones a Fondo de vivienda</field>
@@ -2318,7 +2351,18 @@ if days_work:
         if income_period >=value[0] and value[1] >= income_period:
             result = value[2]
             break
-    result = -0.01 if not (result * days_work) / 30 else 0 </field>
+    result = (-0.01 if employee.address_home_id.property_account_position_id.l10n_mx_edi_code == '02' else 0) if not (result * days_work) / 30 else 0 </field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_deduction_071_ptu" model="hr.salary.rule">
+        <field name="name">Ajuste en Subsidio para el empleo - efectivamente entregado al trabajador</field>
+        <field name="sequence" eval="81700"/>
+        <field name="code">PTU071</field>
+        <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -0.01 if employee.address_home_id.property_account_position_id.l10n_mx_edi_code == '02' else 0
+        </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_deduction_072" model="hr.salary.rule">
         <field name="name">Ajuste en Ingresos en acciones o títulos valor que representan bienes Exento</field>
@@ -2867,7 +2911,19 @@ if not result:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = AUX_OP002
-result = result + AUX_ISR if result &gt; abs(AUX_ISR) else 0.01</field>
+result = result + AUX_ISR if result &gt; abs(AUX_ISR) else (0.01 if employee.address_home_id.property_account_position_id.l10n_mx_edi_code == '02' else 0)
+        </field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_other_payment_002_ptu" model="hr.salary.rule">
+        <field name="name">Subsidio para el empleo - efectivamente entregado al trabajador</field>
+        <field name="code">OPTU002</field>
+        <field name="sequence">87000</field>
+        <field name="category_id" ref="hr_salary_rule_category_other_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0.01 if employee.address_home_id.property_account_position_id.l10n_mx_edi_code == '02' else 0
+        </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_other_payment_003" model="hr.salary.rule">
         <field name="name">Viáticos - entregados al trabajador</field>
@@ -2983,13 +3039,14 @@ if not employee.l10n_mx_edi_is_assimilated:
     sbc = contract.l10n_mx_edi_integrated_salary
     uma = contract.company_id.l10n_mx_edi_uma
     days_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_days or 0.0
-    specie_fixed = uma * 0.204 * days_work
-    specie_excess = ((sbc - (uma * 3)) * 0.011 * days_work) if (sbc - (uma * 3)) &gt; 0 else 0
+    leaves = worked_days.dict.get('FALTA_INJUSTIFICADA') and worked_days.FALTA_INJUSTIFICADA.number_of_days or 0.0
+    specie_fixed = uma * 0.204 * (days_work + leaves)
+    specie_excess = ((sbc - (uma * 3)) * 0.011 * (days_work + leaves)) if (sbc - (uma * 3)) &gt; 0 else 0
     aux = sbc * days_work
-    benefits = 0.007 * aux
-    pensioners = 0.0105 * aux
+    benefits = 0.007 * sbc * (days_work + leaves)
+    pensioners = 0.0105 * sbc * (days_work + leaves)
     disability = 0.0175 * aux
-    risk = employee.l10n_mx_edi_risk_rank.percentage / 100 * aux
+    risk = (employee.l10n_mx_edi_risk_rank if not employee.l10n_mx_edi_employer_registration_id else employee.l10n_mx_edi_employer_registration_id.job_risk_id).percentage / 100 * aux
     kindergarten = 0.01 * aux
 
     result = -(specie_fixed + specie_excess + benefits + pensioners + disability + risk + kindergarten)
@@ -3007,6 +3064,9 @@ result = 0
 if not employee.l10n_mx_edi_is_assimilated:
     sbc = contract.l10n_mx_edi_integrated_salary
     days_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_days or 0.0
+    days_work += worked_days.dict.get('MATERNITY') and worked_days.MATERNITY.number_of_days or 0.0
+    days_work += worked_days.dict.get('INCAPACIDAD_POR_RIESGO_DE_TRABAJO') and worked_days.INCAPACIDAD_POR_RIESGO_DE_TRABAJO.number_of_days or 0.0
+    days_work += worked_days.dict.get('INCAPACIDAD_POR_ENFERMEDAD_GENERAL') and worked_days.INCAPACIDAD_POR_ENFERMEDAD_GENERAL.number_of_days or 0.0
     aux = sbc * days_work
     infonavit = 0.05 * aux
 
@@ -3025,6 +3085,9 @@ result = 0
 if not employee.l10n_mx_edi_is_assimilated:
     sbc = contract.l10n_mx_edi_integrated_salary
     days_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_days or 0.0
+    days_work += worked_days.dict.get('MATERNITY') and worked_days.MATERNITY.number_of_days or 0.0
+    days_work += worked_days.dict.get('INCAPACIDAD_POR_RIESGO_DE_TRABAJO') and worked_days.INCAPACIDAD_POR_RIESGO_DE_TRABAJO.number_of_days or 0.0
+    days_work += worked_days.dict.get('INCAPACIDAD_POR_ENFERMEDAD_GENERAL') and worked_days.INCAPACIDAD_POR_ENFERMEDAD_GENERAL.number_of_days or 0.0
     aux = sbc * days_work
     retirement = 0.02 * aux
 

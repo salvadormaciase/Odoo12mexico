@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
 {
     "name": "Discounts by amount",

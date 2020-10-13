@@ -50,7 +50,7 @@
                     <attribute name="widget"/>
                     <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
                 </xpath>
-                <xpath expr="//group/group[last()]//field[@name='journal_id']" position="attributes">
+                <xpath expr="//group/div//field[@name='journal_id']" position="attributes">
                     <attribute name="widget"/>
                     <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
                 </xpath>

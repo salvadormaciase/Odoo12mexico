@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="donations" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes">
+            <attribute name="t-att-xmlns__donat">"http://www.sat.gob.mx/donat" if record.partner_id.l10n_mx_edi_donations else False</attribute>
+        </xpath>
         <xpath expr="*" position="inside">
             <t t-if="record.partner_id.l10n_mx_edi_donations">
                 <cfdi:Complemento

@@ -3,7 +3,7 @@
 
     <template id="retailer" inherit_id="l10n_mx_edi.cfdiv33">
         <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
-            <attribute name="xmlns__detallista">http://www.sat.gob.mx/detallista</attribute>
+            <attribute name="t-att-xmlns__detallista">"http://www.sat.gob.mx/detallista" if record.x_complement_retailer_data else False</attribute>
         </xpath>
         <xpath expr="*" position="inside">
             <cfdi:Complemento

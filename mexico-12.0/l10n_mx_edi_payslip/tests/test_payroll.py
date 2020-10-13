@@ -1,4 +1,3 @@
-# coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -310,6 +309,17 @@ class HRPayroll(TransactionCase):
         xml_1 = objectify.fromstring(base64.b64decode(xml_attachs[0].datas))
         xml_2 = objectify.fromstring(base64.b64decode(xml_attachs[1].datas))
         self.assertEqualXML(xml_1, xml_2)
+
+    def test_014_assimilated(self):
+        """Tests case when the employee is assimilated"""
+        payroll = self.create_payroll()
+        payroll.employee_id.l10n_mx_edi_is_assimilated = True
+        payroll.employee_id.address_home_id.property_account_position_id = self.env.ref(
+            'l10n_mx_edi_payslip.account_fiscal_position_09_emp')
+        payroll.contract_id.type_id = self.env.ref('l10n_mx_edi_payslip.hr_contract_type_99')
+        payroll.action_payslip_done()
+        self.assertEqual(payroll.l10n_mx_edi_pac_status, 'signed',
+                         payroll.message_ids.mapped('body'))
 
     def create_payroll(self):
         return self.payslip_obj.create({

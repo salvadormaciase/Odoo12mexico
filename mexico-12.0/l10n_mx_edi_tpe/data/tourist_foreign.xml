@@ -28,6 +28,9 @@
         </t>
     </template>
     <template id="template_xml_tpe" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__tpe">"http://www.sat.gob.mx/TuristaPasajeroExtranjero" if record.partner_id.country_id != record.company_id.country_id and record.invoice_line_ids.filtered(lambda r: r.product_id.l10n_mx_edi_tpe_track) else False</attribute>
+        </xpath>
         <xpath expr="*" position="inside">
             <t t-call="l10n_mx_edi_tpe.l10n_mx_edi_tpe_xml" t-lang="es_MX"/>
         </xpath>

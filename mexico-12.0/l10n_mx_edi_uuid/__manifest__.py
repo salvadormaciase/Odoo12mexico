@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Vauxoo Oscar Alcala <oscar@vauxoo.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
@@ -7,7 +6,7 @@
         Adds the option to search by the uuid of the attachment
         of the invoice by default when searching for the name
     """,
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "author": "Vauxoo",
     "category": "Localization/Mexico",
     "website": "http://www.vauxoo.com/",
