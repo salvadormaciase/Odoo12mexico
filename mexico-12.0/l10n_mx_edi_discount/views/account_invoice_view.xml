@@ -11,6 +11,9 @@
             <xpath expr="//field[@name='amount_untaxed']" position="after">
                 <field name="l10n_mx_edi_total_discount"/>
             </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="after" >
+                 <field name="em_mm_desc" readonly="1" attrs="{'column_invisible':[('parent.l10n_mx_edi_origin','=', False)]}"/>
+            </xpath>
         </field>
     </record>
     <record model="ir.ui.view" id="invoice_form_supplier_l10n_mx_discount">
@@ -35,6 +38,7 @@
             <xpath expr="//field[@name='discount']" position="after">
                 <field name="l10n_mx_edi_amount_discount"/>
                 <field name="l10n_mx_edi_total_discount"/>
+                <field name="em_mm_desc"/>
             </xpath>
         </field>
     </record>
