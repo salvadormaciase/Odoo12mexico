@@ -31,8 +31,8 @@
         <field name="arch" type="xml">
             <field name="uom_id" position="before">
                  <field name="sum_of_stock"/>
-                   <field name="total_purchase"/>
-                   <field name="qty_total_po"/>
+                   <field name="transito"/>
+                   <field name="qty_transito"/>
                    <field name="min_qty"/>
                    <field name="max_qty"/>
                    <field name="recovery"/>
@@ -47,8 +47,8 @@
         <field name="arch" type="xml">
             <field name="uom_id" position="before">
                  <field name="sum_of_stock"/>
-                   <field name="total_purchase"/>
-                   <field name="qty_total_po"/>
+                   <field name="transito"/>
+                   <field name="qty_transito"/>
                    <field name="min_qty"/>
                    <field name="max_qty"/>
                    <field name="recovery"/>
@@ -63,8 +63,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='general_information']/group/group[@name='group_general']" position="inside">
                        <field name="sum_of_stock"/>
-                       <field name="total_purchase"/>
-                       <field name="qty_total_po"/>
+                       <field name="transito"/>
+                       <field name="qty_transito"/>
                        <field name="min_qty"/>
                        <field name="max_qty"/>
                        <field name="recovery"/>

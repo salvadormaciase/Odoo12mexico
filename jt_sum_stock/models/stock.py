@@ -37,48 +37,20 @@ class StockLocation(models.Model):
 class Product(models.Model):
     _inherit = "product.product"
 
-    @api.multi
-    def _compute_purchases(self):
-        domain = [
-            ('state', '!=', 'cancel'),
-            ('product_id', 'in', self.mapped('id')),
-        ]
-        order_lines = self.env['purchase.order.line'].read_group(domain, ['product_id', 'product_uom_qty'],
-                                                                 ['product_id'])
-        purchased_data = dict([(data['product_id'][0], data['product_uom_qty']) for data in order_lines])
-        for product in self:
-            product.total_purchase = float_round(purchased_data.get(product.id, 0),
-                                                        precision_rounding=product.uom_id.rounding)
-
+    @api.depends('min_qty', 'max_qty', 'qty_transito')
     def _compute_recovery(self):
         for product in self:
-            stock = product.qty_available
+            stock = product.qty_transito
             min = product.min_qty
             max = product.max_qty
-            domain = [
-                ('state', 'in', ['draft', 'sent', 'to approve']),
-                ('product_id', '=', product.id),
-            ]
-            order_lines = self.env['purchase.order.line'].read_group(domain, ['product_id', 'product_uom_qty'],
-                                                                     ['product_id'])
-            purchased_data = dict([(data['product_id'][0], data['product_uom_qty']) for data in order_lines])
-            requested = float_round(purchased_data.get(product.id, 0),
-                                                 precision_rounding=product.uom_id.rounding)
-            if stock + requested >= min:
+            if stock >= min:
                 product.recovery = 0
             else:
-                product.recovery = max - (stock + requested)
+                product.recovery = max - stock
 
     sum_of_stock = fields.Float(
         'Suma de ubicaciones', compute='_compute_quantities', search='_search_qty_available')
-    total_purchase = fields.Float(string='Tránsito', compute='_compute_purchases')
-    qty_total_po = fields.Float(string="Qty + Tránsito", compute="_compute_tot_qty_po")
-    recovery = fields.Float("Recuperación", compute='_compute_recovery')
-
-    def _compute_tot_qty_po(self):
-        for product in self:
-            product.qty_total_po = product.total_purchase + product.qty_available
-
+    recovery = fields.Float("Recuperación", compute='_compute_recovery', store=True)
 
     @api.depends('stock_move_ids.product_qty', 'stock_move_ids.state')
     def _compute_quantities(self):
@@ -96,8 +68,6 @@ class Product(models.Model):
         domain_quant_loc, domain_move_in_loc, domain_move_out_loc = self._get_domain_locations()
         domain_quant = [('product_id', 'in', self.ids)] + domain_quant_loc
         sum_stock_domain_quant = domain_quant + [('location_id.location_to_add', '=', True)]
-        # if 'from_sum_stock' in self._context:
-        #     domain_quant += [('location_id.location_to_add', '=', True)]
         dates_in_the_past = False
         # only to_date as to_date will correspond to qty_available
         to_date = fields.Datetime.to_datetime(to_date)
@@ -223,20 +193,13 @@ class ProductTemplate(models.Model):
             }
         return prod_available
 
+    @api.depends('sum_of_stock', 'transito')
     @api.multi
-    def _compute_purchases(self):
+    def _compute_qty_transito(self):
         for template in self:
-            template.total_purchase = float_round(
-                sum([p.total_purchase for p in template.product_variant_ids]),
-                precision_rounding=template.uom_id.rounding)
+            template.qty_transito = template.sum_of_stock + template.transito
 
-    @api.multi
-    def _compute_tot_qty_po(self):
-        for template in self:
-            template.qty_total_po = float_round(
-                sum([p.qty_total_po for p in template.product_variant_ids]),
-                precision_rounding=template.uom_id.rounding)
-
+    @api.depends('product_variant_ids.recovery')
     @api.multi
     def _compute_recovery(self):
         for template in self:
@@ -247,8 +210,8 @@ class ProductTemplate(models.Model):
     sum_of_stock = fields.Float(
         'Suma de ubicaciones', compute='_compute_quantities', search='_search_qty_available',
         digits=dp.get_precision('Product Unit of Measure'))
-    total_purchase = fields.Float(string='Tránsito', compute='_compute_purchases')
-    qty_total_po = fields.Float(string="Qty + Tránsito", compute="_compute_tot_qty_po")
-    recovery = fields.Float("Recuperación", compute='_compute_recovery')
+    transito = fields.Float(string='Tránsito', related='product_variant_id.incoming_qty', store=True)
+    qty_transito = fields.Float(string="Qty + Tránsito", compute="_compute_qty_transito", store=True)
+    recovery = fields.Float("Recuperación", compute='_compute_recovery', store=True)
     min_qty = fields.Float("Min")
     max_qty = fields.Float("Max")
