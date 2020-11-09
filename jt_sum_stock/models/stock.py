@@ -24,35 +24,23 @@
 from odoo.tools.float_utils import float_round
 from odoo.addons import decimal_precision as dp
 from odoo.tools.float_utils import float_round
-
 from odoo import models, api, fields
-
 
 class StockLocation(models.Model):
     _inherit = "stock.location"
 
     location_to_add = fields.Boolean('¿Ubicación a sumar?')
 
-
 class Product(models.Model):
     _inherit = "product.product"
 
-    @api.depends('min_qty', 'max_qty', 'qty_transito')
-    def _compute_recovery(self):
-        for product in self:
-            stock = product.qty_transito
-            min = product.min_qty
-            max = product.max_qty
-            if stock >= min:
-                product.recovery = 0
-            else:
-                product.recovery = max - stock
-
     sum_of_stock = fields.Float(
         'Suma de ubicaciones', compute='_compute_quantities', search='_search_qty_available')
-    recovery = fields.Float("Recuperación", compute='_compute_recovery', store=True)
+    qty_transito = fields.Float(string="Qty + Tránsito", compute='_compute_quantities',
+                                search='_search_qty_available', )
+    recovery = fields.Float("Recuperación", compute='_compute_quantities', search='_search_qty_available')
 
-    @api.depends('stock_move_ids.product_qty', 'stock_move_ids.state')
+    @api.depends('stock_move_ids.product_qty', 'stock_move_ids.state', 'min_qty', 'max_qty')
     def _compute_quantities(self):
         res = self._compute_quantities_dict(self._context.get('lot_id'), self._context.get('owner_id'),
                                             self._context.get('package_id'), self._context.get('from_date'),
@@ -63,6 +51,8 @@ class Product(models.Model):
             product.outgoing_qty = res[product.id]['outgoing_qty']
             product.virtual_available = res[product.id]['virtual_available']
             product.sum_of_stock = res[product.id]['sum_of_stock']
+            product.qty_transito = res[product.id]['qty_transito']
+            product.recovery = res[product.id]['recovery']
 
     def _compute_quantities_dict(self, lot_id, owner_id, package_id, from_date=False, to_date=False):
         domain_quant_loc, domain_move_in_loc, domain_move_out_loc = self._get_domain_locations()
@@ -141,6 +131,8 @@ class Product(models.Model):
                 sum_stock = quant_res_sum_stock.get(product_id, 0.0)
             res[product_id]['qty_available'] = float_round(qty_available, precision_rounding=rounding)
             res[product_id]['sum_of_stock'] = float_round(sum_stock, precision_rounding=rounding)
+            qty_transito = sum_stock + moves_in_res.get(product_id, 0.0)
+            res[product_id]['qty_transito'] = float_round(qty_transito, precision_rounding=rounding)
             res[product_id]['incoming_qty'] = float_round(moves_in_res.get(product_id, 0.0),
                                                           precision_rounding=rounding)
             res[product_id]['outgoing_qty'] = float_round(moves_out_res.get(product_id, 0.0),
@@ -148,14 +140,22 @@ class Product(models.Model):
             res[product_id]['virtual_available'] = float_round(
                 qty_available + res[product_id]['incoming_qty'] - res[product_id]['outgoing_qty'],
                 precision_rounding=rounding)
+            stock = qty_transito
+            min = product.min_qty
+            max = product.max_qty
+            if stock >= min:
+                res[product_id]['recovery'] = float_round(0, precision_rounding=rounding)
+            else:
+                res[product_id]['recovery'] = float_round((max - stock), precision_rounding=rounding)
         return res
-
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     @api.depends(
         'product_variant_ids',
+        'product_variant_ids.min_qty',
+        'product_variant_ids.max_qty',
         'product_variant_ids.stock_move_ids.product_qty',
         'product_variant_ids.stock_move_ids.state',
     )
@@ -167,6 +167,8 @@ class ProductTemplate(models.Model):
             template.incoming_qty = res[template.id]['incoming_qty']
             template.outgoing_qty = res[template.id]['outgoing_qty']
             template.sum_of_stock = res[template.id]['sum_of_stock']
+            template.qty_transito = res[template.id]['qty_transito']
+            template.recovery = res[template.id]['recovery']
 
     def _compute_quantities_dict(self):
         # TDE FIXME: why not using directly the function fields ?
@@ -184,34 +186,29 @@ class ProductTemplate(models.Model):
                 virtual_available += variants_available[p.id]["virtual_available"]
                 incoming_qty += variants_available[p.id]["incoming_qty"]
                 outgoing_qty += variants_available[p.id]["outgoing_qty"]
+            stock = sum_of_stock + incoming_qty
+            min = template.min_qty
+            max = template.max_qty
+            if stock >= min:
+                recovery = 0
+            else:
+                recovery = max - stock
             prod_available[template.id] = {
                 "qty_available": qty_available,
                 "virtual_available": virtual_available,
                 "incoming_qty": incoming_qty,
                 "outgoing_qty": outgoing_qty,
                 "sum_of_stock": sum_of_stock,
+                "qty_transito": sum_of_stock + incoming_qty,
+                "recovery": recovery,
             }
         return prod_available
-
-    @api.depends('sum_of_stock', 'transito')
-    @api.multi
-    def _compute_qty_transito(self):
-        for template in self:
-            template.qty_transito = template.sum_of_stock + template.transito
-
-    @api.depends('product_variant_ids.recovery')
-    @api.multi
-    def _compute_recovery(self):
-        for template in self:
-            template.recovery = float_round(
-                sum([p.recovery for p in template.product_variant_ids]),
-                precision_rounding=template.uom_id.rounding)
 
     sum_of_stock = fields.Float(
         'Suma de ubicaciones', compute='_compute_quantities', search='_search_qty_available',
         digits=dp.get_precision('Product Unit of Measure'))
-    transito = fields.Float(string='Tránsito', related='product_variant_id.incoming_qty', store=True)
-    qty_transito = fields.Float(string="Qty + Tránsito", compute="_compute_qty_transito", store=True)
-    recovery = fields.Float("Recuperación", compute='_compute_recovery', store=True)
+    qty_transito = fields.Float(string="Qty + Tránsito", compute='_compute_quantities',
+                                search='_search_qty_available',)
+    recovery = fields.Float("Recuperación", compute='_compute_quantities', search='_search_qty_available')
     min_qty = fields.Float("Min")
     max_qty = fields.Float("Max")
