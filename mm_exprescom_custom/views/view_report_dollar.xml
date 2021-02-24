@@ -1,0 +1,41 @@
+<odoo>
+  <data>
+        <!--Vista tree-->
+        <record id="report_view_tree_dollar" model="ir.ui.view">
+            <field name="name">Report View Tree Dollar</field>
+            <field name="model">report.view.dollar</field>
+            <field name="arch" type="xml">
+                <tree string="Reporte Vencidos por Cobrar en Dolares" create="false" import="false">
+                     <field name="client"/>
+                     <field name="name_inv"/>
+                     <field name="invoice"/>
+                     <field name="total_usd"/>
+                </tree>
+            </field>
+        </record>
+
+      <record id="action_report_dollar" model="ir.actions.act_window">
+            <field name="name">Reporte Vencidos por Cobrar en Dolares</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report.view.dollar</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Reporte Vencidos por Cobrar en Dolares
+              </p>
+            </field>
+        </record>
+
+        <!--crear menus-->
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="report_root"
+                  name="Vencidos por Cobrar en Dolares"
+                  sequence="1"/>
+        <menuitem id="report_dollar_view"
+                  name=" "
+                  parent="report_root"
+                  action="action_report_dollar"
+                  sequence="2"/>
+
+  </data>
+</odoo>
