@@ -9,7 +9,7 @@
                      <field name="client"/>
                      <field name="name_inv"/>
                      <field name="invoice"/>
-                     <field name="total_usd"/>
+                     <field name="total_usd" sum="Sum total"/>
                 </tree>
             </field>
         </record>
@@ -19,23 +19,13 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">report.view.dollar</field>
             <field name="view_mode">tree</field>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Reporte Vencidos por Cobrar en Dolares
-              </p>
-            </field>
         </record>
 
-        <!--crear menus-->
-        <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="report_root"
-                  name="Vencidos por Cobrar en Dolares"
-                  sequence="1"/>
         <menuitem id="report_dollar_view"
-                  name=" "
-                  parent="report_root"
+                  name="Vencidos por cobrar en USD"
+                  parent="account.account_reports_management_menu"
                   action="action_report_dollar"
-                  sequence="2"/>
+                  sequence="5"/>
 
   </data>
 </odoo>

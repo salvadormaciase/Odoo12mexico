@@ -13,7 +13,7 @@ class ReportViewDollar(models.Model):
     client = fields.Char(comodel_name='res_partner', string='Código Socio', readonly=True)
     name_inv = fields.Char(comodel_name='report.name', string='Nombre', readonly=True)
     invoice = fields.Char(comodel_name='report.invoice.number', string='Factura', readonly=True)
-    total_usd = fields.Char(comodel_name=' report.residual', string='Total USD', readonly=True)
+    total_usd = fields.Float(comodel_name=' report.residual', string='Total USD', readonly=True)
 
     @api.model_cr
     def init(self):
