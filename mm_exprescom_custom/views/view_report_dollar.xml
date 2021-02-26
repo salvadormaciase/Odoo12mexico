@@ -23,9 +23,9 @@
 
         <menuitem id="report_dollar_view"
                   name="Vencidos por cobrar en USD"
-                  parent="account.account_reports_management_menu"
+                  parent="account.menu_finance_reports"
                   action="action_report_dollar"
-                  sequence="5"/>
+                  sequence="2" />
 
   </data>
 </odoo>
