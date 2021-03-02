@@ -5,11 +5,15 @@
             <field name="name">Report View Tree Dollar</field>
             <field name="model">report.view.dollar</field>
             <field name="arch" type="xml">
-                <tree string="Reporte Vencidos por Cobrar en Dolares" create="false" import="false">
+                <tree default_order='name_inv' string="Reporte Vencidos por Cobrar en Dolares" create="false" import="false">
                      <field name="client"/>
                      <field name="name_inv"/>
-                     <field name="invoice"/>
                      <field name="total_usd" sum="Sum total"/>
+                     <field name="total_usd_30" sum="Sum total30"/>
+                     <field name="total_usd_60" sum="Sum total60"/>
+                     <field name="total_usd_90" sum="Sum total90"/>
+                     <field name="total_usd_120" sum="Sum total12"/>
+                     <field name="total_usd_old" sum="Sum totalold"/>
                 </tree>
             </field>
         </record>
