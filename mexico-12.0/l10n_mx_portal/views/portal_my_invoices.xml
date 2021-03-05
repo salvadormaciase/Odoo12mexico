@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_invoices_inh" name="Download Zipped Invoice" inherit_id="account.portal_invoice_page">
+        <xpath expr="//div[hasclass('o_download_pdf')]/div[hasclass('mr-1')]" position="inside">
+            <t t-set="attachment" t-value="invoice._get_zipped_cfdi()"/>
+            <t t-if="attachment">
+                <div class="btn btn-secondary btn-group flex-grow-1 ml-1">
+                    <a class="text-white btn-download-zip-cfdi" t-att-href="'/web/content/' + str(attachment.id) + '?download=true'" title="Download Zip"><i class="fa fa-folder"/> Download Zip</a>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

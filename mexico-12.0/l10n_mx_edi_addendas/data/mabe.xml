@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="mabe" name="Mabe [auto]">
+        <t t-set="values" t-value="record._l10n_mx_edi_create_cfdi_values()"/>
+        <t t-set="partner_values" t-value="record.partner_id.ref.split('|') if record.partner_id.ref else []"/>
+        <t t-set="decimal_precision" t-value="values['decimal_precision']"/>
+        <mabe:Factura
+            xmlns:mabe="https://recepcionfe.mabempresa.com/cfd/addenda/v1"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://recepcionfe.mabempresa.com/cfd/addenda/v1 https://recepcionfe.mabempresa.com/cfd/addenda/v1/mabev1.xsd"
+            version="1.0"
+            t-att-tipoDocumento="record.type.replace('out_invoice', 'FACTURA').replace('out_refund', 'NOTA CREDITO')"
+            t-att-folio="'%s%s' % (record._get_string_cfdi(values.get('serie', ''), 25), record._get_string_cfdi(values.get('folio', ''), 40))"
+            t-att-fecha="record.date_invoice"
+            t-att-ordenCompra="record.name or 'NA'"
+            t-att-referencia1="'%s%s' % (record._get_string_cfdi(values.get('serie', ''), 25), record._get_string_cfdi(values.get('folio', ''), 40))"
+            referencia2="NA">
+            <mabe:Moneda
+                t-att-tipoMoneda="record.currency_id.name"
+                t-att-tipoCambio="values.get('rate', None)"
+                t-att-importeConLetra="record.l10n_mx_edi_amount_to_text()"/>
+            <mabe:Proveedor
+                t-att-codigo="partner_values[0] if partner_values else None"/>
+            <t t-set="partner_shipping" t-value="env['res.partner'].browse(record.get_delivery_partner_id())"/>
+            <mabe:Entrega
+                t-att-plantaEntrega="partner_values[1] if len(partner_values) &gt; 1 else None"
+                t-att-calle="partner_shipping.street_name or None"
+                t-att-noExterior="partner_shipping.street_number or None"
+                t-att-noInterior="partner_shipping.street_number2 or None"
+                t-att-codigoPostal="partner_shipping.zip or None"/>
+            <mabe:Detalles>
+                <t t-set="line_no" t-value="1"/>
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <mabe:Detalle
+                        t-att-noLineaArticulo="line_no"
+                        t-att-codigoArticulo="line.product_id.default_code"
+                        t-att-descripcion="record._get_string_cfdi(line.product_id.name, 40)"
+                        t-att-unidad="'UN'"
+                        t-att-cantidad="line.quantity"
+                        t-att-precioSinIva="'%.*f' % (decimal_precision, line.price_unit)"
+                        t-att-importeSinIva="'%.*f' % (decimal_precision, values.get('subtotal_wo_discount')(line))"/>
+                    <t t-set="line_no" t-value="line_no + 1"/>
+                </t>
+            </mabe:Detalles>
+            <mabe:Descuentos t-if="values.get('amount_discount')"
+                t-att-tipo="NA"
+                t-att-descripcion="NA"
+                t-att-importe="values.get('amount_discount')"/>
+            <mabe:Subtotal
+                t-att-importe="values.get('amount_untaxed')"/>
+            <t t-if="values['taxes']['transferred']">
+                <mabe:Traslados>
+                    <t t-foreach="values['taxes']['transferred']" t-as="transferred">
+                        <mabe:Traslado
+                            t-att-tipo="transferred['name']"
+                            t-att-tasa="'%.6f' % (transferred['rate'])"
+                            t-att-importe="'%.*f' % (decimal_precision, transferred['amount']) or 0.0"/>
+                    </t>
+                </mabe:Traslados>
+            </t>
+            <t t-if="values['taxes']['withholding']">
+                <mabe:Retenciones>
+                    <t t-foreach="values['taxes']['withholding']" t-as="withholding">
+                        <mabe:Retencion
+                            t-att-tipo="withholding['name']"
+                            t-att-tasa="'%.6f' % (withholding['rate'])"
+                            t-att-importe="'%.*f' % (decimal_precision, withholding['amount']) or 0.0"/>
+                    </t>
+                </mabe:Retenciones>
+            </t>
+            <mabe:Total
+                t-att-importe="values.get('amount_total')"/>
+        </mabe:Factura>
+    </template>
+    <record id="mabe" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+</odoo>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="ford" name="Ford">
+            <fomadd:addenda xmlns:fomadd="http://www.ford.com.mx/cfdi/addenda"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.ford.com.mx/cfdi/addenda http://www.ford.com.mx/cfdi/addenda/cfdiAddendaFord_1_0.xsd">
+                <fomadd:FOMASN version="1.0">
+                    <t t-set="elements" t-value="(record.x_addenda_ford or '|').split('|')"/>
+                    <t t-set="folio" t-value="record._l10n_mx_get_serie_and_folio(record.number)['folio'] or ''"/>
+                    <fomadd:GSDB t-raw="elements[0].upper()"/>
+                    <t t-set="asns" t-value="(elements[1] or folio).split(',')"/>
+                    <t t-foreach="asns" t-as="asn">
+                        <fomadd:ASN t-raw="asn"/>
+                    </t>
+                </fomadd:FOMASN>
+            </fomadd:addenda>
+    </template>
+    <record id="ford" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_ford" model="ir.model">
+        <field name="name">Addenda Ford</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_addenda.ford</field>
+        <field name="info">Addend ford documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_ford_gsdb" model="ir.model.fields">
+        <field name="name">x_gsdb</field>
+        <field name="field_description">GSDB</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help">GSDB of the distributor (required, alphanumeric characters in upper case).</field>
+        <field name="model_id" ref="wizard_ford"/>
+    </record>
+    <record id="wizard_ford_asn" model="ir.model.fields">
+        <field name="name">x_asn</field>
+        <field name="field_description">ASN</field>
+        <field name="ttype">char</field>
+        <field name="help">ASN - Advanced Shipping Notice (numeric characters, no maximum limit of appearances).
+ASNs must be added separated by commas (,) e.g. 1,2,3,4. If no value is set, the invoice folio will be taken.</field>
+        <field name="model_id" ref="wizard_ford"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_ford_field" model="ir.model.fields">
+        <field name="name">x_addenda_ford</field>
+        <field name="field_description">Addenda Ford</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate fields x_gsdb and x_asn</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_ford_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda Ford</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.ford'].browse(model._context['active_id'])
+# TODO: Discuss if this should be done in an internal not instead a new field.
+wizard_fields = [wizard.x_gsdb, wizard.x_asn]
+wizard_fields = [j or '' for j in wizard_fields]
+invoice.write({'x_addenda_ford': '|'.join(wizard_fields)})
+# raise Warning(str(model._context))
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_ford_view" model="ir.ui.view">
+        <field name="name">x_addenda.ford.view</field>
+        <field name="model">x_addenda.ford</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>The necessary nodes for the implementation of the Addenda of Ford Motor Company of Mexico are:</p>
+                    <ul>
+                        <li><p><b>GSDB:</b></p>
+                            <p>It is the alphanumeric provider code established in the purchase order.</p>
+                        </li>
+                        <li><p><b>ASN:</b></p>
+                            <p><b>Productive Material:</b> ASN is the number (folio and/or remission and/or shipper and/or packing slip) used by the Supplier to carry out the delivery of production materials in the Plants, and later when the receipt of material is registered in the warehouse of Ford is shown on the epayables page in the 'doc number' column.</p>
+                            <p><b>Non-Productive Material, Spare parts warehouse and Services:</b> The ASN is considered to be the number that the Suppliers show in the XML as folio, and later when the receipt of material/service is registered is shown on the epayables page in the 'doc number' column.</p>
+                           <p>Invoices can include one or more ASN's. If it's not provided, it will be filled using the invoice's folio.</p>
+                        </li>
+                    </ul>
+                </div>
+                <group>
+                    <field name="x_gsdb"/>
+                    <field name="x_asn"/>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_ford_values"
+                    type="action" string="Set Values" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the wizard
+    After default values are set.
+    -->
+    <record id="action_addenda_ford" model="ir.actions.act_window">
+        <field name="name">Addenda Ford</field>
+        <field name="res_model">x_addenda.ford</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_ford_view"/>
+    </record>
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_addenda_ford_defaults" model="ir.actions.server">
+        <field name="name">Set default values for the addenda Ford</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+context = {'invoice_id': record.id}
+wizard_values = record.x_addenda_ford and record.x_addenda_ford.split('|')
+# If the wizard has been run before, fill it with its previows values
+if wizard_values:
+    context.update({
+        'default_x_gsdb': wizard_values[0],
+        'default_x_asn': wizard_values[1],
+    })
+action = env.ref('l10n_mx_edi_addendas.action_addenda_ford').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_ford" model="ir.ui.view">
+        <field name="name">account.invoice.form.ford</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_ford_defaults" type="action"
+                        string="Addenda Ford"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

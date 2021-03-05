@@ -1,0 +1,41 @@
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <mabe:Factura xmlns:mabe="https://recepcionfe.mabempresa.com/cfd/addenda/v1"
+        xsi:schemaLocation="https://recepcionfe.mabempresa.com/cfd/addenda/v1 https://recepcionfe.mabempresa.com/cfd/addenda/v1/mabev1.xsd"
+        version="1.0"
+        referencia2="NA"
+        tipoDocumento="FACTURA"
+        folio="FV 201819"
+        fecha="2018-06-19"
+        ordenCompra="PO002"
+        referencia1="FV 201819">
+        <mabe:Moneda tipoMoneda="USD"
+            tipoCambio="21.000000"
+            importeConLetra="FOUR HUNDRED AND SEVENTY-SEVEN DOLLARS 00/100 M.E."/>
+        <mabe:Proveedor codigo="0107"/>
+        <mabe:Entrega plantaEntrega="0107"
+            calle="Elsie Drive"
+            noExterior="325"
+            codigoPostal="26807"/>
+        <mabe:Detalles>
+            <mabe:Detalle noLineaArticulo="1"
+                codigoArticulo="FURN_7800"
+                descripcion="Desk Combination"
+                unidad="UN"
+                cantidad="1.0"
+                precioSinIva="450.00"
+                importeSinIva="450.00"/>
+        </mabe:Detalles>
+        <mabe:Subtotal importe="450.00"/>
+        <mabe:Traslados>
+            <mabe:Traslado tipo="IVA"
+                tasa="0.160000"
+                importe="72.00"/>
+        </mabe:Traslados>
+        <mabe:Retenciones>
+            <mabe:Retencion tipo="ISR"
+                tasa="0.100000"
+                importe="45.00"/>
+        </mabe:Retenciones>
+        <mabe:Total importe="477.00"/>
+    </mabe:Factura>
+</cfdi:Addenda>

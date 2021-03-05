@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cancellation_with_reversal_move">
+        <p>This Payment <t t-esc="name"/> has been cancelled with the following moves:</p>
+        <t t-foreach="origin" t-as="o">
+            <li><a href="#" t-att-data-oe-model="o._name" t-att-data-oe-id="o.id"><t t-esc="o.display_name"/></a></li>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,19 @@
+<odoo>
+     <record id="iedu_account_journal_form_inherit" model="ir.ui.view">
+        <field name="name">iedu.account.journal.form.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='advanced_settings']/group" position="inside">
+                    <group name="iedu_codes" string="Education Level Codes">
+                        <field name="l10n_mx_edi_iedu_code_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="l10n_mx_edi_iedu_education_level_id" domain="[('parent_id.name','ilike', 'IEDU')]"/>
+                                <field name="l10n_mx_edi_iedu_code"/>
+                            </tree>
+                        </field>
+                    </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

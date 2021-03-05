@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="ir_cron_monetary_revaluation" model="ir.cron">
+        <field name="name">Monthly Monetary Revaluation: Generate Entries on Invoices and Accounts</field>
+        <field name="model_id" ref="base.model_ir_actions_server"/>
+        <field name="state">code</field>
+        <field name="code">
+# /!\ READ CAREFULLY /!\ method signature
+# cron_monthly_realization(on_day, init_date=None, realized=False,
+# do_ledger=True, do_entry=None, do_commit=False)
+
+# @on_day: day of month when this cron will run. This is not the date of
+# realization. Date of realization will be last date of previous month.
+# @init_date: since which date revaluation will run. If not set It will from 1st
+# day of previous month.
+# @realized: if False only non-fully-realized invoices will be reevaluated.
+# @do_ledger: whether or not revaluation ledger items will computed/created.
+# @do_entry: whether or not journal entries will be created. Company settings
+# will be used instead if value sent here is None. If value is different than
+# None then it will override Company Settings.
+# @do_commit: whether or not a commit will be done for each invoice or account
+# been reevaluated. It is hugely advisable to use it when running on hugely
+# populated invoices and accounts or first time run.
+
+# /!\ NOTE: This cron will effectively run on 3rd day of every month
+env['account.revaluation.ledger'].cron_monthly_realization(3, do_commit=True)
+        </field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d 02:45:00')" />
+    </record>
+
+    <record id="one_time_run" model="ir.actions.server">
+        <field name="name">[GANDALF] Create Cron Jobs for First Time Run on Invoice Revaluation Ledger</field>
+        <field name="model_id" ref="base.model_ir_actions_server"/>
+        <field name="state">code</field>
+        <field name="code">
+i_want_to_run_this_server_action = False
+if not i_want_to_run_this_server_action:
+  raise Warning("Carefully read all the options for this Server Actions.\nOnce Sure set the variable `i_want_to_run_this_server_action` to True")
+
+# Please set this value to True if you want that immediately after running this Server Action the Cron Jobs are run.
+run_immediately = False
+
+date = '2019-08-31'
+init_date = '2018-12-31'
+name = '[CRON-GANDALF] Revaluation Ledger on Invoices at %s - %3s/%3s'
+stack_number = 20  # How many Cron jobs will be created
+threads = 4   # This will indicate how many threads will be activated to run the process, check your Odoo settings for support on how many threads cron jobs can run simultaneously.
+cron_active = "write({'active':True})"
+
+# /!\ DO NOT TOUCH ANY THING DOWN HERE!!!. IF YOU DO NOT KNOW WHAT YOU ARE DOING!!!
+
+ias_obj = env['ir.cron']
+arl_id = env['ir.model'].search([('model', '=', 'account.revaluation.ledger')]).id
+
+values = {
+  'active': False, # Let us create them deactivated
+  'model_id': arl_id,
+  'state': 'code',
+  'interval_number': 5,
+  'interval_type': 'minutes',
+  'numbercall': 1,
+  'doall': False,
+}
+
+code = """
+incluide_ids = {incluide_ids}
+inv_obj = env['account.move']
+log('Beginning  Realization', level='info')
+inv_obj.with_context(prefetch_fields=False).browse(incluide_ids).create_realization_entries('{date}', '{init_date}', do_ledger=True, do_entry=False, do_commit=True)
+log('Finished Realization', level='info')
+next_cron = env['ir.cron'].search([('active','=',False),('numbercall','!=',0),('name','ilike','%[CRON-GANDALF]%')], limit=1)
+if next_cron:
+  try:
+    next_cron.{cron}
+  except Exception as e:
+    log('We were not able to activate another cron', level='info')
+"""
+
+query = """
+  SELECT DISTINCT am.id, am.date
+  FROM account_move am
+  INNER JOIN res_company rc ON rc.id = am.company_id
+  WHERE
+    am.currency_id != rc.currency_id
+    AND am.date &lt;= %s
+  ORDER BY am.date
+"""
+env.cr.execute(query, (date,))
+invoice_ids = [x[0] for x in env.cr.fetchall()]
+
+full_length = len(invoice_ids)
+if not full_length:
+  raise Warning("Seems there is nothing to do here. Number of invoices = {full_length}".format(full_length=full_length))
+stack_length =  full_length // stack_number
+
+if full_length % stack_number:
+  stack_length += 1
+
+if full_length // stack_length &lt; stack_number:
+  stack_number = full_length // stack_length
+  if full_length % stack_length:
+    stack_number += 1
+
+for x in range(stack_number):
+  if x == stack_number-1:
+    # /!\ NOTE: In the last stack we are going to include the remaining ids.
+    new_stack = invoice_ids[x*stack_length: full_length]
+  else:
+    new_stack = invoice_ids[x*stack_length: (x+1)*stack_length]
+  values['name'] = name % (date, x+1, stack_number)
+  values['code'] = code.format(incluide_ids=repr(new_stack), date=date, init_date=init_date, cron=cron_active)
+  ias_obj.create(values)
+
+  if (x+1)*stack_length &gt;= full_length:
+    break
+
+if run_immediately:
+  # /!\ NOTE: Let us Activate only a few cron jobs equal to the number of threads
+  env['ir.cron'].search([('active','=',False),('name','ilike','%[CRON-GANDALF]%')], limit=threads).write({'active':True})
+        </field>
+    </record>
+</odoo>

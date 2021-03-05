@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_public_notary" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="*" position="inside">
+            <t t-if="record.l10n_mx_edi_np_partner_id">
+                <t t-set="state_dict" t-value='{"AGU":"01", "BCN":"02", "BCS":"03", "CAM":"04", "COA":"05", "COL":"06", "CHP":"07", "CHH":"08", "DIF":"09", "DUR":"10", "GUA":"11", "GRO":"12", "HID":"13", "JAL":"14", "MEX":"15", "MIC":"16", "MOR":"17", "NAY":"18", "NLE":"19", "OAX":"20", "PUE":"21", "QUE":"22", "ROO":"23", "SLP":"24", "SIN":"25", "SON":"26", "TAB":"27", "TAM":"28", "TLA":"29", "VER":"30", "YUC":"31", "ZAC":"32"}'/>
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <notariospublicos:NotariosPublicos
+                        xmlns:notariospublicos="http://www.sat.gob.mx/notariospublicos"
+                        Version="1.0">
+                        <notariospublicos:DescInmuebles>
+                            <t t-set="properties" t-value="record.partner_id.child_ids.filtered(lambda r: r.type == 'other')"/>
+                            <t t-foreach="properties" t-as="property">
+                                <t t-set="property_notes" t-value="property.comment.split('|') if property.comment else []"/>
+                                <notariospublicos:DescInmueble
+                                    t-att-TipoInmueble="property_notes[0] if property_notes else None"
+                                    t-att-Calle="property.street_name"
+                                    t-att-NoExterior="property.street_number or False"
+                                    t-att-NoInterior="property.street_number2 or False"
+                                    t-att-Colonia="property.l10n_mx_edi_colony or False"
+                                    t-att-Localidad="property.l10n_mx_edi_locality or False"
+                                    t-att-Referencia="property_notes[1] if property_notes and len(property_notes) &gt; 1 else False"
+                                    t-att-Municipio="property.city"
+                                    t-att-Estado="state_dict.get(property.state_id.code, '')"
+                                    t-att-Pais="property.country_id.l10n_mx_edi_code"
+                                    t-att-CodigoPostal="property.zip"/>
+                            </t>
+                        </notariospublicos:DescInmuebles>
+                        <t t-set="oper_subtotal" t-value="sum(float(value.ref.split('|')[0]) if value.ref else 0.00 for value in properties)"/>
+                        <t t-set="oper_tax" t-value="sum(float(value.ref.split('|')[1]) if value.ref and len(value.ref.split('|')) &gt; 1 else 0.00 for value in properties) / 100"/>
+                        <notariospublicos:DatosOperacion
+                            t-att-NumInstrumentoNotarial="record.name or None"
+                            t-att-FechaInstNotarial="record.date_invoice"
+                            t-att-MontoOperacion="'%.6f' % (oper_subtotal * oper_tax + oper_subtotal)"
+                            t-att-Subtotal="'%.6f' % oper_subtotal"
+                            t-att-IVA="'%.6f' % (oper_tax * oper_subtotal)"/>
+                        <notariospublicos:DatosNotario
+                            t-att-CURP="record.user_id.partner_id.l10n_mx_edi_curp"
+                            t-att-NumNotaria="record.company_id.company_registry"
+                            t-att-EntidadFederativa="state_dict.get(record.company_id.partner_id.state_id.code, '')"
+                            t-att-Adscripcion="record.user_id.partner_id.comment or False"/>
+                        <t t-set="partnership" t-value="[id for id,type in record.partner_id.category_id.get_xml_id().items() if type == 'l10n_mx_edi_np.l10n_mx_edi_np_partnership']"/>
+                        <notariospublicos:DatosEnajenante
+                            t-att-CoproSocConyugalE="'Si' if partnership else 'No'">
+                            <t t-if="not partnership">
+                                <t t-set="name" t-value="record.partner_id.name.split(',')"/>
+                                <notariospublicos:DatosUnEnajenante
+                                    t-att-Nombre="name[0]"
+                                    t-att-ApellidoPaterno="name[1] if len(name) &gt; 1 else None"
+                                    t-att-ApellidoMaterno="name[2] if len(name) &gt; 2 else None"
+                                    t-att-RFC="record.partner_id.l10n_mx_edi_get_customer_rfc()"
+                                    t-att-CURP="record.partner_id.l10n_mx_edi_curp"/>
+                            </t>
+                            <t t-if="partnership">
+                                <notariospublicos:DatosEnajenantesCopSC>
+                                    <t t-set="name" t-value="record.partner_id.name.split(',')"/>
+                                    <notariospublicos:DatosEnajenanteCopSC
+                                        t-att-Nombre="name[0]"
+                                        t-att-ApellidoPaterno="name[1] if len(name) &gt; 1 else None"
+                                        t-att-ApellidoMaterno="name[2] if len(name) &gt; 2 else None"
+                                        t-att-RFC="record.partner_id.vat"
+                                        t-att-CURP="record.partner_id.l10n_mx_edi_curp"
+                                        t-att-Porcentaje="record.partner_id.comment"/>
+                                    <t t-foreach="record.partner_id.child_ids.filtered(lambda r: r.type == 'contact')" t-as="person">
+                                        <t t-set="name" t-value="person.name.split(',')"/>
+                                        <notariospublicos:DatosEnajenanteCopSC
+                                            t-att-Nombre="name[0]"
+                                            t-att-ApellidoPaterno="name[1] if len(name) &gt; 1 else None"
+                                            t-att-ApellidoMaterno="name[2] if len(name) &gt; 2 else None"
+                                            t-att-RFC="person.vat"
+                                            t-att-CURP="person.l10n_mx_edi_curp"
+                                            t-att-Porcentaje="person.comment"/>
+                                    </t>
+                                </notariospublicos:DatosEnajenantesCopSC>
+                            </t>
+                        </notariospublicos:DatosEnajenante>
+                        <t t-if="record.l10n_mx_edi_np_partner_id">
+                           <t t-set="partnership" t-value="[id for id,type in record.l10n_mx_edi_np_partner_id.category_id.get_xml_id().items() if type == 'l10n_mx_edi_np.l10n_mx_edi_np_partnership']"/>
+                            <notariospublicos:DatosAdquiriente
+                                t-att-CoproSocConyugalE="'Si' if partnership else 'No'">
+                                <t t-if="not partnership">
+                                    <t t-set="name" t-value="record.l10n_mx_edi_np_partner_id.name.split(',')"/>
+                                    <notariospublicos:DatosUnAdquiriente
+                                        t-att-Nombre="name[0]"
+                                        t-att-ApellidoPaterno="name[1] if len(name) &gt; 1 else None"
+                                        t-att-ApellidoMaterno="name[2] if len(name) &gt; 2 else None"
+                                        t-att-RFC="record.l10n_mx_edi_np_partner_id.vat"
+                                        t-att-CURP="record.l10n_mx_edi_np_partner_id.l10n_mx_edi_curp"/>
+                                </t>
+                                <t t-if="partnership">
+                                    <notariospublicos:DatosAdquirientesCopSC>
+                                        <t t-set="name" t-value="record.l10n_mx_edi_np_partner_id.name.split(',')"/>
+                                        <notariospublicos:DatosAdquirienteCopSC
+                                            t-att-Nombre="name[0]"
+                                            t-att-ApellidoPaterno="name[1] if len(name) &gt; 1 else None"
+                                            t-att-ApellidoMaterno="name[2] if len(name) &gt; 2 else None"
+                                            t-att-RFC="record.l10n_mx_edi_np_partner_id.vat"
+                                            t-att-CURP="record.l10n_mx_edi_np_partner_id.l10n_mx_edi_curp"
+                                            t-att-Porcentaje="record.l10n_mx_edi_np_partner_id.comment"/>
+                                        <t t-foreach="record.l10n_mx_edi_np_partner_id.child_ids.filtered(lambda r: r.type == 'contact')" t-as="person">
+                                            <t t-set="name" t-value="person.name.split(',')"/>
+                                            <notariospublicos:DatosAdquirienteCopSC
+                                                t-att-Nombre="name[0]"
+                                                t-att-ApellidoPaterno="name[1] if len(name) &gt; 1 else None"
+                                                t-att-ApellidoMaterno="name[2] if len(name) &gt; 2 else None"
+                                                t-att-RFC="person.vat"
+                                                t-att-CURP="person.l10n_mx_edi_curp"
+                                                t-att-Porcentaje="person.comment"/>
+                                        </t>
+                                    </notariospublicos:DatosAdquirientesCopSC>
+                                </t>
+                            </notariospublicos:DatosAdquiriente>
+                        </t>
+                    </notariospublicos:NotariosPublicos>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>

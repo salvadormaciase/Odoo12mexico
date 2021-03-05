@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 Ketan Kachhela <l.kachhela28@gmail.com>
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+	<data>
+		<record id="view_account_payment" model="ir.ui.view">
+			<field name="name">account.payment.form</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="sr_manual_currency_exchange_rate.view_account_payment_invoice_form_extends_add_manual_currency_exchange_rate" />
+			<field name="arch" type="xml">
+				<field name="journal_id" position="after">
+					<field name="manual_currency_exchange_rate"
+						attrs="{'invisible': ['|',('apply_manual_currency_exchange', '=', False),('active_manual_currency_rate', '=', False)],'required':[('apply_manual_currency_exchange', '=', True)]}" />
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

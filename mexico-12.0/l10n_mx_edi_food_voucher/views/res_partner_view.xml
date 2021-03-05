@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_partner_form_inherit_l10n_mx_edi_voucher" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.voucher</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="l10n_mx_edi_voucher_nss"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

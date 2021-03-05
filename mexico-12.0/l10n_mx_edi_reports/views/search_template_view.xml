@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="search_template_report_details">
+        <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+            <span class="fa fa-cog"/> Details:
+            <t t-if="options.get('request_type')">Type: <t t-raw="options.get('request_type')"/>,</t>
+            <t t-if="options.get('order_number')">Order: <t t-raw="options.get('order_number')"/>,</t>
+            <t t-if="options.get('process_number')">Procedure: <t t-raw="options.get('process_number')"/></t>
+            <t t-if="options.get('move_name')">Journal Entry: <t t-raw="options.get('move_name')"/></t>
+            <span class="caret"/>
+        </a>
+        <ul class="dropdown-menu o_filters_menu" role="menu">
+            <li title="Act Audit" data-filter="request_type" data-id="AF" class="js_account_reports_details"><a>Act Audit (AF)</a></li>
+            <li title="Attested Audit" data-filter="request_type" data-id="FC" class="js_account_reports_details"><a>Attested Audit (FC)</a></li>
+            <li title="Refund" data-filter="request_type" data-id="DE" class="js_account_reports_details"><a>Refund (DE)</a></li>
+            <li title="Compensation" data-filter="request_type" data-id="CO" class="js_account_reports_details"><a>Compensation (CO)</a></li>
+            <li class="divider"></li>
+            <li style='margin-left: 10px; margin-right: 10px;'>
+                <label for="order_number">Order number:</label><br />
+                <input type="text" name="order" t-att-value="options.get('order_number')"/><br/>
+                <label for="process_number">Process number:</label><br />
+                <input type="text" name="process" t-att-value="options.get('process_number')"/><br/>
+                <label for="move_name">Journal Entry:</label><br />
+                <input type="text" name="move" t-att-value="options.get('move_name')"/><br/>
+            </li>
+        </ul>
+    </template>
+    <template id="search_template" inherit_id="account_reports.search_template">
+        <xpath expr="//div[hasclass('o_account_reports_filter_date_cmp')]" position="before">
+            <div class="btn-group o_dropdown" t-if="options.get('request_type', None) != None">
+                <t t-call="l10n_mx_edi_reports.search_template_report_details"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

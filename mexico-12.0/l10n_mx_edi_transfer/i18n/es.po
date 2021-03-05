@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_transfer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-16 17:37+0000\n"
+"PO-Revision-Date: 2020-01-16 17:37+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_transfer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_transfer.report_invoice_documement_transfer
+msgid "<span>TRASLADO DE MERCANCIAS</span>"
+msgstr ""
+
+#. module: l10n_mx_edi_transfer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_transfer.report_invoice_documement_transfer
+msgid "<strong>Payment Method:</strong>"
+msgstr "<strong>Método de Pago:</strong>"
+
+#. module: l10n_mx_edi_transfer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_transfer.report_invoice_documement_transfer
+msgid "<strong>Payment Way:</strong>"
+msgstr "<strong>Forma de Pago:</strong>"
+
+#. module: l10n_mx_edi_transfer
+#: model:ir.model,name:l10n_mx_edi_transfer.model_account_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_transfer.report_invoice_documement_transfer
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_transfer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_transfer.report_invoice_documement_transfer
+msgid "Transfer"
+msgstr "Traslado"

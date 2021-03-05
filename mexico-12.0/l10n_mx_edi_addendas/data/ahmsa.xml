@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="ahmsa" name="AHMSA">
+        <t t-set="values" t-value="record.x_addenda_ahmsa.split('|') if record.x_addenda_ahmsa else ['', '', '', '', '', '', '', '', '', '']"/>
+        <t t-set="partners" t-value="{'AHM420706U10': 'S001', 'MNO810731QF9': 'S003', 'SCA920203FG6': 'S005', 'SAC9611196EA': 'S006', 'RRP9604164F8': 'S008', 'CSA940208GY1': 'S015', 'SAN971211PZ1': 'S021', 'CAN020826160': 'S022', 'ANT890912L10': 'S024', 'SMA9203055L1': 'S027', 'TSM9411304A9': 'S028', 'RCO961024AJ1': 'S029'}"/>
+        <t t-set="sale_model" t-value="record.env.ref('sale.model_sale_order', raise_if_not_found=False)"/>
+        <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+        <ahmsa:AddendaAHM xmlns:ahmsa="http://www.ahmsa.com/xsd/AddendaAHM1" Version="1.0">
+            <ahmsa:Documento t-att-Tipo="values[0]" t-att-Clase="values[1]">
+                <ahmsa:Encabezado
+                    t-att-NumSociedad="partners.get(record.partner_id.commercial_partner_id.vat, '')"
+                    t-att-NumDivision="values[2] if partners.get(record.partner_id.commercial_partner_id.vat, '') == 'S003' else ''"
+                    t-att-NumProveedor="record.partner_id.ref"
+                    t-att-Correo="record.user_id.partner_id.email"
+                    t-att-Moneda="(record.currency_id.name or '').replace('MXN', 'MXP')"/>
+                <ahmsa:Detalle>
+                    <ahmsa:Pedido t-att-Num="sale_id.client_order_ref if sale_id else None">
+                        <t t-foreach="values[3].split(',')" t-as="line">
+                            <ahmsa:Recepcion t-raw='line'/>
+                        </t>
+                    </ahmsa:Pedido>
+                    <ahmsa:HojaServicio t-att-Num="values[4]"/>
+                    <ahmsa:Transporte t-att-Num ="values[5]"/>
+                    <ahmsa:CtaxPag t-att-Num="values[6]" t-att-Ejercicio="values[7]"/>
+                    <ahmsa:Liquidacion
+                        t-att-FechaInicio=" time.strftime('%d.%m.%Y',time.strptime(values[8],'%Y-%m-%d')) if values[8] else ''"
+                        t-att-FechaFin="time.strftime('%d.%m.%Y',time.strptime(values[9],'%Y-%m-%d')) if values[9] else ''"/>
+                </ahmsa:Detalle>
+                <ahmsa:Anexos>
+                    <ahmsa:Anexo></ahmsa:Anexo>
+                </ahmsa:Anexos>
+            </ahmsa:Documento>
+        </ahmsa:AddendaAHM>
+    </template>
+    <record id="ahmsa" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+    <!--Wizard to set elements-->
+    <record id="wizard_ahmsa" model="ir.model">
+        <field name="name">Addenda AHMSA</field>
+        <field name="transient">Addenda AHMSA</field>
+        <field name="model">x_addenda.ahmsa</field>
+        <field name="info">Addend Ahmsa documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_ahmsa_type_doc" model="ir.model.fields">
+        <field name="name">x_type_doc</field>
+        <field name="field_description">Document Type</field>
+        <field name="ttype">selection</field>
+        <field name="required">1</field>
+        <field name="selection">[['1', 'Invoice with Order'], ['2', 'Invoice without Order'], ['3', 'Charge Note'], ['4', 'Invoice Refund']]</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_class_doc" model="ir.model.fields">
+        <field name="name">x_class_doc</field>
+        <field name="field_description">Document Class</field>
+        <field name="ttype">selection</field>
+        <field name="required">1</field>
+        <field name="selection">[['PE', 'Invoice with purchase order'], ['PS', 'Invoice without Order'], ['PA', 'Invoice of order with advance payment'], ['AS', 'Invoice of order without advance payment'], ['HS', 'Invoice with service sheet or maquila service'], ['FC', 'Invoice of freight of purchase or transport of maquila'], ['FV', 'Invoice of freight of sale or letter of carriage'], ['AA', 'Invoice from Broker'], ['CO', 'Consignment invoice'], ['KT', 'Freight proven Invoice (Only mines)'], ['PT', 'Prizes and punishments Invoice'], ['AC', 'Charge Note'], ['NC', 'Invoice Refund']]</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_division" model="ir.model.fields">
+        <field name="name">x_division</field>
+        <field name="field_description">Division</field>
+        <field name="ttype">selection</field>
+        <field name="required">0</field>
+        <field name="selection">[['D002', 'Unidad MICARE'], ['D003', 'Unidad MIMOSA - Palaú'], ['D018', 'Unidad Hércules y La Perla'], ['D020', 'Unidad Cerro de Mercado']]</field>
+        <field name="help">Only apply when the society is S003</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_service_sheet" model="ir.model.fields">
+        <field name="name">x_service_sheet</field>
+        <field name="field_description">Service Sheet</field>
+        <field name="ttype">char</field>
+        <field name="required">0</field>
+        <field name="help">Is the service sheet number generated to the service that is invoiced.</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_reception" model="ir.model.fields">
+        <field name="name">x_reception</field>
+        <field name="field_description">Reception Number</field>
+        <field name="ttype">char</field>
+        <field name="required">0</field>
+        <field name="help">Is the reception number in the customer system. If are many receptions, please separate this by a coma</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_trasport" model="ir.model.fields">
+        <field name="name">x_transport</field>
+        <field name="field_description">Transport</field>
+        <field name="ttype">char</field>
+        <field name="required">0</field>
+        <field name="help">Required for the invoices with reference (2) and with class (FV).</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_account_number" model="ir.model.fields">
+        <field name="name">x_account_number</field>
+        <field name="field_description">Account Number</field>
+        <field name="ttype">char</field>
+        <field name="required">0</field>
+        <field name="help">Account to pay. Is required to invoice without order and with class 'KT'</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_fiscal_year" model="ir.model.fields">
+        <field name="name">x_fiscal_year</field>
+        <field name="field_description">Fiscal Year</field>
+        <field name="ttype">char</field>
+        <field name="required">0</field>
+        <field name="help">Fiscal year to the account to pay.</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_date_start" model="ir.model.fields">
+        <field name="name">x_date_start</field>
+        <field name="field_description">Date start</field>
+        <field name="ttype">date</field>
+        <field name="required">0</field>
+        <field name="help">Required to consignment invoices.</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+    <record id="wizard_ahmsa_date_stop" model="ir.model.fields">
+        <field name="name">x_date_stop</field>
+        <field name="field_description">Date stop</field>
+        <field name="ttype">date</field>
+        <field name="required">0</field>
+        <field name="help">Required to consignment invoices.</field>
+        <field name="model_id" ref="wizard_ahmsa"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_ahmsa_field" model="ir.model.fields">
+        <field name="name">x_addenda_ahmsa</field>
+        <field name="field_description">Addenda AHMSA</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate wizard fields</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_ahmsa_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda Ahmsa</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.ahmsa'].browse(model._context['active_id'])
+wizard_fields = [wizard.x_type_doc, wizard.x_class_doc, wizard.x_division, wizard.x_reception, wizard.x_service_sheet, wizard.x_transport, wizard.x_account_number, wizard.x_fiscal_year,
+                 wizard.x_date_start.strftime('%Y-%m-%d') if wizard.x_date_start else '',
+                 wizard.x_date_stop.strftime('%Y-%m-%d') if wizard.x_date_stop else '']
+wizard_fields = [j or '' for j in wizard_fields]
+invoice.write({'x_addenda_ahmsa': '|'.join(wizard_fields)})
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_ahmsa_view" model="ir.ui.view">
+        <field name="name">x_addenda.ahmsa.view</field>
+        <field name="model">x_addenda.ahmsa</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_type_doc"/>
+                        <field name="x_class_doc"/>
+                        <field name="x_division"/>
+                    </group>
+                    <group>
+                        <field name="x_service_sheet"/>
+                        <field name="x_reception"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="x_transport"/>
+                    </group>
+                    <group>
+                        <field name="x_account_number"/>
+                        <field name="x_fiscal_year"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="x_date_start"/>
+                        <field name="x_date_stop"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_ahmsa_values"
+                    type="action" string="Set Values"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the set wizard.
+    -->
+    <record id="action_addenda_ahmsa" model="ir.actions.act_window">
+        <field name="name">Addenda Ahmsa</field>
+        <field name="res_model">x_addenda.ahmsa</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_ahmsa_view"/>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_ahmsa" model="ir.ui.view">
+        <field name="name">account.invoice.form.ahmsa</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_ahmsa" type="action"
+                        string="Addenda Ahmsa"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

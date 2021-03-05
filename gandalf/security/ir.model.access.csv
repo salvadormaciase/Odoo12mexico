@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_account_revaluation_ledger_user,access_account_revaluation_ledger,model_account_revaluation_ledger,,1,0,0,0
+access_account_revaluation_ledger_manager,access_account_revaluation_ledger,model_account_revaluation_ledger,account.group_account_invoice,1,1,1,1
+access_realization_date_wizard_manager,access_realization_date_wizard,model_realization_date_wizard,account.group_account_invoice,1,1,1,1

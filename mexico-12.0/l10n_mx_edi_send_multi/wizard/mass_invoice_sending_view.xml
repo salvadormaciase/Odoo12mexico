@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="wizard_mass_invoice_sending_view_form" model="ir.ui.view">
+        <field name="name">wizard.mass.invoice.sending.view.form</field>
+        <field name="model">wizard.mass.invoice.sending</field>
+        <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        <field name="arch" type="xml">
+            <form string="Mass Invoice Sending">
+                <div name="mail_form">
+                    <div>
+                        <field name="body" style="border:none;" options="{'style-inline': true}"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="attachment_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2"/>
+                        </group>
+                        <group>
+                            <field name="template_id" options="{'no_create': True, 'no_edit': True}"
+                                context="{'default_model': 'res.partner'}"/>
+                        </group>
+                    </group>
+                </div>
+
+                <footer>
+                    <button string="Send"
+                        name="send_email" type="object" class="send btn-primary o_mail_send"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window
+        name="Mass Invoice Sending"
+        id="invoice_send"
+        multi="True"
+        key2="client_action_multi"
+        res_model="wizard.mass.invoice.sending"
+        src_model="account.invoice"
+        view_mode="form"
+        target="new"
+        view_type="form"
+        context="{
+        'default_template_id': ref('l10n_mx_edi_send_multi.email_template_wizard_mass_invoice_sending'),
+        }"
+        groups="account.group_account_invoice"/>
+</odoo>

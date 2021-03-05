@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record id="hr_contract_type_01" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">01</field>
+        <field name="name">Contrato de trabajo por tiempo indeterminado</field>
+    </record>
+    <record id="hr_contract_type_02" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">02</field>
+        <field name="name">Contrato de trabajo para obra determinada</field>
+    </record>
+    <record id="hr_contract_type_03" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">03</field>
+        <field name="name">Contrato de trabajo por tiempo determinado</field>
+    </record>
+    <record id="hr_contract_type_04" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">04</field>
+        <field name="name">Contrato de trabajo por temporada</field>
+    </record>
+    <record id="hr_contract_type_05" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">05</field>
+        <field name="name">Contrato de trabajo sujeto a prueba</field>
+    </record>
+    <record id="hr_contract_type_06" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">06</field>
+        <field name="name">Contrato de trabajo con capacitación inicial</field>
+    </record>
+    <record id="hr_contract_type_07" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">07</field>
+        <field name="name">Modalidad de contratación por pago de hora laborada</field>
+    </record>
+    <record id="hr_contract_type_08" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">08</field>
+        <field name="name">Modalidad de trabajo por comisión laboral</field>
+    </record>
+    <record id="hr_contract_type_09" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">09</field>
+        <field name="name">Modalidades de contratación donde no existe relación de trabajo</field>
+    </record>
+    <record id="hr_contract_type_10" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">10</field>
+        <field name="name">Jubilación, pensión, retiro.</field>
+    </record>
+    <record id="hr_contract_type_99" model="hr.contract.type">
+        <field name="l10n_mx_edi_code">99</field>
+        <field name="name">Otro contrato</field>
+    </record>
+    <!-- Risk rank -->
+    <record id="class_job_risk_1" model="l10n_mx_edi.job.risk">
+        <field name="name">Class I</field>
+        <field name="code">1</field>
+        <field name="percentage">0.54355</field>
+    </record>
+    <record id="class_job_risk_2" model="l10n_mx_edi.job.risk">
+        <field name="name">Class II</field>
+        <field name="code">2</field>
+        <field name="percentage">1.13065</field>
+    </record>
+    <record id="class_job_risk_3" model="l10n_mx_edi.job.risk">
+        <field name="name">Class III</field>
+        <field name="code">3</field>
+        <field name="percentage">2.59840</field>
+    </record>
+    <record id="class_job_risk_4" model="l10n_mx_edi.job.risk">
+        <field name="name">Class IV</field>
+        <field name="code">4</field>
+        <field name="percentage">4.65325</field>
+    </record>
+    <record id="class_job_risk_5" model="l10n_mx_edi.job.risk">
+        <field name="name">Class V</field>
+        <field name="code">5</field>
+        <field name="percentage">7.58875</field>
+    </record>
+</odoo>

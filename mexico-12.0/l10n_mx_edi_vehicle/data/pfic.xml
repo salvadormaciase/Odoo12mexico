@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_pfic" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__pfic">"http://www.sat.gob.mx/http://www.sat.gob.mx/pfic" if record.company_id.l10n_mx_edi_complement_type == 'pfic' and record.l10n_mx_edi_vehicle_id else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-if="record.company_id.l10n_mx_edi_complement_type == 'pfic' and record.l10n_mx_edi_vehicle_id">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <pfic:PFintegranteCoordinado
+                        xmlns:pfic="http://www.sat.gob.mx/pfic"
+                        version="1.0"
+                        t-att-ClaveVehicular="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_niv"
+                        t-att-Placa="record.l10n_mx_edi_vehicle_id.license_plate"
+                        t-att-RFCPF="record.l10n_mx_edi_vehicle_id.driver_id.vat or False"/>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>
+

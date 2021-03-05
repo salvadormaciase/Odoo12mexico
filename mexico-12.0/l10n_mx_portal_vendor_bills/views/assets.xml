@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" inherit_id="web.assets_frontend" name="Website Form Assets Frontend">
+        <xpath expr="." position="inside">
+            <script src="/l10n_mx_portal_vendor_bills/static/src/js/attachments_form.js" type="text/javascript"/>
+        </xpath>
+    </template>
+
+</odoo>

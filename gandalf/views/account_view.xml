@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_form" model="ir.ui.view">
+        <field name="name">account.account.form</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                        <button name="action_view_realization_move" type="object"
+                                class="oe_stat_button" icon="fa-money"
+                                context="{'realization_move':True}"
+                                attrs="{'invisible': [('realization_move_ids_nbr', '=', 0)]}">
+                            <field name="realization_move_ids_nbr" widget="statinfo" string="Entries"/>
+                        </button>
+                        <button name="action_view_realization_move" type="object"
+                                context="{'revaluation_ledger':True}"
+                                class="oe_stat_button" icon="fa-money"
+                                attrs="{'invisible': [('revaluation_ledger_ids_nbr', '=', 0)]}">
+                            <field name="revaluation_ledger_ids_nbr" widget="statinfo" string="Ledger"/>
+                        </button>
+                </xpath>
+                <xpath expr="//field[@name='deprecated']" position="after">
+                    <field name="realizable_account"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

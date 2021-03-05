@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <requestForPaymentIdentification>
+        <orderIdentification>
+            <referenceIdentification>5644544</referenceIdentification>
+        </orderIdentification>
+        <buyer>
+            <contactInformation>
+                <personOrDepartmentName>
+                    <text>SIDEL DE MEXICO SA DE CV</text>
+                </personOrDepartmentName>
+            </contactInformation>
+        </buyer>
+        <currency currencyISOCode="USD">
+            <rateOfChange>20.000000</rateOfChange>
+        </currency>
+        <baseAmount>
+            <Amount>477.0</Amount>
+        </baseAmount>
+        <payableAmount>
+            <Amount>477.0</Amount>
+        </payableAmount>
+    </requestForPaymentIdentification>
+</cfdi:Addenda>

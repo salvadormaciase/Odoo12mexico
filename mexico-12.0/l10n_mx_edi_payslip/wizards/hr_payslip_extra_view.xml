@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_payslip_extra_by_employees" model="ir.ui.view">
+        <field name="name">view.hr.payslip.extra.by.employees</field>
+        <field name="model">hr.payslip.extra.employees</field>
+        <field name="arch" type="xml">
+            <form string="Employees">
+                <header>
+                    <button icon="fa-cogs" string="Assign" name="load_employees" type="object" class="oe_highlight"/>
+                </header>
+                <group>
+                    <span colspan="4" nolabel="1">This wizard will assign all selected employee(s) on the extras.</span>
+                </group>
+                <group colspan="4">
+                    <separator string="Employees" colspan="4"/>
+                    <newline/>
+                    <field name="employee_ids" nolabel="1"/>
+                </group>
+           </form>
+        </field>
+    </record>
+
+    <record id="action_hr_payslip_assign_extra_employees" model="ir.actions.act_window">
+        <field name="name">Assign Employees</field>
+        <field name="res_model">hr.payslip.extra.employees</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hr_payslip_extra_by_employees"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

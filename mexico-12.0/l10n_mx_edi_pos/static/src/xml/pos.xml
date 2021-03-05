@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <!-- See customer detail -->
+    <t t-extend="ClientDetails" >
+        <!-- l10n_mx_edi_usage -->
+        <t t-jquery=".client-details-left" t-operation="append">
+            <div class='client-detail'>
+                <span class='label'>Usage</span>
+                <t t-if='partner.l10n_mx_edi_usage'>
+                    <span class='detail vat'><t t-esc='widget.pos.edi_usages_by_id[partner.l10n_mx_edi_usage]'/></span>
+                </t>
+                <t t-if='!partner.l10n_mx_edi_usage'>
+                    <span class='detail vat empty'>N/A</span>
+                </t>
+            </div>
+        </t>
+        <!-- l10n_mx_edi_payment_method_id -->
+        <t t-jquery=".client-details-right" t-operation="prepend">
+            <div class='client-detail'>
+                <span class='label'>Payment Method</span>
+                <t t-if='partner.l10n_mx_edi_payment_method_id'>
+                    <span class='detail vat'><t t-esc='partner.l10n_mx_edi_payment_method_id[1]'/></span>
+                </t>
+                <t t-if='!partner.l10n_mx_edi_payment_method_id'>
+                    <span class='detail vat empty'>N/A</span>
+                </t>
+            </div>
+        </t>
+
+        
+    </t>
+
+    <!-- Edit customer -->
+    <t t-extend="ClientDetailsEdit" >
+        <!-- l10n_mx_edi_usage -->
+        <t t-jquery=".client-details-left" t-operation="append">
+            <div class='client-detail'>
+                <span class='label'>Usage</span>
+                <select class='detail client-address-country needsclick' name='l10n_mx_edi_usage'>
+                    <option value=''>None</option>
+                    <t t-foreach='widget.pos.edi_usages' t-as='usage'>
+                        <option t-att-value='usage[0]' t-att-selected="partner.l10n_mx_edi_usage ? ((usage[0] === partner.l10n_mx_edi_usage) ? true : undefined) : undefined">
+                            <t t-esc='usage[1]'/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </t>
+
+        <!-- l10n_mx_edi_payment_method_id -->
+        <t t-jquery=".client-details-right" t-operation="prepend">
+            <div class='client-detail client-detail-sat'>
+                <span class='label'>Payment Method</span>
+                <select class='detail client-address-country needsclick' name='l10n_mx_edi_payment_method_id'>
+                    <option value=''>None</option>
+                    <t t-foreach='widget.pos.payment_methods' t-as='method'>
+                        <option t-att-value='method.id' t-att-selected="partner.l10n_mx_edi_payment_method_id ? ((method.id === partner.l10n_mx_edi_payment_method_id[0]) ? true : undefined) : undefined">
+                            <t t-esc='method.name'/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </t>
+
+    </t>
+
+</templates>

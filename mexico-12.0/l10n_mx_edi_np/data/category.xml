@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="l10n_mx_edi_np_partnership" model="res.partner.category">
+        <field name="name">co-ownership / conjugal partnership</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

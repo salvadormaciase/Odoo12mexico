@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="faurecia" name="Faurecia">
+        <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+            <t t-set="values" t-value="record.x_addenda_faurecia if record.x_addenda_faurecia else ''"/>
+            <t t-set="sale_model" t-value="record.env.ref('sale.model_sale_order', raise_if_not_found=False)"/>
+            <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+            <t t-set="po" t-value="sale_id[0].client_order_ref if sale_id else ''"/>
+            <t t-set="pdf" t-value="record.l10n_mx_edi_retrieve_attachments().search([('res_id', '=', record.id), ('name', 'like', '%.pdf')], limit=1).datas"/>
+            <t t-if="po.startswith(('55', '58'))">
+                <FSE:Factura
+                    xmlns:FSE="http://www.faurecia.com/FSE"
+                    Version="1.0"
+                    TipoDocumentoFiscal="FA"
+                    TipoAddenda="FSE">
+                    <FSE:Proveedor t-att-NoProveedor="record.partner_id.ref"/>
+                    <FSE:Referencias t-att-NoConfirmacion="values"/>
+                    <FSE:Nota/>
+                    <FSE:Archivo t-att-archivoadjunto="pdf" tipo="PDF"/>
+                    <FSE:Partes>
+                        <t t-foreach="record.invoice_line_ids" t-as="line">
+                            <FSE:Parte
+                                t-att-consecutivo="line_index + 1"
+                                t-att-descripcion="record._get_string_cfdi(line.name, 1000)"
+                                t-att-cantidad="line.quantity"
+                                t-att-unidad="record._get_string_cfdi(line.uom_id.name, 20)"
+                                t-att-valorUnitario="line.price_unit"
+                                t-att-importe="line.price_subtotal"
+                                t-att-OrdenCompra="line.sale_line_ids.order_id.client_order_ref"/>
+                        </t>
+                    </FSE:Partes>
+                </FSE:Factura>
+            </t>
+            <t t-if="po.startswith(('41', '45', '80'))">
+                <FPP:Factura
+                    xmlns:FPP="http://www.faurecia.com/FPP"
+                    Version="1.0"
+                    TipoDocumentoFiscal="FA"
+                    TipoAddenda="FPP">
+                    <FPP:Proveedor t-att-NoProveedor="record.partner_id.ref"/>
+                    <FPP:Referencias t-att-Nodocumentoentrega="values"/>
+                    <FPP:Nota/>
+                    <FPP:Archivo t-att-archivoadjunto="pdf" tipo="PDF"/>
+                    <FPP:Partes>
+                        <t t-foreach="record.invoice_line_ids" t-as="line">
+                            <FPP:Parte
+                                t-att-consecutivo="line_index + 1"
+                                t-att-descripcion="record._get_string_cfdi(line.name, 1000)"
+                                t-att-cantidad="line.quantity"
+                                t-att-unidad="record._get_string_cfdi(line.uom_id.name, 20)"
+                                t-att-valorUnitario="line.price_unit"
+                                t-att-importe="line.price_subtotal"
+                                t-att-OrdenCompra="line.sale_line_ids.order_id.client_order_ref"
+                                t-att-NumeroParte="record._get_string_cfdi(line.product_id.default_code or '')"/>
+                        </t>
+                    </FPP:Partes>
+                </FPP:Factura>
+            </t>
+        </cfdi:Addenda>
+    </template>
+    <record id="faurecia" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+    <!--Wizard to set elements-->
+    <record id="wizard_faurecia" model="ir.model">
+        <field name="name">Addenda Faurecia</field>
+        <field name="transient">Addenda Faurecia</field>
+        <field name="model">x_addenda.faurecia</field>
+        <field name="info">Addend Faurecia documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_faurecia_reception" model="ir.model.fields">
+        <field name="name">x_reception</field>
+        <field name="field_description">Reception</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_faurecia"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_faurecia_field" model="ir.model.fields">
+        <field name="name">x_addenda_faurecia</field>
+        <field name="field_description">Addenda Faurecia</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate wizard fields</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_faurecia_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda Faurecia</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.faurecia'].browse(model._context['active_id'])
+wizard_fields = wizard.x_reception
+invoice.write({'x_addenda_faurecia': wizard_fields})
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_faurecia_view" model="ir.ui.view">
+        <field name="name">x_addenda.faurecia.view</field>
+        <field name="model">x_addenda.faurecia</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_reception"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_faurecia_values"
+                    type="action" string="Set Values"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the set wizard.
+    -->
+    <record id="action_addenda_faurecia" model="ir.actions.act_window">
+        <field name="name">Addenda Faurecia</field>
+        <field name="res_model">x_addenda.faurecia</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_faurecia_view"/>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_faurecia" model="ir.ui.view">
+        <field name="name">account.invoice.form.faurecia</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_faurecia" type="action"
+                        string="Addenda Faurecia"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

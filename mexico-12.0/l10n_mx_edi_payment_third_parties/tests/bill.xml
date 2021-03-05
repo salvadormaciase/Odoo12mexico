@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+    xmlns:notariospublicos="http://www.sat.gob.mx/notariospublicos"
+    xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd"
+    Version="3.3"
+    Sello="Sello"
+    Fecha="2019-09-10T12:59:29"
+    Folio="5X"
+    Serie="INVX"
+    FormaPago="99"
+    NoCertificado="30001000000400002434"
+    Certificado="Certificado"
+    CondicionesDePago="Fin de Mes Siguiente"
+    SubTotal="75000.00"
+    Moneda="MXN"
+    Total="75000.00"
+    TipoDeComprobante="I"
+    MetodoPago="PPD"
+    LugarExpedicion="37200">
+    <cfdi:Emisor Rfc="VAU111017CG9" Nombre="Vauxoo" RegimenFiscal="601"/>
+    <cfdi:Receptor Rfc="XEXX010101000" Nombre="Azure Interior" UsoCFDI="P01"/>
+    <cfdi:Conceptos>
+        <cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="1" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="kg" Descripcion="[1] Ice Cream" ValorUnitario="75000.00" Importe="75000.00"></cfdi:Concepto>
+    </cfdi:Conceptos>
+    <cfdi:Impuestos></cfdi:Impuestos>
+    <cfdi:Complemento>
+        <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" SelloCFD="TndW5TD/aDsh0UTlsls0EO/wD8eWJGz3/6S8xm7M68W8fNbDiLxH0pfoT9YQ226WRQgK5xvhfxM2B20w32ge71nS5lUP4Zsg/23zLKNqnq4JrlLKhm6G4y7fyjSbOZhifr5X6RUj0xNzCvYSxNrA1pUv0l8AROwktk6MfqGcgTNRLB3r+IoIqQ92OReXHMiUfYgKzyWszpi9O6B7jRwB1qnY4F/sB0xB1CYgS5v6knI7XlSuDTTE8JaO2KfSxmSO0CqhoMhUqn8VC6gWm7NyK5V8hlXifKXsLfuI2lnquF66mO4Q0B2b9MUWgxrtlpN2Rkf+mB5Xlnqbz4V/LUm50Q==" NoCertificadoSAT="20001000000300022323" RfcProvCertif="CVD110412TF6" UUID="E835D0F2-93B9-4134-8531-B656BA693BA4" FechaTimbrado="2019-09-10T12:59:32" SelloSAT="pNk2e0AeTFzvUMRdr"/>
+        <notariospublicos:NotariosPublicos Version="1.0">
+            <notariospublicos:DescInmuebles>
+                <notariospublicos:DescInmueble TipoInmueble="01" Calle="DE MAR" NoExterior="56" NoInterior="A" Colonia="FRACCIONAMIENTO" Localidad="Localidad" Municipio="Municipio" Estado="06" Pais="MEX" CodigoPostal="82689"/>
+            </notariospublicos:DescInmuebles>
+            <notariospublicos:DatosOperacion NumInstrumentoNotarial="33333" FechaInstNotarial="2019-02-04" MontoOperacion="75000" Subtotal="75000" IVA="0"/>
+            <notariospublicos:DatosNotario CURP="CURP" NumNotaria="02" EntidadFederativa="60" Adscripcion="MANZANILLO"/>
+            <notariospublicos:DatosEnajenante CoproSocConyugalE="Si">
+                <notariospublicos:DatosEnajenantesCopSC>
+                    <notariospublicos:DatosEnajenanteCopSC Nombre="Name" ApellidoPaterno="GARCIA" ApellidoMaterno="GONZALEZ" RFC="RFC" CURP="CURP" Porcentaje="25"/>
+                </notariospublicos:DatosEnajenantesCopSC>
+            </notariospublicos:DatosEnajenante>
+            <notariospublicos:DatosAdquiriente CoproSocConyugalE="No">
+                <notariospublicos:DatosUnAdquiriente Nombre="Name" ApellidoPaterno="VAZQUEZ" ApellidoMaterno="Odoo" RFC="RFC" CURP="CURP"/>
+            </notariospublicos:DatosAdquiriente>
+        </notariospublicos:NotariosPublicos>
+    </cfdi:Complemento>
+</cfdi:Comprobante>

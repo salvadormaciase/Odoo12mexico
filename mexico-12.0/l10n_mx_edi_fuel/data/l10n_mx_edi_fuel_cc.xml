@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_fuel_cc">
+        <cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <t t-if="record.type != 'out_refund' and record.l10n_mx_edi_emitter_reference">
+                <t t-set="ref_data" t-value="record.l10n_mx_edi_emitter_reference.split('|')"/>
+                <t t-set="identificador" t-value="ref_data[0].strip() if ref_data else ''" />
+                <t t-set="numeroCuenta" t-value="ref_data[1].strip() if len(ref_data) >= 2 else ''"/>
+            </t>
+            <consumodecombustibles11:ConsumoDeCombustibles
+                xsi:schemaLocation="http://www.sat.gob.mx/ConsumoDeCombustibles11 http://www.sat.gob.mx/sitio_internet/cfd/ConsumoDeCombustibles/consumodeCombustibles11.xsd"
+                xmlns:consumodecombustibles11="http://www.sat.gob.mx/ConsumoDeCombustibles11"
+                version="1.1"
+                tipoOperacion="monedero electrónico"
+                t-att-numeroDeCuenta="record.l10n_mx_edi_partner_bank_id.acc_number if record.type == 'out_refund' else record._get_string_cfdi(numeroCuenta or '')"
+                t-att-subTotal="fuel_amount_untaxed"
+                t-att-total="fuel_amount_total">
+                <consumodecombustibles11:Conceptos>
+                    <t t-foreach="fuel_lines" t-as="line">
+                        <consumodecombustibles11:ConceptoConsumoDeCombustibles
+                            t-att-identificador="record.name if record.type == 'out_refund' else record._get_string_cfdi(identificador or '')"
+                            t-att-fecha="date"
+                            t-att-rfc="customer.l10n_mx_edi_get_customer_rfc() if record.type == 'out_refund' else record.company_id.vat"
+                            t-att-claveEstacion="record.partner_id.ref if record.type == 'out_refund' else supplier.ref"
+                            t-att-tipoCombustible="line.product_id.default_code"
+                            t-att-cantidad="'%.3f' % line.quantity"
+                            t-att-nombreCombustible="record._get_string_cfdi(line.name, 1000)"
+                            t-att-folioOperacion="record._get_string_cfdi(record.l10n_mx_edi_origin.split('|')[1]) if record.l10n_mx_edi_origin and len(record.l10n_mx_edi_origin.split('|')) &gt; 1 else None"
+                            t-att-valorUnitario="'%.*f' % (decimal_precision, line.price_unit)"
+                            t-att-importe="'%.*f' % (decimal_precision, subtotal_wo_discount(line))">
+                            <t t-set="taxes_line" t-value="line.invoice_line_tax_ids"/>
+                            <t t-if="taxes_line">
+                                <t t-set="transferred" t-value="taxes_line.filtered(lambda r: r.amount &gt;= 0)"/>
+                                <t t-if="transferred">
+                                    <consumodecombustibles11:Determinados>
+                                       <t t-foreach="transferred" t-as="tax">
+                                           <consumodecombustibles11:Determinado
+                                                t-att-impuesto="tax.tag_ids[0].name if tax.tag_ids else ''"
+                                                t-att-tasaOCuota="'%.6f' % abs(tax.amount / 100.0) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"
+                                                t-att-importe="'%.2f' % abs(tax.amount / 100.0 * line.price_subtotal) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"/>
+                                        </t>
+                                    </consumodecombustibles11:Determinados>
+                                </t>
+                            </t>
+                        </consumodecombustibles11:ConceptoConsumoDeCombustibles>
+                    </t>
+                </consumodecombustibles11:Conceptos>
+            </consumodecombustibles11:ConsumoDeCombustibles>
+        </cfdi:Complemento>
+    </template>
+</odoo>

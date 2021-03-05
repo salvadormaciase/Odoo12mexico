@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="encinas" name="Encinas [auto]">
+        <t t-set="cfdi_values" t-value="record._l10n_mx_edi_create_cfdi_values()"/>
+        <Generales>
+            <TipoCambio t-esc="cfdi_values['rate'] or '1.000000'"/>
+            <moneda t-esc="record.currency_id.name"/>
+        </Generales>
+    </template>
+    <record id="encinas" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+</odoo>
