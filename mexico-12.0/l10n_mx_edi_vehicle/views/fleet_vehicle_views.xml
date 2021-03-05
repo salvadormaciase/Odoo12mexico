@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_mx_edi_complement_cd_vehicle_inherit" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.complement.cd.vehicle.form.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='model_year']" position="after">
+                <field name="l10n_mx_edi_motor"/>
+                <field name="l10n_mx_edi_niv"/>
+                <field name="l10n_mx_edi_circulation_no"/>
+                <field name="l10n_mx_edi_aduana"/>
+                <field name="l10n_mx_edi_landing"/>
+                <field name="l10n_mx_edi_landing_date"/>
+                <field name="l10n_mx_edi_fiscal_folio"/>
+                <field name="l10n_mx_edi_int_advice"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

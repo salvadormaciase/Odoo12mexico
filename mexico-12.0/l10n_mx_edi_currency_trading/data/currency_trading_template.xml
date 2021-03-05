@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="currency_trading_template" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__divisas">"http://www.sat.gob.mx/divisas" if record.invoice_line_ids.filtered('product_id.l10n_mx_edi_ct_type') else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-set="lines" t-value="record.invoice_line_ids.filtered('product_id.l10n_mx_edi_ct_type')"/>
+            <t t-if="lines">
+                <cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <divisas:Divisas
+                        xmlns:divisas="http://www.sat.gob.mx/divisas"
+                        version="1.0"
+                        t-att-tipoOperacion="lines[0].product_id.l10n_mx_edi_ct_type.replace('purchase', 'compra').replace('sale', 'venta')"/>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

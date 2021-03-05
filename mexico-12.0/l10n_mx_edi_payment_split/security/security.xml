@@ -1,0 +1,5 @@
+<odoo>
+    <record id="payment_split_allow_csv_info_import" model="res.groups">
+        <field name="name">Allow to import invoice payment info from csv</field>
+    </record>
+</odoo>

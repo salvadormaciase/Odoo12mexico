@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_documement_transfer" inherit_id="account.report_invoice_document">
+        <xpath expr="//table[@name='invoice_line_table']//td[@name='account_invoice_line_name']/span" position="before">
+            <t t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('TipoDeComprobante') == 'T'">
+                <span>TRASLADO DE MERCANCIAS</span>
+            </t>
+        </xpath>
+        <xpath expr="//h2[1]/span[1]" position="replace">
+            <t t-if="not o.l10n_mx_edi_cfdi_uuid or (o.l10n_mx_edi_cfdi_uuid and xml.get('TipoDeComprobante') != 'T')">
+                <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
+            </t>
+            <t t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('TipoDeComprobante') == 'T'">
+                <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Transfer</span>
+            </t>
+        </xpath>
+        <xpath expr="//div[@t-if='o.partner_id.vat']/span" position="replace">
+            <t t-set="xml" t-value="o.l10n_mx_edi_get_xml_etree()"/>
+            <span t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('TipoDeComprobante') != 'T'" t-field="o.partner_id.vat"/>
+            <span t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('TipoDeComprobante') == 'T'" t-esc="xml.Receptor.get('Rfc')"/>
+        </xpath>
+        <xpath expr="//div[@id='informations']/t[@t-if='o.l10n_mx_edi_cfdi_uuid']/div[1]" position="replace">
+            <div t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('TipoDeComprobante') != 'T'" class="col-xs-2">
+                <strong>Payment Method:</strong>
+                <p t-esc="xml.get('formaDePago', xml.get('MetodoPago'))"/>
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-if='o.l10n_mx_edi_payment_method_id']/div" position="replace">
+            <div t-if="o.l10n_mx_edi_cfdi_uuid and xml.get('TipoDeComprobante') != 'T'" class="col-xs-2">
+                <strong>Payment Way:</strong>
+                <p t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

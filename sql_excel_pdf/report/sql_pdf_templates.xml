@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_sql_pdf_document">
+    <t t-call="web.external_layout">
+        <div class="page">
+            <div class="oe_structure"/>
+            <br/>
+            <br/>
+            <br/>
+            <t t-set="i" t-value="1"/> 
+            <h4 class="text-center">
+                <strong><span t-field="o.name"/></strong><br/>
+                <h6 class="text-center">Database :<t t-esc='o.env.cr.dbname'/> | Printed by : <t t-esc='o.env.user.name'/> |Printed on :<span t-esc="time.strftime('%d-%m-%Y %H:%M:%S')"/> Hrs</h6>
+            </h4>
+            <br/>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <t t-foreach="o.prepare_query_execution().get('column_list')" t-as="header">
+                            <th class="text-center" style="background-color:#d3d3d3;">
+                                <strong><span t-esc="header"/></strong>
+                            </th>
+                        </t>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="o.prepare_query_execution().get('result')" t-as="line">
+                        <td class="text-center"><span t-esc="i"/></td>
+                        <td t-foreach="line" t-as="result">
+                            <span t-esc="result"/>
+                        </td>
+                        <t t-set="i" t-value="i+1"/> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</template>
+
+<template id="report_sql_pdf">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="sql_excel_pdf.report_sql_pdf_document"/>
+        </t>
+    </t>
+</template>
+</odoo>

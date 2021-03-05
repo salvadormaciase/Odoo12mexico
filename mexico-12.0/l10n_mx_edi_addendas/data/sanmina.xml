@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="sanmina" name="Sanmina [auto]">
+        <t t-set="cfdi_values" t-value="record._l10n_mx_edi_create_cfdi_values()"/>
+        <SANMINA:AP xmlns:SANMINA="https://webapps2.sanmina-sci.com/partners-access"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://webapps2.sanmina-sci.com/partners-access https://webapps2.sanmina-sci.com/partners-access/addenda-sanmina.xsd"
+            t-att-PONumber="record.name or ''"
+            email="--Collection email here--"
+            t-att-LegalEntityName="record.partner_id.name"
+            CustomerCode="--Customer Code here--"
+            t-att-Currency="record.currency_id.name"
+            t-att-ExchangeRate="cfdi_values['rate'] or '1.000000'"
+            t-att-InternalInvoiceNumber="record.number"/>
+    </template>
+
+    <record id="sanmina" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+</odoo>

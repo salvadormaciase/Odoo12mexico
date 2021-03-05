@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+    <!--This is the addenda-->
+    <template id="yanfeng" name="Addenda Yanfeng">
+        <YFAI:AddendaYFAI 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://www.yfai.com/suppliers https://www.yfai.com/suppliers/YFAI-Addenda.xsd"
+            xmlns:YFAI="https://www.yfai.com/suppliers"> 
+            <t t-set="cfdi_values" t-value="record._l10n_mx_edi_create_cfdi_values()"/>
+            <YFAI:Factura Plant="--Plant number here--" t-att-FiscalDoc="cfdi_values.get('document_type', '')[0].upper()" CompanyCode="--Company code here--" t-att-CompanyName="cfdi_values.get('customer').name">
+                <YFAI:Moneda t-att-Currency="cfdi_values.get('currency_name', '')"/>
+                <YFAI:Proveedor SuppCode="--Supplier code here--" />
+                <YFAI:Pur t-att-PurchaseOrder="record.name or ''" t-att-DeliveryNote="record._l10n_mx_get_serie_and_folio(record.number).get('folio')" />
+            </YFAI:Factura>
+        </YFAI:AddendaYFAI>
+    </template>
+    <record id="yanfeng" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+</odoo>

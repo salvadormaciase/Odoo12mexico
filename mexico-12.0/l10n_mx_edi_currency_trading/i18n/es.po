@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_currency_trading
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 02:14+0000\n"
+"PO-Revision-Date: 2018-11-14 02:14+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_currency_trading
+#: model:ir.model,name:l10n_mx_edi_currency_trading.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_mx_edi_currency_trading
+#: model:ir.model.fields,field_description:l10n_mx_edi_currency_trading.field_product_template__l10n_mx_edi_ct_type
+msgid "Exchange operation type"
+msgstr "Tipo de operación cambiaria"
+
+#. module: l10n_mx_edi_currency_trading
+#: model:ir.model,name:l10n_mx_edi_currency_trading.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_currency_trading
+#: model:ir.model,name:l10n_mx_edi_currency_trading.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: l10n_mx_edi_currency_trading
+#: selection:product.template,l10n_mx_edi_ct_type:0
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: l10n_mx_edi_currency_trading
+#: selection:product.template,l10n_mx_edi_ct_type:0
+msgid "Sale"
+msgstr "Venta"
+
+#. module: l10n_mx_edi_currency_trading
+#: code:addons/l10n_mx_edi_currency_trading/models/account_invoice.py:16
+#, python-format
+msgid "This invoice contains products with different exchange operation types.\n"
+"It is not possible to bill currency purchases and sales within the same invoice."
+msgstr "Esta factura contiene productos con distintos tipos de operación cambiaria.\n"
+"No es posible facturar compras y ventas de divisas en una misma factura."
+
+#. module: l10n_mx_edi_currency_trading
+#: model:ir.model.fields,help:l10n_mx_edi_currency_trading.field_product_template__l10n_mx_edi_ct_type
+msgid "When this product is intended to be used to trade currencies, specifies the type of operation, i.e. if it's a purchase or sale.\n"
+"If set, this field will be used to create and fill the complement's XML node into the CFDI. If this field is not set in any of the invoice products, the complement will not be used and the XML node will not be included."
+msgstr "Cuando este producto será utilizado para el comercio de divisas, especifica el tipo de operación. Es decir, si es una compra o una venta.\n"
+"Si tiene algún valor, este campo será utilizado para crear y rellenar el nodo XML del complemento dentro del CFDI. Si no tiene un valor en ninguno de los productos de la factura, no se utilizará el complemento y no se incluirá el nodo XML."

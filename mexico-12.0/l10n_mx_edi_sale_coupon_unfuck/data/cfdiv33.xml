@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cfdiv33_inherited" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Conceptos']/t" position="attributes">
+            <attribute name="t-foreach">record.invoice_line_ids.filtered('price_unit')</attribute>
+        </xpath>
+    </template>
+</odoo>

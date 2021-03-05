@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_addendas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-05 15:13+0000\n"
+"PO-Revision-Date: 2020-08-05 15:13+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "0.00"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "0.000"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "00000"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "0000000000000"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "AJ"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_dunosusa
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_dunosusa
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_dunosusa_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_dunosusa
+msgid "Addenda Dunosusa"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_dunosusa_reception
+msgid "Additional Reference Code"
+msgstr "Código de referencia adicional"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_dunosusa_reception_folio
+msgid "Additional Reference Number"
+msgstr "Número de referencia adicional"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_dunosusa_reception_folio
+msgid "Additional reference number"
+msgstr "Número de referencia adicional"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.dunosusa,x_additional_ref_code:0
+msgid "Approval number"
+msgstr "Número de aprobación"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "BILLING_CURRENCY"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_dunosusa_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.dunosusa,x_additional_ref_code:0
+msgid "Check number"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_dunosusa_po_date
+msgid "Date Purchase Order"
+msgstr "Fecha Orden de Compra"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.dunosusa,x_additional_ref_code:0
+msgid "Document number (remission)"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.dunosusa,x_additional_ref_code:0
+msgid "Document number that is replaced"
+msgstr "Número del documento que es reemplazado"
+
+#. module: l10n_mx_edi_addendas
+#: selection:res.config.settings,l10n_mx_addenda:0
+msgid "Dunosusa"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_dunosusa_invoice_line_ids
+msgid "Invoice Lines"
+msgstr "Líneas de factura"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_dunosusa_view
+msgid "Line"
+msgstr "Línea"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_dunosusa_view
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.dunosusa,x_additional_ref_code:0
+msgid "Merchandise Receipt Folio"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_dunosusa_order_number
+msgid "Order Number"
+msgstr "Número de compra"
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.dunosusa,x_additional_ref_code:0
+msgid "Order number (buyer)"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: selection:x_addenda.dunosusa,x_additional_ref_code:0
+msgid "Property account"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_dunosusa_order_number
+msgid "Purchase order number that supports the receipt of merchandise. This number is displayed in the portal."
+msgstr "Número de orden de compra que respalda la entrega de mercancía. Este es el número mostrado en el portal."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "RETENIDO"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_dunosusa_view
+msgid "Set Values"
+msgstr "Asignar Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_dunosusa_values
+msgid "Set Values Addenda Dunosusa"
+msgstr "Asignar Valores a la Addenda Dunosusa"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_dunosusa_defaults
+msgid "Set default values for the addenda Dunosusa"
+msgstr "Asignar valores predeterminados a la addenda Dunosusa"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.dunosusa
+msgid "TRANSFERIDO"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_dunosusa_po_date
+msgid "The date of the purchase order."
+msgstr "La fecha de la orden de compra."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_dunosusa_view
+msgid "The necessary nodes for the implementation of the Addenda of Dunosusa"
+msgstr "Campos necesarios para la implementación de la Addenda de Dunosusa"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_dunosusa_field
+msgid "Used to concatenate wizard fields"
+msgstr "Utilizado para concatenar los campos del asistente"

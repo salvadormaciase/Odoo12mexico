@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_fuel_ecc">
+    <cfdi:Complemento
+        xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <ecc12:EstadoDeCuentaCombustible
+            xsi:schemaLocation="
+            http://www.sat.gob.mx/EstadoDeCuentaCombustible12
+            http://www.sat.gob.mx/sitio_internet/cfd/EstadoDeCuentaCombustible/ecc12.xsd"
+            xmlns:ecc12="http://www.sat.gob.mx/EstadoDeCuentaCombustible12"
+            Version="1.2"
+            TipoOperacion="Tarjeta"
+            t-att-NumeroDeCuenta="record.l10n_mx_edi_partner_bank_id.acc_number"
+            t-att-SubTotal="'%.2f' % fuel_amount_untaxed"
+            t-att-Total="'%.2f' % fuel_amount_total">
+            <ecc12:Conceptos>
+            <t t-foreach="fuel_lines" t-as="line">
+                <ecc12:ConceptoEstadoDeCuentaCombustible
+                    t-att-Identificador="record.partner_id.ref"
+                    t-att-Fecha="date"
+                    t-att-Rfc="line.l10n_mx_edi_fuel_partner_id.vat or record.company_id.vat"
+                    t-att-ClaveEstacion="line.l10n_mx_edi_fuel_partner_id.ref or record.company_id.partner_id.ref"
+                    t-att-Cantidad="line.quantity"
+                    t-att-TipoCombustible="line.product_id.default_code"
+                    t-att-Unidad="record._get_string_cfdi(line.uom_id.name, 20)"
+                    t-att-NombreCombustible="record._get_string_cfdi(line.name, 1000)"
+                    t-att-FolioOperacion="record._get_string_cfdi(folio)"
+                    t-att-ValorUnitario="'%.*f' % (decimal_precision, line.price_unit)"
+                    t-att-Importe="'%.*f' % (decimal_precision, subtotal_wo_discount(line))">
+                    <t t-set="taxes_line" t-value="line.invoice_line_tax_ids"/>
+                        <t t-if="taxes_line">
+                        <t t-set="transferred" t-value="taxes_line.filtered(lambda r: r.amount &gt;= 0)"/>
+                            <t t-if="transferred">
+                                <ecc12:Traslados>
+                                <t t-foreach="transferred" t-as="tax">
+                                    <ecc12:Traslado
+                                        t-att-Impuesto="tax.tag_ids[0].name if tax.tag_ids else ''"
+                                        t-att-TasaOCuota="'%.6f' % abs(tax.amount / 100.0) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"
+                                        t-att-Importe="'%.2f' % abs(tax.amount / 100.0 * line.price_subtotal) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"/>
+                                </t>
+                               </ecc12:Traslados>
+                            </t>
+                        </t>
+                </ecc12:ConceptoEstadoDeCuentaCombustible>
+            </t>
+            </ecc12:Conceptos>
+        </ecc12:EstadoDeCuentaCombustible>
+    </cfdi:Complemento>
+    </template>
+</odoo>

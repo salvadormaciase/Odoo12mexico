@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="view_ir_session_tree" model="ir.ui.view">
+		<field name="name">ir.session.form</field>
+		<field name="model">ir.session</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+				<field name="user_id" />				
+				<field name="remote_addr" />
+				<field name="user_agent" />
+				<field name="start_date" />
+				<field name="hostname" />
+				<field name="last_request_time" />
+			</tree>
+		</field>
+	</record>
+
+</odoo>

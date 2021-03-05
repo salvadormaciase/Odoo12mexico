@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="action_ui_view" model="ir.actions.act_window">
+        <field name="name">Views</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ir.ui.view</field>
+        <field name="view_id" ref="base.view_view_tree"/>
+        <field name="domain">[('l10n_mx_edi_addenda_flag', '=', 1)]</field>
+        <field name="context">{'search_default_active': 1, 'default_l10n_mx_edi_addenda_flag': 1}</field>
+        <field name="help">Views allows you to personalize each view of Odoo. You can add new fields, move fields, rename them or delete the ones that you do not need.</field>
+    </record>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.l10n.mx</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_mx_edi.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr=".//div[@id='l10n_mx_edi_certificates']"
+                   position="after">
+                <div class="row mt16 o_settings_container"
+                     id="l10n_mx_edi_addenda_settings">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">MX EDI addendas</span>
+                            <div class="text-muted">
+                                Select which addenda you will need from the
+                                list. (PAC).
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="Addenda"
+                                           for="l10n_mx_addenda" class="col-md-3 o_light_label"/>
+                                    <field name="l10n_mx_addenda" class="oe_inline"/>
+                                    <button name="install_addenda"
+                                            string="Install Selected Addenda"
+                                            type="object" class="oe_link oe_inline"
+                                            icon="fa-arrow-right"/>
+                                </div>
+                            </div>
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <div>
+                                        <button
+                                                name="l10n_mx_edi_addendas.action_ui_view"
+                                                class="oe_link" type="action"
+                                                icon="fa-play-circle-o"
+                                                string="Installed Addendas"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ahmsa:AddendaAHM xmlns:ahmsa="http://www.ahmsa.com/xsd/AddendaAHM1" Version="1.0">
+        <ahmsa:Documento Tipo="1" Clase="PE">
+            <ahmsa:Encabezado NumSociedad="S003" NumDivision="D002" NumProveedor="0000123456" Correo="mx_billing_user@yourcompany.com" Moneda="MXP"/>
+            <ahmsa:Detalle>
+                <ahmsa:Pedido>
+                    <ahmsa:Recepcion/>
+                </ahmsa:Pedido>
+                <ahmsa:HojaServicio Num=""/>
+                <ahmsa:Transporte Num=""/>
+                <ahmsa:CtaxPag Num="" Ejercicio=""/>
+                <ahmsa:Liquidacion FechaInicio="" FechaFin=""/>
+            </ahmsa:Detalle>
+            <ahmsa:Anexos>
+                <ahmsa:Anexo/>
+            </ahmsa:Anexos>
+        </ahmsa:Documento>
+    </ahmsa:AddendaAHM>
+</cfdi:Addenda>

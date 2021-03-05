@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_unsigned_invoice
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-18 19:43+0000\n"
+"PO-Revision-Date: 2020-11-18 19:43+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_unsigned_invoice
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/.ipynb_checkpoints/account_payment-checkpoint.py:59
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/account_payment.py:59
+#, python-format
+msgid "<b>The invoices related with this payment have the payment method as <b>PUE</b>.</b><br/><br/>When an invoice has the payment method <b>PUE</b> do not requires generate a payment complement. For more information please read <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf\"> this SAT reference.</a>, Pag. 3. Or read the <a href=\"https://www.odoo.com/documentation/user/11.0/es/accounting/localizations/mexico.html#payments-just-available-for-cfdi-3-3\"> Odoo documentation</a> to know how to indicate the payment method in the invoice CFDI."
+msgstr "<b>Las facturas relacionadas con este pago tienen el método de pago como <b>PUE</b>.</b><br/><br/>Cuando una factura tiene el método de pago <b>PUE</b> no requiere generar un complemento de pago. Para mayor información por favor lea <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Guia_comple_pagos.pdf\"> esta referencia del SAT.</a>, Pag. 3. O lea la <a href=\"https://www.odoo.com/documentation/user/11.0/es/accounting/localizations/mexico.html#payments-just-available-for-cfdi-3-3\"> documentación de Odoo</a> para saber como indicar el método de pago en el CFDI de la factura."
+
+#. module: l10n_mx_edi_unsigned_invoice
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/.ipynb_checkpoints/account_payment-checkpoint.py:45
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/account_payment.py:45
+#, python-format
+msgid "<b>This payment <b>has not</b> invoices related.</b><br/><br/>Which actions can you take?<br/><ul><ol>If this is an payment advance, you need to create a new invoice with a product that will represent the payment in advance and reconcile such invoice with this payment. For more information please read <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Caso_uso_Anticipo.pdf\"> this SAT reference.</a></ol><ol>If you already have the invoices that are paid make the payment matching of them.</ol></ul><p>If you follow this steps once you finish them and the paid amount is bellow the sum of invoices the payment will be automatically signed</p>"
+msgstr "<b>Este pago <b>no tiene</b> facturas relacionadas.</b><br/><br/>Qué acciones puedes tomar?<br/><ul><ol>Si este es un avance de pago, debes crear una nueva factura con un producto que representará el pago por adelantado y reconciliar esa factura con este pago. Para mayor información por favor lea <a href=\"http://omawww.sat.gob.mx/informacion_fiscal/factura_electronica/Documents/Complementoscfdi/Caso_uso_Anticipo.pdf\"> esta referencia del SAT.</a></ol><ol>Si ya tiene las facturas que están pagadas haga coincidir el pago con ellas.</ol></ul><p>Si sigue estos pasos una vez que los termine y el monto del pago esté por debajo de la suma de las facturas el pago será firmado automáticamente</p>"
+
+#. module: l10n_mx_edi_unsigned_invoice
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/.ipynb_checkpoints/account_payment-checkpoint.py:37
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/account_payment.py:37
+#, python-format
+msgid "<p style='color:red'>WARNING</p> <p style='font-weight:bold'>Some of the invoices paid with this payment are not signed, then the payment complement cannot be generated. If this is intentional ignore this message, otherwise please be sure of signing this invoice and regenerating the payment.</p>"
+msgstr "<p style='color:red'>ADVERTENCIA</p> <p style='font-weight:bold'>Algunas de las facturas pagadas con este pago no están firmadas, por lo tanto el complemento de pago no puede ser generado. Si esto es intencional, ignore este mensaje, de lo contrario, asegúrese de firmar esta factura y volver a generar el pago.</p>"
+
+#. module: l10n_mx_edi_unsigned_invoice
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/.ipynb_checkpoints/account_payment-checkpoint.py:30
+#: code:addons/l10n_mx_edi_unsigned_invoice/models/account_payment.py:30
+#, python-format
+msgid "<p style='color:red'>WARNING</p><p style='font-weight:bold'>Was registered a new payment for this invoice, but this invoice is not signed, then the payment complement cannot be generated. If this is intentional ignore this message, otherwise please be sure of signing this invoice and regenerating the payment.</p>"
+msgstr "<p style='color:red'>ADVERTENCIA</p><p style='font-weight:bold'>Se registró un nuevo pago para esta factura, pero esta factura no esta firmada, por lo tanto el complemento de pago no puede ser generado. Si esto es intencional, ignore este mensaje, de lo contrario, asegúrese de firmar esta factura y volver a generar el pago.</p>"
+
+#. module: l10n_mx_edi_unsigned_invoice
+#: model:ir.model,name:l10n_mx_edi_unsigned_invoice.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+

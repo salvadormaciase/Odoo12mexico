@@ -1,0 +1,17 @@
+<odoo noupdate="1">
+    <record id="execute_depreciation_on_confirmed_assets" model="ir.actions.server">
+        <field name="name">Execute depreciation on confirmed assets</field>
+        <field name="model_id" ref="account_asset.model_account_asset_asset"/>
+        <field name="binding_model_id" ref="account_asset.model_account_asset_asset"/>
+        <field name="state">code</field>
+        <field name="code">records.execute_depreciation()</field>
+    </record>
+
+    <record id="validate_fixed_asset_entries" model="ir.actions.server">
+        <field name="name">Validate journal entries in draft</field>
+        <field name="model_id" ref="account_asset.model_account_asset_asset"/>
+        <field name="binding_model_id" ref="account_asset.model_account_asset_asset"/>
+        <field name="state">code</field>
+        <field name="code">records.validate_entries()</field>
+    </record>
+</odoo>

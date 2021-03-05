@@ -1,0 +1,197 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_eapa
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 02:10+0000\n"
+"PO-Revision-Date: 2018-11-14 02:10+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_characteristic:0
+msgid "2 or more characteristics"
+msgstr "2 o más características"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_acquisition
+msgid "Acquisition"
+msgstr "Titulo Adquirido"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_acquisition_date
+msgid "Acquisition date"
+msgstr "Fecha Adquisición"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_art_complement:0
+msgid "Alienation of Works of Plastic Arts and Antiques"
+msgstr "Obras de Artes Plásticas y Antigüedades"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_characteristic:0
+msgid "Armelladas"
+msgstr "Armelladas"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_art_complement
+msgid "Art Complement"
+msgstr "Complemento de Arte"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_tax_paid
+msgid "Assign the tax amount paid by the acquisition"
+msgstr "Asigne el IVA pagado por la adquisición"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_acquisition
+msgid "Assign the way like was acquired this good"
+msgstr "Asigne la forma por la que se adquirió el bien"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_characteristic
+msgid "Characteristic"
+msgstr "Característica"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_characteristic
+msgid "Characteristic of the piece according with the SAT catalog."
+msgstr "Característica de la pieza de acuerdo con el catalogo del SAT."
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_art_complement
+msgid "Choose the complemento to use"
+msgstr "Seleccione el complemento a usar"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model,name:l10n_mx_edi_eapa.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_mx_edi_eapa
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_eapa.view_prod_form_inh_l10n_mx_edi_eapa
+msgid "Complements Plastic Arts And Antiques and Payment in Kind"
+msgstr "Complemento Obras de Artes Plásticas y Antigüedades y Pago en Especie"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_characteristic:0
+msgid "Dated"
+msgstr "Fechadas"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_pik_dimension
+msgid "Dimensions of the piece of art"
+msgstr "Dimensiones de la obra de arte"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_acquisition:0
+msgid "Donation"
+msgstr "Donación"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_good_type:0
+msgid "Engraved"
+msgstr "Grabados"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_characteristic:0
+msgid "Framed"
+msgstr "Enmarcadas"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_good_type
+msgid "Good type"
+msgstr "Tipo de bien"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_acquisition:0
+msgid "Heritage"
+msgstr "Herencia"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_other_good_type
+msgid "If the 'Acquisition' is '05', assign the acquisition way to this art."
+msgstr "Si la 'Adquisición' es '05', asigne la forma en que adquirió esta arte."
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_good_type
+msgid "If this is an art, assign which art type is this good."
+msgstr "Si es un arte, asigne el tipo de arte que es este bien."
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,help:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_acquisition_date
+msgid "Indicate the acquisition date."
+msgstr "Indique la fecha de adquisición."
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_acquisition:0
+msgid "Legacy"
+msgstr "Legado"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_other_good_type
+msgid "Other good type"
+msgstr "Otro tipo de bien"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_acquisition:0
+#: selection:product.template,l10n_mx_edi_good_type:0
+msgid "Others"
+msgstr "Otros"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_art_complement:0
+msgid "Payment in Kind"
+msgstr "Pago en Especie"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_good_type:0
+msgid "Picture"
+msgstr "Pinturas"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_pik_dimension
+msgid "Piece of Art Dimensions"
+msgstr "Dimensiones de la Pieza de Arte"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model,name:l10n_mx_edi_eapa.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_acquisition:0
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_good_type:0
+msgid "Sculpture"
+msgstr "Esculturas"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_characteristic:0
+msgid "Serial number"
+msgstr "Número de serie"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_characteristic:0
+msgid "Signed"
+msgstr "Firmadas"
+
+#. module: l10n_mx_edi_eapa
+#: model:ir.model.fields,field_description:l10n_mx_edi_eapa.field_product_template__l10n_mx_edi_tax_paid
+msgid "Tax paid"
+msgstr "IVA pagado"
+
+#. module: l10n_mx_edi_eapa
+#: selection:product.template,l10n_mx_edi_characteristic:0
+msgid "Wiring"
+msgstr "Alambrados"

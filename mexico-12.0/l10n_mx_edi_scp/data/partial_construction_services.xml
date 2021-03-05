@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="partial_construction_service" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__servicioparcial">"http://www.sat.gob.mx/servicioparcialconstruccion" if record.l10n_mx_edi_property else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-if="record.l10n_mx_edi_property">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <servicioparcial:parcialesconstruccion
+                        xsi:schemaLocation="http://www.sat.gob.mx/sitio_internet/cfd/servicioparcialconstruccion/servicioparcialconstruccion.xsd"
+                        xmlns:servicioparcial="http://www.sat.gob.mx/servicioparcialconstruccion"
+                        Version="1.0"
+                        t-att-NumPerLicoAut="record.l10n_mx_edi_property.l10n_mx_edi_property_licence">
+                        <t t-set="states" t-value="{'AGU': '01', 'BCN': '02', 'BCS': '03', 'CAM': '04', 'CHP': '05', 'CHH': '06', 'COA': '07', 'COL': '08', 'DIF': '09', 'DUR': '10', 'GUA': '11', 'GRO': '12', 'HID': '13', 'JAL': '14', 'MEX': '15', 'MIC': '16', 'MOR': '17', 'NAY': '18', 'NLE': '19', 'OAX': '20', 'PUE': '21', 'QUE': '22', 'ROO': '23', 'SLP': '24', 'SIN': '25', 'SON': '26', 'TAB': '27', 'TAM': '28', 'TLA': '29', 'VER': '30', 'YUC': '31', 'ZAC': '32'}"/>
+                        <servicioparcial:Inmueble
+                            t-att-Calle="record.l10n_mx_edi_property.street_name"
+                            t-att-NoExterior="record.l10n_mx_edi_property.street_number"
+                            t-att-NoInterior="record.l10n_mx_edi_property.street_number2"
+                            t-att-Colonia="record.l10n_mx_edi_property.l10n_mx_edi_colony"
+                            t-att-Localidad="record.l10n_mx_edi_property.l10n_mx_edi_locality"
+                            t-att-Municipio="record.l10n_mx_edi_property.city"
+                            t-att-Estado="states.get(record.l10n_mx_edi_property.state_id.code, False)"
+                            t-att-CodigoPostal="record.l10n_mx_edi_property.zip"/>
+                    </servicioparcial:parcialesconstruccion>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>

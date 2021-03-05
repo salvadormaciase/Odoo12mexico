@@ -1,0 +1,107 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_addendas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-01 01:41+0000\n"
+"PO-Revision-Date: 2018-11-01 01:41+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "<b>ASN:</b>"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "<b>GSDB:</b>"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "<b>Non-Productive Material, Spare parts warehouse and Services:</b> The ASN is considered to be the number that the Suppliers show in the XML as folio, and later when the receipt of material/service is registered is shown on the epayables page in the 'doc number' column."
+msgstr "<b>Material no productivo, almacén de repuestos y servicios:</b> El ASN se considera el número que se muestra como el folio en el XML del proveedor. Una vez se registra el recibo de materiales/servicios, se muestra en la página epayables en la columna 'doc number'."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "<b>Productive Material:</b> ASN is the number (folio and/or remission and/or shipper and/or packing slip) used by the Supplier to carry out the delivery of production materials in the Plants, and later when the receipt of material is registered in the warehouse of Ford is shown on the epayables page in the 'doc number' column."
+msgstr "<b>Material productivo:</b> ASN es el número (folio y/o albarán y/o embarque y/o hoja de embalaje) utilizado por el proveedor para llevar a cabo la entrega de materiales productivos de acuerdo a lo planificado. Una vez que se registra el recibo de materiales en el almacén de Ford, se muestra en la página epayables en la columna 'doc number'."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_ford_asn
+msgid "ASN"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_ford_asn
+msgid "ASN - Advanced Shipping Notice (numeric characters, no maximum limit of appearances).\n"
+"ASNs must be added separated by commas (,) e.g. 1,2,3,4. If no value is set, the invoice folio will be taken."
+msgstr "ASN - Advanced Shipping Notice (caracteres numéricos, sin límite de apariciones).\n"
+"Los ASNs debe ser especificado separados por comas (,) por ejemplo, 1,2,3,4. Si no se especifica ningún valor, se tomará el folio de la factura."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_ford
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_ford
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_ford_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_ford
+msgid "Addenda Ford"
+msgstr "Adenda Ford"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_ford_gsdb
+msgid "GSDB"
+msgstr ""
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_ford_gsdb
+msgid "GSDB of the distributor (required, alphanumeric characters in upper case)."
+msgstr "GSDB del distribuidor (obligatorio, caracteres alfanuméricos en mayúsculas)."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "Invoices can include one or more ASN's. If it's not provided, it will be filled using the invoice's folio."
+msgstr "Las facturas pueden contener uno o más ASNs. Si no se suministra, se llenará con el folio de la factura."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "It is the alphanumeric provider code established in the purchase order."
+msgstr "Es el código alfanumérico suministrado ubicado en el pedido de compra."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "Set Values"
+msgstr "Establecer Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_ford_values
+msgid "Set Values Addenda Ford"
+msgstr "Establecer Valores Adenda Ford"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_ford_defaults
+msgid "Set default values for the addenda Ford"
+msgstr "Establecer valores por defecto para la adenda Ford"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_ford_view
+msgid "The necessary nodes for the implementation of the Addenda of Ford Motor Company of Mexico are:"
+msgstr "Los nodos necesarios para la implementación de la adenda de Ford Motor Company of Mexico son:"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_ford_field
+msgid "Used to concatenate fields x_gsdb and x_asn"
+msgstr "Utilizado para concatenar los campos x_gsdb y x_asn"
+

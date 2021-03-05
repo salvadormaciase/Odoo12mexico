@@ -1,0 +1,23 @@
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Addenda>
+        <Documento>
+            <FacturaFemsa>
+                <noVersAdd>1</noVersAdd>
+                <claseDoc>01</claseDoc>
+                <noSociedad>0107</noSociedad>
+                <noProveedor>0000010101</noProveedor>
+                <noPedido>PO002</noPedido>
+                <moneda>MXP</moneda>
+                <noEntrada>123</noEntrada>
+                <noRemision>SO002</noRemision>
+                <noSocio/>
+                <centroCostos/>
+                <iniPerLiq/>
+                <finPerLiq/>
+                <retencion1/>
+                <retencion2/>
+                <email>mx_billing_user@yourcompany.com</email>
+            </FacturaFemsa>
+        </Documento>
+    </Addenda>
+</cfdi:Addenda>

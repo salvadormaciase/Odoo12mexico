@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_pos_pos_form">
+        <field name="name">pos.order</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+           <xpath expr='//field[@name="account_move"]' position="after">
+                <field name='cogs_move_id' attrs="{'invisible': [('cogs_move_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

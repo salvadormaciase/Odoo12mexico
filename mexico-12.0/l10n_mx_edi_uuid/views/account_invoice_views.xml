@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_tree_uuid" model="ir.ui.view">
+        <field name="name">account.invoice.tree.inherit.uuid</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="l10n_mx_edi_cfdi_uuid"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="invoice_supplier_tree_uuid" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.tree.inherit.uuid</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="l10n_mx_edi_cfdi_uuid"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="invoice_supplier_filter_uuid" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.filter.inherit.uuid</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="l10n_mx_edi_cfdi_uuid"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

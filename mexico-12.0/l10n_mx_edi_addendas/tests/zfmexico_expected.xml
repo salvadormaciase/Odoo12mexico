@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Addenda_ZF_Detecno>
+        <Version>1.0</Version>
+        <Moneda>USD</Moneda>
+        <IDFactura>1003</IDFactura>
+        <Conceptos>
+            <Concepto NumPosicion="1" NumOc="5644544" cantidad="1.0" valorUnitario="450.0" importe="477.0"/>
+        </Conceptos>
+    </Addenda_ZF_Detecno>
+</cfdi:Addenda>

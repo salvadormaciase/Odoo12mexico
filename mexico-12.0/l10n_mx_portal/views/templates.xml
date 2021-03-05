@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="mx_assets_frontend" inherit_id="website.assets_frontend" name="MX Portal Assets">
+      <xpath expr="." position="inside">
+          <script type="text/javascript" src="/l10n_mx_portal/static/src/js/mx_portal_tour.js"></script>
+      </xpath>
+    </template>
+    <template id="website_e_invoices" inherit_id="account.portal_my_invoices" name="Download E-invoices">
+        <xpath expr="//th[last()]" position="attributes">
+            <attribute name="class">col-md-3 text-right</attribute>
+        </xpath>
+        <xpath expr="//td[last()]" position="after">
+            <t t-set="attachment_id" t-value="invoice.l10n_mx_edi_retrieve_last_attachment()"/>
+            <td>
+                <div class="btn-group pull-right">
+                    <a t-att-href="'/send_invoice_mail/{0}'.format(invoice.id)" t-att-class="'btn btn-xs btn-primary' if attachment_id else 'btn btn-xs btn-primary disabled'" title="Send Email"><i class="fa fa-envelope"></i></a>
+                    <a t-att-href="'/web/content/{0}?download=true'.format(attachment_id.id if attachment_id else 0)" t-att-class="'btn btn-xs btn-primary' if attachment_id else 'btn btn-xs btn-primary disabled'" title="Download XML" target="_blank"><i class="fa fa-download"></i></a>
+                </div>
+            </td>
+        </xpath>
+    </template>
+
+    <template id="email_sent" name="Email Sent">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container mb64">
+                    <div class="col-md-8">
+                        <div class="oe_structure">
+                            <h3 class="alert alert-success">The invoice has been sent</h3>
+                        </div>
+                    </div>
+                    <div id="o_my_sidebar" class="col-md-3 col-md-offset-1 o_my_sidebar">
+                        <div class="o_my_details">
+                            <h3 class="page-header">Your Details <a href="/my/home" class="btn btn-default btn-xs">Change</a></h3>
+                            <div t-field="user.partner_id" t-field-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/>
+                        </div>
+                    </div>
+                    <div class="col-md-12 oe_structure"/>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

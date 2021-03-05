@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante
+    Certificado="MIIFuzCCA6OgAwIBAgIUMzAwMDEwMDAwMDA0MDAwMDI0MzQwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWRpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMTkwNjE3MTk0NDE0WhcNMjMwNjE3MTk0NDE0WjCB4jEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gWElRQjg5MTExNlFFNDEeMBwGA1UEBRMVIC8gWElRQjg5MTExNk1HUk1aUjA1MR4wHAYDVQQLExVFc2N1ZWxhIEtlbXBlciBVcmdhdGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCN0peKpgfOL75iYRv1fqq+oVYsLPVUR/GibYmGKc9InHFy5lYF6OTYjnIIvmkOdRobbGlCUxORX/tLsl8Ya9gm6Yo7hHnODRBIDup3GISFzB/96R9K/MzYQOcscMIoBDARaycnLvy7FlMvO7/rlVnsSARxZRO8Kz8Zkksj2zpeYpjZIya/369+oGqQk1cTRkHo59JvJ4Tfbk/3iIyf4H/Ini9nBe9cYWo0MnKob7DDt/vsdi5tA8mMtA953LapNyCZIDCRQQlUGNgDqY9/8F5mUvVgkcczsIgGdvf9vMQPSf3jjCiKj7j6ucxl1+FwJWmbvgNmiaUR/0q4m2rm78lFAgMBAAGjHTAbMAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgbAMA0GCSqGSIb3DQEBCwUAA4ICAQBcpj1TjT4jiinIujIdAlFzE6kRwYJCnDG08zSp4kSnShjxADGEXH2chehKMV0FY7c4njA5eDGdA/G2OCTPvF5rpeCZP5Dw504RZkYDl2suRz+wa1sNBVpbnBJEK0fQcN3IftBwsgNFdFhUtCyw3lus1SSJbPxjLHS6FcZZ51YSeIfcNXOAuTqdimusaXq15GrSrCOkM6n2jfj2sMJYM2HXaXJ6rGTEgYmhYdwxWtil6RfZB+fGQ/H9I9WLnl4KTZUS6C9+NLHh4FPDhSk19fpS2S/56aqgFoGAkXAYt9Fy5ECaPcULIfJ1DEbsXKyRdCv3JY89+0MNkOdaDnsemS2o5Gl08zI4iYtt3L40gAZ60NPh31kVLnYNsmvfNxYyKp+AeJtDHyW9w7ftM0Hoi+BuRmcAQSKFV3pk8j51la+jrRBrAUv8blbRcQ5BiZUwJzHFEKIwTsRGoRyEx96sNnB03n6GTwjIGz92SmLdNl95r9rkvp+2m4S6q1lPuXaFg7DGBrXWC8iyqeWE2iobdwIIuXPTMVqQb12m1dAkJVRO5NdHnP/MpqOvOgLqoZBNHGyBg4Gqm4sCJHCxA1c8Elfa2RQTCk0tAzllL4vOnI1GHkGJn65xokGsaU4B4D36xh7eWrfj4/pgWHmtoDAYa8wzSwo2GVCZOs+mtEgOQB91/g=="
+    Fecha=""
+    Folio=""
+    FormaPago="01"
+    LugarExpedicion="85134"
+    MetodoPago="PPD"
+    Moneda="USD"
+    NoCertificado="30001000000400002434"
+    Sello=""
+    Serie="GAS 2018"
+    SubTotal="14.95"
+    TipoCambio="14.54"
+    TipoDeComprobante="E"
+    Total="17.34"
+    Version="3.3"
+    xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd">
+    <cfdi:CfdiRelacionados TipoRelacion="01">
+        <cfdi:CfdiRelacionado UUID=""/>
+    </cfdi:CfdiRelacionados>
+    <cfdi:Emisor
+        Nombre="YourCompany"
+        RegimenFiscal="601"
+        Rfc="EKU9003173C9"/>
+    <cfdi:Receptor
+        Nombre="MX Service Station"
+        Rfc="XAXX010101000"
+        UsoCFDI="P01"/>
+    <cfdi:Conceptos>
+        <cfdi:Concepto
+            Cantidad="1.000000"
+            ClaveProdServ="15101505"
+            ClaveUnidad="LTR"
+            Descripcion='[3] Diesel Fuel'
+            Importe="14.95"
+            NoIdentificacion="3"
+            Unidad="Liter(s)"
+            ValorUnitario="14.95">
+            <cfdi:Impuestos>
+                <cfdi:Traslados>
+                    <cfdi:Traslado
+                        Base="14.95"
+                        Impuesto="002"
+                        TipoFactor="Tasa"
+                        TasaOCuota="0.160000"
+                        Importe="2.39"/>
+                </cfdi:Traslados>
+            </cfdi:Impuestos>
+        </cfdi:Concepto>
+    </cfdi:Conceptos>
+    <cfdi:Impuestos TotalImpuestosTrasladados="2.39">
+        <cfdi:Traslados>
+            <cfdi:Traslado
+                Importe="2.39"
+                Impuesto="002"
+                TipoFactor="Tasa"
+                TasaOCuota="0.160000"/>
+        </cfdi:Traslados>
+    </cfdi:Impuestos>
+    <cfdi:Complemento>
+        <consumodecombustibles11:ConsumoDeCombustibles
+            xmlns:consumodecombustibles11="http://www.sat.gob.mx/ConsumoDeCombustibles11"
+            xsi:schemaLocation="http://www.sat.gob.mx/ConsumoDeCombustibles11 http://www.sat.gob.mx/sitio_internet/cfd/ConsumoDeCombustibles/consumodeCombustibles11.xsd"
+            version="1.1"
+            tipoOperacion="monedero electrónico"
+            numeroDeCuenta="234567890"
+            subTotal="14.95"
+            total="17.34">
+            <consumodecombustibles11:Conceptos>
+                <consumodecombustibles11:ConceptoConsumoDeCombustibles
+                    identificador="0000123"
+                    fecha="2018-04-19T08:01:52"
+                    rfc="EKU9003173C9"
+                    claveEstacion="12345"
+                    tipoCombustible="3"
+                    cantidad="1.0"
+                    nombreCombustible="[3] Diesel Fuel"
+                    folioOperacion="B4536414-607E-42CA-AAB4-03EB964002A1"
+                    valorUnitario="14.95"
+                    importe="14.95">
+                <consumodecombustibles11:Determinados>
+                    <consumodecombustibles11:Determinado
+                        impuesto="IVA"
+                        tasaOCuota="0.160000"
+                        importe="2.39"/>
+                    </consumodecombustibles11:Determinados>
+                </consumodecombustibles11:ConceptoConsumoDeCombustibles>
+            </consumodecombustibles11:Conceptos>
+        </consumodecombustibles11:ConsumoDeCombustibles>
+        <tfd:TimbreFiscalDigital
+            xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital"
+            xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/TimbreFiscalDigital/TimbreFiscalDigital.xsd"
+            FechaTimbrado="2016-01-01T00:00:00"
+            UUID="00000000-0000-0000-0000-000000000000"
+            selloCFD="gLqw7lBHGHnGXTm1XeT2WTWRpR0n1bFYaAhyvlEhlIwN1fot6YfCK3dy6Ay2jQrmiwhKcH2rErN0mWs9z2qC3UCnJkf2fSqOol9l/cdYoOnUjJdyN3ZpAobKXp+dYl6HoEiVVHdCK0ZbViwVfZK1iVONPuO4halPSjspJZQjw+g="
+            selloSAT="zozpPs6DsDCU9bffFtJ1qsUm2acr1ElMvAyXxOPRPu+lD/JPX/uQiX8Iirp4urXImTGz+T7SE9MLhXGeljEWHEX1XlNPYl42xXr0pn44Ur7Y8LHxoDa40AcrfZe7jfofeqJyeTbgFPfdIf143PN+x0MCJ5UAPTLk110j4jSEuUY="
+            noCertificadoSAT="20001000000100005761"
+            version="1.0"/>
+    </cfdi:Complemento>
+</cfdi:Comprobante>

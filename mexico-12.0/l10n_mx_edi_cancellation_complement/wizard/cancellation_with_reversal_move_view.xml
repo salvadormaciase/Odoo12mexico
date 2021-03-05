@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payment_cancellation_with_reversal_move" model="ir.ui.view">
+        <field name="name">payment.cancellation.with.reversal.move</field>
+        <field name="model">l10n_mx_edi.payment_cancellation_with_reversal_move</field>
+        <field name="arch" type="xml">
+            <form string="Move Reversal Information">
+                <group col="4">
+                    <field name="date"/>
+                    <field name="journal_id"/>
+                </group>
+                <footer>
+                    <button string="Cancel payment with reversal move" name="cancel_with_reversal_move" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_reversal_move_view_to_cancel" model="ir.actions.act_window">
+        <field name="name">Reversal move information</field>
+        <field name="res_model">l10n_mx_edi.payment_cancellation_with_reversal_move</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_payment_cancellation_with_reversal_move"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_payment"/>
+        <field name="context">{'l10n_mx_edi_manual_reconciliation': False}</field>
+    </record>
+</odoo>

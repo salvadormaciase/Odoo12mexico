@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="email_template_wizard_mass_invoice_sending" model="mail.template">
+        <field name="name">Account Invoice: Mass Sending by email</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="email_from">${object.env.user.email_formatted |safe}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="subject">${object.company_id.name}</field>
+        <field name="report_template" ref="account.account_invoices"/>
+        <field name="report_name">${object.l10n_mx_edi_is_required() and object.l10n_mx_edi_cfdi_name and object.l10n_mx_edi_cfdi_name.replace('.xml', '.pdf') or (object.state in ('open','in_payment','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')}</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hi!
+        <br/>
+        You can now check your invoices or download the PDF files that we attached in this email, with their respective supports for review.
+        % set record = ctx.get('record')
+        <br/><br/>
+        <p class="or-text" style="padding: 0; margin: 15px 0;">
+            Invoice list:
+            <br style="margin: 0; padding: 0;"/>
+        % for inv in ctx.get('invoices'):
+            Invoice <strong>${inv.number}</strong> - amounting in <strong>${format_amount(inv.amount_total, inv.currency_id)}</strong>
+            <br style="margin: 0; padding: 0;"/>
+        % endfor
+        </p>
+        <br /><br />
+        If you have any questions, do not hesitate to contact us.
+    </p>
+</div>
+        </field>
+        <field name="lang">${object.lang}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>

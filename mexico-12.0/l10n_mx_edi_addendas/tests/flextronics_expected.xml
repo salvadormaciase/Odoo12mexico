@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <flextronics:AddendaFlextronics
+        xmlns:flextronics="http://www.flextronics.com/CFD/Addenda/Receptor"
+        companiaFlextronics="--Flextronix Company here--"
+        numeroProveedor="--Supplier Number here--"
+        ordenCompra="5644544"
+        numeroFacturaProveedor="EABFA345325"
+        packingSlip_Embarque="345325"
+        />
+</cfdi:Addenda>

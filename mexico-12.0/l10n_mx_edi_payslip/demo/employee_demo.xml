@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record id="res_partner_address_mx_qdp" model="res.partner">
+        <field name="name">Gilles Gravie</field>
+        <field eval="1" name="customer"/>
+        <field eval="1" name="supplier"/>
+        <field name="street_name">Lunik</field>
+        <field name="street2">Futurama Monterrey</field>
+        <field name="street_number">119</field>
+        <field name="zip">37180</field>
+        <field name="city">León</field>
+        <field name="state_id" ref="base.state_mx_gto"/>
+        <field name="country_id" ref="base.mx"/>
+        <field name="email">info@vauxoo.com</field>
+        <field name="phone">477-773-3346</field>
+        <field name="vat">VAAM130719H60</field>
+        <field name='l10n_mx_edi_curp'>PUXB571021HNELXR00</field>
+        <field name="property_account_position_id" ref="l10n_mx_edi_payslip.account_fiscal_position_02_emp"/>
+    </record>
+
+    <record id="account_bank_employee_qdp" model="res.partner.bank">
+        <field name='acc_number' eval="1234567890"/>
+        <field name='partner_id' ref="res_partner_address_mx_qdp"/>
+        <field name='bank_id' ref="l10n_mx_edi_bank.acc_bank_012_BBVA_BANCOMER"/>
+    </record>
+
+    <record id="hr.employee_qdp" model="hr.employee">
+        <field name='ssnid' eval="123456789236958"/>
+        <field name="category_ids" eval="[(4, ref('hr_employee_category_01'))]"/>
+        <field name='l10n_mx_edi_risk_rank' eval="class_job_risk_1"/>
+        <field name='address_id' ref="base.main_partner"/>
+        <field name='address_home_id' ref="res_partner_address_mx_qdp"/>
+        <field name='bank_account_id' ref="account_bank_employee_qdp"/>
+    </record>
+
+    <record id="hr_payroll.hr_contract_gilles_gravie" model="hr.contract">
+        <field name='type_id' ref="hr_contract_type_01"/>
+        <field name='struct_id' ref="payroll_structure_data_01"/>
+        <field name='schedule_pay'>04</field>
+        <field name='wage'>22000</field>
+        <field name='l10n_mx_edi_infonavit_type'>fixed_amount</field>
+        <field name='l10n_mx_edi_infonavit_rate'>2000</field>
+    </record>
+</odoo>

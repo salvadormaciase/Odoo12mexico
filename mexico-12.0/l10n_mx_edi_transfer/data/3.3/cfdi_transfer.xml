@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cfdiv33_transfer" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="(//*[local-name()='Comprobante'])" position="attributes">
+            <attribute name="t-att-FormaPago">(payment_method or '').replace('NA', '99') if document_type != 'T' else None</attribute>
+        </xpath>
+        <xpath expr="(//*[local-name()='Receptor'])" position="attributes">
+            <attribute name="t-att-Rfc">customer.l10n_mx_edi_get_customer_rfc() if document_type != 'T' else 'XAXX010101000'</attribute>
+        </xpath>
+        <xpath expr="(//*[local-name()='Concepto'])" position="attributes">
+            <attribute name="t-att-Descripcion">record._get_string_cfdi(line.name, 1000) if document_type != 'T' else record._get_string_cfdi('TRASLADO DE MERCANCIAS %s' % line.name, 1000)</attribute>
+        </xpath>
+    </template>
+</odoo>
