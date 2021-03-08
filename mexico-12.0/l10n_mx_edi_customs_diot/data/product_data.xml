@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_mx_edi_product_category_tax" model="product.category">
+        <field name="name">Tax</field>
+    </record>
+    <record id="tax_imp_16" model="account.tax">
+        <field name="name">IVA(16%) IMPORTACIÓN</field>
+        <field name="description">IVA(16%) imp</field>
+        <field name="python_compute">result = price_unit * 0.16</field>
+        <field name="amount_type">code</field>
+        <field name="amount">16</field>
+        <field name="type_tax_use">purchase</field>
+        <field name="tag_ids" eval="[(6,0,[ref('l10n_mx.tag_diot_16_imp')])]"/>
+    </record>
+
+    <record id="l10n_mx_edi_tax_product" model="product.product">
+        <field name="name">Taxable Base - Importation Tax</field>
+        <field name="type">service</field>
+        <field name="sale_ok">False</field>
+        <field name="categ_id" ref="l10n_mx_edi_customs_diot.l10n_mx_edi_product_category_tax"/>
+        <field name="supplier_taxes_id" eval="[(6,0,[ref('l10n_mx_edi_customs_diot.tax_imp_16')])]"/>
+    </record>
+</odoo>

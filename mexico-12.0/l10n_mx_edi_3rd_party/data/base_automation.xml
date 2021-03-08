@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo noupdate="1">
+
+    <record id="action_validate_3rds_fields" model="base.automation">
+        <field name="name">Validate third's address fields</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+required_fields = ('street_name', 'city_id', 'state_id', 'country_id', 'zip')
+for invoice in records:
+    for third in invoice.mapped('invoice_line_ids.l10n_mx_edi_3rd_party_id'):
+        field_values = third.read(required_fields)[0]
+        if not all(field_values.values()):
+            missing_fields = [
+                third._fields[k].string
+                for k, v in field_values.items() if not v]
+            fields_html = "&lt;ul&gt;&lt;li&gt;%s&lt;/li&gt;&lt;/ul&gt;" % (
+                "&lt;/li&gt;&lt;li&gt;".join(missing_fields))
+            invoice.message_post(body=(
+                "&lt;p&gt;&lt;strong&gt; WARNING &lt;/strong&gt;&lt;/p&gt;"
+                "The partner %s, who you are selling on behalf of, is missing "
+                "some required address fields, so no address information was "
+                "included in the CFDI for "
+                "that partner. The following fields are missing:%s") % (
+                    third.name, fields_html),
+                subtype='account.mt_invoice_validated')
+        </field>
+        <field name="trigger">on_write</field>
+        <field name="active" eval="True"/>
+        <field name="filter_domain">[('l10n_mx_edi_pac_status', '=', 'signed')]</field>
+        <field name="filter_pre_domain">[('l10n_mx_edi_pac_status', '=', 'to_sign')]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:mmmcfdi="http://mmm.com/CDFI">
+    <Generales>
+        <TipoCambio>20.000000</TipoCambio>
+        <moneda>USD</moneda>
+    </Generales>
+</cfdi:Addenda>

@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_attachment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-13 22:11+0000\n"
+"PO-Revision-Date: 2018-11-13 22:11+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_attachment
+#: model:ir.model,name:l10n_mx_edi_attachment.model_ir_attachment
+msgid "Attachment"
+msgstr "Adjunto"
+
+#. module: l10n_mx_edi_attachment
+#: code:addons/l10n_mx_edi_attachment/models/ir_attachment.py:59
+#, python-format
+msgid "You cannot delete documents which contain legal information and have been declared to the SAT.\n"
+"Please, try first to cancel the document associated with the record: %s, in the model: %s, named: %s, with the UUID: %s; and then resign it if necessary."
+msgstr "No puede eliminar documentos que contengan información legal y que hayan sido declarados al SAT.\n"
+"Por favor, intente cancelar primero el documento asociado al registro: %s, en el modelo: %s, y con el nombre: %s, con el UUID: %s; y después re-firme de ser necesario"

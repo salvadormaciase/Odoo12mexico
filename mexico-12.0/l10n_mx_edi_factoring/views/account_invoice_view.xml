@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_mx_edi_invoice_form_inherit" model="ir.ui.view">
+        <field name="name">l10n_mx_edi_factoring.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="l10n_mx_edi.view_l10n_mx_edi_invoice_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_mx_edi_payment_method_id']" position="before">
+                <field name="l10n_mx_edi_factoring_id" attrs="{'invisible':['|', ('state', 'not in', ['open', 'paid']), ('type','!=','out_invoice')]}" domain="[('id','!=',partner_id)]"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">l10n_mx_edi_factoring.invoice.form.defaults</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@id='account_invoice_payment_btn']" position="attributes">
+                <attribute name="context">{'default_invoice_ids': [(4, active_id, None)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

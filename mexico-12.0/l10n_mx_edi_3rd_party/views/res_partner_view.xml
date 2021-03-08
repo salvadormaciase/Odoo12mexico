@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mx_partner_address_form_inherit_3rd_party" model="ir.ui.view">
+        <field name="name">mx.partner.address.form.inherit.3rd.party</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_mx_edi.mx_partner_address_form"/>
+        <field name="priority">110</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_mx_edi_locality']" position="replace">
+                <field name="l10n_mx_edi_locality" invisible="1"/>
+                <field name="l10n_mx_edi_locality_id" placeholder="Locality..." domain="[('state_id','=', state_id)]" options='{"no_create": True}'/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

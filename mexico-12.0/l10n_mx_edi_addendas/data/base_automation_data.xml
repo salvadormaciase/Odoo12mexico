@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+
+        <record id="automatic_addenda_doc" model="base.automation">
+            <field name="name">Automatic assign addenda doc</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">
+if record.l10n_mx_edi_addenda == env.ref('l10n_mx_edi_addendas.addenda_chrysler'):
+    record['l10n_mx_edi_addenda_doc'] = """&lt;p>When signing an invoice, the corresponding xml will appears with the addenda information. This information is taken
+    from the fields that are explicitly included in the invoice, and for the case that the information is not in a specific field,
+    the &lt;b>&lt;i>Reference/Description&lt;/i>&lt;/b> field is used. This is the case of the following addenda tags:&lt;/p>
+
+    &lt;p>1- Tag &lt;b>&lt;i>ordenCompra&lt;/i>&lt;/b> (node &lt;b>&lt;i>references&lt;/i>&lt;/b>).&lt;/p>
+    &lt;p>2- Tag &lt;b>&lt;i>referenciaChrysler&lt;/i>&lt;/b> (node &lt;b>&lt;i>cargosCreditos&lt;/i>&lt;/b>).&lt;/p>
+    &lt;p>3- Tag &lt;b>&lt;i>consecutivo&lt;/i>&lt;/b> (node &lt;b>&lt;i>cargosCreditos&lt;/i>&lt;/b>).&lt;/p>
+    &lt;p>4- Tag &lt;b>&lt;i>montoLinea&lt;/i>&lt;/b> (node &lt;b>&lt;i>cargosCreditos&lt;/i>&lt;/b>).&lt;/p>
+    &lt;p>5- Tag &lt;b>&lt;i>factura&lt;/i>&lt;/b> (node &lt;b>&lt;i>cargosCreditos&lt;/i>&lt;/b>).&lt;/p>
+    &lt;p>6- Tag &lt;b>&lt;i>cancelaSustituye&lt;/i>&lt;/b> (node &lt;b>&lt;i>cancelaciones&lt;/i>&lt;/b>).&lt;/p>
+
+    &lt;p>These tags should appear in the &lt;b>&lt;i>Reference/Description&lt;/i>&lt;/b> field in the same order as they are listed above and
+    separated by &lt;b>|&lt;/b> symbol, &lt;b>&lt;i>ordenCompra&lt;/i>&lt;/b> is a mandatory tag and &lt;b>&lt;i>referenciaChrysler&lt;/i>&lt;/b>,
+    &lt;b>&lt;i>consecutivo&lt;/i>&lt;/b>, &lt;b>&lt;i>montoLinea&lt;/i>&lt;/b>, &lt;b>&lt;i>factura&lt;/i>&lt;/b>, &lt;b>&lt;i>cancelaSustituye&lt;/i>&lt;/b> are optional tags.&lt;/p>
+
+    &lt;p>For case of tag &lt;b>&lt;i>unidadDeMedida&lt;/i>&lt;/b> of the &lt;b>&lt;i>part&lt;/i>&lt;/b> node, its values were mapped in the view itself of the addenda,
+    so if any change is necessary, it must be modified directly (click on &lt;b>&lt;i>Addenda Chysler&lt;/i>&lt;/b> field &lt;b>&lt;i>Addenda&lt;/i>&lt;/b> located in
+    this window and modify the variable &lt;i>&lt;t t-set = "unit_m" t-value = "{'Unit(s)': 'EA'}"/>&lt;/i> where &lt;i>Unit(s)&lt;/i> is the name of
+    the unit of measure in ODOO and &lt;i>EA&lt;/i> is its corresponding for Chrysler).&lt;/p>
+
+    &lt;p>For more information about the structure of the addenda, visit the following
+    &lt;a href="http://www.dfdchryslerdemexico.com.mx/addenda/PUA/PUA.XSD" target="_blank">link&lt;/a>&lt;/p>"""
+
+if record.l10n_mx_edi_addenda == env.ref('l10n_mx_edi_addendas.addenda_ford'):
+    record['l10n_mx_edi_addenda_doc'] = """&lt;p>When signing an invoice, the corresponding xml will appears with the addenda information. This information is taken from the invoice
+    field &lt;b>&lt;i>Reference/Description&lt;/i>&lt;/b> which must have the following structure:
+    value of the GSDB node (required, alphanumeric characters) followed by the ASN nodes (required, without maximum limit of occurrences) separated by | symbol,
+    example &lt;b>&lt;i>Reference/Description = GSDB|ASN_1|ASN_2|ASN_3&lt;/i>&lt;/b>&lt;/p>"""
+            </field>
+            <field name="trigger">on_create_or_write</field>
+            <field name="active" eval="True"/>
+            <field name="filter_domain">[('l10n_mx_edi_addenda', '!=', False)]</field>
+        </record>
+
+</odoo>

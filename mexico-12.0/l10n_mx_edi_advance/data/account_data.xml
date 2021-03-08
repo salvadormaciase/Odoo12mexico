@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Account Reconciliation Models
+    Create a default rule for the reconciliation widget matching advances automatically.
+    -->
+    <record id="reconciliation_model_default_rule" model="account.reconcile.model">
+        <field name="name">Advances matching</field>
+        <field name="sequence">1</field>
+        <field name="rule_type">writeoff_suggestion</field>
+        <field name="auto_reconcile" eval="False"/>
+        <field name="match_nature">both</field>
+        <field name="amount_type">percentage</field>
+        <field name="label">Advance</field>
+        <field name="match_total_amount_param" eval="100"/>
+        <field name="match_partner" eval="True"/>
+        <field name="account_id" search="[('code', '=', '206.01.01')]"/>
+    </record>
+
+</odoo>

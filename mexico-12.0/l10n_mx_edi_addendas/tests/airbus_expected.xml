@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+    <R:Airbus
+        xmlns:R="http://www.edivolt.com/ns/AirbusR"
+        version="1.0" codigoEmpresa="1120"
+        tipoDocumentoFiscal="FA"
+        moneda="MXN"
+        concepto="CALIBRACIONES"
+        descripcionFact="New purchase">
+        <R:Solicitante eMail="floyd.steward34@example.com"/>
+        <R:Proveedor numProveedor="--Supplier num here--"/>
+        <R:Partidas>
+            <R:Partida
+                ordenCompraNum="4530023319"
+                posicionOC="01"
+                recepcionNum="7381890"
+                descripcion="[FURN_7800] Desk Combination Desk combination, black-brown: chair + desk + drawer."
+                numMaterial="CONS-CH-0079"
+                cantidad="1.0" unidadMedida="TR"
+                precioUnitario="450.00"
+                montoLinea="450.00" codigoImpuesto="W0"
+                notaEntrega="234225"/>
+        </R:Partidas>
+        <R:AgenteAduanal tipoOperation="IMPORTACION" pedimento="15  48  3009  0001234"/>
+    </R:Airbus>
+</cfdi:Addenda>

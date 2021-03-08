@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_supplier_defaults_purchaseorder_document" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <div id="l10n_mx_edi_informations" class="row mt32 mb32">
+                <div t-if="o.l10n_mx_edi_payment_method_id" class="col-5 bm-2">
+                    <strong>Payment Way:</strong>
+                    <p t-esc="' - '.join([o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name])" class="m-0"/>
+                </div>
+                <div t-if="o.l10n_mx_edi_usage" class="col-7 bm-2">
+                    <strong>Usage:</strong>
+                    <p t-field="o.l10n_mx_edi_usage" class="m-0"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

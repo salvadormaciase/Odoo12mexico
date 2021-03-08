@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="aam" name="AAM">
+        <t t-set="cfdi_values" t-value="record._l10n_mx_edi_create_cfdi_values()"/>
+        <!-- Print the invoice so the PDF may be included in base64 -->
+        <t t-set="report" t-value="env['ir.actions.report']._get_report_from_name(
+            record.invoice_print()['report_name'])
+            .render(record.ids) and True"/>
+        <t t-set="pdf_attachment" t-value="env.ref('account.account_invoices').retrieve_attachment(record)"/>
+        <IND:Factura
+            xmlns:IND="https://online.aam.com/Addenda/IND"
+            tipoDocumento="IND"
+            TipoDocumentoFiscal="INV"
+            t-att-OrganizacionOperacional="record.x_addenda_aam or ''"
+            version="1.1"
+            Clabe="--Bank CLABE here--"
+            NombreBanco="--Bank name here--">
+            <IND:Moneda
+                t-att-tipoMoneda="record.currency_id.name"
+                t-att-tipoCambio="cfdi_values['rate'] or '1.000000'"/>
+            <IND:Proveedor Codigo="--Supplier code here--"/>
+            <IND:Requisitor
+                t-att-Nombre="record.partner_id.name"
+                t-att-Correo="record.partner_id.email or ''"/>
+            <IND:Archivo
+                t-att-datos="pdf_attachment.datas or ''"
+                tipo="PDF"/>
+            <IND:Conceptos>
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <t t-set="subtotal_wo_discount" t-value="cfdi_values['subtotal_wo_discount'](line)"/>
+                    <t t-set="supplier_info" t-value="line.sudo().product_id.seller_ids.filtered(
+                        lambda s:
+                        s.name == record.commercial_partner_id
+                        and s.product_id == line.product_id
+                        and s.sequence == 999)[:1]"/>
+                    <IND:part
+                        t-att-Linea="line_index + 1"
+                        t-att-numero="line.x_addenda_sap_code or supplier_info.product_code or ''"
+                        t-att-cantidad="line.quantity"
+                        t-att-descripcion="line.x_addenda_sap_description or supplier_info.product_name or ''"
+                        t-att-unidadDeMedida="line.x_addenda_sap_uom or supplier_info.x_addenda_uom_code or ''"
+                        t-att-precioUnitario="(subtotal_wo_discount/line.quantity) if line.quantity else 0.0"
+                        t-att-montoDeLinea="subtotal_wo_discount">
+                            <IND:references
+                                t-att-ordenCompra="record.name or ''"/>
+                    </IND:part>
+                </t>
+            </IND:Conceptos>
+        </IND:Factura>
+    </template>
+    <record id="aam" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_aam" model="ir.model">
+        <field name="name">Addenda AAM</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_addenda.aam</field>
+        <field name="info">Addenda aam documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_aam_operational_organization" model="ir.model.fields">
+        <field name="name">x_operational_organization</field>
+        <field name="field_description">Operational Organization</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="help">A division code internally used by AAM. This code is provided to the seller when the order is made.</field>
+        <field name="model_id" ref="wizard_aam"/>
+    </record>
+    <record id="wizard_aam_invoice_line_ids" model="ir.model.fields">
+        <field name="name">x_invoice_line_ids</field>
+        <field name="field_description">Invoice Lines</field>
+        <field name="ttype">many2many</field>
+        <field name="model_id" ref="wizard_aam"/>
+        <field name="relation">account.invoice.line</field>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_aam_field" model="ir.model.fields">
+        <field name="name">x_addenda_aam</field>
+        <field name="field_description">Addenda AAM</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to store the field x_operational_organization</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+    <record id="invoice_line_sap_description" model="ir.model.fields">
+        <field name="name">x_addenda_sap_description</field>
+        <field name="field_description">SAP Description</field>
+        <field name="ttype">char</field>
+        <field name="help">The product's SAP description as handled by the customer. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+    <record id="invoice_line_sap_code" model="ir.model.fields">
+        <field name="name">x_addenda_sap_code</field>
+        <field name="field_description">SAP Code</field>
+        <field name="ttype">char</field>
+        <field name="help">The product's SAP code as handled by the customer. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+    <record id="invoice_line_sap_uom" model="ir.model.fields">
+        <field name="name">x_addenda_sap_uom</field>
+        <field name="field_description">SAP UoM</field>
+        <field name="ttype">char</field>
+        <field name="help">The unit of measure's SAP code as handled by the customer. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+
+    <!--Fields on product supplierinfo-->
+    <record id="product_supplierinfo_sap_uom" model="ir.model.fields">
+        <field name="name">x_addenda_uom_code</field>
+        <field name="field_description">UoM Code</field>
+        <field name="ttype">char</field>
+        <field name="help">The unit of measure's code as handled by the supplier.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'product.supplierinfo')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_aam_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda AAM</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(env.context['invoice_id'])
+wizard = env['x_addenda.aam'].browse(env.context['active_id'])
+invoice.write({'x_addenda_aam': wizard.x_operational_organization})
+
+# Create supplier info for SAP values, if theyre not already created
+for line in invoice.invoice_line_ids:
+    if not any([line.x_addenda_sap_description,
+                line.x_addenda_sap_code,
+                line.x_addenda_sap_uom]):
+        continue
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == invoice.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 999)[:1]
+    if supplier_info:
+        supplier_info.write({
+            'product_name': line.x_addenda_sap_description,
+            'product_code': line.x_addenda_sap_code,
+            'x_addenda_uom_code': line.x_addenda_sap_uom,
+        })
+    else:
+        supplier_info.create({
+            'name': invoice.commercial_partner_id.id,
+            'product_tmpl_id': line.product_id.product_tmpl_id.id,
+            'product_id': line.product_id.id,
+            'sequence': 999,
+            'product_name': line.x_addenda_sap_description,
+            'product_code': line.x_addenda_sap_code,
+            'x_addenda_uom_code': line.x_addenda_sap_uom,
+        })
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values. This view needs to hold all
+    the required help information
+    -->
+    <record id="wizard_aam_view" model="ir.ui.view">
+        <field name="name">x_addenda.aam.view</field>
+        <field name="model">x_addenda.aam</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>
+                        The necessary nodes for the implementation of the Addenda of AAM Maquiladora México, S. de R.L. de C.V. are:
+                    </p>
+                    <ul>
+                        <li>
+                            <p><b>Operational Organization:</b></p>
+                            <p>A division code internally used by AAM. This code is provided to the seller when the order is made.</p>
+                        </li>
+                        <li>
+                            <p><b>Product SAP Information:</b></p>
+                            <p>SAP information of the product, as handled by AAM: description, code and unit of measure. This information has to be set on each invoice line.</p>
+                        </li>
+                        <li>
+                            <p><b>Purchase Order:</b></p>
+                            <p>The number of the customer's purchase order. This value is taken from the invoice's field "Reference/Description".</p>
+                        </li>
+                        <li>
+                            <p><b>Requisitor:</b></p>
+                            <p>Information of the person who made the requisition: name and e-mail. Such information is taken from the customer of the invoice.</p>
+                        </li>
+                    </ul>
+                </div>
+                <group>
+                    <field name="x_operational_organization"/>
+                </group>
+                <group string="Lines">
+                    <field name="x_invoice_line_ids" nolabel="1">
+                        <tree editable="1" create="0" delete="0">
+                            <field name="name" string="Line" readonly="1"/>
+                            <field name="x_addenda_sap_description"/>
+                            <field name="x_addenda_sap_code"/>
+                            <field name="x_addenda_sap_uom"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        string="Set Values"
+                        name="l10n_mx_edi_addendas.set_addenda_aam_values"
+                        type="action"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the wizard
+    After default values are set.
+    -->
+   <act_window
+        id="action_addenda_aam"
+        name="Addenda AAM"
+        res_model="x_addenda.aam"
+        view_type="form"
+        view_mode="form"
+        target="new"
+        view_id="wizard_aam_view"/>
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_addenda_aam_defaults" model="ir.actions.server">
+        <field name="name">Set default values for the addenda AAM</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+context = {
+    'invoice_id': record.id,
+    'default_x_operational_organization': record.x_addenda_aam,
+    'default_x_invoice_line_ids': record.invoice_line_ids.ids,
+}
+
+# Set default SAP values if available as supplier info
+for line in record.invoice_line_ids:
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == record.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 999)[:1]
+    line.write({
+        'x_addenda_sap_description': line.x_addenda_sap_description or supplier_info.product_name,
+        'x_addenda_sap_code': line.x_addenda_sap_code or supplier_info.product_code,
+        'x_addenda_sap_uom': line.x_addenda_sap_uom or supplier_info.x_addenda_uom_code,
+    })
+
+action = env.ref('l10n_mx_edi_addendas.action_addenda_aam').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_aam" model="ir.ui.view">
+        <field name="name">account.invoice.form.aam</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button
+                    name="l10n_mx_edi_addendas.action_addenda_aam_defaults"
+                    type="action"
+                    string="Addenda AAM"
+                    attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

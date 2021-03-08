@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="pepsico" name="PepsiCo">
+        <t t-set="wizard_values" t-value="(record.x_addenda_pepsico or '|').split('|')"/>
+        <t t-set="xml" t-value="record.l10n_mx_edi_get_xml_etree()"/>
+        <t t-set="tfd" t-value="record.l10n_mx_edi_get_tfd_etree(xml)"/>
+        <RequestCFD
+            version="2.0"
+            tipo="AddendaPCO"
+            t-att-idPedido="record.name or ''"
+            t-att-idSolicitudPago="wizard_values[0] or None">
+            <Documento
+                t-att-tipoDoc="{'out_invoice': 1, 'out_refund': 2}.get(record.type)"
+                t-att-folioUUID="tfd.get('UUID')"
+                t-att-referencia="record.refund_invoice_id.l10n_mx_edi_cfdi_uuid if record.type == 'out_refund' else None"/>
+            <Proveedor t-att-idProveedor="record.partner_id.ref"/>
+            <Recepciones>
+                <Recepcion t-att-idRecepcion="wizard_values[1]">
+                    <t t-foreach="record.invoice_line_ids" t-as="line">
+                        <Concepto
+                            t-att-importe="'%.6f' % (line.price_unit * line.quantity)"
+                            t-att-valorUnitario="line.price_unit"
+                            t-att-cantidad="line.quantity"
+                            t-att-descripcion="record._get_string_cfdi(line.name, 1000)"
+                            t-att-unidad="record._get_string_cfdi(line.uom_id.name, 20)"/>
+                    </t>
+                </Recepcion>
+            </Recepciones>
+        </RequestCFD>
+    </template>
+    <record id="pepsico" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+    <!--Wizard to set elements-->
+    <record id="wizard_pepsico" model="ir.model">
+        <field name="name">Addenda PepsiCo</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_addenda.pepsico</field>
+        <field name="info">Addenda PepsiCo documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_pepsico_payment_request" model="ir.model.fields">
+        <field name="name">x_payment_request</field>
+        <field name="field_description">Payment Request</field>
+        <field name="ttype">char</field>
+        <field name="required">0</field>
+        <field name="help">Indicates the number generated for the payment request to the services provider.</field>
+        <field name="model_id" ref="wizard_pepsico"/>
+    </record>
+    <record id="wizard_pepsico_reception" model="ir.model.fields">
+        <field name="name">x_reception</field>
+        <field name="field_description">Reception Number</field>
+        <field name="ttype">char</field>
+        <field name="required">0</field>
+        <field name="help">It is the reception number in the customer system.</field>
+        <field name="model_id" ref="wizard_pepsico"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_pepsico_field" model="ir.model.fields">
+        <field name="name">x_addenda_pepsico</field>
+        <field name="field_description">Addenda PepsiCo</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate wizard fields</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_pepsico_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda PepsiCo</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.pepsico'].browse(model._context['active_id'])
+wizard_fields = [wizard.x_payment_request, wizard.x_reception]
+wizard_fields = [j or '' for j in wizard_fields]
+invoice.write({'x_addenda_pepsico': '|'.join(wizard_fields)})
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_pepsico_view" model="ir.ui.view">
+        <field name="name">x_addenda.pepsico.view</field>
+        <field name="model">x_addenda.pepsico</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>
+                        The necessary nodes for the implementation of the Addenda of PepsiCo Mexico are:
+                    </p>
+                    <ul>
+                        <li>
+                            <p><b>Payment Request:</b></p>
+                            <p>Indicates the number generated for the payment request to the services provider.</p>
+                        </li>
+                        <li>
+                            <p><b>Reception Number:</b></p>
+                            <p>It is the reception number in the customer system.</p>
+                        </li>
+                        <li>
+                            <p><b>Purchase Order:</b></p>
+                            <p>The number of the customer's purchase order. This value is taken from the invoice's field "Reference/Description".</p>
+                        </li>
+                    </ul>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_payment_request"/>
+                        <field name="x_reception"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_pepsico_values"
+                    type="action" string="Set Values" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the wizard
+    After default values are set.
+    -->
+    <record id="action_addenda_pepsico" model="ir.actions.act_window">
+        <field name="name">Addenda PepsiCo</field>
+        <field name="res_model">x_addenda.pepsico</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_pepsico_view"/>
+    </record>
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_addenda_pepsico_defaults" model="ir.actions.server">
+        <field name="name">Set default values for the addenda PepsiCo</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+context = {'invoice_id': record.id}
+wizard_values = record.x_addenda_pepsico and record.x_addenda_pepsico.split('|')
+# If the wizard has been run before, fill it with its previows values
+if wizard_values:
+    context.update({
+        'default_x_payment_request': wizard_values[0],
+        'default_x_reception': wizard_values[1],
+    })
+action = env.ref('l10n_mx_edi_addendas.action_addenda_pepsico').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_pepsico" model="ir.ui.view">
+        <field name="name">account.invoice.form.pepsico</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_pepsico_defaults" type="action"
+                        string="Addenda PepsiCo"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

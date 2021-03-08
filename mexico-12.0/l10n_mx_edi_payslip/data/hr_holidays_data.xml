@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Holiday -->
+    <record id="mexican_holiday" model="hr.leave.type">
+        <field name="name" eval="'HOLIDAYS'"/>
+        <field name="allocation_type">fixed</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_maternity" model="hr.leave.type">
+        <field name="name" eval="'MATERNITY'"/>
+        <field name="allocation_type">no</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_riesgo_de_trabajo" model="hr.leave.type">
+        <field name="name" eval="'INCAPACIDAD_POR_RIESGO_DE_TRABAJO'"/>
+        <field name="allocation_type">no</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_enfermedad_general" model="hr.leave.type">
+        <field name="name" eval="'INCAPACIDAD_POR_ENFERMEDAD_GENERAL'"/>
+        <field name="allocation_type">no</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_licencia_padres_hijo_cancer" model="hr.leave.type">
+        <field name="name" eval="'INCAPACIDAD_PADRES_HIJOS_CANCER'"/>
+        <field name="allocation_type">no</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_faltas_injustificadas" model="hr.leave.type">
+        <field name="name" eval="'FALTA_INJUSTIFICADA'"/>
+        <field name="allocation_type">no</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_falta_justificada" model="hr.leave.type">
+        <field name="name" eval="'FALTA_JUSTIFICADA_SIN_GOCE_DE_SALARIO'"/>
+        <field name="allocation_type">fixed</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_permiso_con_goce" model="hr.leave.type">
+        <field name="name" eval="'PERMISO_CON_GOCE_DE_SUELDO'"/>
+        <field name="allocation_type">fixed</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_licencia_sin_goce" model="hr.leave.type">
+        <field name="name" eval="'LICENCIA_SIN_GOCE_DE_SALARIO'"/>
+        <field name="allocation_type">fixed</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+</odoo>

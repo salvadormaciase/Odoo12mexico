@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="view_account_invoice_expense">
+        <field name="name">view.account.invoice.expense</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_invoice_draft']" position="after">
+                <button name="action_view_expense" string="View Expense" type="object"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_invoice_expense_filter">
+        <field name="name">view.account.invoice.expense.filter</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <separator/>
+                <field name="l10n_mx_edi_expense_id"/>
+                <field name="l10n_mx_edi_expense_sheet_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

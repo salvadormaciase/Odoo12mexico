@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_renew_and_substitution" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__decreto">"http://www.sat.gob.mx/http://www.sat.gob.mx/renovacionysustitucionvehiculos" if record.company_id.l10n_mx_edi_complement_type == 'renew' and record.l10n_mx_edi_decree_type else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-if="record.company_id.l10n_mx_edi_complement_type == 'renew' and record.l10n_mx_edi_decree_type">
+                <cfdi:Complemento
+                  xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <decreto:renovacionysustitucionvehiculos
+                     xsi:schemaLocation="http://www.sat.gob.mx/renovacionysustitucionvehiculos http://www.sat.gob.mx/sitio_internet/cfd/renovacionysustitucionvehiculos/renovacionysustitucionvehiculos.xsd"
+                     xmlns:decreto="http://www.sat.gob.mx/renovacionysustitucionvehiculos"
+                     Version="1.0"
+                     t-att-TipoDeDecreto="record.l10n_mx_edi_decree_type">
+                    <t t-if="record.l10n_mx_edi_decree_type == '01'">
+                        <decreto:DecretoRenovVehicular
+                            t-att-VehEnaj="'01' if record.l10n_mx_edi_vehicle_id.odometer == 0 else '02'">
+                            <t t-foreach="record.l10n_mx_edi_vehicle_ids" t-as="vehicle">
+                                <t t-set="vehicle_tag" t-value="[id for id,tag in vehicle.tag_ids.get_xml_id().items() if tag.startswith('l10n_mx_edi_vehicle')]"/>
+                                <decreto:VehiculosUsadosEnajenadoPermAlFab
+                                    t-att-PrecioVehUsado="vehicle.car_value"
+                                    t-att-TipoVeh="vehicle.tag_ids.browse(vehicle_tag[0]).name[:2] if len(vehicle_tag) > 0 else None"
+                                    t-att-Marca="vehicle.model_id.brand_id.name"
+                                    t-att-TipooClase="vehicle.tag_ids[0].name if vehicle.tag_ids else None"
+                                    t-att-Año="vehicle.model_year"
+                                    t-att-Modelo="vehicle.model_id.name or False"
+                                    t-att-NIV="vehicle.l10n_mx_edi_niv or False"
+                                    t-att-NumSerie="vehicle.vin_sn or False"
+                                    t-att-NumPlacas="vehicle.license_plate"
+                                    t-att-NumMotor="vehicle.l10n_mx_edi_motor or False"
+                                    t-att-NumFolTarjCir="vehicle.l10n_mx_edi_circulation_no"
+                                    t-att-NumPedIm="vehicle.l10n_mx_edi_landing or False"
+                                    t-att-Aduana="vehicle.l10n_mx_edi_aduana or False"
+                                    t-att-FechaRegulVeh="vehicle.l10n_mx_edi_landing_date or False"
+                                    t-att-Foliofiscal="vehicle.l10n_mx_edi_fiscal_folio"/>
+                            </t>
+                            <decreto:VehiculoNuvoSemEnajenadoFabAlPerm
+                                t-att-Año="record.l10n_mx_edi_vehicle_id.model_year"
+                                t-att-Modelo="record.l10n_mx_edi_vehicle_id.model_id.name or False"
+                                t-att-NumPlacas="record.l10n_mx_edi_vehicle_id.license_plate"
+                                t-att-RFC="supplier.vat"/>
+                        </decreto:DecretoRenovVehicular>
+                    </t>
+                    <t t-if="record.l10n_mx_edi_decree_type == '02'">
+                        <decreto:DecretoSustitVehicular
+                            t-att-VehEnaj="'01' if record.l10n_mx_edi_vehicle_id.odometer == 0 else '02'">
+                            <t t-set="vehicle_tag" t-value="[id for id,tag in record.l10n_mx_edi_substitute_id.tag_ids.get_xml_id().items() if tag.startswith('l10n_mx_edi_vehicle')]"/>
+                            <decreto:VehiculoUsadoEnajenadoPermAlFab
+                                t-att-PrecioVehUsado="record.l10n_mx_edi_substitute_id.car_value"
+                                t-att-TipoVeh="record.l10n_mx_edi_substitute_id.tag_ids.browse(vehicle_tag[0]).name[:2] if len(vehicle_tag) > 0 else None"
+                                t-att-Marca="record.l10n_mx_edi_substitute_id.model_id.brand_id.name"
+                                t-att-TipooClase="record.l10n_mx_edi_substitute_id.tag_ids[0].name if record.l10n_mx_edi_substitute_id.tag_ids else None"
+                                t-att-Año="record.l10n_mx_edi_substitute_id.model_year"
+                                t-att-Modelo="record.l10n_mx_edi_substitute_id.model_id.name or False"
+                                t-att-NIV="record.l10n_mx_edi_substitute_id.l10n_mx_edi_niv or False"
+                                t-att-NumSerie="record.l10n_mx_edi_substitute_id.vin_sn or False"
+                                t-att-NumPlacas="record.l10n_mx_edi_substitute_id.license_plate"
+                                t-att-NumMotor="record.l10n_mx_edi_substitute_id.l10n_mx_edi_motor or False"
+                                t-att-NumFolTarjCir="record.l10n_mx_edi_substitute_id.l10n_mx_edi_circulation_no"
+                                t-att-NumPedIm="record.l10n_mx_edi_substitute_id.l10n_mx_edi_landing"
+                                t-att-Aduana="record.l10n_mx_edi_substitute_id.l10n_mx_edi_aduana"
+                                t-att-FechaRegulVeh="record.l10n_mx_edi_substitute_id.l10n_mx_edi_landing_date"
+                                t-att-Foliofiscal="record.l10n_mx_edi_substitute_id.l10n_mx_edi_fiscal_folio"
+                                t-att-NumFolAvisoint="record.l10n_mx_edi_substitute_id.l10n_mx_edi_int_advice"/>
+                            <decreto:VehiculoNuvoSemEnajenadoFabAlPerm
+                                t-att-Año="record.l10n_mx_edi_vehicle_id.model_year"
+                                t-att-Modelo="record.l10n_mx_edi_vehicle_id.model_id.name or False"
+                                t-att-NumPlacas="record.l10n_mx_edi_vehicle_id.license_plate"
+                                t-att-RFC="supplier.vat"/>
+                        </decreto:DecretoSustitVehicular>
+                    </t>
+                    </decreto:renovacionysustitucionvehiculos>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>
+
+

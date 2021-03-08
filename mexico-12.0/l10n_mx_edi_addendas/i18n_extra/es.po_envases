@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_addendas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-06 01:41+0000\n"
+"PO-Revision-Date: 2018-11-01 01:41+0000\n"
+"Last-Translator: Arturo Flores <arturo@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_envases_view
+msgid "<b>Incoming Code:</b>"
+msgstr "<b>Código de Entrada:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_envases_view
+msgid "<b>Purchase Order:</b>"
+msgstr "<b>Pedido de Compra:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_envases
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_envases
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_envases_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_envases
+msgid "Addenda Envases"
+msgstr "Adenda Envases"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_envases_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_envases_incoming_code
+msgid "Incoming Code"
+msgstr "Código de Entrada"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_envases_view
+msgid "Set Values"
+msgstr "Establecer Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_envases_values
+msgid "Set Values for Addenda Envases"
+msgstr "Establece valores para la adenda Envases"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_envases_defaults
+msgid "Set default values for the addenda Envases"
+msgstr "Establece los valores por default para la adenda Envases"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_envases_incoming_code
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_envases_view
+msgid "The code given to the product when it arrives at stock location. This code is provided by the customer."
+msgstr "El código asignado al producto cuando entra en almacén. Este código es suministrado por el proveedor."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_envases_view
+msgid "The necessary nodes for the implementation of the Addenda of Envases Universales de México, S.A.P.I. de C.V. are:"
+msgstr "Los nodos necesarios para la implementación de la Adenda de Envases Universales de México, S.A.P.I. de C.V. son:"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_envases_view
+msgid "The number of the customer's purchase order. This value is taken from the invoice's field \"Reference/Description\"."
+msgstr "El número del pedido de compra del cliente. Este valor se obtiene del campo \"Referencia/Descripción\" de la factura."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_envases_field
+msgid "Used to store the field x_incoming_code"
+msgstr "Usado para guardar el campo x_incoming_code"
+

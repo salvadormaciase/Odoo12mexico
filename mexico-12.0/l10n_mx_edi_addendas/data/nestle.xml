@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="nestle" name="Nestle">
+        <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+            <Header
+                t-att-GR="(record.x_addenda_nestle or '') if record.type == 'out_invoice' else False"
+                t-att-NFactura="record.origin if record.type == 'out_refund' else False"
+                t-att-PONumber="record.refund_invoice_id.name or record.name or ''"
+                t-att-OINumber="record.number or ''"
+                MBanco="--MXN bank name here--"
+                CuentaBancariaMN="--MXN bank number here--"
+                CLABEMN="--MXN bank CLABE here--"
+                CuentaBancariaDL="--USD bank number here--"
+                CLABEDL="--USD bank CLABE here--"/>
+            <t t-set="bill_partner" t-value="record.partner_id if record.partner_id.type == 'invoice' else record.commercial_partner_id"/>
+            <BillTo
+                t-att-Calle="bill_partner.street or ''"
+                t-att-Colonia="bill_partner.l10n_mx_edi_colony or ''"
+                t-att-CP="bill_partner.zip or ''"
+                t-att-Ciudad="bill_partner.city or ''"
+                t-att-Estado="bill_partner.state_id.name or ''"/>
+            <t t-set="delivery_partner" t-value="env['res.partner'].browse(record.get_delivery_partner_id())"/>
+            <ShipTo
+                t-att-Calle="delivery_partner.street or ''"
+                t-att-Colonia="delivery_partner.l10n_mx_edi_colony or ''"
+                t-att-CP="delivery_partner.zip or ''"
+                t-att-Ciudad="delivery_partner.city or ''"
+                t-att-Estado="delivery_partner.state_id.name or ''"
+                t-att-NombreCliente="bill_partner.name"/>
+            <Detail>
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <t t-set="supplier_info" t-value="line.sudo().product_id.seller_ids.filtered(
+                        lambda s:
+                        s.name == record.commercial_partner_id
+                        and s.product_id == line.product_id
+                        and s.sequence == 999)[:1]"/>
+                    <Linea
+                        t-att-noLinea="line_index + 1"
+                        t-att-NumParteABSA="line.product_id.code or ''"
+                        t-att-NumParteNestle="line.x_addenda_sap_code or supplier_info.product_code or ''"/>
+                </t>
+            </Detail>
+        </cfdi:Addenda>
+    </template>
+    <record id="nestle" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_nestle" model="ir.model">
+        <field name="name">Addenda Nestle</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_addenda.nestle</field>
+        <field name="info">Addenda Nestle documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_nestle_incoming_code" model="ir.model.fields">
+        <field name="name">x_incoming_code</field>
+        <field name="field_description">Incoming Code</field>
+        <field name="ttype">char</field>
+        <field name="help">Invoice validation code. This is applicable only for invoices, not credit notes.</field>
+        <field name="model_id" ref="wizard_nestle"/>
+    </record>
+    <record id="wizard_nestle_invoice_line_ids" model="ir.model.fields">
+        <field name="name">x_invoice_line_ids</field>
+        <field name="field_description">Invoice Lines</field>
+        <field name="ttype">many2many</field>
+        <field name="model_id" ref="wizard_nestle"/>
+        <field name="relation">account.invoice.line</field>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_nestle_field" model="ir.model.fields">
+        <field name="name">x_addenda_nestle</field>
+        <field name="field_description">Addenda Nestle</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to store the field x_incoming_code</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+    <record id="invoice_line_sap_code" model="ir.model.fields">
+        <field name="name">x_addenda_sap_code</field>
+        <field name="field_description">SAP Code</field>
+        <field name="ttype">char</field>
+        <field name="help">The product's SAP code as handled by the customer. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_nestle_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda Nestle</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(env.context['invoice_id'])
+wizard = env['x_addenda.nestle'].browse(env.context['active_id'])
+invoice.write({'x_addenda_nestle': wizard.x_incoming_code})
+
+# Create supplier info for SAP codes, if theyre not already created
+for line in invoice.invoice_line_ids.filtered('x_addenda_sap_code'):
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == invoice.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 999)[:1]
+    if supplier_info:
+        supplier_info.write({
+            'product_code': line.x_addenda_sap_code,
+        })
+    else:
+        supplier_info.create({
+            'name': invoice.commercial_partner_id.id,
+            'product_tmpl_id': line.product_id.product_tmpl_id.id,
+            'product_id': line.product_id.id,
+            'sequence': 999,
+            'product_code': line.x_addenda_sap_code,
+        })
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values. This view needs to hold all
+    the required help information
+    -->
+    <record id="wizard_nestle_view" model="ir.ui.view">
+        <field name="name">x_addenda.nestle.view</field>
+        <field name="model">x_addenda.nestle</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>
+                        The necessary nodes for the implementation of the Addenda of Nestle Mexico, S.A. De C.V. are:
+                    </p>
+                    <ul>
+                        <li>
+                            <p><b>Incoming Code:</b></p>
+                            <p>Invoice validation code. This is applicable only for invoices, not credit notes.</p>
+                        </li>
+                        <li>
+                            <p><b>Purchase Order:</b></p>
+                            <p>The number of the customer's purchase order. This value is taken from the invoice's field "Reference/Description".</p>
+                        </li>
+                        <li>
+                            <p><b>Invoice Number:</b></p>
+                            <p>If this is a credit note, specifies which invoice this credit note comes from. This value is taken from the field "Source Document".</p>
+                        </li>
+                        <li>
+                            <p><b>SAP Code:</b></p>
+                            <p>The product's SAP code as handled by the customer. This value has to be set on each invoice line.</p>
+                        </li>
+                        <li>
+                            <p><b>Bill To:</b></p>
+                            <p>Billing address information: street, colony, zip, city and state. Such information is taken from the invoice address contact configured for the partner.</p>
+                        </li>
+                        <li>
+                            <p><b>Ship To:</b></p>
+                            <p>Shipping address information: street, colony, zip, city and state. Such information is taken from the shipping address contact configured for the partner.</p>
+                        </li>
+                    </ul>
+                </div>
+                <group>
+                    <field name="x_incoming_code"/>
+                </group>
+                <group string="Lines">
+                    <field name="x_invoice_line_ids" nolabel="1">
+                        <tree editable="1" create="0" delete="0">
+                            <field name="name" string="Line" readonly="1"/>
+                            <field name="x_addenda_sap_code"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        string="Set Values"
+                        name="l10n_mx_edi_addendas.set_addenda_nestle_values"
+                        type="action"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the wizard
+    After default values are set.
+    -->
+   <act_window
+        id="action_addenda_nestle"
+        name="Addenda Nestle"
+        res_model="x_addenda.nestle"
+        view_type="form"
+        view_mode="form"
+        target="new"
+        view_id="wizard_nestle_view"/>
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_addenda_nestle_defaults" model="ir.actions.server">
+        <field name="name">Set default values for the addenda Nestle</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+wizard_values = record.x_addenda_nestle or record.refund_invoice_id.x_addenda_nestle
+context = {
+    'invoice_id': record.id,
+    'default_x_incoming_code': wizard_values,
+    'default_x_invoice_line_ids': record.invoice_line_ids.ids,
+}
+
+# Set default SAP codes if available as supplier info
+for line in record.invoice_line_ids.filtered(lambda l: not l.x_addenda_sap_code):
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == record.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 999)[:1]
+    line.write({
+        'x_addenda_sap_code': supplier_info.product_code,
+    })
+
+action = env.ref('l10n_mx_edi_addendas.action_addenda_nestle').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_nestle" model="ir.ui.view">
+        <field name="name">account.invoice.form.nestle</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button
+                    name="l10n_mx_edi_addendas.action_addenda_nestle_defaults"
+                    type="action"
+                    string="Addenda Nestle"
+                    attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

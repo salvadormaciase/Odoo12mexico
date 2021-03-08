@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+    <IND:Factura
+        xmlns:IND="https://online.aam.com/Addenda/IND"
+        tipoDocumento="IND"
+        TipoDocumentoFiscal="INV"
+        OrganizacionOperacional="GMC"
+        version="1.1"
+        Clabe="--Bank CLABE here--"
+        NombreBanco="--Bank name here--">
+        <IND:Moneda
+            tipoMoneda="USD"
+            tipoCambio="20.000000"/>
+        <IND:Proveedor Codigo="--Supplier code here--"/>
+        <IND:Requisitor
+            Nombre="Floyd Steward"
+            Correo="floyd.steward34@example.com"/>
+        <IND:Archivo
+            datos="PDF in base64"
+            tipo="PDF"/>
+        <IND:Conceptos>
+            <IND:part
+                Linea="1"
+                numero="FURN-7800"
+                cantidad="1.0"
+                descripcion="Desk Combination Standard"
+                unidadDeMedida="PCS"
+                precioUnitario="450.0"
+                montoDeLinea="450.0">
+                <IND:references
+                    ordenCompra="369796"/>
+            </IND:part>
+        </IND:Conceptos>
+    </IND:Factura>
+</cfdi:Addenda>

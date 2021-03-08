@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="mrp_bom_form_view_inherit_3rd_party">
+        <field name="name">mrp.bom.form.inherit.3rd.party</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_id']" position="after">
+                <field name="l10n_mx_edi_customs_number"/>
+                <field name="l10n_mx_edi_customs_date"/>
+                <field name="l10n_mx_edi_customs_name"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

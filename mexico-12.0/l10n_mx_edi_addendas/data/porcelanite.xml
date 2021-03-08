@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="porcelanite" name="porcelanite">
+            <if:FacturaInterfactura xmlns:if="https://www.interfactura.com/Schemas/Documentos" TipoDocumento='Factura'>
+                <if:Emisor NumProveedor="100086" RI="0117797"/>
+                <if:Receptor RI="0108918"/>
+                <t t-set="values" t-value="record.x_addenda_porcelanite.split('|') if record.x_addenda_porcelanite else False"/>
+                <if:Encabezado ProcesoId="1" Sociedad="R101" NumProveedor="100086"
+                    t-att-FolioNotaRecepcion="values[0]" PlantaEmite="R101"
+                    t-att-FolioOrdenCompra="values[1]" t-att-Observaciones="values[2]"
+                    t-att-FolioReferencia="record._l10n_mx_get_serie_and_folio(record.number).get('folio')" TipoDocumento="Factura"
+                    t-att-Moneda="record.currency_id.name" t-att-Total="record.amount_total"
+                    t-att-Iva="record.amount_tax" IVAPCT="16"
+                    t-att-SubTotal="record.amount_total-record.amount_tax" formaDePago="Pago en una sola exhibicion">
+                        <t t-set="line_count" t-value="1"/>
+                        <t t-foreach="record.invoice_line_ids" t-as="line">
+                            <if:Cuerpo t-att-UdeM="line.uom_id.name" SKU="M03E0011"
+                                t-att-LineaOC="1" t-att-Importe="line.price_subtotal" t-att-PUnitario="line.price_unit"
+                                t-att-Concepto="line.name" t-att-Cantidad="line.quantity" t-att-Renglon="line_count"/>
+                                <t t-set="line_count" t-value="line_count+1"/>
+                        </t>
+                </if:Encabezado>
+            </if:FacturaInterfactura>
+    </template>
+    <record id="porcelanite" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_porcelanite" model="ir.model">
+        <field name="name">Addenda porcelanite</field>
+        <field name="transient">Addenda porcelanite</field>
+        <field name="model">x_addenda.porcelanite</field>
+        <field name="info">Addend porcelanite documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_porcelanite_folio_nota_recepcion" model="ir.model.fields">
+        <field name="name">x_folio_nota_recepcion</field>
+        <field name="field_description">Folio nota recepcion</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_porcelanite"/>
+    </record>
+    <record id="wizard_porcelanite_folio_orden_compra" model="ir.model.fields">
+        <field name="name">x_folio_orden_compra</field>
+        <field name="field_description">Folio orden compra</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_porcelanite"/>
+    </record>
+    <record id="wizard_porcelanite_observaciones" model="ir.model.fields">
+        <field name="name">x_observaciones</field>
+        <field name="field_description">Observaciones</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_porcelanite"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_porcelanite_field" model="ir.model.fields">
+        <field name="name">x_addenda_porcelanite</field>
+        <field name="field_description">Addenda porcelanite</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate wizard fields</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_porcelanite_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda porcelanite</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.porcelanite'].browse(model._context['active_id'])
+# TODO: Discuss if this should be done in an internal not instead a new field.
+wizard_fields = [wizard.x_folio_nota_recepcion, wizard.x_folio_orden_compra, wizard.x_observaciones]
+wizard_fields = [j for j in wizard_fields if j != False]
+invoice.write({'x_addenda_porcelanite': '|'.join(wizard_fields)})
+# raise Warning(str(model._context))
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_porcelanite_view" model="ir.ui.view">
+        <field name="name">x_addenda.porcelanite.view</field>
+        <field name="model">x_addenda.porcelanite</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_folio_nota_recepcion"/>
+                        <field name="x_folio_orden_compra"/>
+                    </group>
+                    <group>
+                        <field name="x_observaciones"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_porcelanite_values"
+                    type="action" string="Set Values"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the set wizard.
+    -->
+    <record id="action_addenda_porcelanite" model="ir.actions.act_window">
+        <field name="name">Addenda Porcelanite</field>
+        <field name="res_model">x_addenda.porcelanite</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_porcelanite_view"/>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_porcelanite" model="ir.ui.view">
+        <field name="name">account.invoice.form.porcelanite</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_porcelanite" type="action"
+                        string="Addenda porcelanite"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

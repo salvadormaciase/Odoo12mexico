@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_form_inherit_3rd_party" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.3rd.party</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_mx_edi_code_sat_id']" position="after">
+                <field name="l10n_mx_edi_property_tax"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
