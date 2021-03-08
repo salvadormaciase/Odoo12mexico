@@ -18,6 +18,7 @@ class RealizationDateWizard(models.TransientModel):
         string='Initial Date',
         help='Realization Entries will be created from this date onwards.')
 
+    @api.multi
     def compute_realization(self):
         active_ids = self._context.get('active_ids')
         active_model = self._context.get('active_model')
@@ -25,7 +26,7 @@ class RealizationDateWizard(models.TransientModel):
         if not active_ids:
             return False
 
-        if active_model not in ('account.move', 'account.account'):
+        if active_model not in ('account.invoice', 'account.account'):
             return False
 
         self.env[active_model].browse(active_ids).create_realization_entries(

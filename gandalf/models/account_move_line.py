@@ -1,17 +1,19 @@
-from odoo import models
+from odoo import api, models
 from odoo.tools import float_is_zero
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
+    @api.multi
     def get_transaction_currency(self):
         return (
             self.payment_id.currency_id
-            or self.move_id.currency_id
+            or self.invoice_id.currency_id
             or self.currency_id
             or self.company_id.currency_id)
 
+    @api.multi
     def get_paid_balances_at_date(self, to_date):
         """Compute paid amounts at the specified date, for bot company & payment currency"""
         self.ensure_one()
@@ -23,8 +25,6 @@ class AccountMoveLine(models.Model):
         paid_balance = 0
         paid_currency_balance = 0
 
-        # /!\ TODO: This method could need a big overhauling. It depends on how the changes in APR affect it.
-
         aprs = (
             self.mapped('matched_debit_ids') |
             self.mapped('matched_credit_ids'))
@@ -33,7 +33,7 @@ class AccountMoveLine(models.Model):
             if (self == apr.debit_move_id
                     and apr.credit_move_id.journal_id != journal_exchange
                     and apr.credit_move_id.date <= to_date):
-                if apr.credit_amount_currency:
+                if apr.amount_currency:
                     if apr.credit_move_id.amount_currency:
                         # /!\ NOTE: We do this computation because odoo does it
                         # at invoice rate we want actual payment valuation.
@@ -41,7 +41,7 @@ class AccountMoveLine(models.Model):
                         # could be another story when aml.amount_currency is
                         # zero.
                         paid_balance += (
-                            apr.credit_amount_currency /
+                            apr.amount_currency /
                             apr.credit_move_id.amount_currency *
                             apr.credit_move_id.balance)
                     else:
@@ -50,7 +50,7 @@ class AccountMoveLine(models.Model):
                         # valuated payment when dealing with payments in a
                         # different currency than the invoice.
                         paid_balance += apr.amount
-                    paid_currency_balance += apr.credit_amount_currency
+                    paid_currency_balance += apr.amount_currency
                 else:
                     if float_is_zero(
                             apr.amount, precision_rounding=rounding):
@@ -71,7 +71,7 @@ class AccountMoveLine(models.Model):
             elif (self == apr.credit_move_id
                     and apr.debit_move_id.journal_id != journal_exchange
                     and apr.debit_move_id.date <= to_date):
-                if apr.debit_amount_currency:
+                if apr.amount_currency:
                     if apr.debit_move_id.amount_currency:
                         # /!\ NOTE: We do this computation because odoo does it
                         # at invoice rate we want actual payment valuation.
@@ -79,7 +79,7 @@ class AccountMoveLine(models.Model):
                         # could be another story when aml.amount_currency is
                         # zero.
                         paid_balance += (
-                            apr.debit_amount_currency /
+                            apr.amount_currency /
                             apr.debit_move_id.amount_currency *
                             apr.debit_move_id.balance)
                     else:
@@ -88,7 +88,7 @@ class AccountMoveLine(models.Model):
                         # valuated payment when dealing with payments in a
                         # different currency than the invoice.
                         paid_balance += apr.amount
-                    paid_currency_balance += apr.debit_amount_currency
+                    paid_currency_balance += apr.amount_currency
                 else:
                     if float_is_zero(apr.amount, precision_rounding=rounding):
                         # /!\ NOTE: Nothing to here. This is in practice a
