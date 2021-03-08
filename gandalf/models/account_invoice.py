@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountInvoice(models.Model):
-    _inherit = 'account.move'
+    _inherit = 'account.invoice'
 
     def _compute_realization_move_ids_nbr(self):
         for inv in self:
@@ -18,16 +18,16 @@ class AccountInvoice(models.Model):
 
     @api.depends('realization_move_ids')
     def _compute_realization_move_ids(self):
-        def check_full_revaluation(date, account_id, fp_account_id, inv_id):
+        def check_full_revaluation(date, account_id, inv_id):
             rounding = inv_id.company_id.currency_id.rounding
             ledger = arl_obj.get_cumulative_fx_at_date(
-                date, account_id.id, inv_id.id)
+                date, account_id, inv_id.id)
             booked = sum(
                 self
                 .mapped('realization_move_ids.line_ids')
                 .filtered(
                     lambda x: x.date <= date and
-                    x.account_id == fp_account_id).mapped('balance'))
+                    x.account_id.id == account_id).mapped('balance'))
             return float_is_zero(ledger - booked, precision_rounding=rounding)
         res = {}
         arl_obj = self.env['account.revaluation.ledger']
@@ -36,19 +36,11 @@ class AccountInvoice(models.Model):
             res[inv] = {}
             journal_id = inv.company_id.currency_exchange_journal_id
             move_ids = inv.realization_move_ids
-            lines = inv.line_ids.filtered(lambda l: l.account_id.user_type_id.type in ('receivable', 'payable'))
-            pay_ids = lines.mapped('matched_credit_ids.credit_move_id')
-            pay_ids |= lines.mapped('matched_debit_ids.debit_move_id')
+            pay_ids = inv.payment_move_line_ids
             date = max(move_ids.mapped('date') or [dt.min])
-            fp_account_id = account_id = lines.mapped('account_id')
-
-            position_id = inv.company_id.invoice_realization_position_id
-            if position_id:
-                account_ids = position_id.map_accounts({account_id: account_id})
-                fp_account_id = account_ids[account_id]
 
             pay_date = max(
-                (lines | pay_ids)
+                (inv.move_id.line_ids | pay_ids)
                 .filtered(lambda x: x.journal_id != journal_id)
                 .mapped('date') or [dt.min])
 
@@ -64,11 +56,11 @@ class AccountInvoice(models.Model):
             # invoice date. Invoice date is included because invoice date can
             # be greater than payment date.
             res[inv]['fully_realized'] = (
-                inv.payment_state == 'paid' and
+                inv.state in ('paid', 'cancel') and
                 pay_ids and
                 move_ids and
                 date == pay_date and
-                check_full_revaluation(pay_date, account_id, fp_account_id, inv))
+                check_full_revaluation(pay_date, inv.account_id.id, inv))
         for inv, val in res.items():
             inv.date_last_realization = val.get('date_last_realization')
             inv.fully_realized = val.get('fully_realized')
@@ -116,6 +108,7 @@ class AccountInvoice(models.Model):
         store=True,
         help='Date on which last ledger was created')
 
+    @api.multi
     def action_view_realization_move(self):
 
         if self._context.get('revaluation_ledger'):
@@ -137,8 +130,8 @@ class AccountInvoice(models.Model):
     def get_fx_on_invoice(self, to_date, previous_cumulative_fx, account_id):
         self.ensure_one()
 
-        sign = 1 if self.move_type in ('in_invoice', 'out_refund') else -1
-        amls = self.line_ids.filtered(
+        sign = 1 if self.type in ('in_invoice', 'out_refund') else -1
+        amls = self.move_id.line_ids.filtered(
             lambda l: l.account_id.id == account_id)
         res = self.env['account.move.line'].read_group(
             [('id', 'in', amls.ids)],
@@ -166,7 +159,7 @@ class AccountInvoice(models.Model):
             date=to_date,
             invoice_id=self.id,
             cumulative_fx=cumulative_fx,
-            account_id=account_id,
+            account_id=self.account_id.id,
             balance=residual_balance,
             reevaluated_balance=reevaluated_residual,
             foreign_balance=residual_currency_balance,
@@ -181,18 +174,18 @@ class AccountInvoice(models.Model):
         tax_aml_ids = self.env['account.move.line']
 
         res = self.env['account.move.line'].read_group(
-            [('id', 'in', self.line_ids.ids), ('account_id', '=', account_id)],
+            [('id', 'in', self.move_id.line_ids.ids), ('account_id', '=', account_id)],
             ['balance', 'amount_currency'], [], lazy=False)
 
         journal_id = self.company_id.currency_exchange_journal_id
-        sign = -1 if self.move_type in ('in_invoice', 'out_refund') else 1
+        sign = -1 if self.type in ('in_invoice', 'out_refund') else 1
 
         initial_balance = res[0]['balance']
         initial_currency_balance = res[0]['amount_currency']
         paid_balance = paid_currency_balance = 0
 
-        inv_lines = self.line_ids.filtered(
-            lambda l: l.account_id.user_type_id.type in ('receivable', 'payable'))
+        inv_lines = self.move_id.line_ids.filtered(
+            lambda l: l.account_id.id == self.account_id.id)
 
         # /!\ NOTE: We are excluding APRs with foreign exchange differences
         apr_ids = (
@@ -206,7 +199,7 @@ class AccountInvoice(models.Model):
 
         tax_aml_ids |= am_obj.search([
             ('tax_cash_basis_rec_id', 'in', apr_ids.ids)]).mapped('line_ids')
-        tax_aml_ids |= self.mapped('reversal_move_id.line_ids')
+        tax_aml_ids |= self.move_id.reverse_entry_id.line_ids
 
         tax_aml_ids = tax_aml_ids.filtered(
             lambda l: l.account_id.id == account_id and l.date <= date)
@@ -243,6 +236,7 @@ class AccountInvoice(models.Model):
             partner_id=self.partner_id.commercial_partner_id.id,
         )
 
+    @api.multi
     def create_invoice_realization_ledger(self, apply, dates, account_id):
         fnc = self.get_fx_on_invoice if apply == 'inv' else self.get_fx_on_tax
         arl_obj = self.env['account.revaluation.ledger']
@@ -255,22 +249,24 @@ class AccountInvoice(models.Model):
             cumulative_fx = fx_dict.get('cumulative_fx', 0.0)
             arl_obj.create(fx_dict)
 
+    @api.multi
     def realize_invoice_ledger(self, dates):
         self.ensure_one()
-        lines = self.line_ids.filtered(lambda l: l.account_id.user_type_id.type in ('receivable', 'payable'))
         self.create_invoice_realization_ledger(
-            'inv', dates, lines[0].account_id.id)
-        tax_account_ids = (self.line_ids.filtered(
+            'inv', dates, self.account_id.id)
+        tax_account_ids = (self.move_id.line_ids.filtered(
             lambda x: x.tax_line_id.tax_exigibility == 'on_payment')
             .mapped('account_id'))
         for account in tax_account_ids:
             self.create_invoice_realization_ledger('tax', dates, account.id)
 
+    @api.multi
     def realize_invoice_entry(self, dates):
         self.ensure_one()
         arl_obj = self.env['account.revaluation.ledger']
         arl_obj.create_revaluation_move(dates, invoice_id=self)
 
+    @api.multi
     def realize_invoice(
             self, stop_date, init_date, do_ledger=True, do_entry=None,
             do_commit=False):
@@ -278,16 +274,13 @@ class AccountInvoice(models.Model):
 
         arl_obj = self.env['account.revaluation.ledger']
         journal_id = self.company_id.currency_exchange_journal_id
-        inv_date = self.line_ids[0].date
-        lines = self.line_ids.filtered(lambda l: l.account_id.user_type_id.type in ('receivable', 'payable'))
-        payment_move_line_ids = lines.mapped('matched_credit_ids.credit_move_id')
-        payment_move_line_ids |= lines.mapped('matched_debit_ids.debit_move_id')
+        inv_date = self.move_id.line_ids[0].date
         dates = set(
-            payment_move_line_ids
+            self.payment_move_line_ids
             .filtered(
                 lambda x: x.journal_id != journal_id).mapped('date'))
         dates = arl_obj.get_dates(
-            inv_date, self.payment_state, dates, stop_date, init_date)
+            inv_date, self.state, dates, stop_date, init_date)
 
         if not dates:
             return
@@ -296,6 +289,10 @@ class AccountInvoice(models.Model):
         # people to override the way Journal Entries are created.
         if do_entry is None:
             do_entry = self.company_id.create_realization_entry_on_invoices
+        if (self.company_id.apply_only_on_receivable_payable and
+                self.account_id.internal_type not in
+                ('receivable', 'payable')):
+            return
 
         with self.env.norecompute():
             if do_ledger:
@@ -309,6 +306,7 @@ class AccountInvoice(models.Model):
             self._cr.commit()
         return
 
+    @api.multi
     def create_realization_entries(
             self, stop_date=False, init_date=False, do_ledger=True,
             do_entry=None, do_commit=False):
@@ -326,22 +324,24 @@ class AccountInvoice(models.Model):
 
         count = 0
         total = len(self)
-        # /!\ NOTE: We have to check on the invoices that have been cancelled but have reversals.
-        for inv in self.filtered(lambda x: x.is_invoice() and x.state == 'posted'):
+        for inv in self:
             count += 1
             _logger.info(
                 'Processing inv_id: %(inv_id)s - %(count)s / %(total)s',
                 {'inv_id': inv.id, 'count': count, 'total': total})
             if inv.currency_id == inv.company_currency_id:
                 continue
+            if not inv.move_id:
+                continue
             inv.realize_invoice(
                 stop_date, init_date, do_ledger=do_ledger, do_entry=do_entry,
                 do_commit=do_commit)
 
-    def button_draft(self):
+    @api.multi
+    def action_cancel(self):
         move_ids = self.mapped('realization_move_ids')
         self.mapped('revaluation_ledger_ids').unlink()
         move_ids.mapped('line_ids').remove_move_reconcile()
-        super(AccountInvoice, move_ids).button_draft()
-        move_ids.with_context(force_delete=True).unlink()
-        return super(AccountInvoice, self).button_draft()
+        move_ids.button_cancel()
+        move_ids.unlink()
+        return super(AccountInvoice, self).action_cancel()

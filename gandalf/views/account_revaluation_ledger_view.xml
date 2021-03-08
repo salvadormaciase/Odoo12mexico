@@ -88,6 +88,7 @@
                 <filter name="out_refund" string="Customer Credit Note" domain="[('invoice_type','=','out_refund')]"/>
                 <group expand="0" string="Group By">
                     <filter string="Account" name="account" context="{'group_by':'account_id'}"/>
+                    <filter string="Account Group" name="account_group" context="{'group_by':'group_id'}"/>
                     <filter string="Invoice Type" name="groupby_invoice_type" domain="[]" context="{'group_by':'invoice_type'}"/>
                     <filter string="Invoice State" name="groupby_invoice_state" domain="[]" context="{'group_by':'invoice_state'}"/>
                     <filter string="Partner" name="groupby_partner" domain="[]" context="{'group_by':'partner_id'}"/>
