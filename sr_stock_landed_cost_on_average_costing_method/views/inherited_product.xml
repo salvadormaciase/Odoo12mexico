@@ -1,0 +1,16 @@
+<odoo>
+	<data>
+		<record id="view_stock_product_tree2_extend_change_valuation_attribute" model="ir.ui.view">
+			<field name="name">view.stock.product.tree2.extend.change.valuation.attribute</field>
+			<field name="inherit_id" ref="stock_account.view_stock_product_tree2" />
+			<field name="model">product.product</field>
+			<field name="arch" type="xml">
+				<xpath expr="//button[@name='action_valuation_at_date_details']" position="attributes">
+					<attribute name="attrs">{'invisible': [('cost_method', 'not in', ['fifo','average'])]}</attribute>
+				</xpath>
+			</field>
+		</record>
+
+
+	</data>
+</odoo>
