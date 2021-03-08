@@ -68,7 +68,7 @@ values = {
 
 code = """
 incluide_ids = {incluide_ids}
-inv_obj = env['account.move']
+inv_obj = env['account.invoice']
 log('Beginning  Realization', level='info')
 inv_obj.with_context(prefetch_fields=False).browse(incluide_ids).create_realization_entries('{date}', '{init_date}', do_ledger=True, do_entry=False, do_commit=True)
 log('Finished Realization', level='info')
@@ -81,11 +81,12 @@ if next_cron:
 """
 
 query = """
-  SELECT DISTINCT am.id, am.date
-  FROM account_move am
-  INNER JOIN res_company rc ON rc.id = am.company_id
+  SELECT DISTINCT ai.id, am.date
+  FROM account_invoice ai
+  INNER JOIN res_company rc ON rc.id = ai.company_id
+  INNER JOIN account_move am ON am.id = ai.move_id
   WHERE
-    am.currency_id != rc.currency_id
+    ai.currency_id != rc.currency_id
     AND am.date &lt;= %s
   ORDER BY am.date
 """

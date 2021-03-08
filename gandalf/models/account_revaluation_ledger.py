@@ -20,7 +20,7 @@ class AccountRevaluationLedger(models.Model):
         'account.account',
         help='Account to Reevaluate')
     invoice_id = fields.Many2one(
-        'account.move',
+        'account.invoice',
         help='Account to Reevaluate',
         index=True)
     partner_id = fields.Many2one(
@@ -39,17 +39,16 @@ class AccountRevaluationLedger(models.Model):
     reevaluated_balance = fields.Float(
         help='Reevaluated Balance at date')
     group_id = fields.Many2one(
-        'account.group',
+        'account.account',
         related='account_id.group_id',
         help='Group of the Account')
     invoice_type = fields.Selection(
-        related='invoice_id.move_type',
+        related='invoice_id.type',
         store=True,
         readonly=True,
         help='Type of the Invoice when invoice is related to a Ledger Item')
-    # /!\ TODO:  @hbto this state is to be changed to the new state in the account.move for invoices
     invoice_state = fields.Selection(
-        related='invoice_id.payment_state',
+        related='invoice_id.state',
         store=True,
         readonly=True,
         help='State of the Invoice when invoice is related to a Ledger Item')
@@ -91,7 +90,7 @@ class AccountRevaluationLedger(models.Model):
             skip_check = (not pay_min_date or inv_date < pay_min_date) and month_end == inv_date  # noqa
 
         dates |= {inv_date}
-        if inv_state == 'not_paid':
+        if inv_state == 'open':
             dates |= {stop_date}
 
         min_date = min(dates)
@@ -170,7 +169,7 @@ class AccountRevaluationLedger(models.Model):
         if invoice_id:
             currency_id = invoice_id.currency_id.id
             domain += [('invoice_id', '=', invoice_id.id)]
-            label = label % (date, invoice_id.name)
+            label = label % (date, invoice_id.move_id.name)
             journal_id = (
                 invoice_id.company_id.invoice_realization_journal_id or
                 invoice_id.company_id.currency_exchange_journal_id)
@@ -218,7 +217,6 @@ class AccountRevaluationLedger(models.Model):
             'realization_invoice_id': invoice_id and invoice_id.id,
             'realization_account_id': account_id and account_id.id,
             'line_ids': line_ids,
-            'move_type': 'entry',
         }
 
     @api.model
@@ -238,14 +236,12 @@ class AccountRevaluationLedger(models.Model):
         debit_line = base_line.copy()
         credit_line = base_line.copy()
 
-        gain_account = journal_id.company_id.income_currency_exchange_account_id
-        loss_account = journal_id.company_id.expense_currency_exchange_account_id
         if amount > 0:
-            debit_account_id = loss_account.id
+            debit_account_id = journal_id.default_credit_account_id.id
             credit_account_id = account_id
         else:
             debit_account_id = account_id
-            credit_account_id = gain_account.id
+            credit_account_id = journal_id.default_debit_account_id.id
 
         debit_line.update({
             'credit': abs(amount),
@@ -332,22 +328,21 @@ class AccountRevaluationLedger(models.Model):
 
         if apply in ('both', 'invoice'):
             query = """
-                SELECT DISTINCT am.id
-                FROM account_move am
-                INNER JOIN res_company rc ON rc.id = am.company_id
+                SELECT DISTINCT ai.id
+                FROM account_invoice ai
+                INNER JOIN res_company rc ON rc.id = ai.company_id
+                INNER JOIN account_move am ON am.id = ai.move_id
                 WHERE
-                    am.currency_id != rc.currency_id
+                    ai.currency_id != rc.currency_id
                     AND am.date <= %s
-                    AND am.state = 'posted'
-                    AND am.move_type IN ('in_invoice', 'in_refund', 'out_invoice', 'out_refund')
                 """
             if not realized:
-                query += ' AND NOT am.fully_realized'
+                query += ' AND NOT ai.fully_realized'
             self._cr.execute(query, (date,))
 
             invoice_ids = [x[0] for x in self._cr.fetchall()]
             if invoice_ids:
-                (self.env['account.move']
+                (self.env['account.invoice']
                  .with_context(prefetch_fields=False)
                  .browse(invoice_ids)
                  .create_realization_entries(
@@ -366,7 +361,7 @@ class AccountRevaluationLedger(models.Model):
                         aa.deprecated = FALSE OR
                         aa.deprecated IS NULL)
                 """
-            self._cr.execute(query)
+            self._cr.execute(query, (date,))
 
             account_ids = [x[0] for x in self._cr.fetchall()]
             if account_ids:

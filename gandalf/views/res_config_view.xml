@@ -11,6 +11,15 @@
                 <div class="row mt16 o_settings_container" id="account_realization">
                     <div class="col-12 col-lg-6 o_setting_box" title="These settings will be used to create Realization Entries on Invoices or Accounts.">
                         <div class="o_setting_left_pane">
+                            <field name="apply_only_on_receivable_payable" widget="upgrade_boolean"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="apply_only_on_receivable_payable"/>
+                            <div class="text-muted">
+                                If this option is selected and there are invoices which bear an account which is neither receivable nor payable then they will be skipped. No Revaluation Ledger Items or Invoice Realization Journal Entries will be created for them.
+                            </div>
+                        </div>
+                        <div class="o_setting_left_pane">
                             <field name="create_realization_entry_on_invoices" widget="upgrade_boolean"/>
                         </div>
                         <div class="o_setting_right_pane">

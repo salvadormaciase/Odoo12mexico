@@ -6,7 +6,8 @@
         <field name="inherit_id" ref="account.view_account_form"/>
         <field name="arch" type="xml">
             <data>
-                <xpath expr="//div[@name='button_box']" position="inside">
+                <xpath expr="//sheet" position="inside">
+                    <div class="oe_button_box" name="button_box">
                         <button name="action_view_realization_move" type="object"
                                 class="oe_stat_button" icon="fa-money"
                                 context="{'realization_move':True}"
@@ -19,6 +20,7 @@
                                 attrs="{'invisible': [('revaluation_ledger_ids_nbr', '=', 0)]}">
                             <field name="revaluation_ledger_ids_nbr" widget="statinfo" string="Ledger"/>
                         </button>
+                    </div>
                 </xpath>
                 <xpath expr="//field[@name='deprecated']" position="after">
                     <field name="realizable_account"/>

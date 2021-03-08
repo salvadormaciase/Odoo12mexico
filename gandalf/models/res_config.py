@@ -34,3 +34,7 @@ class AccountConfigSettings(models.TransientModel):
         related='company_id.create_realization_entry_on_invoices',
         readonly=False,
         help='If True a Realization Entry will be created on Invoices')
+    apply_only_on_receivable_payable = fields.Boolean(
+        related='company_id.apply_only_on_receivable_payable',
+        readonly=False,
+        help='If True only invoices with Receivables/Payables will be taken')

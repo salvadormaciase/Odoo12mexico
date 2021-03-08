@@ -29,7 +29,8 @@ class AccountAccount(models.Model):
             rec.realization_move_ids_nbr = len(rec.realization_move_ids)
 
     def _compute_revaluation_ledger_ids_nbr(self):
-        for inv in self:
+        realizable_account = self.filtered(lambda x: x.realizable_account)
+        for inv in realizable_account:
             inv.revaluation_ledger_ids_nbr = len(inv.revaluation_ledger_ids)
 
     realizable_account = fields.Boolean(
@@ -59,6 +60,7 @@ class AccountAccount(models.Model):
         'Last Ledger Date',
         help='Date on which last ledger was created')
 
+    @api.multi
     def action_view_realization_move(self):
 
         if self._context.get('realization_move'):
@@ -121,6 +123,7 @@ class AccountAccount(models.Model):
             fx_amount=cumulative_fx - previous_cumulative_fx,
         )
 
+    @api.multi
     def create_account_realization_ledger(self, dates):
         self.ensure_one()
         arl_obj = self.env['account.revaluation.ledger']
@@ -134,15 +137,18 @@ class AccountAccount(models.Model):
             arl_obj.create(fx_dict)
         self.write({'date_last_ledger': max(dates)})
 
+    @api.multi
     def realize_account_ledger(self, dates):
         self.ensure_one()
         self.create_account_realization_ledger(dates)
 
+    @api.multi
     def realize_account_entry(self, dates):
         self.ensure_one()
         arl_obj = self.env['account.revaluation.ledger']
         arl_obj.create_revaluation_move(dates, account_id=self)
 
+    @api.multi
     def realize_account(
             self, stop_date, init_date, do_ledger=True, do_entry=None,
             do_commit=False):
@@ -150,7 +156,7 @@ class AccountAccount(models.Model):
 
         arl_obj = self.env['account.revaluation.ledger']
         dates = arl_obj.get_dates(
-            init_date, 'not_paid', {init_date}, stop_date, init_date, False)
+            init_date, 'open', {init_date}, stop_date, init_date, False)
         if not dates:
             return
 
@@ -171,6 +177,7 @@ class AccountAccount(models.Model):
             self._cr.commit()
         return
 
+    @api.multi
     def create_realization_entries(
             self, stop_date=False, init_date=False, do_ledger=True,
             do_entry=None, do_commit=False):

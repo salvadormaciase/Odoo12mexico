@@ -5,7 +5,7 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     realization_invoice_id = fields.Many2one(
-        'account.move',
+        'account.invoice',
         readonly=True,
         help="Invoice for which this Realization has being made")
     realization_account_id = fields.Many2one(

@@ -22,3 +22,5 @@ class ResCompany(models.Model):
         help='If True a Realization Entry will be created on Accounts')
     create_realization_entry_on_invoices = fields.Boolean(
         help='If True a Realization Entry will be created on Invoices')
+    apply_only_on_receivable_payable = fields.Boolean(
+        help='If True only invoices with Receivables/Payables will be taken')
