@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="l10n_mx_edi_fleet_service_extra" model="fleet.service.type">
+        <field name="name">Sale Extra</field>
+        <field name="category">contract</field>
+    </record>
+</odoo>

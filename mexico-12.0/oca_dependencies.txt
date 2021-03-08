@@ -1,0 +1,3 @@
+server-tools git@github.com:Vauxoo/server-tools.git
+enterprise git@github.com:Vauxoo/enterprise.git
+vendor-bills git@git.vauxoo.com:Vauxoo/vendor-bills.git

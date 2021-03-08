@@ -1,0 +1,264 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_advance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-18 16:42+0000\n"
+"PO-Revision-Date: 2020-06-18 16:42+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_invoice.py:202
+#, python-format
+msgid "<p>The credit note was not created because the advance was used in another invoice or it is not in this system.</p><p>So please, follow one of these actions:</p><li>Cancel this invoice and remove the related advance.</li><li>Create the credit note manually.</li>"
+msgstr "<p>La nota de crédito no fue creada porque el anticipo fue usado en otra factura o no está en este sistema.</p><p>Así que por favor sigue una de estas acciones:</p><li>Cancelar esta factura y elimina el anticipo relacionado.</li><li>Crear la nota de crédito manualmente.</li>"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.res_config_settings_view_form_advance
+msgid "<span class=\"o_form_label\">Advances</span>"
+msgstr "<span class=\"o_form_label\">Anticipos</span>"
+
+#. module: l10n_mx_edi_advance
+#: model:product.product,uom_name:l10n_mx_edi_advance.product_product_advance
+#: model:product.template,uom_name:l10n_mx_edi_advance.product_product_advance_product_template
+#: model:uom.uom,name:l10n_mx_edi_advance.product_uom_act
+msgid "ACT"
+msgstr ""
+
+#. module: l10n_mx_edi_advance
+#: model:uom.category,name:l10n_mx_edi_advance.product_uom_categ_act
+msgid "Activity"
+msgstr "Actividad"
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_invoice.py:230
+#, python-format
+msgid "Advance"
+msgstr "Anticipo"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model.fields,field_description:l10n_mx_edi_advance.field_res_company__l10n_mx_edi_product_advance_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_advance.field_res_config_settings__l10n_mx_edi_product_advance_id
+msgid "Advance product"
+msgstr "Producto de Anticipos"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model.fields,field_description:l10n_mx_edi_advance.field_account_invoice__l10n_mx_edi_amount_advances
+msgid "Amount in advances"
+msgstr "Monto en anticipos"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model.fields,field_description:l10n_mx_edi_advance.field_account_invoice__l10n_mx_edi_amount_residual_advances
+msgid "Amount residual with advances"
+msgstr "Monto restante con anticipos"
+
+#. module: l10n_mx_edi_advance
+#: model:product.product,name:l10n_mx_edi_advance.product_product_advance
+#: model:product.template,name:l10n_mx_edi_advance.product_product_advance_product_template
+msgid "Application of Advances"
+msgstr "Aplicación de anticipos"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model,name:l10n_mx_edi_advance.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Línea extracto bancario"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model,name:l10n_mx_edi_advance.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model,name:l10n_mx_edi_advance.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.res_config_settings_view_form_advance
+msgid "Configuration of advances"
+msgstr "Configuración de anticipos"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model,name:l10n_mx_edi_advance.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_advance
+#: selection:res.company,l10n_mx_edi_advance:0
+msgid "Invoicing by applying advance with acquittal CFDI"
+msgstr "Facturación aplicando anticipo con CFDI de egreso."
+
+#. module: l10n_mx_edi_advance
+#: selection:res.company,l10n_mx_edi_advance:0
+msgid "Invoicing by applying an advance with the remaining of pending duties"
+msgstr "Facturación aplicando anticipo con remanente de la contraprestación"
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_invoice.py:53
+#, python-format
+msgid "Outstanding credits as Advance"
+msgstr "Créditos pendientes como anticipo"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.res_config_settings_view_form_advance
+msgid "Parameters that will be used to create the advances automatically."
+msgstr "Parámetros que serán utilizados para crear los anticipos automáticamente."
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model,name:l10n_mx_edi_advance.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.res_config_settings_view_form_advance
+msgid "Process"
+msgstr "Proceso"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model.fields,field_description:l10n_mx_edi_advance.field_res_company__l10n_mx_edi_advance
+#: model:ir.model.fields,field_description:l10n_mx_edi_advance.field_res_config_settings__l10n_mx_edi_advance
+msgid "Process for Advances"
+msgstr "Proceso para Anticipos"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model.fields,help:l10n_mx_edi_advance.field_res_company__l10n_mx_edi_advance
+#: model:ir.model.fields,help:l10n_mx_edi_advance.field_res_config_settings__l10n_mx_edi_advance
+msgid "Process to be used in the advance generation. Based on the GuiaAnexo20 Document."
+msgstr "Proceso que será utilizado en la generación de anticipos. Basados en el documento GuiaAnexo20."
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.res_config_settings_view_form_advance
+msgid "Product"
+msgstr "Producto"
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/res_config_settings.py:27
+#, python-format
+msgid "The income account for the advance product need to be set up for any advance operation."
+msgstr "La cuenta de ingresos para el producto de anticipos debe ser configurada para las operaciones de anticipos."
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_invoice.py:269
+#, python-format
+msgid "The invoice is not signed, and the UUID is required to relate the documents."
+msgstr "La factura no está firmada y el UUID es requerido para relacionar los documentos."
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_payment.py:40
+#, python-format
+msgid "The product that must be used in the advance invoice line is not configured in the accounting settings."
+msgstr "El producto que será utilizado en la linea de la factura de anticipo no esta configurado en las configuraciones contables."
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_created
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_refund
+msgid "This"
+msgstr "Este"
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_invoice.py:189
+#, python-format
+msgid "This invoice cannot be validated because has an advance related and the CFDI stamped return an error, please fix the errors in the CFDI generation and try again."
+msgstr "Esta factura no puede ser validada porque tiene un anticipo relacionado y el timbrado del CFDI regresa un error, por favor solucione los errores en la generación del CFDI e intente de nuevo."
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_payment.py:59
+#, python-format
+msgid "This payment do not generate advance because the customer has invoices with pending payment."
+msgstr "Este pago no generó anticipo porque el cliente tiene facturas con pagos pendientes."
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model.fields,help:l10n_mx_edi_advance.field_res_company__l10n_mx_edi_product_advance_id
+#: model:ir.model.fields,help:l10n_mx_edi_advance.field_res_config_settings__l10n_mx_edi_product_advance_id
+msgid "This product will be used in the advance invoices that are created automatically when is registered a payment without documents related or with a difference in favor of the customer."
+msgstr "Este producto será utilizado en las facturas de anticipos que se crean automáticamente cuando es registrado un pago sin documentos relacionados o con una diferencia en favor del cliente."
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/account_payment.py:64
+#, python-format
+msgid "This record cannot create the advance document automatically for the next reason: %sFor this record, you need create the invoice manually and reconcile it with this payment or cancel and validate again after that the data was completed."
+msgstr "Este registro no generó documento de anticipos automáticamente por la siguiente razón: %sPara este registro, se necesita crear la factura manualmente y conciliar con este pago o cancelar y validar después de completar la información"
+
+#. module: l10n_mx_edi_advance
+#: code:addons/l10n_mx_edi_advance/models/res_config_settings.py:30
+#, python-format
+msgid "To allow use the process \"B\" for advances is necessary install the module \"l10n_mx_edi_discount\"."
+msgstr "Para permitir utilizar el proceso  \"B\" para anticipos es necesario instalar el módulo \"l10n_mx_edi_discount\"."
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_created
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_refund
+msgid "because this"
+msgstr "porque este"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance
+msgid "but that cannot be signed, please review the CFDI errors and make the conciliation manually."
+msgstr "pero no pudo timbrarse, por favor revise los errores del CFDI y haga la conciliación manualmente."
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_created
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_refund
+msgid "created"
+msgstr "creado"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_created
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_refund
+msgid "has"
+msgstr "tiene"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_refund
+msgid "has an advance applied."
+msgstr "tiene un anticipo aplicado"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_created
+msgid "is an advance."
+msgstr "es un anticipo"
+
+#. module: l10n_mx_edi_advance
+#: model:product.product,weight_uom_name:l10n_mx_edi_advance.product_product_advance
+#: model:product.template,weight_uom_name:l10n_mx_edi_advance.product_product_advance_product_template
+msgid "kg"
+msgstr ""
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_created
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_refund
+msgid "modified"
+msgstr "modificado"
+
+#. module: l10n_mx_edi_advance
+#: model:ir.model.fields,help:l10n_mx_edi_advance.field_account_invoice__l10n_mx_edi_amount_advances
+#: model:ir.model.fields,help:l10n_mx_edi_advance.field_account_invoice__l10n_mx_edi_amount_residual_advances
+msgid "save the amount that will be applied as advance when validate the invoice"
+msgstr "guarda el monto que será aplicado como anticipo cuando se valide la factura"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_created
+msgid "the next customer invoice:"
+msgstr "la siguiente factura de cliente:"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance_refund
+msgid "the next customer invoices credit note:"
+msgstr "la siguiente nota de crédito de cliente:"
+
+#. module: l10n_mx_edi_advance
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_advance.l10n_mx_edi_message_advance
+msgid "the next invoice:"
+msgstr "la siguiente factura:"

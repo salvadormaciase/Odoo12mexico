@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_mx_edi_partner_customs_form_inherit" model="ir.ui.view">
+        <field name="name">view.l10n_mx_edi.partner.customs.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <group name="purchase" position="inside">
+                <field name="l10n_mx_edi_customs_patent"/>
+            </group>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,41 @@
+<odoo>
+    <record model="ir.ui.view" id="invoice_form_l10n_mx_discount">
+        <field name="name">account.invoice.form.l10n_mx.discount</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree//field[@name='discount']" position="after">
+                <field name="l10n_mx_edi_amount_discount"/>
+                <field name="l10n_mx_edi_total_discount"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="l10n_mx_edi_total_discount"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="invoice_form_supplier_l10n_mx_discount">
+        <field name="name">account.invoice.form.supplier.l10n_mx.discount</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree//field[@name='discount']" position="after">
+                <field name="l10n_mx_edi_amount_discount"/>
+                <field name="l10n_mx_edi_total_discount"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="l10n_mx_edi_total_discount"/>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_invoice_line_form">
+        <field name="name">account.invoice.form</field>
+        <field name="model">account.invoice.line</field>
+        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='discount']" position="after">
+                <field name="l10n_mx_edi_amount_discount"/>
+                <field name="l10n_mx_edi_total_discount"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--Wizard to set elements-->
+    <record id="model_l10n_mx_edi_retailer_wizard" model="ir.model">
+        <field name="name">Complement Retailer</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_l10n_mx_edi.retailer.wizard</field>
+        <field name="info">Complement Retailer documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <!-- TODO include buyer's folio -->
+    <!-- TODO Set fields length -->
+    <record id="field_l10n_mx_edi_retailer_wizard_invoice_id" model="ir.model.fields">
+        <field name="name">x_invoice_id</field>
+        <field name="field_description">Invoice</field>
+        <field name="ttype">many2one</field>
+        <field name="help">Invoice associated with this wizard</field>
+        <field name="relation">account.invoice</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+    </record>
+    <record id="field_l10n_mx_edi_retailer_wizard_status" model="ir.model.fields">
+        <field name="name">x_status</field>
+        <field name="field_description">Document Status</field>
+        <field name="ttype">selection</field>
+        <field name="help">Document Function</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+        <field name="selection">
+            [('original', 'Original'),
+            ('copy', 'Copy'),
+            ('reemplaza', 'Reemplaza'),
+            ('delete', 'Delete')]
+        </field>
+    </record>
+    <record id="field_l10n_mx_edi_retailer_wizard_delivery" model="ir.model.fields">
+        <field name="name">x_delivery</field>
+        <field name="field_description">Reference Identification</field>
+        <field name="ttype">char</field>
+        <field name="help">Number emitted by the receiver when receive the products</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+    </record>
+    <record id="field_l10n_mx_edi_retailer_wizard_delivery_date" model="ir.model.fields">
+        <field name="name">x_delivery_date</field>
+        <field name="field_description">Reference Date</field>
+        <field name="ttype">date</field>
+        <field name="help">Date when the customer receives the products</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+    </record>
+    <record id="field_l10n_mx_edi_retailer_wizard_purchase_order_date" model="ir.model.fields">
+        <field name="name">x_purchase_order_date</field>
+        <field name="field_description">Purchase Order Date</field>
+        <field name="ttype">date</field>
+        <field name="help">The date of the purchase order to which the invoice refers.</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+    </record>
+    <record id="field_l10n_mx_edi_retailer_wizard_pruchase_contact_name" model="ir.model.fields">
+        <field name="name">x_purchase_contact_name</field>
+        <field name="field_description">Purchase Contact Name</field>
+        <field name="ttype">char</field>
+        <field name="help">Purchase contact: No. or name of the purchase contact (Department of the partner)</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+    </record>
+    <record id="field_l10n_mx_edi_retailer_wizard_special_service_type" model="ir.model.fields">
+        <field name="name">x_special_service_type</field>
+        <field name="field_description">Discount/Charge Type</field>
+        <field name="ttype">selection</field>
+        <field name="help">Discount/Charge Type</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+        <field name="selection">
+            [('off_invoice', 'OFF_INVOICE'),
+            ('bill_back', 'BILL_BACK')]
+        </field>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="field_account_invoice__complement_retailer_data" model="ir.model.fields">
+        <field name="name">x_complement_retailer_data</field>
+        <field name="field_description">Complemento Retailer</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate fields in complement wizard</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that sets the values on the invoice -->
+    <record id="set_wizard_l10n_mx_edi_retailer_values" model="ir.actions.server">
+        <field name="name">Set Values Complement Retailer</field>
+        <field name="model_id" ref="model_l10n_mx_edi_retailer_wizard"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = record.x_invoice_id
+wizard_fields = (record.x_status, record.x_delivery_date and datetime.datetime
+    .strftime(record.x_delivery_date, '%Y-%m-%d'), record.x_delivery,
+    record.x_purchase_order_date and datetime.datetime.strftime(
+    record.x_purchase_order_date, '%Y-%m-%d'), record.x_purchase_contact_name,
+    record.x_special_service_type)
+wizard_fields_data = "|".join([
+    (f or '').replace('|', ' ')
+    for f in wizard_fields])
+invoice.write({
+    'x_complement_retailer_data': wizard_fields_data,
+})
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that sets the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_complement_retailer_view" model="ir.ui.view">
+        <field name="name">wizard_complement.retailer.view</field>
+        <field name="model">x_l10n_mx_edi.retailer.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="x_invoice_id" invisible="True"/>
+                <group>
+                    <group>
+                        <field name="x_status"/>
+                        <field name="x_purchase_order_date"/>
+                        <field name="x_purchase_contact_name"/>
+                        <field name="x_special_service_type"/>
+                    </group>
+                    <group string="Delivery Note">
+                        <field name="x_delivery"/>
+                        <field name="x_delivery_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        string="Set Values"
+                        name="l10n_mx_edi_retailer.set_wizard_l10n_mx_edi_retailer_values"
+                        type="action"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple view action that open the wizard
+    -->
+    <record id="action_open_wizard_retailer" model="ir.actions.act_window">
+        <field name="name">Open Wizard of the Retailer Complement</field>
+        <field name="res_model">x_l10n_mx_edi.retailer.wizard</field>
+        <field name="view_id" ref="wizard_complement_retailer_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_set_default_values_wizard_retailer" model="ir.actions.server">
+        <field name="name">Open the wizard of the Retailer Complement with preloaded values</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+context = {'default_x_invoice_id': record.id,}
+wizard_values = record.x_complement_retailer_data and record.x_complement_retailer_data.split('|')
+# If the wizard has been run before, fill it with its previows values
+if wizard_values:
+    context.update({
+        'default_x_status': wizard_values[0],
+        'default_x_delivery_date': wizard_values[1],
+        'default_x_delivery': wizard_values[2] and wizard_values[2] or '',
+        'default_x_purchase_order_date': wizard_values[3],
+        'default_x_purchase_contact_name': wizard_values[4] and wizard_values[4] or '',
+        'default_x_special_service_type': wizard_values[5],
+    })
+
+action = env.ref('l10n_mx_edi_retailer.action_open_wizard_retailer').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+</odoo>

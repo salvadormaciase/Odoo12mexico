@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_mx_edi_origin']" position="after">
+                <label for="l10n_mx_edi_origin"/>
+                <div class="o_row">
+                    <button name="l10n_mx_edi_get_related_documents"
+                            string="Get Related Documents" class="oe_link" type="object"
+                            attrs="{'invisible':[('l10n_mx_edi_origin', '=', False)]}"/>
+                </div>
+                <field name="l10n_mx_edi_related_document_ids" invisible="1"/>
+                <field name="l10n_mx_edi_related_document_ids_inverse" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='l10n_mx_edi_get_related_documents']" position="before">
+                <xpath expr="//field[@name='l10n_mx_edi_origin']" position="move"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object" class="oe_stat_button" icon="fa-file-o" name="action_get_related_documents"
+                        attrs="{'invisible':[('l10n_mx_edi_related_document_ids', '=', [])]}" title="Related Documents Origins">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="count_related_documents"/>
+                        </span>
+                        <span class="o_stat_text">Related Documents Origins</span>
+                    </div>
+                </button>
+                <button type="object" class="oe_stat_button" icon="fa-file" name="action_get_related_documents_inverse"
+                        attrs="{'invisible':[('l10n_mx_edi_related_document_ids_inverse', '=', [])]}" title="Related Documents Destinations">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="count_related_documents_inverse"/>
+                        </span>
+                        <span class="o_stat_text">Related Documents Destinations</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

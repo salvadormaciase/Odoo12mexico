@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_delivery" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Conceptos']" position="before">
+            <t t-set="product_free" t-value="record.env['delivery.carrier'].sudo().search([('fixed_price', '=', 0)]).mapped('product_id')"/>
+            <t t-set="lines_free" t-value="record.invoice_line_ids.filtered(lambda inv: not inv.price_unit and inv.product_id in product_free)"/>
+        </xpath>
+        <xpath expr="//*[local-name()='Conceptos']/t" position="attributes">
+             <attribute name="t-foreach">record.invoice_line_ids.filtered(lambda inv: not inv.display_type) - lines_free</attribute>
+        </xpath>
+    </template>
+</odoo>

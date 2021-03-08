@@ -1,0 +1,11 @@
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <RequestCFD version="2.0" tipo="AddendaPCO" idSolicitudPago="000" idPedido="0151">
+        <Documento tipoDoc="1" folioUUID="87761B0F-E166-4214-BF0C-53348AEEA568"/>
+        <Proveedor idProveedor="1000007516"/>
+        <Recepciones>
+            <Recepcion idRecepcion="5029374767">
+                <Concepto importe="450.000000" valorUnitario="450.0" cantidad="1.0" descripcion='[FURN_7800] Desk Combination Desk combination, black-brown: chair + desk + drawer.' unidad="Unit(s)"/>
+            </Recepcion>
+        </Recepciones>
+    </RequestCFD>
+</cfdi:Addenda>

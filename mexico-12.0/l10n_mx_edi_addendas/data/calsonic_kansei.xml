@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="calsonickansei" name="Marelli Mexicana (Antes: Calsonic Kansei)">
+        <fa:Datos xmlns:fa="finanzas">
+            <fa:AddendaComercial>
+                <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
+                    <fa:Finanzas
+                        t-att-PO="record.name or ''"
+                        t-att-Linea="line_index + 1"
+                        t-att-Part="line.product_id.default_code"
+                        t-att-Moneda="record.currency_id.name"/>
+                </t>
+            </fa:AddendaComercial>
+        </fa:Datos>
+    </template>
+    <record id="calsonickansei" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+</odoo>

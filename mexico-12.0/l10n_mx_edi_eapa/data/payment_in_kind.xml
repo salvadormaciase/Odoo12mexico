@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_pik" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__pagoenespecie">"http://www.sat.gob.mx/pagoenespecie" if record.invoice_line_ids.mapped('product_id').filtered(lambda r: r.l10n_mx_edi_art_complement == 'pee') else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-set="donation" t-value="record.invoice_line_ids.mapped('product_id').filtered(lambda r: r.l10n_mx_edi_art_complement == 'pee')"/>
+            <t t-if="donation">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <t t-foreach="donation" t-as="pza">
+                        <pagoenespecie:PagoEnEspecie
+                            xmlns:pagoenespecie="http://www.sat.gob.mx/pagoenespecie"
+                            Version="1.0"
+                            t-att-CvePIC="record.partner_id.ref"
+                            t-att-FolioSolDon="record.name"
+                            t-att-PzaArtNombre="pza.name"
+                            t-att-PzaArtTecn="pza.l10n_mx_edi_good_type if pza.l10n_mx_edi_good_type != '04' else pza.l10n_mx_edi_other_good_type"
+                            t-att-PzaArtAProd="pza.l10n_mx_edi_acquisition_date.year if pza.l10n_mx_edi_acquisition_date else None"
+                            t-att-PzaArtDim="pza.l10n_mx_edi_pik_dimension"/>
+                    </t>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>

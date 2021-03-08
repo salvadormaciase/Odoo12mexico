@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="3rd_party_template" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Concepto']" position="inside">
+            <cfdi:ComplementoConcepto
+                t-if="line.l10n_mx_edi_3rd_party_id"
+                xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                <t t-set="third" t-value="line.l10n_mx_edi_3rd_party_id"/>
+                <t t-set="product" t-value="line.product_id"/>
+                <terceros:PorCuentadeTerceros
+                    xmlns:terceros="http://www.sat.gob.mx/terceros"
+                    version="1.1"
+                    t-att-rfc="third.l10n_mx_edi_get_customer_rfc()"
+                    t-att-nombre="record._get_string_cfdi(third.name, 254)">
+                    <!-- This node is included only if all required fields are set -->
+                    <t t-if="all(third.read(['street_name', 'city_id', 'state_id', 'country_id', 'zip'])[0].values())">
+                        <terceros:InformacionFiscalTercero
+                            t-att-calle="record._get_string_cfdi(third.street_name)"
+                            t-att-noExterior="record._get_string_cfdi(third.street_number)"
+                            t-att-noInterior="record._get_string_cfdi(third.street_number2)"
+                            t-att-colonia="third.l10n_mx_edi_colony"
+                            t-att-localidad="third.l10n_mx_edi_locality_id.code"
+                            t-att-referencia="record._get_string_cfdi(third.street2)"
+                            t-att-municipio="third.city_id.l10n_mx_edi_code"
+                            t-att-estado="third.state_id.code"
+                            t-att-pais="third.country_id.l10n_mx_edi_code"
+                            t-att-codigoPostal="third.zip"/>
+                    </t>
+                    <!-- If the product is imported and sold first hand -->
+                    <t t-if="line.l10n_mx_edi_customs_number or line.l10n_mx_edi_customs_date">
+                        <terceros:InformacionAduanera
+                            t-att-numero="line.l10n_mx_edi_customs_number.split(',')[0]"
+                            t-att-fecha="line.l10n_mx_edi_customs_date"
+                            t-att-aduana="line.l10n_mx_edi_customs_name"/>
+                    </t>
+                    <!-- If the product is made from other products (parts) -->
+                    <t t-if="product.sudo().bom_ids">
+                        <t t-foreach="product.sudo().bom_ids[0].bom_line_ids" t-as="part_line">
+                            <t t-set="part" t-value="part_line.product_id"/>
+                            <t t-set="part_description" t-value="part.partner_ref"/>
+                            <t t-if="part.description_sale"
+                                t-set="part_description"
+                                t-value="'%s %s' % (part_description, part.description_sale)"/>
+                            <terceros:Parte
+                                t-att-cantidad="part_line.product_qty"
+                                t-att-unidad="record._get_string_cfdi(part_line.product_uom_id.name, 20)"
+                                t-att-noIdentificacion="record._get_string_cfdi(part.default_code)"
+                                t-att-descripcion="record._get_string_cfdi(part_description, 1000)"
+                                t-att-valorUnitario="'%.*f' % (decimal_precision, part.lst_price)"
+                                t-att-importe="'%.*f' % (decimal_precision, part_line.product_qty*part.lst_price)">
+                                <!-- If the part is imported and sold first hand -->
+                                <t t-if="part_line.l10n_mx_edi_customs_number">
+                                    <t t-foreach="part_line.l10n_mx_edi_customs_number.split(',')"
+                                        t-as="customs_number">
+                                        <terceros:InformacionAduanera
+                                            t-att-numero="customs_number"
+                                            t-att-fecha="part_line.l10n_mx_edi_customs_date"
+                                            t-att-aduana="part_line.l10n_mx_edi_customs_name"/>
+                                    </t>
+                                </t>
+                            </terceros:Parte>
+                        </t>
+                    </t>
+                    <!-- if the product is a lease -->
+                    <t t-if="product.l10n_mx_edi_property_tax">
+                        <terceros:CuentaPredial
+                            t-att-numero="product.l10n_mx_edi_property_tax"/>
+                    </t>
+                    <terceros:Impuestos>
+                        <t t-set="withholding" t-value="taxes_line.filtered(lambda r: r.amount &lt; 0)"/>
+                        <t t-set="transferred" t-value="taxes_line.filtered(lambda r: r.amount &gt;= 0)"/>
+                        <t t-if="withholding">
+                            <terceros:Retenciones>
+                                <t t-foreach="withholding" t-as="tax">
+                                    <t t-set="tag_name"
+                                        t-value="tax.tag_ids.filtered(lambda r: 'Factor:' not in r.name)"/>
+                                    <terceros:Retencion
+                                        t-att-impuesto="tag_name[0].name if tag_name else ''"
+                                        t-att-importe="'%.2f' % abs(tax.amount / 100.0 * line.price_subtotal)"/>
+                                </t>
+                            </terceros:Retenciones>
+                        </t>
+                        <t t-if="transferred">
+                            <terceros:Traslados>
+                                <t t-foreach="transferred" t-as="tax">
+                                    <terceros:Traslado
+                                        t-att-impuesto="tax.tag_ids[0].name if tax.tag_ids else ''"
+                                        t-att-tasa="'%.6f' % abs(tax.amount / 100.0)"
+                                        t-att-importe="'%.2f' % abs(tax.amount / 100.0 * line.price_subtotal) if tax.l10n_mx_cfdi_tax_type != 'Exento' else False"/>
+                                </t>
+                            </terceros:Traslados>
+                        </t>
+                    </terceros:Impuestos>
+                </terceros:PorCuentadeTerceros>
+            </cfdi:ComplementoConcepto>
+        </xpath>
+    </template>
+
+</odoo>

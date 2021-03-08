@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:fomadd="http://www.ford.com.mx/cfdi/addenda">
+    <fomadd:addenda
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.ford.com.mx/cfdi/addenda http://www.ford.com.mx/cfdi/addenda/cfdiAddendaFord_1_0.xsd">
+        <fomadd:FOMASN version="1.0">
+            <fomadd:GSDB>GYFZA</fomadd:GSDB>
+            <fomadd:ASN>921</fomadd:ASN>
+        </fomadd:FOMASN >
+    </fomadd:addenda>
+</cfdi:Addenda>

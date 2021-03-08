@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <YFAI:AddendaYFAI xmlns:YFAI="https://www.yfai.com/suppliers" xsi:schemaLocation="https://www.yfai.com/suppliers https://www.yfai.com/suppliers/YFAI-Addenda.xsd">
+        <YFAI:Factura Plant="--Plant number here--" FiscalDoc="I" CompanyCode="--Company code here--" CompanyName="Floyd Steward">
+            <YFAI:Moneda Currency="USD"/>
+            <YFAI:Proveedor SuppCode="--Supplier code here--"/>
+            <YFAI:Pur PurchaseOrder="001" DeliveryNote="1"/>
+        </YFAI:Factura>
+    </YFAI:AddendaYFAI>
+</cfdi:Addenda>

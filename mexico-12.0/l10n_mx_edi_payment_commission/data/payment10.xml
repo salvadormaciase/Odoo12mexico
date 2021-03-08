@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_commission_payments" inherit_id="l10n_mx_edi.payment10">
+        <xpath expr="//*[local-name()='Pagos']" position="inside">
+            <t t-set="label" t-value="record.env.ref('l10n_mx_edi_payment_commission.tag_compensation')"/>
+            <t t-if="record.l10n_mx_edi_is_commission and label in record.partner_id.category_id">
+                <t t-set="invoice" t-value="record.invoice_ids[-1]"/>
+                <t t-set="tfd_node" t-value="record.invoice_ids.l10n_mx_edi_get_tfd_etree(invoice)"/>
+                <t t-set="writeoff_vals" t-value="record._l10n_mx_edi_get_payment_write_off()"/>
+                <t t-set="total_writeoff" t-value="sum([writeoff_vals.get(inv.id, 0) for inv in record.invoice_ids])"/>
+                <pago10:Pago
+                    xmlns:pago10="http://www.sat.gob.mx/Pagos"
+                    t-att-FechaPago="payment_date"
+                    t-att-FormaDePagoP="17"
+                    t-att-MonedaP="record.currency_id.name"
+                    t-att-TipoCambioP="payment_rate"
+                    t-att-Monto="total_writeoff"
+                    t-att-NumOperacion="record.communication[:100].replace('|', ' ') if record.communication else None"
+                    t-att-RfcEmisorCtaOrd="pay_vat_ord or None"
+                    t-att-NomBancoOrdExt="pay_name_ord or None"
+                    t-att-TipoCadPago="pay_ent_type"
+                    t-att-CertPago="pay_certificate"
+                    t-att-CadPago="pay_string"
+                    t-att-SelloPago="pay_stamp">
+                    <pago10:DoctoRelacionado
+                        t-att-IdDocumento="invoice.l10n_mx_edi_cfdi_uuid"
+                        t-att-Serie="invoice._get_string_cfdi(invoice._l10n_mx_get_serie_and_folio(invoice.number).get('serie', False), 25)"
+                        t-att-Folio="invoice._get_string_cfdi(invoice._l10n_mx_get_serie_and_folio(invoice.number).get('folio', False), 40)"
+                        t-att-MonedaDR="invoice.currency_id.name"
+                        t-att-TipoCambioDR="inv_rate"
+                        t-att-MetodoDePagoDR="invoice.l10n_mx_edi_get_payment_method_cfdi()"
+                        t-att-NumParcialidad="len(invoice.payment_ids.filtered(lambda p: p.state not in ('draft', 'cancelled')).ids) + 1"
+                        t-att-ImpSaldoAnt="total_writeoff"
+                        t-att-ImpPagado="total_writeoff"
+                        ImpSaldoInsoluto="0.00"/>
+                </pago10:Pago>
+            </t>
+        </xpath>
+    </template>
+</odoo>

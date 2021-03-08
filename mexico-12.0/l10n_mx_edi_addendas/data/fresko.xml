@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--This is the addenda-->
+    <template id="fresko" name="Fresko">
+        <t t-set="values" t-value="record._l10n_mx_edi_create_cfdi_values()"/>
+        <t t-set="extra_values" t-value="record.x_addenda_fresko.split('|') if record.x_addenda_fresko else ['', '', '', '', '']"/>
+        <requestForPayment
+            type="SimpleInvoiceType"
+            contentVersion="1.3.1"
+            documentStructureVersion="AMC7.1"
+            documentStatus="ORIGINAL"
+            t-att-DeliveryDate="record.date_invoice">
+            <requestForPaymentIdentification>
+                <entityType t-raw="'INVOICE' if record.type == 'out_invoice' else 'CREDIT_NOTE'"/>
+                <uniqueCreatorIdentification t-raw="record.number.replace('/', '')"/>
+            </requestForPaymentIdentification>
+            <specialInstruction code="AAB" t-if="record.payment_term_id">
+                <text t-raw="record.payment_term_id.name"/>
+            </specialInstruction>
+            <specialInstruction code="ZZZ">
+                <text t-raw="record.l10n_mx_edi_amount_to_text()"/>
+            </specialInstruction>
+            <orderIdentification>
+                <referenceIdentification type="ON" t-raw="extra_values[3] if extra_values[3] else '0'"/>
+                <ReferenceDate t-raw="extra_values[1]"/>
+            </orderIdentification>
+            <AdditionalInformation>
+                <referenceIdentification t-att-type="extra_values[0]" t-raw="extra_values[2]"/>
+            </AdditionalInformation>
+            <buyer>
+                <gln t-raw="record.partner_id.ref"/>
+                <contactInformation>
+                    <personOrDepartmentName>
+                        <text t-raw="extra_values[4]"/>
+                    </personOrDepartmentName>
+                </contactInformation>
+            </buyer>
+            <seller>
+                <gln>0000000000000</gln> <!-- 13 character code, fill with zeros  -->
+                <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY">00000</alternatePartyIdentification>
+            </seller>
+            <shipTo>
+                <gln t-raw="record.partner_shipping_id.comment or record.partner_id.ref"/>
+                <nameAndAddress>
+                    <name t-raw="record.partner_shipping_id.name.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if record.partner_shipping_id.name else ''"/>
+                    <streetAddressOne t-raw="record.partner_shipping_id.street.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if record.partner_shipping_id.street else ''"/>
+                    <city t-raw="record.partner_shipping_id.city.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').replace('ñ', 'n') if record.partner_shipping_id.city else ''"/>
+                    <postalCode t-raw="record.partner_shipping_id.zip"/>
+                </nameAndAddress>
+            </shipTo>
+            <InvoiceCreator>
+                <gln>0000000000000</gln> <!-- 13 character code, fill with zeros  -->
+                <alternatePartyIdentification type="IA">00000</alternatePartyIdentification>
+            </InvoiceCreator>
+            <currency t-att-currencyISOCode="record.currency_id.name">
+                <currencyFunction>BILLING_CURRENCY</currencyFunction>
+                <rateOfChange t-raw="values['rate'] if record.currency_id.name != 'MXN' else 1"/>
+            </currency>
+            <paymentTerms paymentTermsEvent="DATE_OF_INVOICE" PaymentTermsRelationTime="REFERENCE_AFTER">
+                <netPayment netPaymentTermsType="BASIC_NET">
+                    <paymentTimePeriod>
+                        <timePeriodDue timePeriod="DAYS">
+                            <value t-raw="(record.date_due - record.date_invoice).days"/>
+                        </timePeriodDue>
+                    </paymentTimePeriod>
+                </netPayment>
+                <discountPayment discountType="ALLOWANCE_BY_PAYMENT_ON_TIME">
+                    <percentage>0.000</percentage>
+                </discountPayment>
+            </paymentTerms>
+            <allowanceCharge settlementType="BILL_BACK" allowanceChargeType="ALLOWANCE_GLOBAL">
+                <specialServicesType>AJ</specialServicesType>
+                <monetaryAmountOrPercentage><rate base="INVOICE_VALUE">
+                        <percentage>0.00</percentage>
+                    </rate>
+                </monetaryAmountOrPercentage>
+            </allowanceCharge>
+            <t t-foreach="record.invoice_line_ids" t-as="line">
+               <t t-set="supplier_info" t-value="line.sudo().product_id.seller_ids.filtered(
+                        lambda s:
+                        s.name == record.commercial_partner_id
+                        and s.product_id == line.product_id)[:1]"/>
+                <lineItem type="SimpleInvoiceLineItemType"
+                    t-att-number="line_index + 1">
+                    <tradeItemIdentification>
+                        <gtin t-raw="line.x_addenda_supplier_code or supplier_info.product_code or line.product_id.barcode or ''"/>
+                    </tradeItemIdentification>
+                    <alternateTradeItemIdentification type="BUYER_ASSIGNED" t-raw="line.product_id.barcode or line.x_addenda_supplier_code or supplier_info.product_code or ''"/>
+                    <tradeItemDescriptionInformation>
+                        <longText t-raw="record._get_string_cfdi(line.name, 1000)"/>
+                    </tradeItemDescriptionInformation>
+                    <invoicedQuantity
+                        t-att-unitOfMeasure="record._get_string_cfdi(line.uom_id.name, 1)" t-raw="line.quantity"/>
+                    <grossPrice>
+                        <Amount t-raw="'%.2f' % (values.get('subtotal_wo_discount')(line)/line.quantity)"/>
+                    </grossPrice>
+                    <netPrice>
+                        <Amount t-raw="'%.2f' % (values.get('subtotal_wo_discount')(line)/line.quantity)"/>
+                    </netPrice>
+                    <AdditionalInformation>
+                        <referenceIdentification type="ON" t-raw="line.x_addenda_supplier_code or supplier_info.product_code or ''"/>
+                    </AdditionalInformation>
+                    <totalLineAmount>
+                        <grossAmount>
+                            <Amount t-raw="'%.2f' % (values.get('subtotal_wo_discount')(line))"/>
+                        </grossAmount>
+                        <netAmount>
+                            <Amount t-raw="'%.2f' % (values.get('subtotal_wo_discount')(line))"/>
+                        </netAmount>
+                    </totalLineAmount>
+                </lineItem>
+            </t>
+            <totalAmount>
+                <Amount t-raw="values['amount_total']"/>
+            </totalAmount>
+            <TotalAllowanceCharge allowanceOrChargeType="ALLOWANCE">
+                <Amount>0.00</Amount>
+            </TotalAllowanceCharge>
+            <baseAmount>
+                <Amount t-raw="values['amount_untaxed']"/>
+            </baseAmount>
+            <t t-set="tax_type" t-value="{'IEPS': 'GST', 'IVA': 'VAT', 'ISR': 'LAC'}"/>
+            <t t-if="values.get('taxes')['transferred']">
+                <t t-foreach="values.get('taxes')['transferred']" t-as="transferred">
+                    <tax t-att-type="tax_type.get(transferred['name'])">
+                        <taxPercentage t-raw="'%.2f' % (transferred['rate'])" />
+                        <taxAmount t-raw="'%.2f' % (transferred['amount']) or 0.0"/>
+                        <taxCategory>TRANSFERIDO</taxCategory>
+                    </tax>
+                </t>
+            </t>
+            <t t-if="values.get('taxes')['withholding']">
+                <t t-foreach="values.get('taxes')['withholding']" t-as="withhold">
+                    <tax t-att-type="tax_type.get(withhold['name'])">
+                        <taxPercentage t-raw="'%.2f' % (withhold['rate'])" />
+                        <taxAmount t-raw="'%.2f' % (withhold['amount']) or 0.0"/>
+                        <taxCategory>RETENIDO</taxCategory>
+                    </tax>
+                </t>
+            </t>
+            <payableAmount>
+                <Amount t-raw="values['amount_total']"/>
+            </payableAmount>
+        </requestForPayment>
+    </template>
+    <record id="fresko" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+    <!--Wizard to set elements-->
+    <record id="wizard_fresko" model="ir.model">
+        <field name="name">Addenda Fresko</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_addenda.fresko</field>
+        <field name="info">Addenda Fresko documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_fresko_reception" model="ir.model.fields">
+        <field name="name">x_additional_ref_code</field>
+        <field name="field_description">Additional Reference Code</field>
+        <field name="ttype">selection</field>
+        <field name="required">1</field>
+        <field name="selection">[['AAE', 'Property account'], ['CK', 'Check number'], ['ACE', 'Document number (remission)'], ['ATZ', 'Approval number'], ['AWR', 'Document number that is replaced'], ['ON', 'Order number (buyer)'], ['DQ', 'Merchandise Receipt Folio'], ['IV', 'Invoice Number']]</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_fresko"/>
+    </record>
+    <record id="wizard_fresko_po_date" model="ir.model.fields">
+        <field name="name">x_po_date</field>
+        <field name="field_description">Date Purchase Order</field>
+        <field name="ttype">date</field>
+        <field name="required">1</field>
+        <field name="help">The date of the purchase order.</field>
+        <field name="model_id" ref="wizard_fresko"/>
+    </record>
+    <record id="wizard_fresko_reception_folio" model="ir.model.fields">
+        <field name="name">x_additional_reference</field>
+        <field name="field_description">Additional Reference Number</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help">Additional reference number</field>
+        <field name="model_id" ref="wizard_fresko"/>
+    </record>
+    <record id="wizard_fresko_order_number" model="ir.model.fields">
+        <field name="name">x_order_number</field>
+        <field name="field_description">Order Number</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help">Purchase order number that supports the receipt of merchandise. This number is displayed in the Provecomer portal.</field>
+        <field name="model_id" ref="wizard_fresko"/>
+    </record>
+
+    <record id="wizard_fresko_invoice_line_ids" model="ir.model.fields">
+        <field name="name">x_invoice_line_ids</field>
+        <field name="field_description">Invoice Lines</field>
+        <field name="ttype">many2many</field>
+        <field name="model_id" ref="wizard_fresko"/>
+        <field name="relation">account.invoice.line</field>
+    </record>
+
+    <record id="wizard_fresko_buyer" model="ir.model.fields">
+        <field name="name">x_buyer</field>
+        <field name="field_description">Person or Department (Buyer)</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_fresko"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_fresko_field" model="ir.model.fields">
+        <field name="name">x_addenda_fresko</field>
+        <field name="field_description">Addenda Fresko</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate wizard fields</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+    <record id="invoice_line_supplier_code" model="ir.model.fields">
+        <field name="name">x_addenda_supplier_code</field>
+        <field name="field_description">Supplier Code</field>
+        <field name="ttype">char</field>
+        <field name="help">Product code as handled by the supplier. This value has to be set on each invoice line.</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice.line')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_fresko_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda Fresko</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.fresko'].browse(model._context['active_id'])
+wizard_values = [
+    wizard.x_additional_ref_code,
+    wizard.x_po_date.strftime('%Y-%m-%d'),
+    wizard.x_additional_reference,
+    wizard.x_order_number,
+    wizard.x_buyer,
+]
+wizard_values = '|'.join([value or '' for value in wizard_values])
+invoice.write({'x_addenda_fresko': wizard_values})
+
+# Create supplier info, if theyre not already created
+for line in invoice.invoice_line_ids:
+    if not any([line.x_addenda_supplier_code]):
+        continue
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == invoice.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 999)[:1]
+    if supplier_info:
+        supplier_info.write({
+            'product_code': line.x_addenda_supplier_code,
+        })
+    else:
+        supplier_info.create({
+            'name': invoice.commercial_partner_id.id,
+            'product_tmpl_id': line.product_id.product_tmpl_id.id,
+            'product_id': line.product_id.id,
+            'sequence': 999,
+            'product_code': line.x_addenda_supplier_code,
+        })
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_fresko_view" model="ir.ui.view">
+        <field name="name">x_addenda.fresko.view</field>
+        <field name="model">x_addenda.fresko</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>
+                        The necessary nodes for the implementation of the Addenda of Fresko City
+                    </p>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_additional_ref_code"/>
+                        <field name="x_additional_reference"/>
+                    </group>
+                    <group>
+                        <field name="x_po_date"/>
+                        <field name="x_order_number"/>
+                        <field name="x_buyer"/>
+                    </group>
+                </group>
+                <group string="Lines">
+                    <field name="x_invoice_line_ids" nolabel="1">
+                        <tree editable="1" create="0" delete="0">
+                            <field name="name" string="Line" readonly="1"/>
+                            <field name="x_addenda_supplier_code"/>
+                        </tree>
+                    </field>
+                </group>
+
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_fresko_values"
+                    type="action" string="Set Values" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the wizard
+    After default values are set.
+    -->
+    <record id="action_addenda_fresko" model="ir.actions.act_window">
+        <field name="name">Addenda Fresko</field>
+        <field name="res_model">x_addenda.fresko</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_fresko_view"/>
+    </record>
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_addenda_fresko_defaults" model="ir.actions.server">
+        <field name="name">Set default values for the addenda Fresko</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+context = {'invoice_id': record.id,
+           'default_x_invoice_line_ids': record.invoice_line_ids.ids,
+}
+wizard_values = record.x_addenda_fresko and record.x_addenda_fresko.split('|')
+# If the wizard has been run before, fill it with its previows values
+if wizard_values:
+    context.update({
+        'default_x_additional_ref_code': wizard_values[0],
+        'default_x_po_date': wizard_values[1],
+        'default_x_additional_reference': wizard_values[2],
+        'default_x_order_number': wizard_values[3],
+        'default_x_buyer': wizard_values[4],
+    })
+
+# Set default values if available as supplier info
+for line in record.invoice_line_ids:
+    supplier_info = line.sudo().product_id.seller_ids.filtered(
+        lambda s:
+        s.name == record.commercial_partner_id
+        and s.product_id == line.product_id
+        and s.sequence == 999)[:1]
+    line.write({
+        'x_addenda_supplier_code': line.x_addenda_supplier_code or supplier_info.product_code,
+    })
+
+action = env.ref('l10n_mx_edi_addendas.action_addenda_fresko').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_fresko" model="ir.ui.view">
+        <field name="name">account.invoice.form.fresko</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_fresko_defaults" type="action"
+                        string="Addenda Fresko"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

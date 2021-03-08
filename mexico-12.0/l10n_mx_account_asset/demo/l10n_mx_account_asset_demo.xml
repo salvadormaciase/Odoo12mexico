@@ -1,0 +1,48 @@
+<odoo noupdate="1">
+    <record id="acc_dep_fa" model="account.account">
+        <field name="code">17102001</field>
+        <field name="name">Accum. Dep. of fixed assets - (test)</field>
+        <field name="user_type_id" ref="account.data_account_type_fixed_assets"/>
+    </record>
+    <record id="account_asset_fa" model="account.account">
+        <field name="code">15601001</field>
+        <field name="name">Computer equipment - (test)</field>
+        <field name="user_type_id" ref="account.data_account_type_fixed_assets"/>
+    </record>
+    <record id="depreciation_account" model="account.account">
+        <field name="code">61305103</field>
+        <field name="name">Depreciation of Computer equipment - (test)</field>
+        <field name="user_type_id" ref="account.data_account_type_depreciation"/>
+    </record>
+    <record id="cogs_account" model="account.account">
+        <field name="code">501.01.005</field>
+        <field name="name">Cost of sales of fixed assets - (test)</field>
+        <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+    </record>
+    <record id="depreciation_journal" model="account.journal">
+        <field name="name">Depreciation and Amortization - Test</field>
+        <field name="code">DPAM</field>
+        <field name="type">general</field>
+        <field name="show_on_dashboard" eval="False"/>
+    </record>
+    <record id="asset_category_test_mx" model="account.asset.category">
+        <field name="account_asset_id" ref="l10n_mx_account_asset.account_asset_fa"/>
+        <field name="account_depreciation_id" ref="l10n_mx_account_asset.acc_dep_fa"/>
+        <field name="account_depreciation_expense_id" ref="l10n_mx_account_asset.depreciation_account"/>
+        <field name="account_cogs_id" ref="l10n_mx_account_asset.cogs_account"/>
+        <field name="journal_id" ref="l10n_mx_account_asset.depreciation_journal"/>
+        <field name="name">Hardware - 1 Years</field>
+        <field name="method_number">12</field>
+        <field name="method_period">1</field>
+    </record>
+    <record id="account_asset_test_mx" model="account.asset.asset">
+        <field name="state">open</field>
+        <field name="name">Computer X109</field>
+        <field eval="60000" name="value"/>
+        <field name="category_id" ref="l10n_mx_account_asset.asset_category_test_mx"/>
+        <field name="date">2019-03-01</field>
+        <field name="first_depreciation_manual_date">2019-01-01</field>
+        <field name="method_number">12</field>
+        <field name="method_period">1</field>
+    </record>
+</odoo>

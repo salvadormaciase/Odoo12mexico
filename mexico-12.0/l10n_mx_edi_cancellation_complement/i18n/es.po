@@ -1,0 +1,261 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_cancellation_complement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-09 17:38+0000\n"
+"PO-Revision-Date: 2019-08-09 17:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_account_payment_form_inh_l10n_mx_cancellation
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_mx_edi_cancellation_complement_invoice_form
+msgid "&amp;nbsp;"
+msgstr ""
+
+#. module: l10n_mx_edi_cancellation_complement
+#: code:addons/l10n_mx_edi_cancellation_complement/models/account_invoice.py:54
+#, python-format
+msgid "<p>Odoo recommends not reusing this invoice (set to draft) to create a new one, due to the fact that this was cancelled in another period.</p><p><b>It is recommended</b> that you create a new record (or duplicate this one) and leave this invoice for you actual administrative control.</p><p><b>Remember</b> to add the CFDI origin in the new invoice.</p>"
+msgstr "<p>Odoo recomienda no reutilizar esta factura (regresar a borrador) para generar una nueva, debido a que esta fue cancelada en otro periodo.</p><p><b>Es recomendado</b> que se genere un nuevo registro (o se duplique este) y mantenga esta factura para su control administrativo actual.</p><p><b>Recuerde</b> agregar el CFDI origen en la nueva factura.</p>"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_account_register_payments__l10n_mx_edi_origin
+msgid "CFDI Origin"
+msgstr "CFDI Origen"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_payment_cancellation_with_reversal_move
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_payment_cancellation_with_reversal_move
+msgid "Cancel payment with reversal move"
+msgstr "Cancelar pago con póliza de reverso"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_account_invoice__l10n_mx_edi_cancellation_date
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_account_payment__l10n_mx_edi_cancellation_date
+msgid "Cancellation Date"
+msgstr "Fecha de cancelación"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_reversal_config_settings
+msgid "Cancellation Settings"
+msgstr "Configuración de cancelación"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_account_invoice__l10n_mx_edi_cancellation_time
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_account_payment__l10n_mx_edi_cancellation_time
+msgid "Cancellation Time"
+msgstr "Hora de cancelación"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.actions.server,name:l10n_mx_edi_cancellation_complement.l10n_mx_edi_cancel_payment_with_reversal
+msgid "Cancellation of payments with reversal moves (remove reversal moves and cancel the payment)"
+msgstr "Cancelación de pagos con movimientos de reversión (eliminar movimientos de reversión y cancelar el pago)"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model,name:l10n_mx_edi_cancellation_complement.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model,name:l10n_mx_edi_cancellation_complement.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_reversal_config_settings
+msgid "Customers"
+msgstr "Clientes"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__date
+msgid "Date of the reversal move"
+msgstr "Fecha de la póliza de reverso"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:res.groups,name:l10n_mx_edi_cancellation_complement.allow_cancel_with_reversal_move
+msgid "Enable cancellation with reversed entry"
+msgstr "Habilitar cancelación con póliza de reverso"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_res_company__l10n_mx_cancellation_with_reversal_customer
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_res_config_settings__l10n_mx_cancellation_with_reversal_customer
+msgid "Enable the cancellation of payments from previous periods with reversal entries (For Customer)."
+msgstr "Habilitar cancelación de pagos de periodos previos con entradas de reverso (Para Clientes)."
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_res_company__l10n_mx_cancellation_with_reversal_supplier
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_res_config_settings__l10n_mx_cancellation_with_reversal_supplier
+msgid "Enable the cancellation of payments from previous periods with reversal entries (For Supplier)."
+msgstr "Habilitar cancelación de pagos de periodos previos con entradas de reverso (Para Proveedores)."
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_reversal_config_settings
+msgid "Enable the cancellation of payments from previous periods with reversal entries."
+msgstr "Habilitar cancelación de pagos de periodos previos con entradas de reverso."
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__journal_id
+msgid "If empty, uses the journal of the journal entry to be reversed."
+msgstr "Si está vacío, utiliza el diario del asiento a ser revertido."
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_account_register_payments__l10n_mx_edi_origin
+msgid "In some cases the payment must be regenerated to fix data in it. In that cases is necessary to fill this with one of these formats: \n"
+"04|UUID1, UUID2, ...., UUIDn.\n"
+"or\n"
+"UUID1, UUID2, ..., UUIDn\n"
+"Example:\n"
+"\"04|89966ACC-0F5C-447D-AEF3-3EED22E711EE,89966ACC-0F5C-447D-AEF3-3EED22E711EE\"\n"
+"or\n"
+"\"89966ACC-0F5C-447D-AEF3-3EED22E711EE,89966ACC-0F5C-447D-AEF3-3EED22E711EE\""
+msgstr ""
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model,name:l10n_mx_edi_cancellation_complement.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: code:addons/l10n_mx_edi_cancellation_complement/models/account_invoice.py:76
+#, python-format
+msgid "Invoice must be in draft or open state in order to be cancelled."
+msgstr "La factura debe estar en borrador o abierta para ser cancelada."
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_res_company__l10n_mx_cancellation_with_reversal_customer
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_res_config_settings__l10n_mx_cancellation_with_reversal_customer
+msgid "L10N Mx Cancellation With Reversal Customer"
+msgstr ""
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_res_company__l10n_mx_cancellation_with_reversal_supplier
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_res_config_settings__l10n_mx_cancellation_with_reversal_supplier
+msgid "L10N Mx Cancellation With Reversal Supplier"
+msgstr ""
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_payment_cancellation_with_reversal_move
+msgid "Move Reversal Information"
+msgstr "Información de la Póliza de Reverso"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model,name:l10n_mx_edi_cancellation_complement.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model,name:l10n_mx_edi_cancellation_complement.model_account_register_payments
+msgid "Register Payments"
+msgstr "Registrar pagos"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__date
+msgid "Reversal date"
+msgstr "Fecha de reversión"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.actions.act_window,name:l10n_mx_edi_cancellation_complement.action_reversal_move_view_to_cancel
+msgid "Reversal move information"
+msgstr "Información de la póliza de reverso"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_account_invoice__l10n_mx_edi_cancellation_date
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_account_payment__l10n_mx_edi_cancellation_date
+msgid "Save the cancellation date of the CFDI in the SAT"
+msgstr "Almacena la fecha de cancelación del CFDI en el SAT"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_account_invoice__l10n_mx_edi_cancellation_time
+#: model:ir.model.fields,help:l10n_mx_edi_cancellation_complement.field_account_payment__l10n_mx_edi_cancellation_time
+msgid "Save the cancellation time of the CFDI in the SAT"
+msgstr "Almacena la hora de cancelación del CFDI en el SAT"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:res.groups,name:l10n_mx_edi_cancellation_complement.l10n_mx_edi_show_button_cancel
+msgid "Show Cancel Button"
+msgstr "Mostrar botón de cancelar"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.cancellation_with_reversal_move
+msgid "This Payment"
+msgstr "Este pago"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: code:addons/l10n_mx_edi_cancellation_complement/models/account_payment.py:76
+#, python-format
+msgid "This cancellation was skipped because the account move has a reversed move already."
+msgstr "Esta cancelación se omitió porque el asiento ya tiene un movimiento de reverso."
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model.fields,field_description:l10n_mx_edi_cancellation_complement.field_l10n_mx_edi_payment_cancellation_with_reversal_move__journal_id
+msgid "Use Specific Journal"
+msgstr "Utilizar diario específico"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.view_reversal_config_settings
+msgid "Vendors"
+msgstr "Proveedores"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model:ir.model,name:l10n_mx_edi_cancellation_complement.model_l10n_mx_edi_payment_cancellation_with_reversal_move
+msgid "Wizard for Payment cancellation with reversal move"
+msgstr "Wizard para Cancelación de pago con póliza de reverso"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: code:addons/l10n_mx_edi_cancellation_complement/models/account_payment.py:115
+#, python-format
+msgid "You have no permission to cancel payments from previous periods"
+msgstr "Usted no tiene permiso para cancelar pagos de periodos anteriores"
+
+#. module: l10n_mx_edi_cancellation_complement
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_cancellation_complement.cancellation_with_reversal_move
+msgid "has been cancelled with the following moves:"
+msgstr "ha sido cancelado con las siguientes pólizas:"

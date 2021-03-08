@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="bosh" name="Bosh">
+        <Addenda>
+            <t t-set="values" t-value="record.x_addenda_bosh.split('|') if record.x_addenda_bosh else False"/>
+            <customized xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xmlns="http://repository.edicomnet.com/schemas/mx/cfd/addenda"
+                        t-if="len(values) >= 2"
+                        xsi:schemaLocation="http://repository.edicomnet.com/schemas/mx/cfd/addenda http://repository.edicomnet.com/schemas/mx/cfd/addenda/customized.xsd">
+                <EDICOM_GENERICA>
+                    <!-- <t t-set="elements" t-value="record.name.split('|')"/> -->
+                    <elementos t-if="len(values)">
+                        <elemento>
+                            <etiqueta>OC</etiqueta>
+                            <descripcion>Orden de Compra</descripcion>
+                            <valor t-raw="str(values[0])"></valor>
+                        </elemento>
+                        <elemento>
+                            <etiqueta>CP</etiqueta>
+                            <descripcion>Codigo Planta</descripcion>
+                            <valor t-raw="str(values[1])"></valor>
+                        </elemento>
+                        <elemento t-if="len(values)>=3">
+                            <etiqueta>NC</etiqueta>
+                            <descripcion>NOMBRE DEL REQUISITOR</descripcion>
+                            <valor t-raw="str(values[2])"></valor>
+                        </elemento>
+                        <elemento t-if="len(values)>=4">
+                            <etiqueta>CC</etiqueta>
+                            <descripcion>CENTRO DE COSTOS</descripcion>
+                            <valor t-raw="str(values[3])"></valor>
+                        </elemento>
+                    </elementos>
+                </EDICOM_GENERICA>
+            </customized>
+        </Addenda>
+    </template>
+    <record id="bosh" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_bosh" model="ir.model">
+        <field name="name">Addenda Bosh</field>
+        <field name="transient">Addenda bosh</field>
+        <field name="model">x_addenda.bosh</field>
+        <field name="info">Addend bosh documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_bosh_oc" model="ir.model.fields">
+        <field name="name">x_oc</field>
+        <field name="field_description">Orden de Compra</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_bosh"/>
+    </record>
+    <record id="wizard_bosh_cp" model="ir.model.fields">
+        <field name="name">x_cp</field>
+        <field name="field_description">Codigo Planta</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_bosh"/>
+    </record>
+    <record id="wizard_bosh_nc" model="ir.model.fields">
+        <field name="name">x_nc</field>
+        <field name="field_description">Nombre del Requisidor</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_bosh"/>
+    </record>
+    <record id="wizard_bosh_cc" model="ir.model.fields">
+        <field name="name">x_cc</field>
+        <field name="field_description">Centro de costos</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="model_id" ref="wizard_bosh"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_bosh_field" model="ir.model.fields">
+        <field name="name">x_addenda_bosh</field>
+        <field name="field_description">Addenda bosh</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate wizard fields</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_bosh_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda bosh</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.bosh'].browse(model._context['active_id'])
+# TODO: Discuss if this should be done in an internal not instead a new field.
+wizard_fields = [wizard.x_oc, wizard.x_cp, wizard.x_nc, wizard.x_cc]
+wizard_fields = [j for j in wizard_fields if j != False]
+invoice.write({'x_addenda_bosh': '|'.join(wizard_fields)})
+# raise Warning(str(model._context))
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_bosh_view" model="ir.ui.view">
+        <field name="name">x_addenda.bosh.view</field>
+        <field name="model">x_addenda.bosh</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_oc"/>
+                        <field name="x_cp"/>
+                    </group>
+                    <group>
+                        <field name="x_nc"/>
+                        <field name="x_cc"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_bosh_values"
+                    type="action" string="Set Values"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the set wizard.
+    -->
+    <record id="action_addenda_bosh" model="ir.actions.act_window">
+        <field name="name">Addenda Bosh</field>
+        <field name="res_model">x_addenda.bosh</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_bosh_view"/>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_bosh" model="ir.ui.view">
+        <field name="name">account.invoice.form.bosh</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_bosh" type="action"
+                        string="Addenda bosh"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

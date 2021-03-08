@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="edumex" name="Edumex">
+        <mmmcfdi:Pedido
+            xmlns:mmmcfdi="http://mmm.com/CFDI"
+            t-raw="record.x_addenda_edumex or ''"/>
+    </template>
+    <record id="edumex" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_edumex" model="ir.model">
+        <field name="name">Addenda Edumex</field>
+        <field name="transient" eval="True"/>
+        <field name="model">x_addenda.edumex</field>
+        <field name="info">Addenda Edumex documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_edumex_incoming_code" model="ir.model.fields">
+        <field name="name">x_incoming_code</field>
+        <field name="field_description">Incoming Code</field>
+        <field name="ttype">char</field>
+        <field name="help">The code given to the product when it arrives at stock location. This code is provided by the supplier.</field>
+        <field name="model_id" ref="wizard_edumex"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_edumex_field" model="ir.model.fields">
+        <field name="name">x_addenda_edumex</field>
+        <field name="field_description">Addenda Edumex</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to store the field x_incoming_code</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_edumex_values" model="ir.actions.server">
+        <field name="name">Set Values for Addenda edumex</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(env.context['invoice_id'])
+wizard = env['x_addenda.edumex'].browse(env.context['active_id'])
+wizard_values = [
+    wizard.x_incoming_code,
+]
+wizard_values = '|'.join([value or '' for value in wizard_values])
+invoice.write({'x_addenda_edumex': wizard_values})
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values. This view needs to hold all
+    the required help information
+    -->
+    <record id="wizard_edumex_view" model="ir.ui.view">
+        <field name="name">x_addenda.edumex.view</field>
+        <field name="model">x_addenda.edumex</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+                    <p>
+                        The necessary nodes for the implementation of the Addenda of
+                        Edumex, S.A. de C.V. are:
+                    </p>
+                    <ul>
+                        <li>
+                            <p><b>Incoming Code:</b></p>
+                            <p>The code given to the product when it arrives at stock location. This code is provided by the supplier.</p>
+                        </li>
+                    </ul>
+                </div>
+                <group>
+                    <field name="x_incoming_code"/>
+                </group>
+                <footer>
+                    <button
+                        string="Set Values"
+                        name="l10n_mx_edi_addendas.set_addenda_edumex_values"
+                        type="action"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the wizard
+    After default values are set.
+    -->
+   <act_window
+        id="action_addenda_edumex"
+        name="Addenda Edumex"
+        res_model="x_addenda.edumex"
+        view_type="form"
+        view_mode="form"
+        target="new"
+        view_id="wizard_edumex_view"/>
+
+    <!--
+    Action to set default values on the wizard
+    -->
+    <record id="action_addenda_edumex_defaults" model="ir.actions.server">
+        <field name="name">Set default values for the addenda Edumex</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+context = {'invoice_id': record.id}
+wizard_values = record.x_addenda_edumex and record.x_addenda_edumex.split('|')
+# If the wizard has been run before, fill it with its previows values
+if wizard_values:
+    context.update({
+        'default_x_incoming_code': wizard_values[0],
+    })
+action = env.ref('l10n_mx_edi_addendas.action_addenda_edumex').read()[0]
+action['context'] = context
+        </field>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_edumex" model="ir.ui.view">
+        <field name="name">account.invoice.form.edumex</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button
+                    name="l10n_mx_edi_addendas.action_addenda_edumex_defaults"
+                    type="action"
+                    string="Addenda Edumex"
+                    attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

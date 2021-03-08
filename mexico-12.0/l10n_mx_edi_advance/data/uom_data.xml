@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+    Resource: uom.category
+    -->
+    <record id="product_uom_categ_act" model="uom.category">
+        <field name="name">Activity</field>
+    </record>
+    <!--
+    Resource: uom.uom
+    -->
+    <record id="product_uom_act" model="uom.uom">
+        <field name="category_id" ref="product_uom_categ_act"/>
+        <field name="name">ACT</field>
+        <field name="factor" eval="1.0"/>
+        <field name="rounding" eval="0.001"/>
+        <field name="l10n_mx_edi_code_sat_id" ref="l10n_mx_edi.prod_code_sat_ACT"/>
+    </record>
+</odoo>

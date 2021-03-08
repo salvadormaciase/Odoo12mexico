@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_extras" model="ir.ui.view">
+        <field name="name">view.hr.payslip.extras</field>
+        <field name="model">l10n_mx_edi.hr.payslip.extras</field>
+        <field name="arch" type="xml">
+            <form string="Payslip Extras">
+                <group>
+                    <group>
+                        <field name="input_id"/>
+                    </group>
+                    <field name="slip_ids" nolabel="1">
+                        <tree editable="bottom" create='false'>
+                            <field name="payslip_id" options="{'no_create': True}" invisible="1"/>
+                            <field name="employee_id" options="{'no_create': True}"/>
+                            <field name="detail"/>
+                            <field name="amount"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Assign" name="action_assign_extra" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <act_window
+        name="Update Extras"
+        id="l10n_mx_edi_update_extras"
+        multi="True"
+        key2="client_action_multi"
+        res_model="l10n_mx_edi.hr.payslip.extras"
+        src_model="hr.payslip"
+        view_mode="form"
+        target="new"
+        view_type="form"/>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_mx_edi_complement_company_form_inherit" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.complement.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page" position="inside">
+                <group>
+                    <group string="Donations">
+                        <field name="l10n_mx_edi_donat_auth"/>
+                        <field name="l10n_mx_edi_donat_date"/>
+                        <field name="l10n_mx_edi_donat_note"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

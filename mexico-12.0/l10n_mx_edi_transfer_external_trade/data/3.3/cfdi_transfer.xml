@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cfdiv33_transfer_external_trade" inherit_id="l10n_mx_edi_transfer.cfdiv33_transfer">
+        <xpath expr="(//*[local-name()='Receptor'])" position="attributes">
+            <attribute name="t-att-Rfc">'XAXX010101000' if document_type == 'T' and not record.l10n_mx_edi_external_trade else customer.l10n_mx_edi_get_customer_rfc()</attribute>
+        </xpath>
+    </template>
+</odoo>

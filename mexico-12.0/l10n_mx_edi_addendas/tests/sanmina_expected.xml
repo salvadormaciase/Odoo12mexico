@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <SANMINA:AP
+        xmlns:SANMINA="https://webapps2.sanmina-sci.com/partners-access"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://webapps2.sanmina-sci.com/partners-access https://webapps2.sanmina-sci.com/partners-access/addenda-sanmina.xsd"
+        PONumber="5644544"
+        email="--Collection email here--"
+        LegalEntityName="Floyd Steward"
+        CustomerCode="--Customer Code here--"
+        Currency="USD"
+        ExchangeRate="20.000000"
+        InternalInvoiceNumber="INV/2018/987456"/>
+</cfdi:Addenda>

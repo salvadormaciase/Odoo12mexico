@@ -1,0 +1,279 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_payment_split
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-26 21:22+0000\n"
+"PO-Revision-Date: 2020-06-26 21:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model,name:l10n_mx_edi_payment_split.model_account_register_invoices
+msgid "A model to hold invoices being paid in payment register"
+msgstr "Un modelo para mantener las factura a ser pagadas en el registro de pago"
+
+#. module: l10n_mx_edi_payment_split
+#: model:res.groups,name:l10n_mx_edi_payment_split.payment_split_allow_csv_info_import
+msgid "Allow to import invoice payment info from csv"
+msgstr "Permitir importar información de pago de facturas desde csv"
+
+#. module: l10n_mx_edi_payment_split
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payment_split.view_account_reg_payment_invoices
+msgid "Amount Currency"
+msgstr "Monto en Moneda"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__payment_amount
+msgid "Amount being paid"
+msgstr "Monto a ser pagado"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__payment_currency_amount
+msgid "Amount in currency of payment"
+msgstr "Monto en la moneda del pago"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__amount
+msgid "Amount to pay"
+msgstr "Monto a pagar"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_payments__csv_file_name
+msgid "CSV file name."
+msgstr "Nombre del archivo CSV"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_payments__csv_file
+msgid "CSV file with invoice and amount."
+msgstr "Archivo CSV con factura y monto."
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model,name:l10n_mx_edi_payment_split.model_account_abstract_payment
+msgid "Contains the logic shared between models which allows to register payments"
+msgstr "Contiene la lógica compartida entre los modelos que permiten el registro de pagos"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_payments__csv_file
+msgid "Csv File"
+msgstr "Archivo CSV"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_payments__csv_file_name
+msgid "Csv File Name"
+msgstr "Nombre del archivo CSV"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model,name:l10n_mx_edi_payment_split.model_res_currency_rate
+msgid "Currency Rate"
+msgstr "Tasa monetaria"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__currency_id
+msgid "Currency of this invoice"
+msgstr "Moneda de esta factura"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__payment_currency_id
+msgid "Currency which this payment is being done"
+msgstr "Moneda con la que se realiza este pago"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_payments__custom_rate
+msgid "Custom Rate"
+msgstr "Tasa personalizada"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__amount
+msgid "Due Amount"
+msgstr "Importe vencido"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__date_due
+msgid "Due Date"
+msgstr "Fecha vencimiento"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_payments__dummy_amount
+msgid "Dummy Amount"
+msgstr "Monto ficticio"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_payments__custom_rate
+msgid "If used. This rate will be written in all the invoices to pay"
+msgstr "Si es usado esta tasa será escrita en todas las facturas a pagar"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__invoice_id
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__date
+msgid "Invoice Date"
+msgstr "Fecha de Factura"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__invoice_id
+msgid "Invoice being paid"
+msgstr "Factura siendo pagada"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_payments__payment_invoice_ids
+msgid "Invoices that were paid in mass"
+msgstr "Facturas que fueron pagadas en masa"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__date_due
+msgid "Maturity Date in the invoice"
+msgstr "Fecha de vencimiento en la factura"
+
+#. module: l10n_mx_edi_payment_split
+#: code:addons/l10n_mx_edi_payment_split/models/account_payment.py:88
+#, python-format
+msgid "No invoice info to import. Please make sure you're using a file with CSV format and comma (,) separator."
+msgstr "No hay información de factura para importar. Asegúrese de utilizar un archivo con formato CSV y con separación por coma (,)."
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__partner_id
+msgid "Partner involved in payment"
+msgstr "Socio involucrado en el pago"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__payment_amount
+msgid "Payment Amount"
+msgstr "Cantidad a pagar"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__payment_currency_id
+msgid "Payment Currency"
+msgstr "Moneda de pago"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__payment_currency_amount
+msgid "Payment Currency Amount"
+msgstr "Monto en la moneda de pago"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_payments__payment_invoice_ids
+msgid "Payment Invoice"
+msgstr "Factura de pago"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__rate
+msgid "Payment rate of this Document"
+msgstr "Tasa de pago de este documento"
+
+#. module: l10n_mx_edi_payment_split
+#: code:addons/l10n_mx_edi_payment_split/models/account_payment.py:235
+#: model:ir.model,name:l10n_mx_edi_payment_split.model_account_payment
+#, python-format
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_mx_edi_payment_split
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payment_split.view_account_reg_payment_invoices
+msgid "Payments on Invoices"
+msgstr "Pagos en Facturas"
+
+#. module: l10n_mx_edi_payment_split
+#: code:addons/l10n_mx_edi_payment_split/models/account_payment.py:47
+#: code:addons/l10n_mx_edi_payment_split/models/account_payment.py:64
+#, python-format
+msgid "Please use a file with CSV format."
+msgstr "Por favor utilice un archivo con formato CSV."
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__rate
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_res_currency_rate__rate
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,field_description:l10n_mx_edi_payment_split.field_account_register_invoices__register_id
+msgid "Register"
+msgstr "Registro"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model,name:l10n_mx_edi_payment_split.model_account_register_payments
+msgid "Register Payments"
+msgstr "Registrar pagos"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_payments__dummy_amount
+msgid "Technical field"
+msgstr "Campo Técnico"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_account_register_invoices__register_id
+msgid "Technical field to connect to Bulk Invoice"
+msgstr "Campo técnico para conectarse al lote de facturas"
+
+#. module: l10n_mx_edi_payment_split
+#: model:ir.model.fields,help:l10n_mx_edi_payment_split.field_res_currency_rate__rate
+msgid "The rate of the currency to the currency of rate 1"
+msgstr "La tasa de cambio de la moneda respecto a la moneda de tasa 1"
+
+#. module: l10n_mx_edi_payment_split
+#: code:addons/l10n_mx_edi_payment_split/models/account_payment.py:724
+#, python-format
+msgid "You can only register payments for open invoices"
+msgstr "Solo puedes registrar pagos para facturas abiertas"
+
+#. module: l10n_mx_edi_payment_split
+#: code:addons/l10n_mx_edi_payment_split/models/account_payment.py:731
+#, python-format
+msgid "You can't register payments for multiple suppliers"
+msgstr "No se pueden registrar pagos para multiples socios"

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="fleet_vehicle_tag_01" model="fleet.vehicle.tag">
+        <field name="name">01 - Fifth wheel tractor</field>
+    </record>
+    <record id="fleet_vehicle_tag_02" model="fleet.vehicle.tag">
+        <field name="name">02 - Two axle trucks with a minimum weight of 11,794kg</field>
+    </record>
+    <record id="fleet_vehicle_tag_03" model="fleet.vehicle.tag">
+        <field name="name">03 - Three axle trucks with a minimum weight of 14,500kg</field>
+    </record>
+    <record id="fleet_vehicle_tag_04" model="fleet.vehicle.tag">
+        <field name="name">04 - Integral buses with a capacity of more than 30 seats</field>
+    </record>
+    <record id="fleet_vehicle_tag_05" model="fleet.vehicle.tag">
+        <field name="name">05 - Conventional buses with a capacity of more than 30 seats</field>
+    </record>
+    <record id="fleet_vehicle_tag_06" model="fleet.vehicle.tag">
+        <field name="name">06 - Vehicles for transportation of 15 people or more with age of more than 8 years</field>
+    </record>
+    <record id="fleet_vehicle_tag_07" model="fleet.vehicle.tag">
+        <field name="name">07 - Platform or chassis for integral buses for more than 30 seats</field>
+    </record>
+    <record id="fleet_vehicle_tag_08" model="fleet.vehicle.tag">
+        <field name="name">08 - Platform or chassis for conventional buses for more than 30 seats</field>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <amazon:ElementosAmazon xmlns:amazon="http://www.amazon.com.mx/AmazonAddenda" xsi:schemaLocation="http://www.amazon.com.mx/AmazonAddenda http://repository.edicomnet.com/schemas/mx/cfd/addenda/AmazonAddenda.xsd">
+        <amazon:TextoLibre>Free Text</amazon:TextoLibre>
+        <amazon:LosAtributos identificacionUnica="1" nombreDelAtributo="AmazonPO" valorDelAtributo="ABC123"/>
+        <amazon:LosAtributos identificacionUnica="2" nombreDelAtributo="QPD" valorDelAtributo="Y"/>
+    </amazon:ElementosAmazon>
+</cfdi:Addenda>

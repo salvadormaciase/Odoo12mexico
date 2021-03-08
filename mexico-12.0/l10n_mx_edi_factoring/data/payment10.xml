@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_factoring" inherit_id="l10n_mx_edi.payment10">
+        <xpath expr="//*[local-name()='Receptor']" position="before">
+            <t t-if="record.l10n_mx_edi_factoring_id">
+                <t t-set="customer" t-value="record.l10n_mx_edi_factoring_id.commercial_partner_id"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

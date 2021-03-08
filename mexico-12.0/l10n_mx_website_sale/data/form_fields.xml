@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--     allow via form builder the access to the new fields added to the
+    checkout -->
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+        <value>res.partner</value>
+        <value eval="[
+            'street_name',
+            'street_number',
+            'street_number2',
+            'l10n_mx_edi_locality',
+            'l10n_mx_edi_colony',
+        ]"/>
+    </function>
+</odoo>
