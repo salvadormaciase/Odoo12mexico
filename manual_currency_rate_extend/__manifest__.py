@@ -17,7 +17,7 @@
         'stock',
         'account',
         'l10n_mx_edi',
-        'account_edi'
+        #'account_edi'
     ],
     'data': [
         'views/account_invoice_views.xml',
