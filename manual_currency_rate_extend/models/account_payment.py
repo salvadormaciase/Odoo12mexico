@@ -19,3 +19,10 @@ class AccountPayment(models.Model):
         string="Inverse Currency Rate",
         digits=(12, 4),
         compute="_compute_inverse_currency_rate")
+
+    @api.multi
+    def l10n_mx_edi_payment_data(self):
+        values = super(AccountPayment, self).l10n_mx_edi_payment_data()
+        if self.manual_currency_exchange_rate:
+            values['rate'] = ('%.6f' % self.inverse_currency_rate)
+        return values

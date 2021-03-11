@@ -5,4 +5,3 @@ from . import account_invoice
 from . import purchase_order
 from . import account_payment
 from . import sale_order
-from . import account_edi_format

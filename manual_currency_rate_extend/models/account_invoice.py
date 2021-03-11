@@ -19,3 +19,11 @@ class AccountInvoice(models.Model):
         string="Inverse Currency Rate",
         digits=(12, 4),
         compute="_compute_inverse_currency_rate")
+
+    @api.multi
+    def _l10n_mx_edi_create_cfdi_values(self):
+        values = super(AccountInvoice, self)._l10n_mx_edi_create_cfdi_values()
+        if self.inverse_currency_rate:
+            values['rate'] = ('%.6f' % self.inverse_currency_rate) if self.manual_currency_exchange_rate else False
+        return values
+
