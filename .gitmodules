@@ -1,0 +1,4 @@
+[submodule "loc_av_mexico"]
+	path = loc_av_mexico
+	url = https://github.com/felipearizaga/loc_av_mexico.git
+	branch = devmm

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="sql_excel_pdf_form_view" model="ir.ui.view">
+			<field name="name">sql.excel.pdf.form.view</field>
+			<field name="model">sql.excel.pdf</field>
+			<field name="arch" type="xml">
+				<form string="SQL Views">
+					<header>
+						<button name="action_validate" type="object" string="Validate" class="oe_highlight" states="draft"/>
+						<button name="action_reset_draft" type="object" string="Reset to Draft" class="oe_highlight" states="validate"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+					</header>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+		                    <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+		                        <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+		                    </button>
+		                </div>
+		                <group>
+		                	<group>
+			                	<field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+			                	<field name="category_id" options="{'no_create': True,'no_create_edit':True, 'no_open': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+			                	<field name="tag_ids" widget="many2many_tags" options="{'no_create': True,'no_create_edit':True, 'no_open': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+			                </group>
+			                <group>
+			                	<field name="created_by" options="{'no_create': True,'no_create_edit':True, 'no_open': True}"/>
+			                	<field name="created_date"/>
+			                	<field name="last_updated_by" options="{'no_create': True,'no_create_edit':True, 'no_open': True}"/>
+			                	<field name="last_updated_date"/>
+			                </group>
+		                </group>
+		                <group>
+			                <div class="oe_subtotal_footer oe_right">
+		                		<button string="XLS" type="object" name="print_xls_report" class="btn-success" icon="fa-file-excel-o" states="validate" style="margin-right: 5px"/>
+		                		<button string="PDF" type="object" name="print_pdf_report" class="btn-danger" icon="fa-file-pdf-o" states="validate" style="margin-right: 5px"/>
+		                	</div>
+		                </group>
+	                	<div class="oe_subtotal_footer oe_right">
+		                	<h4>
+		                		<field name="file_name" invisible="1"/>
+		                		<field name="file" filename="file_name" states="validate"/>
+		                	</h4>		               
+		                </div>
+		                <group string="SQL Query">
+	                        <field name="sql_query" nolabel="1" colspan="4" height="50px" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+		                </group>
+	                </sheet>
+	                <div class="oe_chatter">
+		                <field name="message_follower_ids" widget="mail_followers"/>
+		                <field name="message_ids" widget="mail_thread"/>
+		            </div>
+				</form>
+			</field>
+		</record>
+
+		<record id="sql_excel_pdf_tree_view" model="ir.ui.view">
+	       	<field name="name">sql.excel.pdf.tree.view</field>
+			<field name="model">sql.excel.pdf</field>
+			<field name="arch" type="xml">
+	            <tree string="SQL to Excel and PDF">
+	                <field name="name"/>
+	                <field name="category_id"/>
+	                <field name="last_updated_by"/>
+	                <field name="last_updated_date"/>
+	            </tree>
+	        </field>
+	    </record>
+
+	    <record id="action_sql_excel_pdf" model="ir.actions.act_window">
+	        <field name="name">SQL to Excel and PDF</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">sql.excel.pdf</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form,kanban,pivot,graph</field>
+	        <field name="context">{}</field>
+	        <field name="help" type="html">
+	            <p class="o_view_nocontent_smiling_face">
+	                Create a new SQL to Excel and PDF Record
+	            </p>
+	        </field>
+	    </record>
+
+	    <menuitem id="menu_sql_root"
+	      name="SQL Reports"
+	      sequence="10"
+	      groups="group_sql_excel_pdf"
+	      web_icon="sql_excel_pdf,static/description/icon.png"/>
+
+	    <menuitem id="menu_root_sql_to_excel_pdf"
+	      name="SQL to Excel and PDF"
+	      parent="menu_sql_root"
+	      sequence="1"/>
+
+	      <menuitem id="menu_sql_to_excel_pdf_config"
+	      name="Configuration"
+	      parent="menu_sql_root"
+	      sequence="2"/>
+
+	    <menuitem id="menu_sql_to_excel_pdf"
+	      parent="menu_root_sql_to_excel_pdf"
+	      action="action_sql_excel_pdf"
+	      sequence="1"/>
+
+	    <!-- SQL Category -->
+	    <record id="sql_category_form_view" model="ir.ui.view">
+			<field name="name">sql.category.form.view</field>
+			<field name="model">sql.category</field>
+			<field name="arch" type="xml">
+				<form string="SQL Category">
+					<sheet>
+		                <group>
+		                	<field name="name"/>
+		                </group>
+	                </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="sql_category_tree_view" model="ir.ui.view">
+			<field name="name">sql.category.tree.view</field>
+			<field name="model">sql.category</field>
+			<field name="arch" type="xml">
+	            <tree string="SQL Category">
+	                <field name="name"/>
+	            </tree>
+	        </field>
+	    </record>
+
+	    <record id="action_sql_category" model="ir.actions.act_window">
+	        <field name="name">SQL Category</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">sql.category</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="context">{}</field>
+	        <field name="help" type="html">
+	            <p class="o_view_nocontent_smiling_face">
+	                Create a new SQL Category Record
+	            </p>
+	        </field>
+	    </record>
+
+	    <menuitem id="menu_sql_category"
+	      parent="menu_sql_to_excel_pdf_config"
+	      action="action_sql_category"
+	      sequence="1"/>
+
+	    <!-- SQL Tags -->
+	    <record id="sql_tags_form_view" model="ir.ui.view">
+			<field name="name">sql.tags.form.view</field>
+			<field name="model">sql.tags</field>
+			<field name="arch" type="xml">
+				<form string="SQL Tags">
+					<sheet>
+		                <group>
+		                	<field name="name"/>
+		                </group>
+	                </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="sql_tags_tree_view" model="ir.ui.view">
+			<field name="name">sql.tags.tree.view</field>
+			<field name="model">sql.tags</field>
+			<field name="arch" type="xml">
+	            <tree string="SQL Category">
+	                <field name="name"/>
+	            </tree>
+	        </field>
+	    </record>
+
+	    <record id="action_sql_tags" model="ir.actions.act_window">
+	        <field name="name">SQL Tags</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">sql.tags</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="context">{}</field>
+	        <field name="help" type="html">
+	            <p class="o_view_nocontent_smiling_face">
+	                Create a new SQL Tags Record
+	            </p>
+	        </field>
+	    </record>
+
+	    <menuitem id="menu_sql_tags"
+	      parent="menu_sql_to_excel_pdf_config"
+	      action="action_sql_tags"
+	      sequence="2"/>
+
+	</data>
+</odoo>
