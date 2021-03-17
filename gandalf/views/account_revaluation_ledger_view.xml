@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_revaluation_ledger_form" model="ir.ui.view">
+        <field name="name">account.revaluation.ledger.form</field>
+        <field name="model">account.revaluation.ledger</field>
+        <field name="arch" type="xml">
+            <form string="Revaluation Ledger" create="false" delete="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" readonly="True"/>
+                            <field name="invoice_id" readonly="True" attrs="{'invisible':[('invoice_id', '=', False)]}"/>
+                            <field name="invoice_type" readonly="True" attrs="{'invisible':[('invoice_id', '=', False)]}"/>
+                            <field name="invoice_state" readonly="True" attrs="{'invisible':[('invoice_id', '=', False)]}"/>
+                            <field name="account_id" readonly="True"/>
+                            <field name="partner_id" readonly="True" attrs="{'invisible':[('invoice_id', '=', False)]}"/>
+                            <field name="foreign_balance" readonly="True" groups="base.group_no_one"/>
+                            <field name="balance" readonly="True" groups="base.group_no_one"/>
+                            <field name="reevaluated_balance" readonly="True" groups="base.group_no_one"/>
+                            <field name="cumulative_fx" readonly="True" groups="base.group_no_one"/>
+                            <field name="fx_amount" readonly="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_account_revaluation_ledger_tree" model="ir.ui.view">
+        <field name="name">account.revaluation.ledger.tree</field>
+        <field name="model">account.revaluation.ledger</field>
+        <field name="arch" type="xml">
+            <tree string="Revaluation Ledger" create="false" delete="false" edit="false">
+                <field name="date"/>
+                <field name="invoice_id"/>
+                <field name="partner_id" groups="base.group_no_one"/>
+                <field name="account_id"/>
+                <field name="foreign_balance" groups="base.group_no_one"/>
+                <field name="balance" groups="base.group_no_one"/>
+                <field name="reevaluated_balance" groups="base.group_no_one"/>
+                <field name="cumulative_fx" groups="base.group_no_one"/>
+                <field name="fx_amount"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_account_revaluation_ledger_pivot" model="ir.ui.view">
+        <field name="name">account.revaluation.ledger.pivot</field>
+        <field name="model">account.revaluation.ledger</field>
+        <field name="arch" type="xml">
+            <pivot string="Revaluation Ledger">
+                <field name="date" type="col"/>
+                <field name="account_id" type="row"/>
+                <field name="fx_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_account_revaluation_ledger_graph" model="ir.ui.view">
+        <field name="name">account.revaluation.ledger.graph</field>
+        <field name="model">account.revaluation.ledger</field>
+        <field name="arch" type="xml">
+            <graph string="Revaluation Ledger">
+                <field name="date"/>
+                <field name="fx_amount" operator="+" type='measure'/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_account_revaluation_ledger_search" model="ir.ui.view">
+        <field name="name">account.revaluation.ledger.search</field>
+        <field name="model">account.revaluation.ledger</field>
+        <field name="arch" type="xml">
+            <search string="Search Revaluation Ledger Items">
+                <field name="date"/>
+                <field name="account_id"/>
+                <field name="invoice_id"/>
+                <field name="invoice_type"/>
+                <field name="invoice_state"/>
+                <field name="partner_id"/>
+                <separator/>
+                <filter name="gains" string="Gains" domain="[('fx_amount','&gt;',0)]"/>
+                <filter name="no_gains_losses" string="No Gains/No Losses" domain="[('fx_amount','=',0)]"/>
+                <filter name="losses" string="Losses" domain="[('fx_amount','&lt;',0)]"/>
+                <separator/>
+                <filter name="on_invoices" string="On Invoices" domain="[('invoice_id','!=',False)]"/>
+                <filter name="on_accounts" string="On Accounts" domain="[('invoice_id','=',False)]"/>
+                <separator/>
+                <filter name="in_invoice" string="Vendor Bill" domain="[('invoice_type','=','in_invoice')]"/>
+                <filter name="in_refund" string="Vendor Credit Note" domain="[('invoice_type','=','in_refund')]"/>
+                <filter name="out_invoice" string="Customer Invoice" domain="[('invoice_type','=','out_invoice')]"/>
+                <filter name="out_refund" string="Customer Credit Note" domain="[('invoice_type','=','out_refund')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Account" name="account" context="{'group_by':'account_id'}"/>
+                    <filter string="Account Group" name="account_group" context="{'group_by':'group_id'}"/>
+                    <filter string="Invoice Type" name="groupby_invoice_type" domain="[]" context="{'group_by':'invoice_type'}"/>
+                    <filter string="Invoice State" name="groupby_invoice_state" domain="[]" context="{'group_by':'invoice_state'}"/>
+                    <filter string="Partner" name="groupby_partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                    <filter string="Date" name="groupby_date" domain="[]" context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_account_revaluation_ledger" model="ir.actions.act_window">
+        <field name="context">{}</field>
+        <field name="name">Revaluation Ledger Items</field>
+        <field name="res_model">account.revaluation.ledger</field>
+        <field name="view_id" ref="view_account_revaluation_ledger_pivot"/>
+        <field name="view_mode">pivot,tree,graph,form</field>
+    </record>
+    <menuitem
+        action="action_account_revaluation_ledger"
+        id="menu_account_revaluation_ledger"
+        parent="account.menu_finance_entries"
+        sequence="99"
+        groups="account.group_account_user"
+        />
+</odoo>

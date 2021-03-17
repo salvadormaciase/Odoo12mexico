@@ -1,0 +1,618 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* gandalf
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-16 23:19+0000\n"
+"PO-Revision-Date: 2019-09-16 23:19+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_account__realization_move_ids_nbr
+#: model:ir.model.fields,field_description:gandalf.field_account_invoice__realization_move_ids_nbr
+msgid "# of Realization Entries"
+msgstr "# de Asientos de Realización"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_account__revaluation_ledger_ids_nbr
+#: model:ir.model.fields,field_description:gandalf.field_account_invoice__revaluation_ledger_ids_nbr
+msgid "# of Revaluation Ledger Items"
+msgstr "# de Apuntes de Informe de Revaluación"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.realization_date_wizard_view
+msgid "<span class=\"o_form_label\">If the timespan between Initial Date and Realization Date goes through several months, at the final day of each month that it goes across a Realization Journal Entry / Revaluation Ledger Item will created. </span>"
+msgstr "<span class=\"o_form_label\">Si lapso de tiempo entre la Fecha Inicial y la Fecha de Realización pasa por varios meses, al día final de cada mes que éste pase se creará un Asiento Contable de Realización / Apunte de Informe de Revaluación. </span>"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.realization_date_wizard_view
+msgid "<span class=\"o_form_label\">The realization will be computed from this date onwards and only Journal Entries after Initial Date will be created. Useful when you want to skip the creation of Journal Entries in previous fiscal years, i.e., data initialization. Initial Date cannot be greater than Realization Date otherwise no Realization Journal Entries will be created.</span>"
+msgstr "<span class=\"o_form_label\">La realización se calculará desde esta fecha en adelante y solo se crearán Asientos Contables después de la Fecha Initial. Útil cuando quiere omitir la creación de Asientos Contables en ejercicios fiscales previos, esto es, inicialización de datos. La Fecha Inicial no puede ser mayor que la Fecha de Realización de lo contrario no se crearán Asientos Contables de Realización.</span>"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.realization_date_wizard_view
+msgid "<span class=\"o_form_label\">The realization will be computed to the selected invoices using this date</span>"
+msgstr "<span class=\"o_form_label\">La realización se calculará a las facturas seleccionadas usando esta fecha</span>"
+
+#. module: gandalf
+#: model:ir.model,name:gandalf.model_account_account
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__account_id
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Account Group"
+msgstr "Grupo de cuenta"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_res_company__account_realization_journal_id
+#: model:ir.model.fields,field_description:gandalf.field_res_config_settings__account_realization_journal_id
+msgid "Account Realization Journal"
+msgstr "Diario para Realización de Cuentas"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_res_company__account_realization_position_id
+#: model:ir.model.fields,field_description:gandalf.field_res_config_settings__account_realization_position_id
+msgid "Account Realization Position"
+msgstr "Posición para Realización de Cuentas"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_move__realization_account_id
+msgid "Account for which this Realization has being made"
+msgstr "Cuenta para la cual se ha hecho esta Realización"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__account_id
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__invoice_id
+msgid "Account to Reevaluate"
+msgstr "Cuenta a Revaluar"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__partner_id
+msgid "Accounting Partner related to invoice"
+msgstr "Empresa Contable relacionado a la factura"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_res_company__apply_only_on_receivable_payable
+#: model:ir.model.fields,field_description:gandalf.field_res_config_settings__apply_only_on_receivable_payable
+msgid "Apply Only On Receivable Payable"
+msgstr "Aplicar Solo en Cobrable Pagable"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__balance
+msgid "Balance"
+msgstr ""
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__foreign_balance
+msgid "Balance in Foreign Currency at date"
+msgstr "Balance en Moneda Extranjera a la fecha"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.realization_date_wizard_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: gandalf
+#: model:ir.model,name:gandalf.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: gandalf
+#: model:ir.actions.act_window,name:gandalf.action_validate_account_account
+#: model:ir.actions.act_window,name:gandalf.action_validate_account_invoice
+#: model_terms:ir.ui.view,arch_db:gandalf.realization_date_wizard_view
+msgid "Compute Realization"
+msgstr "Calcular Realización"
+
+#. module: gandalf
+#: model:ir.model,name:gandalf.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de Configuración"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_res_company__create_realization_entry_on_accounts
+#: model:ir.model.fields,field_description:gandalf.field_res_config_settings__create_realization_entry_on_accounts
+msgid "Create Realization Entry On Accounts"
+msgstr "Crear Asientos de Realización en Cuentas"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_res_company__create_realization_entry_on_invoices
+#: model:ir.model.fields,field_description:gandalf.field_res_config_settings__create_realization_entry_on_invoices
+msgid "Create Realization Entry On Invoices"
+msgstr "Crear Asientos de Realización en Facturas"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__create_uid
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__create_date
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__cumulative_fx
+msgid "Cumulative Diff."
+msgstr "Dif. Acumulada"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__cumulative_fx
+msgid "Cumulative Foreign Exchange Difference Amount"
+msgstr "Monto Diferencia Cambiaria Acumulada"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Customer Credit Note"
+msgstr "Nota de Crédito de Cliente"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Customer Invoice"
+msgstr "Factura de Cliente"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__date
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Date"
+msgstr "Fecha"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__date
+msgid "Date of Revaluation"
+msgstr "Fecha de Revaluación"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_account__date_last_ledger
+#: model:ir.model.fields,help:gandalf.field_account_invoice__date_last_ledger
+msgid "Date on which last ledger was created"
+msgstr "Fecha en la cual se creó el último informe"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_invoice__date_last_realization
+msgid "Date on which last realization was run"
+msgstr "Fecha en la cual se ejecutó la última realización"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_realization_date_wizard__realization_date
+msgid "Date used to compute the realization to invoices selected"
+msgstr "Fecha que se usa para calcular la realización a las facturas seleccionadas"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__fx_amount
+msgid "Difference"
+msgstr "Diferencia"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__display_name
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.invoice_form
+#: model_terms:ir.ui.view,arch_db:gandalf.invoice_supplier_form
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_form
+msgid "Entries"
+msgstr "Asientos"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__foreign_balance
+msgid "Foreign Balance"
+msgstr "Balance Foráneo"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__fx_amount
+msgid "Foreign Exchange Difference Amount"
+msgstr "Monto de Diferencia Cambiaria"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_invoice__fully_realized
+msgid "Fully Realized"
+msgstr "Realizado Totalmente"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Gains"
+msgstr "Ganancias"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__group_id
+msgid "Group"
+msgstr "Grupo"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__group_id
+msgid "Group of the Account"
+msgstr "Grupo de la Cuenta"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__id
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_res_company__create_realization_entry_on_accounts
+#: model:ir.model.fields,help:gandalf.field_res_config_settings__create_realization_entry_on_accounts
+msgid "If True a Realization Entry will be created on Accounts"
+msgstr "Si es Verdad se crearán Asientos de Realización en las Cuentas"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_res_company__create_realization_entry_on_invoices
+#: model:ir.model.fields,help:gandalf.field_res_config_settings__create_realization_entry_on_invoices
+msgid "If True a Realization Entry will be created on Invoices"
+msgstr "Si es Verdad se crearán Asientos de Realización en las Facturas"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_res_company__apply_only_on_receivable_payable
+#: model:ir.model.fields,help:gandalf.field_res_config_settings__apply_only_on_receivable_payable
+msgid "If True only invoices with Receivables/Payables will be taken"
+msgstr "Si es Verdad solo las facturas con Cobrables/Pagables se tomarán"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "If this option is selected and there are invoices which bear an account which is neither receivable nor payable then they will be skipped. No Revaluation Ledger Items or Invoice Realization Journal Entries will be created for them."
+msgstr "Si se selecciona esta opción y hay facturas que tienen una cuenta que no es cobrable ni pagable entonces se omitirán. No se crearán para éstas Apuntes de Informe de Revaluación o Asientos Contables de Realización de Factura."
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "If you select this option Realization Journal Entries will be created for the Accounts. Leave option unselected if you only want to use the Realization Ledger for the accounts. As accounts do not realize by themselves as opposed by Invoices it is advisable to check this option."
+msgstr "Si selecciona esta opción se crearán Asientos Contables de Realización para las Cuentas. Deje esta opción sin seleccionar si solo quiere usar el Informe de Realización para las cuentas. Dado que las Cuentas no se realizan por sí mismas contrario a las Facturas se aconseja marcar esta opción."
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "If you select this option Realization Journal Entries will be created for the Invoices. Leave option unselected if you only want to use the Realization Ledger for the invoices. Please read all the information below prior to use this option."
+msgstr "Si selecciona esta opción se crearán Asientos Contables de Realización para las Facturas. Deje esta opción sin seleccionar si solo quiere usar el Informe de Realización para las facturas. Por favor lea toda la información de abajo antes de usar esta opción."
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__init_date
+msgid "Initial Date"
+msgstr "Fecha Inicial"
+
+#. module: gandalf
+#: model:ir.model,name:gandalf.model_account_invoice
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__invoice_id
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_res_company__invoice_realization_journal_id
+#: model:ir.model.fields,field_description:gandalf.field_res_config_settings__invoice_realization_journal_id
+msgid "Invoice Realization Journal"
+msgstr "Diario para Realización de Facturas"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_res_company__invoice_realization_position_id
+#: model:ir.model.fields,field_description:gandalf.field_res_config_settings__invoice_realization_position_id
+msgid "Invoice Realization Position"
+msgstr "Posición para Realización de Facturas"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Invoice State"
+msgstr "Estado de la Factura"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Invoice Type"
+msgstr "Tipo de la Factura"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_move__realization_invoice_id
+msgid "Invoice for which this Realization has being made"
+msgstr "Factura para la cual se está haciendo esta Realización"
+
+#. module: gandalf
+#: model:ir.model,name:gandalf.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos contables"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_res_company__account_realization_journal_id
+#: model:ir.model.fields,help:gandalf.field_res_config_settings__account_realization_journal_id
+msgid "Journal where realization entries for Accounts will be booked"
+msgstr "Diario donde los asientos de realización para Cuentas se registrarán"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_res_company__invoice_realization_journal_id
+#: model:ir.model.fields,help:gandalf.field_res_config_settings__invoice_realization_journal_id
+msgid "Journal where realization entries for Invoices will be booked"
+msgstr "Diario donde los asientos de realización para Facturas se registrarán"
+
+#. module: gandalf
+#: model:ir.model,name:gandalf.model_account_revaluation_ledger
+msgid "Keeps track of revaluations on accounts"
+msgstr "Mantiene un rastro de las revaluaciones sobre cuentas"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_account__date_last_ledger
+#: model:ir.model.fields,field_description:gandalf.field_account_invoice__date_last_ledger
+msgid "Last Ledger Date"
+msgstr "Fecha de Último Informe"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger____last_update
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_invoice__date_last_realization
+msgid "Last Realization Date"
+msgstr "Fecha de Última Realización"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__write_uid
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__write_date
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.invoice_form
+#: model_terms:ir.ui.view,arch_db:gandalf.invoice_supplier_form
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_form
+msgid "Ledger"
+msgstr "Informe"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_account__revaluation_ledger_ids
+#: model:ir.model.fields,help:gandalf.field_account_invoice__revaluation_ledger_ids
+msgid "Ledger of Revaluation for this Invoice"
+msgstr "Informe de Revaluación para esta Factura"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Losses"
+msgstr "Pérdidas"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_res_company__account_realization_position_id
+#: model:ir.model.fields,help:gandalf.field_res_config_settings__account_realization_position_id
+msgid "Maps accounts in the Revaluation Ledger Items for Accounts"
+msgstr "Mapea las cuentas en los Apuntes del Informe de Revaluación para Cuentas"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_res_company__invoice_realization_position_id
+#: model:ir.model.fields,help:gandalf.field_res_config_settings__invoice_realization_position_id
+msgid "Maps accounts in the Revaluation Ledger Items for Invoices"
+msgstr "Mapea las cuentas en los Apuntes del Informe de Revaluación para Facturas"
+
+#. module: gandalf
+#: code:addons/gandalf/models/account_revaluation_ledger.py:146
+#, python-format
+msgid "Monetary Revaluation at %s on %s"
+msgstr "Revaluación Monetaria al %s sobre %s"
+
+#. module: gandalf
+#: model:ir.actions.server,name:gandalf.ir_cron_monetary_revaluation_ir_actions_server
+#: model:ir.cron,cron_name:gandalf.ir_cron_monetary_revaluation
+#: model:ir.cron,name:gandalf.ir_cron_monetary_revaluation
+msgid "Monthly Monetary Revaluation: Generate Entries on Invoices and Accounts"
+msgstr "Revaluación Monetaria Mensual: Generar Asientos en Facturas y Cuentas"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "No Gains/No Losses"
+msgstr "Sin Ganancias/Sin Pérdidas"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__balance
+msgid "Non-reevaluated Balance at date"
+msgstr "Balance No-revaluado a la fecha"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "On Accounts"
+msgstr "En Cuentas"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "On Invoices"
+msgstr "En Facturas"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__partner_id
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_account__realization_move_ids_nbr
+msgid "Quantity of Realization Entries this Account has"
+msgstr "Cantidad de Asientos de Realización que esta Cuenta tiene"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_invoice__realization_move_ids_nbr
+msgid "Quantity of Realization Entries this Invoice has"
+msgstr "Cantidad de Asientos de Realización que esta Factura tiene"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_account__revaluation_ledger_ids_nbr
+#: model:ir.model.fields,help:gandalf.field_account_invoice__revaluation_ledger_ids_nbr
+msgid "Quantity of Revaluation Ledger Items this Invoice has"
+msgstr "Cantidad de Apuntes del Informe de Revaluación que esta Factura tiene"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_account__realizable_account
+msgid "Realizable Account"
+msgstr "Cuenta Realizable"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_move__realization_account_id
+msgid "Realization Account"
+msgstr "Cuenta de Realización"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_realization_date_wizard__realization_date
+msgid "Realization Date"
+msgstr "Fecha de Realización"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_account__realization_move_ids
+#: model:ir.model.fields,field_description:gandalf.field_account_invoice__realization_move_ids
+msgid "Realization Entries"
+msgstr "Asientos de Realización"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_realization_date_wizard__init_date
+msgid "Realization Entries will be created from this date onwards."
+msgstr "Los Asientos de Realización se crearán desde esta fecha en adelante."
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_move__realization_invoice_id
+msgid "Realization Invoice"
+msgstr "Factura de Realización"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_account__realization_move_ids
+msgid "Realization Journal Entries for this Account"
+msgstr "Asientos Contables de Realización para esta Cuenta"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_invoice__realization_move_ids
+msgid "Realization Journal Entries for this Invoice"
+msgstr "Asientos Contables de Realización para esta Factura"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__reevaluated_balance
+msgid "Reevaluated Balance"
+msgstr "Balance Revaluado"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__reevaluated_balance
+msgid "Reevaluated Balance at date"
+msgstr "Balance Revaluado a la fecha"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_account__revaluation_ledger_ids
+#: model:ir.model.fields,field_description:gandalf.field_account_invoice__revaluation_ledger_ids
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_form
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_graph
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_pivot
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_tree
+msgid "Revaluation Ledger"
+msgstr "Informe de Revaluación"
+
+#. module: gandalf
+#: model:ir.actions.act_window,name:gandalf.action_account_revaluation_ledger
+#: model:ir.ui.menu,name:gandalf.menu_account_revaluation_ledger
+msgid "Revaluation Ledger Items"
+msgstr "Apuntes del Informe de Revaluación"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "Revaluation Settings"
+msgstr "Configuraciones de Revaluación"
+
+#. module: gandalf
+#: model:ir.model,name:gandalf.model_realization_date_wizard
+msgid "Running the realization process"
+msgstr "Ejecutando el proceso de realización"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Search Revaluation Ledger Items"
+msgstr "Buscar Apuntes del Informe de Revaluación"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__invoice_state
+msgid "State of the Invoice when invoice is related to a Ledger Item"
+msgstr "Estado de la Factura cuendo una factura está relacionada a un Apunte de Informe"
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__invoice_state
+msgid "Status"
+msgstr "Estado"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "These settings will be used to create Realization Entries on Invoices or Accounts."
+msgstr "Estas configuraciones se usarán para crear Asientos de Realización en Facturas o Cuentas."
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "This Fiscal Position will be used to map the accounts that will be booked in the Realization Entries. If no account is found in the fiscal position for the account in the Revaluation Ledger Item then the one in the Item will be used. Counterparts for these accounts will be fetched from the ones in the Account Realization Journal."
+msgstr "Esta Posición Fiscal se usara para mapear las cuentas que se registrarán en los Asientos de Realización. Si no se encuentra una cuenta en la posción fiscal para la cuenta en el Apunte del Informe de Revaluación entonces la que está en el Apunte se usará. Las contrapartidas para estas cuentas se obtendrán de aquellas en el Diario de Realización para Cuentas."
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "This Fiscal Position will be used to map the accounts that will be booked in the Realization Entries. If no account is found in the fiscal position for the account in the Revaluation Ledger Item then the one in the Item will be used. Counterparts for these accounts will be fetched from the ones in the Invoice Realization Journal. It is hugely recommended to use Memorandum accounts in the mapping. Be advised that doing otherwise you could be booking twice the Gains/Losses in Foreign Exchange Difference."
+msgstr "Esta Posición Fiscal se usará para mapear las cuentas que se registrarán en los Asientos de Realización. Si no se encuentra una cuenta en la posición fiscal para la cuenta en el Apunte del Informe de Revaluación entonces la que está en el Apunte se usará. Las contrapartidas para estas cuentas se obtendrán de aquellas en el Diario de Realización para Facturas. Se recomienda altamente usar Cuentas de Orden en el mapeo. Téngase informado que al hacer lo contrario usted estaría registrando doble las Ganancias/Pérdidas en Diferencias Cambiarias."
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "This Journal will be used to book the Journal Entries for the Realization Journal Entries of Accounts. Debit and Credit Accounts in the Journal will be used to book the Gains/Losses in Foreign Exchange Differences."
+msgstr "Este Diario se usará para registrar los Asientos Contables para los Asientos de Realización de Cuentas. Las Cuentas de Débito y Crédito en el Diario se usarán para registrar las Ganancias/Pérdidas en Diferencias Cambiarias."
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_config_settings
+msgid "This Journal will be used to book the Journal Entries for the Realization Journal Entries of Invoices. Debit and Credit Accounts in the Journal will be used to book the Gains/Losses in Foreign Exchange Differences. It is advisable to use Memorandum accounts in the Debit/Credit accounts in this Journal."
+msgstr "Este Diario se usará para registrar los Asientos Contables para los Asientos de Realización de Facturas. Las Cuentas de Débito y Crédito en el Diario se usarán para registrar las Ganancias/Pérdidas en Diferencias Cambiarias. Es aconsejable usar Cuentas de Orden en las cuentas Débito/Crédito en este Diario."
+
+#. module: gandalf
+#: model:ir.model.fields,field_description:gandalf.field_account_revaluation_ledger__invoice_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_revaluation_ledger__invoice_type
+msgid "Type of the Invoice when invoice is related to a Ledger Item"
+msgstr "Tipo de la Factura cuando una Factura está relacionada a un Apunte de Informe"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Vendor Bill"
+msgstr "Factura de Proveedor"
+
+#. module: gandalf
+#: model_terms:ir.ui.view,arch_db:gandalf.view_account_revaluation_ledger_search
+msgid "Vendor Credit Note"
+msgstr "Nota de Crédito de Proveedor"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_invoice__fully_realized
+msgid "When all the Realization Entries for this invoice have been created this field is marked"
+msgstr "Cuando todos los Asientos de Realización para esta factura se hayan creado este campo se marcará"
+
+#. module: gandalf
+#: model:ir.model.fields,help:gandalf.field_account_account__realizable_account
+msgid "When wizard for Monetary Realization is run this account will be considere for realization"
+msgstr "Cuando el asistente para la Realización Monetaria se corre esta cuenta se considerará para la realización"
+
+#. module: gandalf
+#: code:addons/gandalf/models/account_revaluation_ledger.py:127
+#: code:addons/gandalf/models/account_revaluation_ledger.py:143
+#, python-format
+msgid "You have to either use an invoice or an account"
+msgstr "Tienes que usar una factura o una cuenta"
+
+#. module: gandalf
+#: model:ir.actions.server,name:gandalf.one_time_run
+msgid "[GANDALF] Create Cron Jobs for First Time Run on Invoice Revaluation Ledger"
+msgstr "[GANDALF] Crear Trabajos Planificados para Correr por Primera Vez sobre el Informe de Revaluación de Facturas"
+
