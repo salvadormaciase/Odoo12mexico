@@ -895,6 +895,7 @@ class HrPayslip(models.Model):
         payroll.update(self.get_cfdi_perceptions_data())
         payroll.update(self.get_cfdi_deductions_data())
         payroll.update(self.get_cfdi_other_payments_data())
+        payroll['inability_data'] = lambda i, p: p._get_inability_data(i)
         return payroll
 
     @api.multi
@@ -955,6 +956,33 @@ class HrPayslip(models.Model):
             'total_taxes_withheld': '%.2f' % abs(total_withheld) if total_withheld else None,  # noqa
             'deductions': deductions,
         }
+
+    def _get_inability_data(self, line):
+        # Incapacidad Riesgo de Trabajo
+        if line.salary_rule_id == self.env.ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_006_irt'):
+            days = sum(self.worked_days_line_ids.filtered(
+                lambda w: w.code == 'INCAPACIDAD_POR_RIESGO_DE_TRABAJO').mapped('number_of_days'))
+            return {'days': days,
+                    'inability_type': '01'}
+        # Incapacidad Enfermedad General
+        if line.salary_rule_id == self.env.ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_006'):
+            days = sum(self.worked_days_line_ids.filtered(
+                lambda w: w.code == 'INCAPACIDAD_POR_ENFERMEDAD_GENERAL').mapped('number_of_days'))
+            return {'days': days,
+                    'inability_type': '02'}
+        # Incapacidad Maternidad
+        if line.salary_rule_id == self.env.ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_006_im'):
+            days = sum(self.worked_days_line_ids.filtered(lambda w: w.code == 'MATERNITY').mapped('number_of_days'))
+            return {'days': days,
+                    'inability_type': '03'}
+        # Licencia para Padres con Hijos con Cancer
+        if line.salary_rule_id == self.env.ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_006_lphc'):
+            days = sum(self.worked_days_line_ids.filtered(
+                lambda w: w.code == 'INCAPACIDAD_PADRES_HIJOS_CANCER').mapped('number_of_days'))
+            return {'days': days,
+                    'inability_type': '04'}
+        return {'days': 0,
+                'inability_type': ''}
 
     @api.multi
     def get_cfdi_other_payments_data(self):
@@ -1198,6 +1226,60 @@ class HrPayslip(models.Model):
                 })]
             slip.compute_sheet()
 
+    @api.model
+    def get_inputs(self, contracts, date_from, date_to):
+        """When receiving the rule by context, the input_line_ids field should be updated taking the data of the
+        rule sent by context, instead of taking the contract or employee rule.
+        """
+        if not self.env.context.get('force_salary_rule_id'):
+            return super(HrPayslip, self).get_inputs(contracts=contracts, date_from=date_from, date_to=date_to)
+        res = []
+        structure_id = self.env['hr.payroll.structure'].browse(self.env.context.get('force_salary_rule_id'))
+        for rule in structure_id.rule_ids:
+            input_data = {'name': rule.name, 'code': rule.code, 'contract_id': contracts.id}
+            res += [input_data]
+        return res
+
+    @api.multi
+    def onchange_employee_id(self, date_from, date_to, employee_id=False, contract_id=False):
+        """When receiving the structure by context, return that structure"""
+        res = super(HrPayslip, self).onchange_employee_id(date_from=date_from, date_to=date_to,
+                                                          employee_id=employee_id, contract_id=contract_id)
+        if self.env.context.get('force_salary_rule_id'):
+            res['struct_id'] = self.env.context['force_salary_rule_id']
+        return res
+
+    def _get_full_leaves(self, code):
+        if not self:
+            return 0
+        count = 0
+        date = self.date_from
+        for _day in range((self.date_to - self.date_from).days + 1):
+            if self.env['hr.leave'].search([
+                    ('holiday_status_id.name', '=', code),
+                    ('state', '=', 'validate'),
+                    ('employee_id', '=', self.employee_id.id),
+                    ('date_from', '<=', date),
+                    ('date_to', '>=', date)], limit=1):
+                count += 1
+            date = date + timedelta(days=1)
+        return count
+
+    def _get_attendences(self):
+        """Get the attendances of the employee in the period of payslip,
+        return Attendances where check_in is between payslips dates, date_from and date_to
+        If the module Attendances is not installed return an empty list."""
+        self.ensure_one()
+        if not self.env['ir.model'].search([('model', '=', 'hr.attendance')]):
+            return []
+        # Cast date to datetime to be avaliable to compare on the filtered
+        date_from = fields.datetime(year=self.date_from.year, month=self.date_from.month, day=self.date_from.day)
+        date_to = fields.datetime(year=self.date_to.year, month=self.date_to.month, day=self.date_to.day,
+                                  hour=23, minute=59, second=59)
+
+        return self.employee_id.attendance_ids.filtered(
+            lambda att: att.check_in >= date_from and att.check_in <= date_to)
+
 
 class HrEmployee(models.Model):
 
@@ -1323,6 +1405,16 @@ class HrContract(models.Model):
         ('2', 'Mixed'),
     ], 'Salary type', help='The action that updates automatically the SDI variable each bimester could discard '
         'contracts based on this field.')
+    l10n_mx_edi_day_off = fields.Selection([
+        ('0', 'Monday'),
+        ('1', 'Tuesday'),
+        ('2', 'Wednesday'),
+        ('3', 'Thursday'),
+        ('4', 'Friday'),
+        ('5', 'Saturday'),
+        ('6', 'Sunday')
+    ], 'Day Off', help='Day off to Mexican payroll, the salary rule Septimo dia will use this '
+        'day to be calculated, if is not set, the rule will consider Saturdays and Sundays as days off.')
 
     @api.depends()
     def _compute_sdi_total(self):
@@ -1540,7 +1632,8 @@ class HrPayslipExtraPerception(models.Model):
 
 
 class HrPayslipRun(models.Model):
-    _inherit = 'hr.payslip.run'
+    _name = 'hr.payslip.run'
+    _inherit = ['hr.payslip.run', 'mail.thread', 'mail.activity.mixin']
 
     l10n_mx_edi_payment_date = fields.Date(
         'Payment Date', required=True,
@@ -1587,3 +1680,79 @@ class HrPayslipRun(models.Model):
             mail_composition |= res
         # send all
         mail_composition.action_send_mail()
+
+    @api.multi
+    def action_print_payroll_dispersion(self):
+        self.ensure_one()
+        if not self.env.user.has_group('l10n_mx_edi_payslip.l10n_mx_edi_allow_print_payslip_dispertion'):
+            raise UserError(_("Only Managers with the group 'Allow to Print Payslip Dispersion' can generate "
+                              "payslip dispersion files"))
+
+        ids = {'list_ids': ','.join(str(x) for x in self.ids)}
+        return {
+            'name': 'PayslipDispersion',
+            'type': 'ir.actions.act_url',
+            'url': '/print/payslip/dispersions?list_ids=%(list_ids)s' % ids,
+        }
+
+    def _get_payslips_dispersions(self):
+        """Get the payslip dispersions, 1 for each bank on payslip batch
+        :return: List of tuples, 2 values. Report name and text
+        :rtype: list"""
+        if not self.env.user.has_group('l10n_mx_edi_payslip.l10n_mx_edi_allow_print_payslip_dispertion'):
+            raise UserError(_("Only Managers with the group 'Allow to Print Payslip Dispersion' can generate "
+                              "payslip dispersion files"))
+        dispersions = []
+        bank_errors = []
+
+        for bank_id in self.mapped('slip_ids.employee_id.bank_account_id.bank_id'):
+            # using search instead filtered to keep performance in batch with many payslips like action_payslips_done()
+            payslips = self.slip_ids.search([
+                ('id', 'in', self.slip_ids.ids),
+                ('employee_id.bank_account_id.bank_id', '=', bank_id.id)
+            ])
+            # Call generate dispersion methods with the firts word of the bank name
+            bank_func = '_generate_%s_dispersion' % bank_id.name.split(' ')[0].lower()
+            try:
+                text = getattr(self, bank_func)(payslips)
+            except AttributeError:
+                bank_errors.append(bank_id.name)
+                continue
+            file_name = self._get_payslips_dispersion_report_name(bank_id.name)
+            dispersions.append((file_name, text))
+
+        if bank_errors:
+            body_msg = _("The following of your banks are not available for payroll dispersion")
+            self.message_post(body=body_msg + create_list_html(bank_errors))
+
+        return dispersions
+
+    @api.model
+    def _generate_bbva_dispersion(self, payslips):
+        """According to BBVA documentation, Gotten from BBVA portal."""
+        lines = []
+        for index, payslip in enumerate(payslips):
+            consecutive = str(index + 1).zfill(9).ljust(25)
+            bank_account = payslip.employee_id.bank_account_id.acc_number
+            bank_account = str(bank_account).ljust(20)
+            amount = payslip.line_ids.filtered(lambda s: s.code == "NetSalary").total
+            amount = str(amount).replace('.', '').zfill(15)
+            employee_name = payslip.employee_id.name.ljust(40)[:40]
+            # 001 are fixed values, represent bank and branch. 99 Account type
+            line = "%s%s%s%s%s%s%s" % (consecutive, "99", bank_account, amount, employee_name, '001', '001')
+            lines.append(line)
+        return '\n'.join(lines) + "\n"
+
+    @api.model
+    def _generate_santander_dispersion(self, slips):
+        """For now Dummny method, shows how other banks methods will be structured, replace this docstring
+           when santander is supported"""
+        return self._generate_bbva_dispersion(slips)
+
+    @api.model
+    def _get_payslips_dispersion_report_name(self, bank_name=False):
+        self.ensure_one()
+        name = self.name.replace(' ', '_')
+        bank_name = bank_name.replace(' ', '_') if bank_name else _('Dispersions')
+        date = self.l10n_mx_edi_payment_date.strftime("%d_%m_%Y")
+        return '%s_%s_%s' % (bank_name, date, name)

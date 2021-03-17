@@ -21,6 +21,11 @@ msgid "<i class=\"fa fa-download\"/> Generate Invoice"
 msgstr "<i class=\"fa fa-download\"/> Generar Factura"
 
 #. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.portal_my_invoices_inh
+msgid "<i class=\"fa fa-folder\"/> Download Zip"
+msgstr "<i class=\"fa fa-folder\"/> Descargar Zip"
+
+#. module: l10n_mx_portal
 #: model_terms:ir.ui.view,arch_db:l10n_mx_portal.email_sent
 msgid "Change"
 msgstr "Cambiar"
@@ -29,6 +34,11 @@ msgstr "Cambiar"
 #: model_terms:ir.ui.view,arch_db:l10n_mx_portal.website_e_invoices
 msgid "Download XML"
 msgstr "Descargar XML"
+
+#. module: l10n_mx_portal
+#: model_terms:ir.ui.view,arch_db:l10n_mx_portal.portal_my_invoices_inh
+msgid "Download Zip"
+msgstr "Descargar Zip"
 
 #. module: l10n_mx_portal
 #: model_terms:ir.ui.view,arch_db:l10n_mx_portal.sale_order_mx_portal_template

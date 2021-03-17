@@ -143,10 +143,17 @@
             <xpath expr="//button[@name='draft_payslip_run']" position="after">
                 <button name="action_payslips_done" type="object" states="close" string="Confirm payslips" class="oe_highlight"/>
                 <button name="action_payroll_sent" type="object" string="Send by Email" states="close" class="oe_highlight"/>
+                <button string="Payroll Dispersion" name="action_print_payroll_dispersion" type="object" states="close" groups="l10n_mx_edi_payslip.l10n_mx_edi_allow_print_payslip_dispertion" class="oe_highlight"/>
             </xpath>
             <xpath expr="//field[@name='credit_note']" position="before">
                 <field name="l10n_mx_edi_payment_date"/>
                 <field name="l10n_mx_edi_productivity_bonus"/>
+            </xpath>
+            <xpath expr='//sheet' position="after">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </xpath>
         </field>
     </record>

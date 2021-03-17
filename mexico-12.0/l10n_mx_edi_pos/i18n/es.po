@@ -38,6 +38,11 @@ msgid "<br/><span>Customs: </span>"
 msgstr "<br/><span>Aduanas: </span>"
 
 #. module: l10n_mx_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_pos.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Default Customer</span>"
+msgstr "<span class=\"o_form_label\">Cliente por defecto</span>"
+
+#. module: l10n_mx_edi_pos
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_pos.report_xml_session_document
 msgid "<span> | Certification Date:</span>"
 msgstr "<span> | Fecha de Certificación:</span>"
@@ -203,6 +208,11 @@ msgid "Code: "
 msgstr "Código: "
 
 #. module: l10n_mx_edi_pos
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_pos.res_config_settings_view_form
+msgid "Default Customer"
+msgstr "Cliente por defecto"
+
+#. module: l10n_mx_edi_pos
 #: model:ir.model.fields,field_description:l10n_mx_edi_pos.field_report_l10n_mx_edi_pos_report_xml_session__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
@@ -269,6 +279,14 @@ msgid "PAC status"
 msgstr "Estado del PAC"
 
 #. module: l10n_mx_edi_pos
+#. openerp-web
+#: code:addons/l10n_mx_edi_pos/static/src/xml/pos.xml:21
+#: code:addons/l10n_mx_edi_pos/static/src/xml/pos.xml:54
+#, python-format
+msgid "Payment Method"
+msgstr "Método de pago"
+
+#. module: l10n_mx_edi_pos
 #: code:addons/l10n_mx_edi_pos/models/point_of_sale.py:556
 #, python-format
 msgid "Please check your configuration: "
@@ -280,6 +298,12 @@ msgstr "Por favor revise su configuración: "
 #, python-format
 msgid "Please provide a partner for the sale."
 msgstr "Por favor proporcione un cliente para la venta."
+
+#. module: l10n_mx_edi_pos
+#: model:ir.model.fields,field_description:l10n_mx_edi_pos.field_res_company__l10n_mx_edi_pos_default_partner_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_pos.field_res_config_settings__l10n_mx_edi_pos_default_partner_id
+msgid "PoS default partner"
+msgstr "Cliente por defecto para el TPV"
 
 #. module: l10n_mx_edi_pos
 #: model:ir.model,name:l10n_mx_edi_pos.model_pos_order
@@ -306,6 +330,13 @@ msgstr "Se refiere al estado de la factura dentro del PAC."
 #: selection:pos.session,l10n_mx_edi_pac_status:0
 msgid "Retry"
 msgstr "Reintentar"
+
+#. module: l10n_mx_edi_pos
+#: model:ir.model.fields,help:l10n_mx_edi_pos.field_res_company__l10n_mx_edi_pos_default_partner_id
+#: model:ir.model.fields,help:l10n_mx_edi_pos.field_res_config_settings__l10n_mx_edi_pos_default_partner_id
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_pos.res_config_settings_view_form
+msgid "Select a partner with General Public RFC on this field if you want to create individual invoices for each PoS order, in consequence each invoice will have its own XML CFDI attachment. If this field is not set, the default partner feature is disabled, so new uninvoiced PoS orders will be grouped on a common CFDI when the PoS session is closed."
+msgstr "Selecciona un cliente con RFC para público en general en este campo si quieres crear facturas individuales para cada orden del TPV, así cada factura tendrá su propio XML CFDI adjunto. Si este campo esta vacío, el cliente por defecto está deshabilitado, así que las nuevas ordenes del TPV serán agrupadas con un CFDI global cuando la sesión del TPV se cierre."
 
 #. module: l10n_mx_edi_pos
 #: selection:pos.session,l10n_mx_edi_pac_status:0
@@ -362,6 +393,14 @@ msgstr "No se encontró el archivo xsd para validar la estructura XML"
 #: selection:pos.session,l10n_mx_edi_pac_status:0
 msgid "To cancel"
 msgstr "Para cancelar"
+
+#. module: l10n_mx_edi_pos
+#. openerp-web
+#: code:addons/l10n_mx_edi_pos/static/src/xml/pos.xml:9
+#: code:addons/l10n_mx_edi_pos/static/src/xml/pos.xml:39
+#, python-format
+msgid "Usage"
+msgstr "Uso"
 
 #. module: l10n_mx_edi_pos
 #: model:ir.model.fields,field_description:l10n_mx_edi_pos.field_pos_order__xml_generated

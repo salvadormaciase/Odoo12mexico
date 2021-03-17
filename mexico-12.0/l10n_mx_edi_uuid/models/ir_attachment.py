@@ -46,12 +46,11 @@ class IrAttachment(models.Model):
                 # It is not a signed xml
                 attachments_skipped |= attach
                 continue
-            # used _write to avoid loop when calling method from write
-            attach._write({'l10n_mx_edi_cfdi_uuid': tfd_node.get('UUID', '').upper().strip()})
-            if not model.l10n_mx_edi_cfdi_name:
-                model.l10n_mx_edi_cfdi_name = attach.name
-        (self - uuid_attachments + attachments_skipped)._write({
-            'l10n_mx_edi_cfdi_uuid': False})
+            attach.with_context(force_l10n_mx_edi_cfdi_uuid=True).write({
+                'l10n_mx_edi_cfdi_uuid': tfd_node.get('UUID', '').upper().strip()})
+        (self - uuid_attachments + attachments_skipped).with_context(
+            force_l10n_mx_edi_cfdi_uuid=True).write({
+                'l10n_mx_edi_cfdi_uuid': False})
         invoice_ids = (uuid_attachments - attachments_skipped).filtered(
             lambda r: r.res_model == 'account.invoice').mapped('res_id')
         invoices = self.env['account.invoice'].browse(invoice_ids).exists()
@@ -61,6 +60,8 @@ class IrAttachment(models.Model):
 
     @api.multi
     def write(self, vals):
+        if self.env.context.get('force_l10n_mx_edi_cfdi_uuid'):
+            return super().write(vals)
         vals.pop('l10n_mx_edi_cfdi_uuid', None)
         with self.env.cr.savepoint():
             # Secure way if someone catch the exception to skip a rollback

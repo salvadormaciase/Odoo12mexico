@@ -47,6 +47,11 @@ msgid "<span class=\"o_form_label\">Mexican Payroll</span>"
 msgstr "<span class=\"o_form_label\">Nómina mexicana</span>"
 
 #. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_by_employees_inherit
+msgid "<span class=\"text-muted\">Set a specific structure if you wish to make an extra payslip (eg: End of the year bonus). If you leave this field empty, a regular payslip will be generated for all the selected employees, based on their contracts configuration.</span>"
+msgstr "<span class=\"text-muted\">Establezca una estructura específica si desea hacer una nómina extraordinaria (por ejemplo: Aguinaldo). Si deja este campo vacío, se generará una nómina regular para todos los empleados seleccionados, en función de la configuración de sus contratos.</span>"
+
+#. module: l10n_mx_edi_payslip
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_extra_by_employees
 msgid "<span colspan=\"4\" nolabel=\"1\">This wizard will assign all selected employee(s) on the extras.</span>"
 msgstr "<span colspan=\"4\" nolabel=\"1\">Este asistente asignará todos los empleados seleccionados en las extras.</span>"
@@ -741,6 +746,11 @@ msgid "Allow register the loans in each employee (Fonacot)"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:res.groups,name:l10n_mx_edi_payslip.l10n_mx_edi_allow_print_payslip_dispertion
+msgid "Allow to Print Payslip Dispersion"
+msgstr "Permitir Imprimir Dispersión de Nómina"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_extra_detail__amount
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__amount
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__amount
@@ -1182,6 +1192,16 @@ msgid "Date To"
 msgstr "Fecha hasta"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_day_off
+msgid "Day Off"
+msgstr "Día Libre"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_day_off
+msgid "Day off to Mexican payroll, the salary rule Septimo dia will use this day to be calculated. If is not set, the rule will consider Saturdays and Sundays as days off."
+msgstr "Día Libre para nómina mexicana, la regla salarial Séptimo día se calcula con base a este día. Si no se coloca, las reglas consideraran sábados y domingos como días libres."
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_inability__days
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_overtime__days
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.l10n_mx_edi_report_payslip
@@ -1261,6 +1281,12 @@ msgstr "Descuento"
 #: selection:hr.payslip.inability,inability_type:0
 msgid "Disease in general"
 msgstr "Enfermedad en general"
+
+#. module: l10n_mx_edi_payslip
+#: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:1761
+#, python-format
+msgid "Dispersions"
+msgstr "Dispersión"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee_loan__display_name
@@ -1448,6 +1474,11 @@ msgstr "Monto Vales de Despensa"
 #: selection:hr.contract,schedule_pay:0
 msgid "Fortnightly"
 msgstr "Quincenal"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields.selection,name:l10n_mx_edi_payslip.selection__hr_contract__l10n_mx_edi_day_off__4
+msgid "Friday"
+msgstr "Viernes"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model,name:l10n_mx_edi_payslip.model_hr_payslip_extra_employees
@@ -1978,6 +2009,11 @@ msgid "Modalidades de contratación donde no existe relación de trabajo"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields.selection,name:l10n_mx_edi_payslip.selection__hr_contract__l10n_mx_edi_day_off__0
+msgid "Monday"
+msgstr "Lunes"
+
+#. module: l10n_mx_edi_payslip
 #: selection:hr.contract,schedule_pay:0
 msgid "Monthly"
 msgstr "Mensual"
@@ -2124,8 +2160,22 @@ msgstr "En Aniversario"
 
 #. module: l10n_mx_edi_payslip
 #: selection:res.company,l10n_mx_edi_vacation_bonus:0
+msgid "On Christmas"
+msgstr "En Aguinaldo"
+
+#. module: l10n_mx_edi_payslip
+#: selection:res.company,l10n_mx_edi_vacation_bonus:0
 msgid "On Holidays"
 msgstr "En Vacaciones"
+
+#. module: l10n_mx_edi_payslip
+#: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:1685
+#: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:1696
+#, python-format
+msgid "Only Managers with the group 'Allow to Print Payslip Dispersion' can generate payslip dispersion files"
+msgstr ""
+"Solo los administradores con el grupo 'Permitir Imprimir Dispersión de Nómina' pueden generar "
+"los archivos de dispersión de nómina"
 
 #. module: l10n_mx_edi_payslip
 #: selection:hr.contract,schedule_pay:0
@@ -2261,6 +2311,11 @@ msgstr "Plazo de Pago"
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_employee_form_inherit_l10n_mx
 msgid "Payroll CFDI"
 msgstr "Nómina de sueldos CFDI"
+
+#. module: l10n_mx_edi_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_run_form_inherit_l10n_mx
+msgid "Payroll Dispersion"
+msgstr " Dispersión de Nómina"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee_loan__payslip_ids
@@ -2562,9 +2617,20 @@ msgid "Salary Rule"
 msgstr "Regla de Salario"
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip_employees__l10n_mx_edi_structure_id
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.view_hr_payslip_by_employees_inherit
+msgid "Salary Structure"
+msgstr "Estructura salarial"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_contract__l10n_mx_edi_salary_type
 msgid "Salary type"
 msgstr "Tipo de salario"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields.selection,name:l10n_mx_edi_payslip.selection__hr_contract__l10n_mx_edi_day_off__5
+msgid "Saturday"
+msgstr "Sábado"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_payment_date
@@ -2694,6 +2760,11 @@ msgid "Sueldos, Salarios Rayas y Jornales"
 msgstr ""
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields.selection,name:l10n_mx_edi_payslip.selection__hr_contract__l10n_mx_edi_day_off__6
+msgid "Sunday"
+msgstr "Domingo"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_cfdi_supplier_rfc
 msgid "Supplier RFC"
 msgstr "RFC del Proveedor"
@@ -2769,6 +2840,12 @@ msgid "The extra must be approved to allow pay this on the employee payslips"
 msgstr "El extra debe estar aprobado para permitir pagar este extra en la nómina del empleado"
 
 #. module: l10n_mx_edi_payslip
+#: code:addons/l10n_mx_edi_payslip/models/hr_payslip.py:1725
+#, python-format
+msgid "The following of your banks are not available for payroll dispersion"
+msgstr "De tus bancos, los siguientes no están disponibles para la dispersión de nómina"
+
+#. module: l10n_mx_edi_payslip
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_payslip.res_config_settings_view_form_inherit_l10n_mx_edi_payslip
 msgid "The parameters to configure the payslips."
 msgstr "Los parámetros para configurar la nómina"
@@ -2827,6 +2904,16 @@ msgid "This input will be set on the payslip inputs for the employees related."
 msgstr "Esta entrada será colocada en las nóminas relacionadas a este empleado."
 
 #. module: l10n_mx_edi_payslip
+#: model:ir.model.fields.selection,name:l10n_mx_edi_payslip.selection__hr_contract__l10n_mx_edi_day_off__3
+msgid "Thursday"
+msgstr "Jueves"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model,name:l10n_mx_edi_payslip.model_hr_leave
+msgid "Time Off"
+msgstr "Ausencias"
+
+#. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_payslip__l10n_mx_edi_time_payslip
 msgid "Time payslip"
 msgstr "Horario de pago"
@@ -2855,6 +2942,11 @@ msgstr "Monto Total"
 #: selection:hr.payslip.overtime,overtime_type:0
 msgid "Triples"
 msgstr ""
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields.selection,name:l10n_mx_edi_payslip.selection__hr_contract__l10n_mx_edi_day_off__1
+msgid "Tuesday"
+msgstr "Martes"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,field_description:l10n_mx_edi_payslip.field_hr_employee_loan__loan_type
@@ -3066,6 +3158,11 @@ msgstr "Historial de comunicaciones del sitio web"
 #: selection:hr.contract,schedule_pay:0
 msgid "Weekly"
 msgstr "Semanal"
+
+#. module: l10n_mx_edi_payslip
+#: model:ir.model.fields.selection,name:l10n_mx_edi_payslip.selection__hr_contract__l10n_mx_edi_day_off__2
+msgid "Wednesday"
+msgstr "Miércoles"
 
 #. module: l10n_mx_edi_payslip
 #: model:ir.model.fields,help:l10n_mx_edi_payslip.field_hr_payslip_action_titles__price_granted

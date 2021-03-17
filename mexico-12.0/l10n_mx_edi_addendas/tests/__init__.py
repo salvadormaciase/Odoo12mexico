@@ -24,4 +24,4 @@ from . import test_addenda_vallen
 from . import test_addenda_yanfeng
 from . import test_addenda_zfmexico
 from . import test_addenda_amazon
-# from . import test_addenda_sams
+from . import test_addenda_sams

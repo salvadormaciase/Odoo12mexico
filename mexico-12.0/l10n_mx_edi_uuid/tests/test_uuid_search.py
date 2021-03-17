@@ -83,33 +83,33 @@ class TestL10nMxEdiUUID(TransactionCase):
             len(invoices), 1, "Not invoice found with the UUID %s" % uuid)
 
         invoices = inv.search([('l10n_mx_edi_cfdi_uuid', '=', uuid)])
-        self.assertEqual(invoice.id, invoices.id, "Not invoice found")
+        self.assertEqual(invoice.ids, invoices.ids, "Not invoice found")
         invoices = self.invoice_model.name_search(name='nonexistantuuid')
         self.assertFalse(invoices, "Shouldn't exist an invoice")
 
         invoices = inv.search([('l10n_mx_edi_cfdi_uuid', '=', False)])
         self.assertIn(invoice2.id, invoices.ids, "Not invoice found")
-        self.assertNotIn(invoice.id, invoices.ids, "Invoice found")
+        self.assertNotIn(invoice.ids, invoices.ids, "Invoice found")
 
         invoices = inv.search([('l10n_mx_edi_cfdi_uuid', '!=', False)])
-        self.assertEqual(invoice.id, invoices.id, "Not invoice found")
+        self.assertEqual(invoice.ids, invoices.ids, "Not invoice found")
 
         invoices = inv.search([('l10n_mx_edi_cfdi_uuid', 'not in', [uuid])])
-        self.assertNotIn(invoice.id, invoices.ids, "Invoice found")
+        self.assertNotIn(invoice.ids, invoices.ids, "Invoice found")
 
         invoices = inv.search([('l10n_mx_edi_cfdi_uuid', 'in', [uuid])])
-        self.assertEqual(invoice.id, invoices.id, "Invoice not found")
+        self.assertEqual(invoice.ids, invoices.ids, "Invoice not found")
 
         invoices = inv.search([('l10n_mx_edi_cfdi_uuid', 'like', uuid[:5])])
-        self.assertEqual(invoice.id, invoices.id, "Invoice not found")
+        self.assertEqual(invoice.ids, invoices.ids, "Invoice not found")
 
         invoices = inv.search([(
             'l10n_mx_edi_cfdi_uuid', 'not like', uuid[:5])])
-        self.assertNotIn(invoice.id, invoices.ids, "Invoice found")
+        self.assertNotIn(invoice.ids, invoices.ids, "Invoice found")
 
         invoices = inv.search([(
             'l10n_mx_edi_cfdi_uuid', 'ilike', uuid[:5].upper())])
-        self.assertEqual(invoice.id, invoices.id, "Invoice not found")
+        self.assertEqual(invoice.ids, invoices.ids, "Invoice not found")
 
         invoices = inv.search([(
             'l10n_mx_edi_cfdi_uuid', 'not ilike', uuid[:5].upper())])
@@ -133,7 +133,7 @@ class TestL10nMxEdiUUID(TransactionCase):
 
         invoices = inv.search(['|', ('l10n_mx_edi_cfdi_uuid', '=', 'noexists'),
                                ('l10n_mx_edi_cfdi_uuid', '=', uuid)])
-        self.assertEqual(invoice.id, invoices.id, "Invoice not found")
+        self.assertEqual(invoice.ids, invoices.ids, "Invoice not found")
 
     def test_uuid_attachment_update(self):
         invoice = self.create_invoice()

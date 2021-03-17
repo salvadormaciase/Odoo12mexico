@@ -17,6 +17,7 @@ class ResCompany(models.Model):
     l10n_mx_edi_vacation_bonus = fields.Selection([
         ('on_holidays', 'On Holidays'),
         ('on_anniversary', 'On Anniversary'),
+        ('on_christmas_bonus', 'On Christmas'),
     ], 'Vacation Bonus', default='on_holidays', help='Indicate when the company will to pay the vacation bonus.')
     l10n_mx_edi_dynamic_name = fields.Boolean(
         'Dynamic concepts?', help='If true, the payslip concepts based on inputs could be dynamic.\nFor example: '

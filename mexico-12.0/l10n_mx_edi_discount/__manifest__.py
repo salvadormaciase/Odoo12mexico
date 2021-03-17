@@ -11,7 +11,7 @@ lines lines and total in the invoice.
     "website": "http://www.vauxoo.com/",
     "license": "OEEL-1",
     "depends": [
-        "l10n_mx_edi", "mm_exprescom_custom",
+        "l10n_mx_edi",
     ],
     "data": [
         "views/account_invoice_view.xml",

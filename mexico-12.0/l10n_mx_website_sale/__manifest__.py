@@ -20,6 +20,7 @@
     "data": [
         'data/form_fields.xml',
         'views/templates.xml',
+        'views/assets.xml',
     ],
     "installable": True,
     "auto_install": False,

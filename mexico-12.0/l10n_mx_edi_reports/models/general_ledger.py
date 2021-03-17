@@ -228,7 +228,7 @@ class MxReportJournalEntries(models.AbstractModel):
     def get_bce_dict(self, options):
         company = self.env.user.company_id
         xml_data = self._get_lines(options)
-        lines = [int(l['id'][5:]) for l in xml_data if l['level'] == 2]
+        lines = [int(line['id'][5:]) for line in xml_data if line['level'] == 2]
         moves = self.env['account.move'].browse(lines)
         date = fields.datetime.strptime(
             self.env.context['date_from'], DEFAULT_SERVER_DATE_FORMAT)

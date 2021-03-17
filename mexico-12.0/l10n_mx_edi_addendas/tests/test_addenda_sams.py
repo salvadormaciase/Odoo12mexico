@@ -1,39 +1,41 @@
 # LICENSE file for full copyright and licensing details.
 
-import os
-from lxml.objectify import fromstring
-from odoo.tools import misc
-from odoo.addons.l10n_mx_edi.tests.common import InvoiceTransactionCase
+from lxml import etree
+
+from .common import AddendasTransactionCase
 
 
-class MxEdiAddendaSams(InvoiceTransactionCase):
+class TestAddendaSams(AddendasTransactionCase):
+
     def setUp(self):
-        super(MxEdiAddendaSams, self).setUp()
-        self.company.partner_id.write({
-            'property_account_position_id': self.fiscal_position.id, })
-        conf = self.env['res.config.settings'].create({
-            'l10n_mx_addenda': 'sams'})
-        conf.install_addenda()
-        self.partner_agrolait.l10n_mx_edi_addenda = self.env.ref(
-            'l10n_mx_edi_addendas.sams')
-        self.partner_agrolait.street_number2 = '8098'
-        sams_expected = misc.file_open(os.path.join(
-            'l10n_mx_edi_addendas', 'tests', 'sams_expected.xml')
-        ).read().encode('UTF-8')
-        self.addenda_tree = fromstring(sams_expected)
+        super(TestAddendaSams, self).setUp()
+        self.install_addenda('sams')
 
-    def test_001_addenda_in_xml(self):
-        """test addenda sams"""""
+    def test_addenda_sams(self):
+        """Test addenda for SAMS"""""
+        self.partner_agrolait.street_number2 = '8098'
         invoice = self.create_invoice()
+        invoice.invoice_line_ids.invoice_line_tax_ids = [(6, 0, self.tax_positive.ids)]
+        invoice.compute_taxes()
         invoice.partner_shipping_id = self.partner_agrolait
+        invoice.partner_shipping_id.sudo().ref = '7507003100001'
         # wizard values
-        invoice.x_addenda_sams = '9250113699|20200619|185853950'
+        invoice.x_addenda_sams = '20200619'
         invoice.action_invoice_open()
+        invoice.refresh()
         self.assertEqual(invoice.state, "open")
         self.assertEqual(invoice.l10n_mx_edi_pac_status, "signed",
                          invoice.message_ids.mapped('body'))
         xml = invoice.l10n_mx_edi_get_xml_etree()
         self.assertTrue(hasattr(xml, 'Addenda'), "There is not Addenda node")
-        sams_nodes = xml.Addenda.getchildren()
-        sams_nodes[0] = ""
-        self.assertEqualXML(xml.Addenda, self.addenda_tree)
+        expected_addenda = self.get_expected_addenda('sams')
+        addenda = etree.tostring(expected_addenda)
+        date_time = '{date}{time}'.format(date=invoice.date_invoice.strftime('%Y%m%d'), time=(
+            invoice.l10n_mx_edi_time_invoice or '000000').replace(':', ''))
+        addenda = addenda.replace(
+            b'-folio-', invoice._l10n_mx_get_serie_and_folio(invoice.number)['folio'].encode()).replace(
+                b'-date-', invoice.date_invoice.strftime('%y%m%d').encode()).replace(
+                    b'-time-', (invoice.l10n_mx_edi_time_invoice or '0000').replace(':', '')[:4].encode()).replace(
+                        b'-datetime-', date_time.encode(),
+                    )
+        self.assertEqualXML(xml.Addenda, etree.fromstring(addenda))

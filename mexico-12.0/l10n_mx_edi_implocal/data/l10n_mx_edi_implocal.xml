@@ -56,5 +56,8 @@
                 </cfdi:Complemento>
             </t>
         </xpath>
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__implocal">"http://www.sat.gob.mx/implocal" if record.invoice_line_ids.mapped('invoice_line_tax_ids').filtered(lambda r: r. tag_ids and r.tag_ids[0].name.lower() == 'local') else False</attribute>
+        </xpath>
     </template>
 </odoo>

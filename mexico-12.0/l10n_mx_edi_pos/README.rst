@@ -11,6 +11,7 @@ before to validate the order:
 1. Not assign customer in the sale.
 2. Assign a customer in the sale.
 3. Assign customer in the sale, and generate the invoice.
+4. Assign a default customer for sales (via settings).
 
 .. image:: l10n_mx_edi_pos/static/src/img/cases_pos.png
 
@@ -28,7 +29,7 @@ With all orders that have not partner assigned, is generated one XML with the
 generic partner, and is sent to sign with the PAC assigned in the session
 journal.
 
-The resultant XML is attached in the section.
+The resultant XML is attached in the session.
 
 **CASE 2:**
 
@@ -63,6 +64,24 @@ generated directly the XML. In this module not are afected this orders.
 Also is added the option to validate all invoices generated in the session
 after to close it.
 
+**CASE 4:**
+
+You can configure Odoo to automatically assign the General Public partner
+(this partner must have the General Public RFC in order to be selectable
+for this feature). This feature facilitates the management of the fiscal
+documents, specially in cases where customers wants to ask for their
+individual invoices after the sale was made and the PoS session is
+already closed.
+
+If this feature in enabled all the PoS orders will create its own XML at the
+invoice (XML will not be grouped at the Session as Case 1 and 2). All these
+orders will be created as General Public sales to the partner you selected
+as default, this will cause each one to generate its own invoice.
+
+If the deafault partner feature is enabled, but the customer ask for the his
+invoice, the real partner is used instead of the default one, working exactly
+as the Case 3.
+
 .. contents::
 
 Installation
@@ -89,6 +108,12 @@ Configuration
 .. image:: l10n_mx_edi_pos/static/src/img/journal.png
    :align: center
    :width: 200pt
+
+* If you want to enable the Default Partner feature (Described in Case 4 above),
+  you just have to go to the app Point of Sale > Configuration > Settings > 
+  Default Partner and set the partner you want to use (Partner must have the
+  generic RFC 'XAXX010101000' to be selectable) If you want to disable this
+  feature just leave that field blank.
 
 Bug Tracker
 ===========

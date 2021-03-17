@@ -49,7 +49,7 @@ class PointOfSale(InvoiceTransactionCase):
         self.session = self.create_session()
         self.create_order(self.partner1.id)
         self.session.action_pos_session_closing_control()
-        self.assertEqual(self.session.l10n_mx_edi_pac_status, "signed",
+        self.assertEqual(self.session.l10n_mx_edi_pac_status, "retry",
                          self.session.message_ids.mapped('body'))
         self.assertFalse(
             self.att_obj.search([
@@ -74,6 +74,8 @@ class PointOfSale(InvoiceTransactionCase):
                 ('res_model', '=', 'pos.session'),
                 ('res_id', '=', self.session.id)]).ids), 1,
             'Attachments not generated')
+        self.session.l10n_mx_edi_update_sat_status()
+        self.assertEqual(self.session.l10n_mx_edi_sat_status, 'not_found', self.session.l10n_mx_edi_sat_status)
 
         # Generated the order without partner.
         # The session must have one XML attached and one PDF
@@ -93,6 +95,8 @@ class PointOfSale(InvoiceTransactionCase):
                 ('res_model', '=', 'pos.session'),
                 ('res_id', '=', self.session.id)]).ids), 1,
             'Attachments not generated')
+        self.session.l10n_mx_edi_update_sat_status()
+        self.assertEqual(self.session.l10n_mx_edi_sat_status, 'not_found', self.session.l10n_mx_edi_sat_status)
 
         # Generated two orders without partner, with partner and without
         # complete address.
@@ -112,6 +116,8 @@ class PointOfSale(InvoiceTransactionCase):
                 ('res_model', '=', 'pos.session'),
                 ('res_id', '=', self.session.id)]).ids), 2,
             'Attachments not generated')
+        self.session.l10n_mx_edi_update_sat_status()
+        self.assertEqual(self.session.l10n_mx_edi_sat_status, 'not_found', self.session.l10n_mx_edi_sat_status)
         # Call method that cancel XML, the XML is not cancelled by the time
         # between the stamp and cancel.
         self.session.l10n_mx_edi_cancel()
@@ -321,18 +327,19 @@ class PointOfSale(InvoiceTransactionCase):
         })
         payment.check()
         self.assertEqual(refund.state, 'paid', 'The refund order was not paid')
+        # Check Session2, the refund session
         session2.action_pos_session_closing_control()
-        self.assertEqual(session2.l10n_mx_edi_pac_status, "signed",
+        self.assertEqual(session2.l10n_mx_edi_pac_status, "retry",
                          session2.message_ids.mapped('body'))
         attachments = self.att_obj.search([('res_model', '=', 'pos.session'),
                                            ('res_id', '=', session2.id)])
         self.assertFalse(attachments, 'attachment created')
+        # Check self.session the Original Session
         self.session.l10n_mx_edi_update_pac_status()
-        self.assertEqual(self.session.l10n_mx_edi_pac_status, "signed",
+        self.assertEqual(self.session.l10n_mx_edi_pac_status, "retry",
                          self.session.message_ids.mapped('body'))
-        attachments = self.att_obj.search([('res_model', '=', 'pos.session'),
-                                           ('res_id', '=', self.session.id)])
-        self.assertFalse(attachments, 'attachment created')
+        expected_message = "The following orders were skipped because it's not"
+        self.assertIn(expected_message, self.session.message_ids[0].body)
 
     def test_007_amount_line(self):
         """Order with negative amount in a line."""
@@ -364,6 +371,74 @@ class PointOfSale(InvoiceTransactionCase):
         xml_total = attach.get('Total')
         self.assertEqual(round(order.amount_total, 2), float(xml_total),
                          'The amount with include base amount is incorrect')
+
+    def test_008_default_partner(self):
+        """Test all cases of PoS using the default partner feature"""
+        # Configure default partner to activate the feature
+        partner_default = self.env.ref('base.res_partner_address_27')
+        partner_default.vat = 'XAXX010101000'
+        partner_default.l10n_mx_edi_usage = 'P01'
+        partner_default.country_id = self.env.ref('base.mx')
+        self.env.user.company_id.l10n_mx_edi_pos_default_partner_id = partner_default
+
+        # Create order with all data to invoice.
+        # In this case, the order created have all information to generate the
+        # invoice, but is not generated from PoS.
+        # Verify that the order is invoiced with the Odoo process, the session
+        # must not have XML attached.
+        self.session = self.create_session()
+        self.create_order(self.partner1.id)
+        self.session.action_pos_session_closing_control()
+        self.assertEqual(self.session.l10n_mx_edi_pac_status, "retry", self.session.message_ids.mapped('body'))
+        self.assertFalse(self.att_obj.search([
+            ('res_model', '=', 'pos.session'), ('res_id', '=', self.session.id)]), 'Attachments generated')
+        # Verify that invoice is generated automatically when is created the
+        # order, without generate the invoice from PoS.
+        order = self.session.order_ids
+        self.assertTrue(order.invoice_id, 'Invoice not validated')
+
+        # Generated order with partner, but address is incomplete.
+        # Is created the order with partner, but the partner have not RFC.
+        # The Generic Partner will be set instead the invoice is generated
+        # from the order. No XML must be attached on PoS Session.
+        self.session = self.create_session()
+        self.create_order(self.partner2.id)
+        self.session.action_pos_session_closing_control()
+        self.assertEqual(self.session.l10n_mx_edi_pac_status, "retry", self.session.message_ids.mapped('body'))
+        self.assertFalse(self.att_obj.search([
+            ('res_model', '=', 'pos.session'), ('res_id', '=', self.session.id)]), 'Attachments generated')
+        order = self.session.order_ids
+        self.assertEqual(order.partner_id, partner_default, 'Generic Partner was expected')
+        self.assertTrue(order.invoice_id, 'Invoice not validated')
+
+        # Generated the order without partner.
+        # The Generic Partner will be set instead the invoice is generated
+        # from the order. No XML must be attached on PoS Session.
+        self.session = self.create_session()
+        self.create_order()
+        self.session.action_pos_session_closing_control()
+        self.assertEqual(self.session.l10n_mx_edi_pac_status, "retry", self.session.message_ids.mapped('body'))
+        self.assertFalse(self.att_obj.search([
+            ('res_model', '=', 'pos.session'), ('res_id', '=', self.session.id)]), 'Attachments generated')
+        order = self.session.order_ids
+        self.assertEqual(order.partner_id, partner_default, 'Generic Partner was expected')
+        self.assertTrue(order.invoice_id, 'Invoice not validated')
+
+        # Generated two orders without partner, with partner and without
+        # complete address.
+        # The session must not generate attachments because of the Generic
+        # Partner feature is On and each order has its own invoice
+        self.session = self.create_session()
+        self.create_order()
+        self.create_order(self.partner1.id)
+        self.create_order(self.partner2.id)
+        self.create_order()
+        self.create_order(self.partner1.id)
+        self.create_order(self.partner2.id)
+        self.session.action_pos_session_closing_control()
+        self.assertEqual(self.session.l10n_mx_edi_pac_status, "retry", self.session.message_ids.mapped('body'))
+        self.assertFalse(self.att_obj.search([
+            ('res_model', '=', 'pos.session'), ('res_id', '=', self.session.id)]), 'Attachments generated')
 
     @unittest.skip("We can't sign CFDI 3.3 with SolucionFactible")
     def test_l10n_mx_edi_invoice_basic_sf(self):

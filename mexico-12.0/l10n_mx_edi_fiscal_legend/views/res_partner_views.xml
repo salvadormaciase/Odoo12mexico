@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_account_form" model="ir.ui.view">
+        <field name="name">res.partner.account.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_account_payable_id']" position="after">
+                <field name="l10n_mx_edi_legend_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

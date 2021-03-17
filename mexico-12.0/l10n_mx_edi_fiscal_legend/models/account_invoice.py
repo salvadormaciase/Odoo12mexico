@@ -11,6 +11,12 @@ class AccountInvoice(models.Model):
         help="Legends under tax provisions, other than those contained in the "
         "Mexican CFDI standard.")
 
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        if self.partner_id.l10n_mx_edi_legend_ids:
+            self.l10n_mx_edi_legend_ids = self.partner_id.l10n_mx_edi_legend_ids
+        return super(AccountInvoice, self)._onchange_partner_id()
+
     @api.multi
     def _l10n_mx_edi_create_cfdi(self):
         """If the CFDI was signed, try to adds the schemaLocation correctly"""
@@ -27,3 +33,10 @@ class AccountInvoice(models.Model):
             'http://www.sat.gob.mx/sitio_internet/cfd/leyendasFiscales/leyendasFisc.xsd')
         result['cfdi'] = etree.tostring(cfdi, pretty_print=True, xml_declaration=True, encoding='UTF-8')
         return result
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('l10n_mx_edi_legend_ids') and vals.get('partner_id'):
+            partner = self.env['res.partner'].browse(vals['partner_id'])
+            vals.update({'l10n_mx_edi_legend_ids': [(6, 0, partner.l10n_mx_edi_legend_ids.ids)]})
+        return super().create(vals)

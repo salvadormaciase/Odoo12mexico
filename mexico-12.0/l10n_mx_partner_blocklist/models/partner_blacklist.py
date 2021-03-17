@@ -58,9 +58,14 @@ class ResPartnerBlacklist(models.Model):
         self.env['ir.attachment'].search([('name', '=', file_name)]).unlink()
         try:
             list_file = requests.get(url)
+            number_line = 0
             for count, line in enumerate(list_file.iter_lines()):
-                if line[line.index(b','):] not in file_content and \
+                # This conditional was added because near
+                # line number 996 find a white space
+                # For this reason cause error
+                if line and line[line.index(b','):] not in file_content and \
                         count not in [0, 1] and line != b'':
+                    number_line += 1
                     line = line.decode(
                         'utf-8', errors="ignore").replace('""', '')
                     sub_line = re.search('"[A-Za-z0-9 .,&-/_]+', line)
@@ -74,7 +79,9 @@ class ResPartnerBlacklist(models.Model):
                         ((",").join(cols[0:8]), (",").join(cols[11:14])))
                     file_content += line.encode() + b'\r\n'
         except Exception as e:
-            _logger.info(_("Unexpected: " + str(e)))
+            _logger.info(
+                _("Unexpected: " + str(e) + " Number Line:" +
+                    str(number_line)))
 
         attachment_id = self.env['ir.attachment'].create({
             'name': file_name,

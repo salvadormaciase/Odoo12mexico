@@ -21,6 +21,8 @@
     "data": [
         "views/templates.xml",
         "views/sale_portal_templates.xml",
+        "views/portal_my_invoices.xml",
+        "views/assets.xml",
     ],
     "test": [],
     "js": [],

@@ -31,14 +31,6 @@
         <field name="contract_id" ref="hr_payroll.hr_contract_gilles_gravie"/>
         <field name="payslip_id" ref="hr_payslip_mlc_cfdi0"/>
     </record>
-    <!-- Deductions -->
-    <record id="hr_payslip_mlc_cfdi0_input_line5" model="hr.payslip.input">
-        <field name="code">d_006</field>
-        <field name="name">Descuento por incapacidad</field>
-        <field name="amount" eval="100.0"/>
-        <field name="contract_id" ref="hr_payroll.hr_contract_gilles_gravie"/>
-        <field name="payslip_id" ref="hr_payslip_mlc_cfdi0"/>
-    </record>
     <!-- Overtime -->
     <record id="hr_payslip_mlc_cfdi0_overtime_line0" model="hr.payslip.overtime">
         <field name="amount" eval="100.0"/>
@@ -54,19 +46,6 @@
         <field name="days" eval="2"/>
         <field name="hours" eval="2"/>
         <field name="overtime_type">01</field>
-        <field name="payslip_id" ref="hr_payslip_mlc_cfdi0"/>
-    </record>
-    <!-- Inability -->
-    <record id="hr_payslip_mlc_cfdi0_inability_line0" model="hr.payslip.inability">
-        <field name="amount">50.0</field>
-        <field name="days">1</field>
-        <field name="inability_type">02</field>
-        <field name="payslip_id" ref="hr_payslip_mlc_cfdi0"/>
-    </record>
-    <record id="hr_payslip_mlc_cfdi0_inability_line1" model="hr.payslip.inability">
-        <field name="amount">50.0</field>
-        <field name="days">2</field>
-        <field name="inability_type">02</field>
         <field name="payslip_id" ref="hr_payslip_mlc_cfdi0"/>
     </record>
     <!-- Other Payments -->

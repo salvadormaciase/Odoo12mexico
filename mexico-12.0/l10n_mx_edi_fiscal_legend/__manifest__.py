@@ -14,6 +14,9 @@
         'security/ir.model.access.csv',
         'data/fiscal_legend_template.xml',
         'views/account_invoice_view.xml',
+        'views/res_partner_views.xml',
+        'views/account_views.xml',
+        'views/fiscal_legend_views.xml',
     ],
     'demo': [
     ],

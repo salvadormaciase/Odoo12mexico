@@ -301,13 +301,18 @@ result = exempt if result &gt;= exempt else result
         <field name="category_id" ref="hr_salary_rule_category_perception_mx_exempt"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = inputs.pe_020 and inputs.pe_020.amount</field>
-        <field name="note">Sólo 1 SM por cada domingo trabajado es exento, el excedente es gravado</field>
-    </record>
-    <record id="hr_rule_input_perception_020_e" model="hr.rule.input">
-        <field name="code">pe_020</field>
-        <field name="name">Prima dominical</field>
-        <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_020_e"/>
+        <field name="amount_python_compute">
+result = 0
+if employee.env['ir.model'].search([('model', '=', 'hr.attendance')]):
+    attendances = employee.env['hr.payslip'].browse(payslip.id)._get_attendences()
+    # Get How many sundays there is with an attendece
+    sundays_count = len(attendances.filtered(lambda att: att.check_in.weekday() == 6))
+    sundays_payment = contract.wage / 30.4 * 0.25 * sundays_count
+    exempt = contract.company_id.l10n_mx_edi_uma * sundays_count
+
+    result = exempt if exempt &lt; sundays_payment else sundays_payment
+        </field>
+        <field name="note">Sólo 1 UMA por cada domingo trabajado es exento, el excedente es gravado. Por favor, instale el módulo de Asistencias para utilizar esta regla.</field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_020_g" model="hr.salary.rule">
         <field name="name">Prima dominical</field>
@@ -316,13 +321,18 @@ result = exempt if result &gt;= exempt else result
         <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = inputs.pg_020 and inputs.pg_020.amount</field>
-        <field name="note">Sólo 1 SM por cada domingo trabajado es exento, el excedente es gravado</field>
-    </record>
-    <record id="hr_rule_input_perception_020_g" model="hr.rule.input">
-        <field name="code">pg_020</field>
-        <field name="name">Prima dominical</field>
-        <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_020_g"/>
+        <field name="amount_python_compute">
+result = 0
+if employee.env['ir.model'].search([('model', '=', 'hr.attendance')]):
+    attendances = employee.env['hr.payslip'].browse(payslip.id)._get_attendences()
+    # Get How many sundays there is with an attendece
+    sundays_count = len(attendances.filtered(lambda att: att.check_in.weekday() == 6))
+    sundays_payment = contract.wage / 30.4 * 0.25 * sundays_count
+    exempt = contract.company_id.l10n_mx_edi_uma * sundays_count
+
+    result = sundays_payment - exempt if sundays_payment &gt; exempt else 0
+        </field>
+        <field name="note">Sólo 1 UMA por cada domingo trabajado es exento, el excedente es gravado. Por favor, instale el módulo de Asistencias para utilizar esta regla.</field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_021_e" model="hr.salary.rule">
         <field name="name">Prima vacacional</field>
@@ -332,11 +342,11 @@ result = exempt if result &gt;= exempt else result
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-vacation_bonus = payslip.company_id.l10n_mx_edi_vacation_bonus
+vacation_bonus = (payslip.company_id or contract.company_id).l10n_mx_edi_vacation_bonus
 result = holidays = 0
 if not vacation_bonus or vacation_bonus == 'on_holidays':
     holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
-elif vacation_bonus == 'on_anniversary' and payslip.date_from.month == contract.date_start.month and payslip.date_from.day != contract.date_start.year and payslip.date_from.day &lt;= contract.date_start.day &lt;= payslip.date_to.day:
+elif vacation_bonus == 'on_anniversary' and payslip.date_from.month == contract.date_start.month and payslip.date_from.year != contract.date_start.year and payslip.date_from.day &lt;= contract.date_start.day &lt;= payslip.date_to.day:
     holidays = contract.get_current_holidays()
 if holidays:
     daily_wage = contract.wage / 30
@@ -354,11 +364,51 @@ if holidays:
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-vacation_bonus = payslip.company_id.l10n_mx_edi_vacation_bonus
+vacation_bonus = (payslip.company_id or contract.company_id).l10n_mx_edi_vacation_bonus
 result = holidays = 0
 if not vacation_bonus or vacation_bonus == 'on_holidays':
     holidays = worked_days.dict.get('HOLIDAYS') and worked_days.HOLIDAYS.number_of_days or 0.0
-elif vacation_bonus == 'on_anniversary' and payslip.date_from.month == contract.date_start.month and payslip.date_from.day != contract.date_start.year and payslip.date_from.day &lt;= contract.date_start.day &lt;= payslip.date_to.day:
+elif vacation_bonus == 'on_anniversary' and payslip.date_from.month == contract.date_start.month and payslip.date_from.year != contract.date_start.year and payslip.date_from.day &lt;= contract.date_start.day &lt;= payslip.date_to.day:
+    holidays = contract.get_current_holidays()
+if holidays:
+    daily_wage = contract.wage / 30
+    uma = contract.company_id.l10n_mx_edi_uma
+    result = daily_wage * holidays * contract.l10n_mx_edi_vacation_bonus / 100
+    result = result - uma * 15 if result >= uma * 15 else 0
+        </field>
+        <field name="note">Sólo 15 dias de SM son exentos, el excedente es gravado</field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_perception_021_e_christmas" model="hr.salary.rule">
+        <field name="name">Prima vacacional</field>
+        <field name="sequence" eval="21000"/>
+        <field name="code">PE021</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_exempt"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+vacation_bonus = (payslip.company_id or contract.company_id).l10n_mx_edi_vacation_bonus
+result = holidays = 0
+if vacation_bonus == 'on_christmas_bonus':
+    holidays = contract.get_current_holidays()
+if holidays:
+    daily_wage = contract.wage / 30
+    uma = contract.company_id.l10n_mx_edi_uma
+    result = daily_wage * holidays * contract.l10n_mx_edi_vacation_bonus / 100
+    result = uma * 15 if result >= (uma * 15) else result
+        </field>
+        <field name="note">Sólo 15 dias de SM son exentos, el excedente es gravado</field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_perception_021_g_christmas" model="hr.salary.rule">
+        <field name="name">Prima vacacional</field>
+        <field name="sequence" eval="21000"/>
+        <field name="code">PG021</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+vacation_bonus = (payslip.company_id or contract.company_id).l10n_mx_edi_vacation_bonus
+result = holidays = 0
+if vacation_bonus == 'on_christmas_bonus':
     holidays = contract.get_current_holidays()
 if holidays:
     daily_wage = contract.wage / 30
@@ -376,9 +426,12 @@ if holidays:
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-seniority = contract.get_seniority(date_to=payslip.date_to).get('years')
 result = 0
-if (payslip.struct_id.code == 'CFDI_FINIQUITO' and seniority >= 15):
+seniority = contract.get_seniority(date_to=payslip.date_to).get('years')
+if (payslip.struct_id.code == 'CFDI_FINIQUITO' and seniority >= 15) or payslip.struct_id.code == 'CFDI_LIQUIDACION':
+    year = payslip.date_to.year if contract.date_start.replace(year=payslip.date_to.year) &lt; payslip.date_to else payslip.date_to.year -1
+    date_start = contract.date_start if contract.date_start.year == payslip.date_to else contract.date_start.replace(year=year)
+    seniority += round(1 / 365 * (contract.get_seniority(date_start, date_to=payslip.date_to, method='a')['days'] - 1), 2)
     minimum_wage = contract.company_id.l10n_mx_edi_minimum_wage
     sbc = contract.l10n_mx_edi_integrated_salary
     # The basis for making the calculation can not be less than a minimum wage or more than two.
@@ -397,9 +450,12 @@ if (payslip.struct_id.code == 'CFDI_FINIQUITO' and seniority >= 15):
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-seniority = contract.get_seniority(date_to=payslip.date_to).get('years')
 result = 0
-if (payslip.struct_id.code == 'CFDI_FINIQUITO' and seniority >= 15):
+seniority = contract.get_seniority(date_to=payslip.date_to).get('years')
+if (payslip.struct_id.code == 'CFDI_FINIQUITO' and seniority >= 15) or payslip.struct_id.code == 'CFDI_LIQUIDACION':
+    year = payslip.date_to.year if contract.date_start.replace(year=payslip.date_to.year) &lt; payslip.date_to else payslip.date_to.year -1
+    date_start = contract.date_start if contract.date_start.year == payslip.date_to else contract.date_start.replace(year=year)
+    seniority += round(1 / 365 * (contract.get_seniority(date_start, date_to=payslip.date_to, method='a')['days'] - 1), 2)
     minimum_wage = contract.company_id.l10n_mx_edi_minimum_wage
     sbc = contract.l10n_mx_edi_integrated_salary
     # The basis for making the calculation can not be less than a minimum wage or more than two.
@@ -420,7 +476,10 @@ if (payslip.struct_id.code == 'CFDI_FINIQUITO' and seniority >= 15):
         <field name="amount_python_compute">
 daily_wage = contract.wage/30
 days = contract.get_current_holidays()
-result = daily_wage * days
+year = payslip.date_to.year if contract.date_start.replace(year=payslip.date_to.year) &lt; payslip.date_to else payslip.date_to.year -1
+date_start = contract.date_start if contract.date_start.year == payslip.date_to else contract.date_start.replace(year=year)
+seniority = contract.get_seniority(date_start, date_to=payslip.date_to, method='a')['days'] - 1
+result = daily_wage * (days / 365 * seniority)
         </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_023_e_2" model="hr.salary.rule">
@@ -499,20 +558,47 @@ result = aguinaldo
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-income_period = categories.PERGRA
+income_period = categories.PERGRA - PG022 - PG025
 # Table ISR (limite_inferior, limite_superior, cuota_fija, tasa)
-table = [(0.01, 578.52, 0.00, 0.0192), (578.53, 4910.18, 11.11, 0.0640),
-         (4910.19, 8629.20, 288.33, 0.1088), (8629.21, 10031.07, 692.96, 0.1600),
-         (10031.08, 12009.94, 917.26, 0.1792), (12009.95, 24222.31, 1271.87, 0.2136),
-         (24222.32, 38177.69, 3880.44, 0.2352), (38177.70, 72887.50, 7162.74, 0.3000),
-         (72887.51, 97183.33, 17575.69, 0.3200), (97183.34, 291550.00, 25350.35, 0.3400),
-         (291550.01, 999999999, 91435.02, 0.3500)]
+table = [(0.01, 644.58, 0.00, 0.0192), (644.59, 5470.92, 12.38, 0.0640),
+         (5470.93, 9614.66, 321.26, 0.1088), (9614.67, 11176.62, 772.10, 0.1600),
+         (11176.63, 13381.47, 1022.01, 0.1792), (13381.48, 26988.5, 1417.12, 0.2136),
+         (26988.51, 42537.58, 4323.58, 0.2352), (42537.59, 81211.25, 7980.73, 0.3000),
+         (81211.26, 108281.67, 19582.83, 0.3200), (108281.68, 324845.01, 28245.36, 0.3400),
+         (324845.01, 999999999, 101876.9, 0.3500)]
 result = 0
 for value in table:
     if income_period >=value[0] and value[1] >= income_period:
         extra = income_period - value[0]
         result = ((extra * value[3]) + value[2]) * -1
         break</field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_deduction_finiquito_002_indemnizaciones" model="hr.salary.rule">
+        <field name="name">ISR Indemnizaciones</field>
+        <field name="sequence" eval="41000"/>
+        <field name="code">I002</field>
+        <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+# ART 96, ART 95
+
+income_period = contract.wage
+# Table ISR (limite_inferior, limite_superior, cuota_fija, tasa)
+table = [(0.01, 644.58, 0.00, 0.0192), (644.59, 5470.92, 12.38, 0.0640),
+         (5470.93, 9614.66, 321.26, 0.1088), (9614.67, 11176.62, 772.10, 0.1600),
+         (11176.63, 13381.47, 1022.01, 0.1792), (13381.48, 26988.5, 1417.12, 0.2136),
+         (26988.51, 42537.58, 4323.58, 0.2352), (42537.59, 81211.25, 7980.73, 0.3000),
+         (81211.26, 108281.67, 19582.83, 0.3200), (108281.68, 324845.01, 28245.36, 0.3400),
+         (324845.01, 999999999, 101876.9, 0.3500)]
+result = 0
+for value in table:
+    if income_period >=value[0] and value[1] >= income_period:
+        extra = income_period - value[0]
+        result = ((extra * value[3]) + value[2]) * -1
+        break
+result = (result / contract.wage) * (PG022 + PG025 + PE022)
+        </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_024_e" model="hr.salary.rule">
         <field name="name">Seguro de retiro</field>
@@ -551,10 +637,16 @@ for value in table:
         <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = inputs.pg_025 and inputs.pg_025.amount</field>
+        <field name="amount_python_compute">
+result = inputs.p_025 and inputs.p_025.amount
+exempt = 90 * contract.company_id.l10n_mx_edi_uma
+result += contract.l10n_mx_edi_integrated_salary * 90
+result = result - exempt if result &gt; exempt else 0
+        </field>
+        <field name="note">Sólo 90 UMAs por año trabajado es exento, el excedente es gravado</field>
     </record>
-    <record id="hr_rule_input_perception_025_g" model="hr.rule.input">
-        <field name="code">pg_025</field>
+    <record id="hr_rule_input_perception_025" model="hr.rule.input">
+        <field name="code">p_025</field>
         <field name="name">Indeminizaciones</field>
         <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_025_g"/>
     </record>
@@ -565,12 +657,47 @@ for value in table:
         <field name="category_id" ref="hr_salary_rule_category_perception_mx_exempt"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = inputs.pe_025 and inputs.pe_025.amount</field>
+        <field name="amount_python_compute">
+result = inputs.p_025 and inputs.p_025.amount
+exempt = 90 * contract.company_id.l10n_mx_edi_uma
+result += contract.l10n_mx_edi_integrated_salary * 90
+result = exempt if result &gt; exempt else result
+        </field>
+        <field name="note">Sólo 90 UMAs por año trabajado es exento, el excedente es gravado</field>
     </record>
-    <record id="hr_rule_input_perception_025_e" model="hr.rule.input">
-        <field name="code">pe_025</field>
+    <!-- Finiquito -->
+    <record id="hr_rule_l10n_mx_payroll_perception_025_g_fin" model="hr.salary.rule">
         <field name="name">Indeminizaciones</field>
-        <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_025_e"/>
+        <field name="sequence" eval="25000"/>
+        <field name="code">PG025</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.p_025 and inputs.p_025.amount
+exempt = 90 * contract.company_id.l10n_mx_edi_uma
+result = result - exempt if result &gt; exempt else 0
+        </field>
+        <field name="note">Sólo 90 UMAs por año trabajado es exento, el excedente es gravado</field>
+    </record>
+    <record id="hr_rule_input_perception_025_fin" model="hr.rule.input">
+        <field name="code">p_025</field>
+        <field name="name">Indeminizaciones</field>
+        <field name="input_id" ref="hr_rule_l10n_mx_payroll_perception_025_g_fin"/>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_perception_025_e_fin" model="hr.salary.rule">
+        <field name="name">Indeminizaciones</field>
+        <field name="sequence" eval="25000"/>
+        <field name="code">PE025</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_exempt"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs.p_025 and inputs.p_025.amount
+exempt = 90 * contract.company_id.l10n_mx_edi_uma
+result = exempt if result &gt; exempt else result
+        </field>
+        <field name="note">Sólo 90 UMAs por año trabajado es exento, el excedente es gravado</field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_perception_026_e" model="hr.salary.rule">
         <field name="name">Reembolso por funeral</field>
@@ -878,6 +1005,34 @@ if not absence and not delay:
     result = contract.l10n_mx_edi_punctuality_bonus
         </field>
     </record>
+    <record id="hr_rule_l10n_mx_payroll_perception_seventh_day_g" model="hr.salary.rule">
+        <field name="name">Séptimo dia</field>
+        <field name="sequence" eval="38040"/>
+        <field name="code">SD038</field>
+        <field name="category_id" ref="hr_salary_rule_category_perception_mx_taxed"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0
+if employee.env['ir.model'].search([('model', '=', 'hr.attendance')]):
+    # get all employee's attendance
+    attendances = payslip.env['hr.payslip'].browse(payslip.id)._get_attendences()
+    # get which days employee works
+    working_days = employee.resource_calendar_id.attendance_ids.mapped('dayofweek')
+    daily_payment = contract.wage / 30.4
+
+    for attendance in attendances:
+        day = str(attendance.check_in.weekday())
+
+        if contract.l10n_mx_edi_day_off:
+            if day == contract.l10n_mx_edi_day_off:
+                result += (daily_payment * 2) if day == '6' else daily_payment
+
+        elif not day in working_days:
+            result += (daily_payment * 2) if day == '6' else daily_payment
+        </field>
+        <field name="note">Por favor, instale el módulo de Asistencias para utilizar esta regla.</field>
+    </record>
     <record id="hr_rule_l10n_mx_payroll_perception_039_e" model="hr.salary.rule">
         <field name="name">Jubilaciones, pensiones o haberes de retiro</field>
         <field name="sequence" eval="39000"/>
@@ -1151,21 +1306,18 @@ if not employee.l10n_mx_edi_is_assimilated:
     sbc = contract.l10n_mx_edi_sdi_total
     uma = contract.company_id.l10n_mx_edi_uma
     days_work = worked_days.dict.get('WORK100') and worked_days.WORK100.number_of_days or 0.0
-    days_work += worked_days.dict.get('FALTA_INJUSTIFICADA') and worked_days.FALTA_INJUSTIFICADA.number_of_days or 0.0
-    salary = days_work * sbc
-
-    result = 0.02375 * salary
-
-    imss = 0
-    if sbc > (uma * 3):
-        imss = 0.004 * (sbc - uma * 3) * days_work
-
-    result = (result + imss) * -1
+    leaves = worked_days.dict.get('FALTA_INJUSTIFICADA') and worked_days.FALTA_INJUSTIFICADA.number_of_days or 0.0
+    specie_excess = ((sbc - (uma * 3)) * 0.004 * (days_work + leaves)) if (sbc - (uma * 3)) &gt; 0 else 0
+    benefits = 0.0025 * sbc * (days_work + leaves)
+    pensioners = 0.00375 * sbc * (days_work + leaves)
+    disability = 0.00625 * sbc * days_work
+    unemployment = 0.01125 * sbc * days_work
+    result = -(specie_excess + benefits + pensioners + disability + unemployment)
         </field>
     </record>
-    <record id="hr_rule_l10n_mx_payroll_deduction_isr" model="hr.salary.rule">
+    <record id="hr_rule_l10n_mx_payroll_deduction_isr_extra" model="hr.salary.rule">
         <field name="name">AUX ISR</field>
-        <field name="sequence" eval="53500"/>
+        <field name="sequence" eval="60000"/>
         <field name="code">AUX_ISR</field>
         <field name="category_id" ref="hr_salary_rule_category_aux_mx"/>
         <field name="condition_select">none</field>
@@ -1173,36 +1325,97 @@ if not employee.l10n_mx_edi_is_assimilated:
         <field name="amount_python_compute">
 income_period = categories.PERGRA
 # Table ISR (limite_inferior, limite_superior, cuota_fija, tasa)
-table = {'05': [(0.01, 578.52, 0.00, 0.0192), (578.53, 4910.18, 11.11, 0.0640),
-         (4910.19, 8629.20, 288.33, 0.1088), (8629.21, 10031.07, 692.96, 0.1600),
-         (10031.08, 12009.94, 917.26, 0.1792), (12009.95, 24222.31, 1271.87, 0.2136),
-         (24222.32, 38177.69, 3880.44, 0.2352), (38177.70, 72887.50, 7162.74, 0.3000),
-         (72887.51, 97183.33, 17575.69, 0.3200), (97183.34, 291550.00, 25350.35, 0.3400),
-         (291550.01, 999999999, 91435.02, 0.3500)],
-         '04': [(0.01, 285.45, 0.00, 0.0192), (285.46, 2422.80, 5.55, 0.0640),
-         (2422.81, 4257.90, 142.20,  0.1088), (4257.91, 4949.55, 341.85,  0.1600),
-         (4949.56, 5925.90, 452.55,  0.1792), (5925.91, 11951.85, 627.60, 0.2136),
-         (11951.86, 18837.75, 1914.75, 0.2352), (18837.76, 35964.30, 3534.30, 0.3000),
-         (35964.31, 47952.30, 8672.25, 0.3200), (47952.31, 143856.90, 12508.35, 0.3400),
-         (143856.91, 999999999, 45115.95, 0.3500)],
-         '02': [(0.01, 133.21, 0.00, 0.0192), (133.22, 1130.64, 2.59, 0.0640),
-         (1130.65, 1987.02, 66.36, 0.1088), (1987.03, 2309.79, 159.53, 0.1600),
-         (2309.80, 2765.42, 211.19, 0.1792), (2765.43, 5577.53, 292.88, 0.2136),
-         (5577.54, 8790.95, 893.55, 0.2352), (8790.96, 16783.34, 1649.34, 0.3000),
-         (16783.35, 22377.74, 4047.05, 0.3200), (22377.75, 67133.22, 5837.23, 0.3400),
-         (67133.23, 99999999, 21054.11, 0.3500)],
-         '01': [(0.01, 19.03, 0.00, 0.0192), (19.04, 161.52, 0.37, 0.0640),
-         (161.53, 283.86, 9.48, 0.1088), (283.87, 329.97, 22.79, 0.1600),
-         (329.98, 395.06, 30.17, 0.1792), (395.07, 796.79, 41.84, 0.2136),
-         (796.80, 1255.85, 127.65, 0.2352), (1255.86, 2397.62, 235.62, 0.3000),
-         (2397.63, 3196.82, 578.15, 0.3200), (3196.83, 9590.46, 833.89, 0.3400),
-         (9590.47, 99999999, 3007.73, 0.3500)],
-         '10': [(0.01, 190.30, 0.00, 0.0192), (190.31, 1615.20, 3.70, 0.0640),
-         (1615.21, 2838.60, 94.80, 0.1088), (2838.61, 3299.70, 227.90, 0.1600),
-         (3299.71, 3950.60, 301.70, 0.1792), (3950.61, 7967.90, 418.40, 0.2136),
-         (7967.91, 12558.50, 1276.50, 0.2352), (12558.51, 23976.20, 2356.20, 0.3000),
-         (23976.21, 31968.20, 5781.50, 0.3200), (31968.21, 95904.60, 8338.90, 0.3400),
-         (95904.61, 99999999, 30077.30, 0.3500)]}
+table = {'05': [(0.01, 644.58, 0.00, 0.0192), (644.59, 5470.92, 12.38, 0.0640),
+         (5470.93, 9614.66, 321.26, 0.1088), (9614.67, 11176.62, 772.10, 0.1600),
+         (11176.63, 13381.47, 1022.01, 0.1792), (13381.48, 26988.5, 1417.12, 0.2136),
+         (26988.51, 42537.58, 4323.58, 0.2352), (42537.59, 81211.25, 7980.73, 0.3000),
+         (81211.26, 108281.67, 19582.83, 0.3200), (108281.68, 324845.01, 28245.36, 0.3400),
+         (324845.01, 999999999, 101876.9, 0.3500)],
+         '04': [(0.01, 318.0, 0.00, 0.0192), (318.01, 2699.4, 6.15, 0.0640),
+         (2699.41, 4744.05, 158.55,  0.1088), (4744.06, 5514.75, 381.00,  0.1600),
+         (5514.76, 6602.7, 504.3,  0.1792), (6602.71, 13316.7, 699.3, 0.2136),
+         (13316.71, 20988.9, 2133.3, 0.2352), (20988.91, 40071.3, 3937.8, 0.3000),
+         (40071.31, 53428.5, 9662.55, 0.3200), (53428.51, 160285.35, 13936.80, 0.3400),
+         (160285.36, 999999999, 50268.15, 0.3500)],
+         '02': [(0.01, 148.4, 0.00, 0.0192), (148.41, 1259.72, 2.87, 0.0640),
+         (1259.73, 2213.89, 73.99, 0.1088), (2213.90, 2573.55, 177.80, 0.1600),
+         (2573.56, 3081.26, 235.34, 0.1792), (3081.27, 6214.46, 326.34, 0.2136),
+         (6214.47, 9794.82, 995.54, 0.2352), (9794.83, 18699.94, 1837.64, 0.3000),
+         (18699.95, 24933.30, 4509.19, 0.3200), (24933.31, 74799.83, 6503.84, 0.3400),
+         (74799.84, 99999999, 23458.47, 0.3500)],
+         '01': [(0.01, 21.20, 0.00, 0.0192), (21.21, 179.96, 0.41, 0.0640),
+         (179.97, 316.27, 10.57, 0.1088), (316.28, 367.65, 25.40, 0.1600),
+         (367.66, 440.18, 33.62, 0.1792), (440.19, 887.78, 46.62, 0.2136),
+         (887.79, 1399.26, 142.22, 0.2352), (1399.27, 2671.42, 262.52, 0.3000),
+         (2671.43, 3561.90, 644.17, 0.3200), (3561.91, 10685.69, 929.12, 0.3400),
+         (10685.70, 99999999, 3351.21, 0.3500)],
+         '10': [(0.01, 212, 0.00, 0.0192), (212.01, 1799.6, 4.10, 0.0640),
+         (1799.61, 3162.70, 105.70, 0.1088), (3162.71, 3676.50, 254, 0.1600),
+         (3676.51, 4401.80, 466.20, 0.1792), (4401.81, 8877.80, 466.20, 0.2136),
+         (8877.81, 13992.60, 1422.20, 0.2352), (13992.61, 26714.20, 2625.20, 0.3000),
+         (26714.21, 35619, 6441.70, 0.3200), (35619.01, 106856.90, 9291.20, 0.3400),
+         (106856.91, 99999999, 33512.10, 0.3500)]}
+result = 0
+table_isr = table.get(contract.schedule_pay, [])
+if table_isr:
+    for value in table_isr:
+        if income_period >=value[0] and value[1] >= income_period:
+            extra = income_period - value[0]
+            result = ((extra * value[3]) + value[2]) * -1
+            break
+if employee.env['hr.payslip'].browse(payslip.id).l10n_mx_edi_is_last_payslip():
+    category = employee.env.ref('l10n_mx_edi_payslip.hr_salary_rule_category_perception_mx_taxed')
+    payslips = employee.slip_ids.filtered(lambda sl: sl.state == 'done' and sl.id != payslip.id and sl.date_from.month == payslip.date_from.month and sl.date_from.year == payslip.date_from.year)
+    lines = payslips.mapped('line_ids')
+    income_monthly = income_period + sum(lines.filtered(lambda li: li.category_id.id == category.id).mapped('total'))
+    for value in table['05']:
+        if income_monthly >=value[0] and value[1] >= income_monthly:
+            extra = income_monthly - value[0]
+            result = ((extra * value[3]) + value[2]) * -1
+            break
+    rule = employee.env.ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_isr')
+    result = result - sum(lines.filtered(lambda li: li.salary_rule_id == rule).mapped('total'))</field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_deduction_isr" model="hr.salary.rule">
+        <field name="name">AUX ISR</field>
+        <field name="sequence" eval="60000"/>
+        <field name="code">AUX_ISR</field>
+        <field name="category_id" ref="hr_salary_rule_category_aux_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+income_period = categories.PERGRA + IEG006 + IM006 + IRT006 + LPHC006
+# Table ISR (limite_inferior, limite_superior, cuota_fija, tasa)
+table = {'05': [(0.01, 644.58, 0.00, 0.0192), (644.59, 5470.92, 12.38, 0.0640),
+         (5470.93, 9614.66, 321.26, 0.1088), (9614.67, 11176.62, 772.10, 0.1600),
+         (11176.63, 13381.47, 1022.01, 0.1792), (13381.48, 26988.5, 1417.12, 0.2136),
+         (26988.51, 42537.58, 4323.58, 0.2352), (42537.59, 81211.25, 7980.73, 0.3000),
+         (81211.26, 108281.67, 19582.83, 0.3200), (108281.68, 324845.01, 28245.36, 0.3400),
+         (324845.01, 999999999, 101876.9, 0.3500)],
+         '04': [(0.01, 318.0, 0.00, 0.0192), (318.01, 2699.4, 6.15, 0.0640),
+         (2699.41, 4744.05, 158.55,  0.1088), (4744.06, 5514.75, 381.00,  0.1600),
+         (5514.76, 6602.7, 504.3,  0.1792), (6602.71, 13316.7, 699.3, 0.2136),
+         (13316.71, 20988.9, 2133.3, 0.2352), (20988.91, 40071.3, 3937.8, 0.3000),
+         (40071.31, 53428.5, 9662.55, 0.3200), (53428.51, 160285.35, 13936.80, 0.3400),
+         (160285.36, 999999999, 50268.15, 0.3500)],
+         '02': [(0.01, 148.4, 0.00, 0.0192), (148.41, 1259.72, 2.87, 0.0640),
+         (1259.73, 2213.89, 73.99, 0.1088), (2213.90, 2573.55, 177.80, 0.1600),
+         (2573.56, 3081.26, 235.34, 0.1792), (3081.27, 6214.46, 326.34, 0.2136),
+         (6214.47, 9794.82, 995.54, 0.2352), (9794.83, 18699.94, 1837.64, 0.3000),
+         (18699.95, 24933.30, 4509.19, 0.3200), (24933.31, 74799.83, 6503.84, 0.3400),
+         (74799.84, 99999999, 23458.47, 0.3500)],
+         '01': [(0.01, 21.20, 0.00, 0.0192), (21.21, 179.96, 0.41, 0.0640),
+         (179.97, 316.27, 10.57, 0.1088), (316.28, 367.65, 25.40, 0.1600),
+         (367.66, 440.18, 33.62, 0.1792), (440.19, 887.78, 46.62, 0.2136),
+         (887.79, 1399.26, 142.22, 0.2352), (1399.27, 2671.42, 262.52, 0.3000),
+         (2671.43, 3561.90, 644.17, 0.3200), (3561.91, 10685.69, 929.12, 0.3400),
+         (10685.70, 99999999, 3351.21, 0.3500)],
+         '10': [(0.01, 212, 0.00, 0.0192), (212.01, 1799.6, 4.10, 0.0640),
+         (1799.61, 3162.70, 105.70, 0.1088), (3162.71, 3676.50, 254, 0.1600),
+         (3676.51, 4401.80, 466.20, 0.1792), (4401.81, 8877.80, 466.20, 0.2136),
+         (8877.81, 13992.60, 1422.20, 0.2352), (13992.61, 26714.20, 2625.20, 0.3000),
+         (26714.21, 35619, 6441.70, 0.3200), (35619.01, 106856.90, 9291.20, 0.3400),
+         (106856.91, 99999999, 33512.10, 0.3500)]}
 result = 0
 table_isr = table.get(contract.schedule_pay, [])
 if table_isr:
@@ -1227,7 +1440,7 @@ if employee.env['hr.payslip'].browse(payslip.id).l10n_mx_edi_is_last_payslip():
     <record id="hr_rule_l10n_mx_payroll_other_payment_aux_002" model="hr.salary.rule">
         <field name="name">Auxiliar Subsidio para el empleo</field>
         <field name="code">AUX_OP002</field>
-        <field name="sequence">53501</field>
+        <field name="sequence">60001</field>
         <field name="category_id" ref="hr_salary_rule_category_aux_mx"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
@@ -1272,7 +1485,7 @@ if not employee.l10n_mx_edi_is_assimilated:
     </record>
     <record id="hr_rule_l10n_mx_payroll_deduction_002" model="hr.salary.rule">
         <field name="name">ISR</field>
-        <field name="sequence" eval="55000"/>
+        <field name="sequence" eval="60002"/>
         <field name="code">002</field>
         <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
         <field name="condition_select">none</field>
@@ -1288,17 +1501,17 @@ result = AUX_ISR + AUX_OP002 if abs(AUX_ISR) - AUX_OP002 &gt; 0 else 0</field>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-table = [(0.01, 578.52, 0.00, 0.0192), (578.53, 4910.18, 11.11, 0.0640),
-         (4910.19, 8629.20, 288.33, 0.1088), (8629.21, 10031.07, 692.96, 0.1600),
-         (10031.08, 12009.94, 917.26, 0.1792), (12009.95, 24222.31, 1271.87, 0.2136),
-         (24222.32, 38177.69, 3880.44, 0.2352), (38177.70, 72887.50, 7162.74, 0.3000),
-         (72887.51, 97183.33, 17575.69, 0.3200), (97183.34, 291550.00, 25350.35, 0.3400),
-         (291550.01, 999999999, 91435.02, 0.3500)]
+table = [(0.01, 644.58, 0.00, 0.0192), (644.59, 5470.92, 12.38, 0.0640),
+         (5470.93, 9614.66, 321.26, 0.1088), (9614.67, 11176.62, 772.10, 0.1600),
+         (11176.63, 13381.47, 1022.01, 0.1792), (13381.48, 26988.5, 1417.12, 0.2136),
+         (26988.51, 42537.58, 4323.58, 0.2352), (42537.59, 81211.25, 7980.73, 0.3000),
+         (81211.26, 108281.67, 19582.83, 0.3200), (108281.68, 324845.01, 28245.36, 0.3400),
+         (324845.01, 999999999, 101876.9, 0.3500)]
 income_period = categories.PERGRA
 income_exe = categories.PEREXE
 wage = contract.wage
 
-year = payslip.l10n_mx_edi_payment_date.year
+year = (payslip.l10n_mx_edi_payment_date or payslip.date_from).year
 days_year = 365
 if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
     days_year = 366
@@ -1317,7 +1530,7 @@ for value in table:
        result2 = (((wage - value[0]) * value[3]) + value[2]) * -1
 
 isr = result2 - result1
-efective_rate = isr / art_174_lisr
+efective_rate = isr / (art_174_lisr or 1)
 result = -1 * (income_period * efective_rate)
         </field>
     </record>
@@ -1392,18 +1605,68 @@ result = -result
         <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_005"/>
     </record>
     <record id="hr_rule_l10n_mx_payroll_deduction_006" model="hr.salary.rule">
-        <field name="name">Descuento por incapacidad</field>
+        <field name="name">Incapacidad Enfermedad General</field>
         <field name="sequence" eval="59000"/>
-        <field name="code">006</field>
+        <field name="code">IEG006</field>
         <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = (inputs.d_006 and inputs.d_006.amount)*-1</field>
+        <field name="amount_python_compute">
+result = 0
+if worked_days.dict.get('INCAPACIDAD_POR_ENFERMEDAD_GENERAL'):
+    payment_daily = (contract.wage / 30)
+    payslip_ = payslip.env['hr.payslip'].browse(payslip.id)
+    sick_leave = payslip_._get_full_leaves('INCAPACIDAD_POR_ENFERMEDAD_GENERAL')
+    result = -(sick_leave * payment_daily)
+        </field>
     </record>
-    <record id="hr_rule_input_deduction_006" model="hr.rule.input">
-        <field name="code">d_006</field>
-        <field name="name">Descuento por incapacidad</field>
-        <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_006"/>
+    <record id="hr_rule_l10n_mx_payroll_deduction_006_im" model="hr.salary.rule">
+        <field name="name">Incapacidad Maternidad</field>
+        <field name="sequence" eval="59002"/>
+        <field name="code">IM006</field>
+        <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0
+if worked_days.dict.get('MATERNITY'):
+    payment_daily = (contract.wage / 30)
+    payslip_ = payslip.env['hr.payslip'].browse(payslip.id)
+    sick_leave = payslip_._get_full_leaves('MATERNITY')
+    result = -(sick_leave * payment_daily)
+        </field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_deduction_006_irt" model="hr.salary.rule">
+        <field name="name">Incapacidad Riesgo de Trabajo</field>
+        <field name="sequence" eval="59001"/>
+        <field name="code">IRT006</field>
+        <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0
+if worked_days.dict.get('INCAPACIDAD_POR_RIESGO_DE_TRABAJO'):
+    payment_daily = (contract.wage / 30)
+    payslip_ = payslip.env['hr.payslip'].browse(payslip.id)
+    sick_leave = payslip_._get_full_leaves('INCAPACIDAD_POR_RIESGO_DE_TRABAJO')
+    result = -(sick_leave * payment_daily)
+        </field>
+    </record>
+    <record id="hr_rule_l10n_mx_payroll_deduction_006_lphc" model="hr.salary.rule">
+        <field name="name">Licencia para Padres con Hijos con Cancer</field>
+        <field name="sequence" eval="59003"/>
+        <field name="code">LPHC006</field>
+        <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = 0
+if worked_days.dict.get('INCAPACIDAD_PADRES_HIJOS_CANCER'):
+    payment_daily = (contract.wage / 30)
+    payslip_ = payslip.env['hr.payslip'].browse(payslip.id)
+    sick_leave = payslip_._get_full_leaves('INCAPACIDAD_PADRES_HIJOS_CANCER')
+    result = -(sick_leave * payment_daily)
+        </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_deduction_007" model="hr.salary.rule">
         <field name="name">Pensión alimenticia</field>
@@ -1619,12 +1882,11 @@ result = -result
         <field name="category_id" ref="hr_salary_rule_category_deduction_mx"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = (inputs.d_020 and inputs.d_020.amount)*-1</field>
-    </record>
-    <record id="hr_rule_input_deduction_020" model="hr.rule.input">
-        <field name="code">d_020</field>
-        <field name="name">Ausencia - Ausentismo</field>
-        <field name="input_id" ref="hr_rule_l10n_mx_payroll_deduction_020"/>
+        <field name="amount_python_compute">
+payment_daily = contract.wage / 30.4
+leaves = worked_days.dict.get('FALTA_INJUSTIFICADA') and worked_days.FALTA_INJUSTIFICADA.number_of_days or 0.0
+result = -payment_daily * leaves
+        </field>
     </record>
     <record id="hr_rule_l10n_mx_payroll_deduction_021" model="hr.salary.rule">
         <field name="name">Cuotas obrero patronales</field>

@@ -69,7 +69,7 @@
                     <tradeItemIdentification>
                         <gtin t-raw="line.x_addenda_supplier_code or supplier_info.product_code or line.product_id.barcode or ''"/>
                     </tradeItemIdentification>
-                    <alternateTradeItemIdentification type="BUYER_ASSIGNED" t-raw="line.product_id.barcode or line.x_addenda_supplier_code or supplier_info.product_code or ''"/>
+                    <alternateTradeItemIdentification type="BUYER_ASSIGNED" t-raw="line.x_addenda_supplier_code or line.product_id.barcode or supplier_info.product_code or ''"/>
                     <tradeItemDescriptionInformation>
                         <longText t-raw="record._get_string_cfdi(line.name, 1000)"/>
                     </tradeItemDescriptionInformation>

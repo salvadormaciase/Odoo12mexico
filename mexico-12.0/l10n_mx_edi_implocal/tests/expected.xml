@@ -1,6 +1,7 @@
 <cfdi:Comprobante
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+xmlns:implocal="http://www.sat.gob.mx/implocal"
 xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd http://www.sat.gob.mx/implocal http://www.sat.gob.mx/sitio_internet/cfd/implocal/implocal.xsd"
 Version="3.3"
 Sello=""

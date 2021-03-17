@@ -5,11 +5,12 @@ import base64
 import json
 import logging
 from io import BytesIO
+import requests
 
 from lxml import etree, objectify
 from suds.client import Client
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, tools
 from odoo.addons.l10n_mx_edi.models.account_invoice import create_list_html
 from odoo.exceptions import UserError
 from odoo.tools import config
@@ -20,6 +21,11 @@ _logger = logging.getLogger(__name__)
 
 CFDI_TEMPLATE_33 = 'l10n_mx_edi_pos.cfdiv33_pos'
 CFDI_XSLT_CADENA = 'l10n_mx_edi/data/3.3/cadenaoriginal.xslt'
+CFDI_SAT_QR_STATE = {
+    'No Encontrado': 'not_found',
+    'Cancelado': 'cancelled',
+    'Vigente': 'valid',
+}
 
 
 class PosSession(models.Model):
@@ -37,6 +43,21 @@ class PosSession(models.Model):
         help='Refers to the status of the invoice inside the PAC.',
         readonly=True,
         copy=False)
+    l10n_mx_edi_sat_status = fields.Selection(
+        selection=[
+            ('none', 'State not defined'),
+            ('undefined', 'Not Synced Yet'),
+            ('not_found', 'Not Found'),
+            ('cancelled', 'Cancelled'),
+            ('valid', 'Valid'),
+        ],
+        string='SAT status',
+        help='Refers to the status of the invoice inside the SAT system.',
+        readonly=True,
+        copy=False,
+        required=True,
+        tracking=True,
+        default='undefined')
 
     @api.multi
     def l10n_mx_edi_update_pac_status(self):
@@ -121,7 +142,7 @@ class PosSession(models.Model):
                 self._l10n_mx_edi_post_sign_process(cfdi_values, order_filter)
                 signed.append(bool(cfdi_values.get('cfdi', False)))
             orders = orders - order_filter
-        if all(signed):
+        if signed and all(signed):
             self.l10n_mx_edi_pac_status = 'signed'
 
     @api.multi
@@ -507,6 +528,64 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         attachment_ids = self.l10n_mx_edi_retrieve_attachments(filename)
         return attachment_ids[0] if attachment_ids else None
 
+    def l10n_mx_edi_get_sat_status(self, xml):
+        """Synchronize both systems: Odoo & SAT to make sure the invoice is valid."""
+        url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
+        headers = {'SOAPAction': 'http://tempuri.org/IConsultaCFDIService/Consulta', 'Content-Type': 'text/xml; charset=utf-8'}  # noqa
+        template = """<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:ns0="http://tempuri.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+   <ns1:Body>
+      <ns0:Consulta>
+         <ns0:expresionImpresa>${data}</ns0:expresionImpresa>
+      </ns0:Consulta>
+   </ns1:Body>
+</SOAP-ENV:Envelope>"""  # noqa
+        namespace = {'a': 'http://schemas.datacontract.org/2004/07/Sat.Cfdi.Negocio.ConsultaCfdi.Servicio'}
+        invoice_obj = self.env['account.invoice']
+        supplier_rfc = xml.Emisor.get('Rfc')
+        customer_rfc = xml.Receptor.get('Rfc')
+        total = xml.get('Total')
+        uuid = invoice_obj.l10n_mx_edi_get_tfd_etree(xml).get('UUID', '')
+        params = '?re=%s&amp;rr=%s&amp;tt=%s&amp;id=%s' % (
+            tools.html_escape(tools.html_escape(supplier_rfc or '')),
+            tools.html_escape(tools.html_escape(customer_rfc or '')),
+            total or 0.0, uuid or '')
+        soap_env = template.format(data=params)
+        try:
+            soap_xml = requests.post(url, data=soap_env, headers=headers, timeout=20)
+            response = objectify.fromstring(soap_xml.text)
+            status = response.xpath(
+                '//a:Estado', namespaces=namespace)
+        except Exception as e:
+            return {'error': str(e)}
+        return CFDI_SAT_QR_STATE.get(
+            status[0] if status else '', 'none')
+
+    def l10n_mx_edi_update_sat_status(self):
+        att_obj = self.env['ir.attachment']
+        for record in self:
+            attach_xml_ids = att_obj.search([
+                ('name', 'ilike', '%s%%.xml' % record.name.replace('/', '_')),
+                ('res_model', '=', record._name),
+                ('res_id', '=', record.id),
+            ])
+            for att in attach_xml_ids.filtered('datas'):
+                xml = self.l10n_mx_edi_get_xml_etree(att.datas, True)
+                l10n_mx_edi_sat_status = self.l10n_mx_edi_get_sat_status(xml)
+                if isinstance(l10n_mx_edi_sat_status, dict):
+                    record.l10n_mx_edi_log_error(l10n_mx_edi_sat_status['error'])
+                    continue
+                record.l10n_mx_edi_sat_status = l10n_mx_edi_sat_status
+
+    @api.model
+    def l10n_mx_edi_get_xml_etree(self, cfdi, in_base64=False):
+        """Get an objectified tree representing the cfdi."""
+        if in_base64:
+            cfdi = base64.b64decode(cfdi)
+        return objectify.fromstring(cfdi) if cfdi else None
+
 
 class PosOrder(models.Model):
 
@@ -580,7 +659,7 @@ class PosOrder(models.Model):
             'serie': 'NA',
         }
         invoice['subtotal_wo_discount'] = '%.*f' % (precision_digits, sum([
-            self._get_subtotal_wo_discount(precision_digits, l) for l in
+            self._get_subtotal_wo_discount(precision_digits, line) for line in
             self.mapped('lines')]))
         invoice['amount_untaxed'] = abs(float_round(sum(
             [self._get_subtotal_wo_discount(precision_digits, p) for p in
@@ -855,6 +934,17 @@ class PosOrder(models.Model):
         if refunds:
             refunds.add_payment_for_credit_note()
         return res_invoice
+
+    @api.model
+    def create(self, values):
+        generic_partner = self.env.user.company_id.l10n_mx_edi_pos_default_partner_id
+        if not generic_partner:
+            return super(PosOrder, self).create(values)
+        partner = values.get('partner_id')
+        invoiceable = partner and self.env['res.partner'].browse(partner).vat or False
+        if not invoiceable:
+            values['partner_id'] = generic_partner.id
+        return super(PosOrder, self).create(values)
 
     def _prepare_invoice(self):
         res = super(PosOrder, self)._prepare_invoice()

@@ -32,7 +32,7 @@ class MxEdiAddendaNissan(InvoiceTransactionCase):
         invoice = self.create_invoice()
         invoice.partner_shipping_id = self.partner_agrolait
         # wizard values
-        invoice.x_addenda_nissan = '123|12|1234||10.00'
+        invoice.x_addenda_nissan = '123|12|1234||0'
         invoice.action_invoice_open()
         invoice.refresh()
         self.assertEqual(invoice.state, "open")

@@ -61,8 +61,15 @@ class AccountPayment(models.Model):
         # normal cancel for current period
         (self - payments).cancel()
         # Set none no signed payments
-        payments.filtered(lambda p: p.l10n_mx_edi_pac_status in (
-            'retry', 'to_sign')).write({'l10n_mx_edi_pac_status': 'none'})
+        mx_payment = self.filtered(lambda r: r.l10n_mx_edi_is_required() and r.l10n_mx_edi_cfdi)
+        mx_payment.with_context(disable_after_commit=True)._l10n_mx_edi_cancel()
+        mx_payment.l10n_mx_edi_update_sat_status()
+        env_demo = mx_payment.mapped('company_id').filtered('l10n_mx_edi_pac_test_env')
+        if mx_payment.filtered(
+                lambda p: p.company_id not in env_demo and p.l10n_mx_edi_pac_status in [
+                    'to_cancel', 'cancelled'] and p.l10n_mx_edi_sat_status != 'cancelled'):
+            raise UserError(_('In order to generate a reversal for a payment, you must first cancel it in the SAT '
+                              'system.'))
         # search accounts for tax and cash basis.
         taxes = self.env['account.tax'].search([])
         basis_account_ids = taxes.mapped('cash_basis_base_account_id')

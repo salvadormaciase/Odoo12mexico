@@ -27,7 +27,6 @@
         <shipTo>
             <gln>7505000099632</gln>
             <nameAndAddress>
-                <name/>
             </nameAndAddress>
         </shipTo>
         <paymentTerms paymentTermsEvent="DATE_OF_INVOICE" PaymentTermsRelationTime="REFERENCE_AFTER">
@@ -55,7 +54,9 @@
                 <gtin>1234567890</gtin>
             </tradeItemIdentification>
             <alternateTradeItemIdentification type="BUYER_ASSIGNED">1234567890</alternateTradeItemIdentification>
-            <tradeItemDescriptionInformation><longText>[PCSC234] Computer SC234 17</longText></tradeItemDescriptionInformation>
+            <tradeItemDescriptionInformation>
+                <longText>[PCSC234] Computer SC234 17</longText>
+            </tradeItemDescriptionInformation>
             <invoicedQuantity unitOfMeasure="U">1.0</invoicedQuantity>
             <grossPrice>
                 <Amount>450.00</Amount>

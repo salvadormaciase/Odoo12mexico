@@ -9,7 +9,7 @@
     "license": "OEEL-1",
     "depends": [
         "point_of_sale",
-        "l10n_mx_edi",
+        "l10n_mx_edi_partner_defaults",
     ],
     "demo": [
     ],
@@ -18,6 +18,8 @@
         "views/account_view.xml",
         "views/point_of_sale_view.xml",
         "views/report_xml_session.xml",
+        "views/assets.xml",
+        "views/res_config_settings_views.xml",
     ],
     'external_dependencies': {
         'python': [
@@ -26,6 +28,7 @@
     },
     "installable": True,
     "auto_install": False,
+    'qweb': ['static/src/xml/pos.xml'],
     'images': [
         'images/main_screenshot.png'
     ],

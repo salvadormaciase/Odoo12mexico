@@ -35,5 +35,8 @@
         <xpath expr="*" position="inside">
             <t t-call="l10n_mx_edi_ine.l10n_mx_edi_ine_xml" t-lang="es_MX"/>
         </xpath>
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__ine">"http://www.sat.gob.mx/ine" if record.l10n_mx_edi_ine_process_type else False</attribute>
+        </xpath>
     </template>
 </odoo>

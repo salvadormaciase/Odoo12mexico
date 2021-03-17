@@ -191,7 +191,9 @@ Configuration
 
 To configure this module, you need to:
 
-* There is not special configuration for this module.
+* In order to use the salary rules Séptimo dia and Prima dominical, please install the Attendances Module.
+  - If Attendances is not installed, the rule Prima dominical will not work.
+  - Usually Attendances Module is used with a time clock, however it is not necessary to use one to use this rules, you can register the attendances manually using any valid way.
 
 Bug Tracker
 ===========

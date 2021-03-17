@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
-import os
 import unittest
 import time
 from datetime import datetime, timedelta
@@ -10,39 +9,11 @@ from calendar import monthrange
 from lxml import etree, objectify
 
 import odoo
-from odoo.tests.common import TransactionCase
+
+from .common import PayrollTransactionCase
 
 
-class HRPayroll(TransactionCase):
-
-    def setUp(self):
-        super(HRPayroll, self).setUp()
-        self.payslip_obj = self.env['hr.payslip']
-        self.mail_obj = self.env['mail.compose.message']
-        self.payslip_run_obj = self.env['hr.payslip.run']
-        self.wizard_batch = self.env['hr.payslip.employees']
-
-        self.employee = self.env.ref('hr.employee_qdp')
-        self.contract = self.env.ref('hr_payroll.hr_contract_gilles_gravie')
-        self.contract.compute_integrated_salary()
-        self.struct = self.env.ref(
-            'l10n_mx_edi_payslip.payroll_structure_data_01')
-        self.cat_excempt = self.env.ref(
-            'l10n_mx_edi_payslip.hr_salary_rule_category_perception_mx_exempt')
-
-        xml_expected_path = os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), 'expected_cfdi.xml')
-        xml_expected_f = open(xml_expected_path)
-        self.xml_expected = objectify.parse(xml_expected_f).getroot()
-        self.fiscal_position_model = self.env['account.fiscal.position']
-        self.fiscal_position = self.fiscal_position_model.create({
-            'name': 'Personas morales del régimen general',
-            'l10n_mx_edi_code': '601',
-        })
-        self.partnerc = self.env.user.company_id.partner_id
-        self.partnerc.property_account_position_id = self.fiscal_position
-        self.env.user.company_id.l10n_mx_edi_minimum_wage = 80.04
-        self.uid = self.env.ref('l10n_mx_edi_payslip.payroll_mx_manager')
+class HRPayroll(PayrollTransactionCase):
 
     def test_001_xml_structure(self):
         """Use XML expected to verify that is equal to generated. And SAT
@@ -73,19 +44,6 @@ class HRPayroll(TransactionCase):
         tfd_xml = objectify.fromstring(etree.tostring(
             self.payslip_obj.l10n_mx_edi_get_tfd_etree(xml)))
         self.xml_expected.Complemento.replace(tfd_expected, tfd_xml)
-        # When the year is a leap year the values will change by a few
-        # decimals
-        year = payroll.l10n_mx_edi_payment_date.year
-        if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
-            self.xml_expected.attrib['Descuento'] = '4179.36'
-            self.xml_expected.attrib['Total'] = '7620.65'
-            self.xml_expected.Conceptos.Concepto.attrib[
-                'Descuento'] = '4179.36'
-            node_expected.attrib['TotalDeducciones'] = '4179.36'
-            node_expected.Receptor.attrib['SalarioDiarioIntegrado'] = '766.48'
-            node_expected.Deducciones.attrib[
-                'TotalOtrasDeducciones'] = '2403.85'
-            node_expected.Deducciones.Deduccion[0].attrib['Importe'] = '304.60'
         self.assertEqualXML(xml, self.xml_expected)
 
     def test_002_perception_022(self):
@@ -321,74 +279,114 @@ class HRPayroll(TransactionCase):
         self.assertEqual(payroll.l10n_mx_edi_pac_status, 'signed',
                          payroll.message_ids.mapped('body'))
 
-    def create_payroll(self):
-        return self.payslip_obj.create({
-            'name': 'Payslip Test',
+    def test_015_inabilities(self):
+        """Ensure that inabilities are created"""
+        leaves = self.env['hr.leave'].search([('employee_id', '=', self.employee.id)])
+        leaves.action_refuse()
+        leaves.action_draft()
+        leaves.unlink()
+        leave = self.env['hr.leave'].sudo().create({
+            'name': 'Maternidad',
+            'holiday_type': 'employee',
             'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
-            'struct_id': self.struct.id,
-            'l10n_mx_edi_source_resource': 'IP',
-            'date_from': '%s-%s-01' % (
-                time.strftime('%Y'), time.strftime('%m')),
-            'date_to': '%s-%s-15' % (time.strftime('%Y'), time.strftime('%m')),
-            'worked_days_line_ids': [(0, 0, {
-                'name': 'Normal Working Days',
-                'code': 'WORK100',
-                'number_of_days': 15,
-                'number_of_hours': 40,
-                'contract_id': self.contract.id,
-            })],
-            'input_line_ids': [(0, 0, {
-                'code': 'pe_005',
-                'name': 'Fondo de Ahorro',
-                'amount': 200.0,
-                'contract_id': self.contract.id,
-            }), (0, 0, {
-                'code': 'pg_019',
-                'name': 'Horas extra',
-                'amount': 300.0,
-                'contract_id': self.contract.id,
-            }), (0, 0, {
-                'code': 'd_006',
-                'name': 'Descuento por incapacidad',
-                'amount': 100.0,
-                'contract_id': self.contract.id,
-            }), (0, 0, {
-                'code': 'op_003',
-                'name': u'Viáticos',
-                'amount': 300.0,
-                'contract_id': self.contract.id,
-            })],
-            'l10n_mx_edi_inability_line_ids': [(0, 0, {
-                'amount': 100.0,
-                'days': 1,
-                'inability_type': '02',
-            })],
-            'l10n_mx_edi_overtime_line_ids': [(0, 0, {
-                'amount': 300.0,
-                'name': 'Overtime Test',
-                'days': 1,
-                'hours': 1,
-                'overtime_type': '02',
-            })],
+            'holiday_status_id': self.env.ref('l10n_mx_edi_payslip.mexican_maternity').id,
+            'date_from': '%s-%s-01' % (time.strftime('%Y'), time.strftime('%m')),
+            'date_to': '%s-%s-03' % (time.strftime('%Y'), time.strftime('%m')),
+            'number_of_days': 3,
         })
+        leave.sudo().action_approve()
+        self.contract.state = 'open'
+        payroll = self.create_payroll()
+        payroll.worked_days_line_ids.unlink()
+        data = payroll.onchange_employee_id(
+            payroll.date_from, payroll.date_to, payroll.employee_id.id, payroll.contract_id.id)
+        payroll.write({'worked_days_line_ids': [(0, 0, x) for x in data['value'].get('worked_days_line_ids')]})
+        payroll.action_payslip_done()
+        xml = payroll.l10n_mx_edi_get_xml_etree()
+        self.assertEqual(
+            '03', payroll.l10n_mx_edi_get_payroll_etree(xml).Incapacidades.Incapacidad.get('TipoIncapacidad'),
+            'Inability not added.')
 
-    def xml2dict(self, xml):
-        """Receive 1 lxml etree object and return a dict string.
-        This method allow us have a precise diff output"""
-        def recursive_dict(element):
-            return (element.tag,
-                    dict(map(recursive_dict, element.getchildren()),
-                         **element.attrib))
-        return dict([recursive_dict(xml)])
+    def test_016_inabilities(self):
+        """Ensure that inabilities are created"""
+        leaves = self.env['hr.leave'].search([('employee_id', '=', self.employee.id)])
+        leaves.action_refuse()
+        leaves.action_draft()
+        leaves.unlink()
+        leave = self.env['hr.leave'].sudo().create({
+            'holiday_type': 'employee',
+            'employee_id': self.employee.id,
+            'holiday_status_id': self.env.ref('l10n_mx_edi_payslip.mexican_riesgo_de_trabajo').id,
+            'date_from': '%s-%s-01' % (time.strftime('%Y'), time.strftime('%m')),
+            'date_to': '%s-%s-03' % (time.strftime('%Y'), time.strftime('%m')),
+            'number_of_days': 3,
+        })
+        leave.action_approve()
+        payroll = self.create_payroll()
+        self.contract.state = 'open'
+        payroll = self.create_payroll()
+        payroll.worked_days_line_ids.unlink()
+        data = payroll.onchange_employee_id(
+            payroll.date_from, payroll.date_to, payroll.employee_id.id, payroll.contract_id.id)
+        payroll.write({'worked_days_line_ids': [(0, 0, x) for x in data['value'].get('worked_days_line_ids')]})
+        payroll.action_payslip_done()
+        xml = payroll.l10n_mx_edi_get_xml_etree()
+        self.assertEqual(
+            '01', payroll.l10n_mx_edi_get_payroll_etree(xml).Incapacidades.Incapacidad.get('TipoIncapacidad'),
+            'Inability not added.')
 
-    def assertEqualXML(self, xml_real, xml_expected):
-        """Receive 2 objectify objects and show a diff assert if exists."""
-        xml_expected = self.xml2dict(xml_expected)
-        xml_real = self.xml2dict(xml_real)
-        # noqa "self.maxDiff = None" is used to get a full diff from assertEqual method
-        # This allow us get a precise and large log message of where is failing
-        # expected xml vs real xml More info:
-        # noqa https://docs.python.org/2/library/unittest.html#unittest.TestCase.maxDiff
-        self.maxDiff = None
-        self.assertEqual(xml_real, xml_expected)
+    def test_017_inabilities(self):
+        """Ensure that inability for 'Enfermedad General' created"""
+        leaves = self.env['hr.leave'].search([('employee_id', '=', self.employee.id)])
+        leaves.action_refuse()
+        leaves.action_draft()
+        leaves.unlink()
+        leave = self.env['hr.leave'].sudo().create({
+            'holiday_type': 'employee',
+            'employee_id': self.employee.id,
+            'holiday_status_id': self.env.ref('l10n_mx_edi_payslip.mexican_enfermedad_general').id,
+            'date_from': '%s-%s-01' % (time.strftime('%Y'), time.strftime('%m')),
+            'date_to': '%s-%s-07' % (time.strftime('%Y'), time.strftime('%m')),
+            'number_of_days': 7,
+        })
+        leave.action_approve()
+        payroll = self.create_payroll()
+        self.contract.state = 'open'
+        payroll = self.create_payroll()
+        payroll.worked_days_line_ids.unlink()
+        data = payroll.onchange_employee_id(
+            payroll.date_from, payroll.date_to, payroll.employee_id.id, payroll.contract_id.id)
+        payroll.write({'worked_days_line_ids': [(0, 0, x) for x in data['value'].get('worked_days_line_ids')]})
+        payroll.action_payslip_done()
+        xml = payroll.l10n_mx_edi_get_xml_etree()
+        self.assertEqual(
+            '02', payroll.l10n_mx_edi_get_payroll_etree(xml).Incapacidades.Incapacidad.get('TipoIncapacidad'),
+            'Inability not added.')
+
+    def test_018_inabilities(self):
+        """Ensure that inability for 'Hijos con Cancer' is created"""
+        leaves = self.env['hr.leave'].search([('employee_id', '=', self.employee.id)])
+        leaves.action_refuse()
+        leaves.action_draft()
+        leaves.unlink()
+        leave = self.env['hr.leave'].sudo().create({
+            'holiday_type': 'employee',
+            'employee_id': self.employee.id,
+            'holiday_status_id': self.env.ref('l10n_mx_edi_payslip.mexican_licencia_padres_hijo_cancer').id,
+            'date_from': '%s-%s-01' % (time.strftime('%Y'), time.strftime('%m')),
+            'date_to': '%s-%s-03' % (time.strftime('%Y'), time.strftime('%m')),
+            'number_of_days': 3,
+        })
+        leave.action_approve()
+        payroll = self.create_payroll()
+        self.contract.state = 'open'
+        payroll = self.create_payroll()
+        payroll.worked_days_line_ids.unlink()
+        data = payroll.onchange_employee_id(
+            payroll.date_from, payroll.date_to, payroll.employee_id.id, payroll.contract_id.id)
+        payroll.write({'worked_days_line_ids': [(0, 0, x) for x in data['value'].get('worked_days_line_ids')]})
+        payroll.action_payslip_done()
+        xml = payroll.l10n_mx_edi_get_xml_etree()
+        self.assertEqual(
+            '04', payroll.l10n_mx_edi_get_payroll_etree(xml).Incapacidades.Incapacidad.get('TipoIncapacidad'),
+            'Inability not added.')

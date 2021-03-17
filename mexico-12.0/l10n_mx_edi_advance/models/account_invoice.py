@@ -107,7 +107,6 @@ class AccountInvoice(models.Model):
             invoice_total = invoice.amount_untaxed
             for line in invoice.invoice_line_ids:
                 total_discount = amount / invoice_total * line.price_subtotal
-                line.em_mm_desc = line.discount
                 line.write({
                     'name': '%s%s' % (
                         line.name.replace(adv_text, ''), adv_text),

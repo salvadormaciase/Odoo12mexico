@@ -37,7 +37,7 @@
                 t-att-RegimenFiscal="company.partner_id.property_account_position_id.l10n_mx_edi_code"/>
             <cfdi:Receptor
                 t-att-Rfc="customer.l10n_mx_edi_get_customer_rfc()"
-                t-att-Nombre="record._get_string_cfdi(customer.commercial_partner_id.name, 254)"
+                t-att-Nombre="record._get_string_cfdi(employee.name, 254)"
                 UsoCFDI="P01"/>
             <cfdi:Conceptos>
                 <cfdi:Concepto
@@ -145,6 +145,7 @@
                                 t-att-IngresoNoAcumulable="line.non_accumulable_income or '0'"/>
                         </t>
                     </nomina12:Percepciones>
+                    <t t-set="inabilities" t-value="False"/>
                     <t t-if="total_other_deductions or total_taxes_withheld">
                         <nomina12:Deducciones
                             t-att-TotalOtrasDeducciones="'%.2f' % total_other_deductions"
@@ -155,6 +156,9 @@
                                     t-att-Clave="deduction.salary_rule_id.l10n_mx_edi_code or deduction.code"
                                     t-att-Concepto="record._get_string_cfdi(record.l10n_mx_edi_name(deduction) or '')"
                                     t-att-Importe="'%.2f' % abs(deduction.total)"/>
+                                <t t-if="deduction.code[-3:] == '006'">
+                                    <t t-set="inabilities" t-value="True"/>
+                                </t>
                             </t>
                         </nomina12:Deducciones>
                     </t>
@@ -180,13 +184,24 @@
                             </t>
                         </nomina12:OtrosPagos>
                     </t>
-                    <t t-if="record.l10n_mx_edi_inability_line_ids">
+                    <t t-if="inabilities or perceptions.filtered(lambda p: p.code[-3:] == '014')">
                         <nomina12:Incapacidades>
-                            <t t-foreach="record.l10n_mx_edi_inability_line_ids" t-as="inability">
+                            <t t-foreach="deductions" t-as="inability">
+                                <t t-if="inability.code[-3:] == '006'">
+                                    <t t-set="in_data" t-value="inability_data(inability, record)"/>
+                                    <nomina12:Incapacidad
+                                        t-att-DiasIncapacidad="int(in_data['days'])"
+                                        t-att-TipoIncapacidad="in_data['inability_type']"
+                                        t-att-ImporteMonetario="'%.2f' % abs(inability.amount if in_data['inability_type'] != '014' else sum(perceptions.filtered(lambda p: p.code[-3:] == '014')).mapped('total'))"
+                                    />
+                                </t>
+                            </t>
+                            <t t-if="perceptions.filtered(lambda p: p.code[-3:] == '014')">
                                 <nomina12:Incapacidad
-                                    t-att-DiasIncapacidad="inability.days"
-                                    t-att-TipoIncapacidad="inability.inability_type"
-                                    t-att-ImporteMonetario="inability.amount"/>
+                                    t-att-DiasIncapacidad="int(sum(record.worked_days_line_ids.filtered(lambda w: w.code == 'LEAVE110').mapped('number_of_days')))"
+                                    TipoIncapacidad="02"
+                                    t-att-ImporteMonetario="'%.2f' % sum(perceptions.filtered(lambda p: p.code[-3:] == '014').mapped('total'))"
+                                />
                             </t>
                         </nomina12:Incapacidades>
                     </t>

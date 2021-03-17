@@ -105,7 +105,7 @@ class HrExpenseSheet(models.Model):
     @api.multi
     @api.depends('employee_id', 'expense_line_ids.partner_id')
     def _compute_l10n_mx_edi_accountant(self):
-        label = self.env.ref('l10n_mx_edi_hr_expense.tag_vendors')
+        label = self.env.ref('l10n_mx_edi_hr_expense.tag_vendors', raise_if_not_found=False)
         for sheet in self:
             employee = sheet.employee_id
             supplier = sheet.expense_line_ids.mapped(
@@ -565,6 +565,9 @@ class HrExpense(models.Model):
         'Is to check?', copy=False,
         help='If is marked, the expense wait for the CFDI with the fiscal '
         'data, and must be merged with the expense with a CFDI.')
+    employee_id = fields.Many2one(
+        states={'downloaded': [('readonly', False)], 'draft': [('readonly', False)],
+                'reported': [('readonly', False)], 'refused': [('readonly', False)]})
 
     def create_partner_from_cfdi(self):
         partner = self.env['res.partner']
@@ -908,7 +911,7 @@ special cases to work with:
         invoices_cache = {}
         for att in atts:
             cfdi = att.l10n_mx_edi_is_cfdi33()
-            if not cfdi:
+            if cfdi is False:
                 invoices -= att
                 continue
             cfdi = self.env['account.invoice'].l10n_mx_edi_get_tfd_etree(cfdi)
@@ -1090,6 +1093,7 @@ special cases to work with:
                 'tax': tax.get('Impuesto', ''),
                 'rate': float(tax.get('TasaOCuota', '0.0')),
                 'base': float(tax.get('Base', 0)),
+                'exempt_tax': tax.get('TipoFactor') == 'Exento',
             })
         for tax in taxes.Retenciones.Retencion if hasattr(
                 taxes, 'Retenciones') else []:
@@ -1734,8 +1738,9 @@ special cases to work with:
 
             code_sat = sat_code.search([
                 ('code', '=', line['uom_code'])], limit=1)
-            uom_id = uom.search([
-                ('l10n_mx_edi_code_sat_id', '=', code_sat.id)], limit=1)
+            uom_id = prod.browse(product).uom_id
+            if not uom_id or uom_id.l10n_mx_edi_code_sat_id.code != line['uom_code']:
+                uom_id = uom.search([('l10n_mx_edi_code_sat_id', '=', code_sat.id)], limit=1)
 
             line_taxes = []
             taxes = tax_global or line['taxes']
@@ -1833,6 +1838,8 @@ special cases to work with:
                   ('type_tax_use', '=', 'purchase'),
                   ('amount', '=', rate),
                   ('amount_type', '!=', 'group')]
+        if tax.get('exempt_tax'):
+            domain.append(('l10n_mx_cfdi_tax_type', '=', 'Exento'))
         if tax['type'] == 'ret' and rate <= -10.66 and rate >= -10.67:
             domain[-1] = ('|')
             domain.append(('amount', '=', rate))

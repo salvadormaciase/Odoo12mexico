@@ -6,7 +6,7 @@
         <field eval="[(6, 0, [
             ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_perception_003_e'),
             ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_perception_003_g'),
-            ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_isr'),
+            ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_deduction_isr_extra'),
             ref('hr_rule_l10n_mx_payroll_other_payment_002_ptu'),
             ref('hr_rule_l10n_mx_payroll_deduction_071_ptu'),
             ref('l10n_mx_edi_payslip.hr_rule_l10n_mx_payroll_other_payment_aux_002'),
@@ -17,7 +17,6 @@
         <field name='name'>Liquidación CFDI</field>
         <field name='code'>CFDI_LIQUIDACION</field>
         <field eval="[(6, 0, [
-            ref('hr_rule_l10n_mx_payroll_perception_001_g'),
             ref('hr_rule_l10n_mx_payroll_perception_022_g'),
             ref('hr_rule_l10n_mx_payroll_perception_022_e'),
             ref('hr_rule_l10n_mx_payroll_perception_023_g_1'),
@@ -28,6 +27,9 @@
             ref('hr_rule_l10n_mx_payroll_perception_025_g'),
             ref('hr_rule_l10n_mx_payroll_perception_025_e'),
             ref('hr_rule_l10n_mx_payroll_deduction_finiquito_002'),
+            ref('hr_rule_l10n_mx_payroll_deduction_finiquito_002_indemnizaciones'),
+            ref('hr_rule_l10n_mx_payroll_other_payment_002_ptu'),
+            ref('hr_rule_l10n_mx_payroll_deduction_071_ptu'),
             ref('hr_rule_net_salary_0'),])]" name="rule_ids"/>
     </record>
     <record id="payroll_structure_data_03" model="hr.payroll.structure">
@@ -45,13 +47,15 @@
             ref('hr_rule_l10n_mx_payroll_deduction_068'),
             ref('hr_rule_l10n_mx_payroll_perception_022_g'),
             ref('hr_rule_l10n_mx_payroll_perception_022_e'),
+            ref('hr_rule_l10n_mx_payroll_perception_025_g_fin'),
+            ref('hr_rule_l10n_mx_payroll_perception_025_e_fin'),
             ref('hr_rule_l10n_mx_payroll_deduction_044'),
             ref('hr_rule_l10n_mx_payroll_deduction_045'),
-            ref('hr_rule_l10n_mx_payroll_deduction_finiquito_002'),
-            ref('hr_rule_l10n_mx_payroll_deduction_071'),
-            ref('hr_rule_l10n_mx_payroll_deduction_isr'),
+            ref('hr_rule_l10n_mx_payroll_deduction_isr_extra'),
             ref('hr_rule_l10n_mx_payroll_other_payment_002'),
             ref('hr_rule_l10n_mx_payroll_other_payment_aux_002'),
+            ref('hr_rule_l10n_mx_payroll_other_payment_002_ptu'),
+            ref('hr_rule_l10n_mx_payroll_deduction_071_ptu'),
             ref('hr_rule_net_salary_0'),])]" name="rule_ids"/>
     </record>
     <record id="payroll_structure_data_02" model="hr.payroll.structure">
@@ -60,11 +64,12 @@
         <field eval="[(6, 0, [
             ref('hr_rule_l10n_mx_payroll_perception_002_e'),
             ref('hr_rule_l10n_mx_payroll_perception_002_g'),
+            ref('hr_rule_l10n_mx_payroll_perception_021_e_christmas'),
+            ref('hr_rule_l10n_mx_payroll_perception_021_g_christmas'),
             ref('hr_rule_l10n_mx_payroll_deduction_aguinaldo_002'),
-            ref('hr_rule_l10n_mx_payroll_deduction_071'),
-            ref('hr_rule_l10n_mx_payroll_deduction_isr'),
-            ref('hr_rule_l10n_mx_payroll_other_payment_002'),
-            ref('hr_rule_l10n_mx_payroll_other_payment_aux_002'),
+            ref('hr_rule_l10n_mx_payroll_other_payment_002_ptu'),
+            ref('hr_rule_l10n_mx_payroll_deduction_071_ptu'),
+            ref('hr_rule_l10n_mx_payroll_deduction_isr_extra'),
             ref('hr_rule_net_salary_0')])]" name="rule_ids"/>
     </record>
     <record id="payroll_structure_data_01" model="hr.payroll.structure">
@@ -93,7 +98,6 @@
             ref('hr_rule_l10n_mx_payroll_perception_021_g'),
             ref('hr_rule_l10n_mx_payroll_perception_024_e'),
             ref('hr_rule_l10n_mx_payroll_perception_024_g'),
-            ref('hr_rule_l10n_mx_payroll_perception_025_e'),
             ref('hr_rule_l10n_mx_payroll_perception_026_e'),
             ref('hr_rule_l10n_mx_payroll_perception_027_e'),
             ref('hr_rule_l10n_mx_payroll_perception_028_g'),
@@ -114,6 +118,7 @@
             ref('hr_rule_l10n_mx_payroll_perception_productivity_g'),
             ref('hr_rule_l10n_mx_payroll_perception_attendance_bonus_g'),
             ref('hr_rule_l10n_mx_payroll_perception_punctuality_bonus_g'),
+            ref('hr_rule_l10n_mx_payroll_perception_seventh_day_g'),
             ref('hr_rule_l10n_mx_payroll_perception_039_e'),
             ref('hr_rule_l10n_mx_payroll_perception_039_g'),
             ref('hr_rule_l10n_mx_payroll_perception_044_e'),
@@ -136,6 +141,9 @@
             ref('hr_rule_l10n_mx_payroll_deduction_004_internal_discount'),
             ref('hr_rule_l10n_mx_payroll_deduction_005'),
             ref('hr_rule_l10n_mx_payroll_deduction_006'),
+            ref('hr_rule_l10n_mx_payroll_deduction_006_im'),
+            ref('hr_rule_l10n_mx_payroll_deduction_006_irt'),
+            ref('hr_rule_l10n_mx_payroll_deduction_006_lphc'),
             ref('hr_rule_l10n_mx_payroll_deduction_007'),
             ref('hr_rule_l10n_mx_payroll_deduction_008'),
             ref('hr_rule_l10n_mx_payroll_deduction_009'),

@@ -42,6 +42,8 @@ msgstr "Leyenda Fiscal"
 
 #. module: l10n_mx_edi_fiscal_legend
 #: model:ir.model.fields,field_description:l10n_mx_edi_fiscal_legend.field_account_invoice__l10n_mx_edi_legend_ids
+#: model:ir.model.fields,field_description:l10n_mx_edi_fiscal_legend.field_res_partner__l10n_mx_edi_legend_ids
+#: model:ir.model.fields,field_description:l10n_mx_edi_fiscal_legend.field_res_users__l10n_mx_edi_legend_ids
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi_fiscal_legend.invoice_template_form_inherit_legend
 msgid "Fiscal Legends"
 msgstr "Leyendas Fiscales"
@@ -80,6 +82,12 @@ msgstr "Texto de la Leyenda"
 #: model:ir.model.fields,help:l10n_mx_edi_fiscal_legend.field_account_invoice__l10n_mx_edi_legend_ids
 msgid "Legends under tax provisions, other than those contained in the Mexican CFDI standard."
 msgstr "Leyendas previstas en disposiciones fiscales, distintas a las contenidas en el estándar de CFDI mexicano."
+
+#. module: absa
+#: model:ir.model.fields,help:l10n_mx_edi_fiscal_legend.field_res_partner__l10n_mx_edi_legend_ids
+#: model:ir.model.fields,help:l10n_mx_edi_fiscal_legend.field_res_users__l10n_mx_edi_legend_ids
+msgid "Legends under tax provisions, other than those contained in the Mexican CFDI standard. This field will be used as the default value in new invoices for this partner."
+msgstr "Leyendas bajo disposiciones fiscales, distintas a aquellas incluidas en el CFDI estándar Mexicano. Este campo será usado como valor por defecto en las nuevas facturas para este socio."
 
 #. module: l10n_mx_edi_fiscal_legend
 #: model:ir.model.fields,field_description:l10n_mx_edi_fiscal_legend.field_l10n_mx_edi_fiscal_legend__rule

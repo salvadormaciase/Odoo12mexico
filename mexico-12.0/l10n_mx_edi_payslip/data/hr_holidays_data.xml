@@ -9,19 +9,25 @@
     </record>
     <record id="mexican_maternity" model="hr.leave.type">
         <field name="name" eval="'MATERNITY'"/>
-        <field name="allocation_type">fixed</field>
+        <field name="allocation_type">no</field>
         <field name="color_name">black</field>
         <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
     </record>
     <record id="mexican_riesgo_de_trabajo" model="hr.leave.type">
         <field name="name" eval="'INCAPACIDAD_POR_RIESGO_DE_TRABAJO'"/>
-        <field name="allocation_type">fixed</field>
+        <field name="allocation_type">no</field>
         <field name="color_name">black</field>
         <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
     </record>
     <record id="mexican_enfermedad_general" model="hr.leave.type">
         <field name="name" eval="'INCAPACIDAD_POR_ENFERMEDAD_GENERAL'"/>
-        <field name="allocation_type">fixed</field>
+        <field name="allocation_type">no</field>
+        <field name="color_name">black</field>
+        <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+    </record>
+    <record id="mexican_licencia_padres_hijo_cancer" model="hr.leave.type">
+        <field name="name" eval="'INCAPACIDAD_PADRES_HIJOS_CANCER'"/>
+        <field name="allocation_type">no</field>
         <field name="color_name">black</field>
         <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
     </record>
