@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_account_config_settings" model="ir.ui.view">
+        <field name="name">Revaluation Settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="110"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='invoicing_settings']" position="after">
+                <h2>Revaluation Settings</h2>
+                <div class="row mt16 o_settings_container" id="account_realization">
+                    <div class="col-12 col-lg-6 o_setting_box" title="These settings will be used to create Realization Entries on Invoices or Accounts.">
+                        <div class="o_setting_left_pane">
+                            <field name="apply_only_on_receivable_payable" widget="upgrade_boolean"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="apply_only_on_receivable_payable"/>
+                            <div class="text-muted">
+                                If this option is selected and there are invoices which bear an account which is neither receivable nor payable then they will be skipped. No Revaluation Ledger Items or Invoice Realization Journal Entries will be created for them.
+                            </div>
+                        </div>
+                        <div class="o_setting_left_pane">
+                            <field name="create_realization_entry_on_invoices" widget="upgrade_boolean"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="create_realization_entry_on_invoices"/>
+                            <div class="text-muted">
+                                If you select this option Realization Journal Entries will be created for the Invoices. Leave option unselected if you only want to use the Realization Ledger for the invoices. Please read all the information below prior to use this option.
+                            </div>
+                            <div class="row mt16">
+                                <label for="invoice_realization_journal_id" class="col-lg-3"/>
+                                <field name="invoice_realization_journal_id" domain="[('type', '=', 'general')]"/>
+                            </div>
+                            <div class="text-muted">
+                                This Journal will be used to book the Journal Entries for the Realization Journal Entries of Invoices. Debit and Credit Accounts in the Journal will be used to book the Gains/Losses in Foreign Exchange Differences. It is advisable to use Memorandum accounts in the Debit/Credit accounts in this Journal.
+                            </div>
+                            <div class="row mt16">
+                                <label for="invoice_realization_position_id" class="col-lg-3"/>
+                                <field name="invoice_realization_position_id"/>
+                            </div>
+                            <div class="text-muted">
+                                This Fiscal Position will be used to map the accounts that will be booked in the Realization Entries. If no account is found in the fiscal position for the account in the Revaluation Ledger Item then the one in the Item will be used. Counterparts for these accounts will be fetched from the ones in the Invoice Realization Journal. It is hugely recommended to use Memorandum accounts in the mapping. Be advised that doing otherwise you could be booking twice the Gains/Losses in Foreign Exchange Difference.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" title="These settings will be used to create Realization Entries on Invoices or Accounts.">
+                        <div class="o_setting_left_pane">
+                            <field name="create_realization_entry_on_accounts" widget="upgrade_boolean"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="create_realization_entry_on_accounts"/>
+                            <div class="text-muted">
+                                If you select this option Realization Journal Entries will be created for the Accounts. Leave option unselected if you only want to use the Realization Ledger for the accounts. As accounts do not realize by themselves as opposed by Invoices it is advisable to check this option.
+                            </div>
+                            <div class="row mt16">
+                                <label for="account_realization_journal_id" class="col-lg-3"/>
+                                <field name="account_realization_journal_id" domain="[('type', '=', 'general')]"/>
+                            </div>
+                            <div class="text-muted">
+                                This Journal will be used to book the Journal Entries for the Realization Journal Entries of Accounts. Debit and Credit Accounts in the Journal will be used to book the Gains/Losses in Foreign Exchange Differences.
+                            </div>
+                            <div class="row mt16">
+                                <label for="account_realization_position_id" class="col-lg-3"/>
+                                <field name="account_realization_position_id"/>
+                            </div>
+                            <div class="text-muted">
+                                This Fiscal Position will be used to map the accounts that will be booked in the Realization Entries. If no account is found in the fiscal position for the account in the Revaluation Ledger Item then the one in the Item will be used. Counterparts for these accounts will be fetched from the ones in the Account Realization Journal.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

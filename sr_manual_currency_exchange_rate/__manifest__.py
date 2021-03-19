@@ -21,7 +21,7 @@
 
 {
     'name': "Manual Currency Exchange rate for Sales Order/Customer Invoice/Vendor Bills/Purchase Orders/Payments",
-    'version': "13.0.0.0",
+    'version': "12.0.0.0",
     'summary': "This module will provide you the facility to enter exchange currency rate at the time of sales order, invoice order, purchase order and payments",
     'category': 'Accounting Management',
     'description': """
