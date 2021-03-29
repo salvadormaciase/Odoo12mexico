@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+        <xpath expr="//t[@t-foreach='o.invoice_line_ids']" position="before">
+            <t t-set="sale_order" t-value="o.mapped('invoice_line_ids.sale_line_ids.order_id') or False"/>
+            <t t-set="pickings" t-value="sale_order.mapped('picking_ids') if sale_order else False"/>
+        </xpath>
+        <xpath expr="//td[@name='account_invoice_line_name']" position="inside">
+            <t t-set="moves" t-value="pickings.mapped('move_ids_without_package').filtered(lambda p: p.product_id == line.product_id) if pickings else False"/>
+            <t t-set="units" t-value="moves.mapped('move_line_ids') if moves else False"/>
+            <ul class="list-group list-group-flush">
+              <t t-foreach="units" t-as="unit">
+                  <li class="list-group-item" style="padding-bottom: 5px; padding-top: 0px;"><span t-esc="unit.lot_id.name"/></li>
+              </t>
+            </ul>
+        </xpath>
+    </template>
+</odoo>
+

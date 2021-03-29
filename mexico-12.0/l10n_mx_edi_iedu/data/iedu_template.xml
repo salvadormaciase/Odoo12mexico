@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="iedu_template" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Concepto']" position="inside">
+            <t t-if="line.l10n_mx_edi_iedu_id">
+                <cfdi:ComplementoConcepto
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:iedu="http://www.sat.gob.mx/iedu"
+                    xsi:schemaLocation="http://www.sat.gob.mx/iedu http://www.sat.gob.mx/sitio_internet/cfd/iedu/iedu.xsd">
+                    <t t-set="iedu_level" t-value="[tag.name for tag in line.l10n_mx_edi_iedu_id.category_id if tag.parent_id.get_external_id().get(tag.parent_id.id, False) == 'l10n_mx_edi_iedu.iedu_level']"/>
+                    <iedu:instEducativas
+                        version="1.0"
+                        t-att-nombreAlumno="line.l10n_mx_edi_iedu_id.name"
+                        t-att-CURP="line.l10n_mx_edi_iedu_id.l10n_mx_edi_curp"
+                        t-att-nivelEducativo="iedu_level[0] if iedu_level else False"
+                        t-att-autRVOE="record.journal_id.l10n_mx_edi_iedu_code_ids.filtered(lambda iedu: iedu.l10n_mx_edi_iedu_education_level_id.name == iedu_level[0] if iedu_level else '').l10n_mx_edi_iedu_code"
+                        t-att-rfcPago="customer.l10n_mx_edi_get_customer_rfc() if line.l10n_mx_edi_iedu_id.vat != record.partner_id.vat else False" />
+                </cfdi:ComplementoConcepto>
+            </t>
+        </xpath>
+    </template>
+</odoo>

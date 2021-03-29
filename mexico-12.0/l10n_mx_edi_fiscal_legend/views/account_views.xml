@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_mx_edi_fiscal_legend_action" model="ir.actions.act_window">
+        <field name="name">Fiscal Legends</field>
+        <field name="res_model">l10n_mx_edi.fiscal.legend</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_fiscal_legends" name="Fiscal Legends" action="l10n_mx_edi_fiscal_legend_action" parent="account.account_account_menu"/>
+</odoo>

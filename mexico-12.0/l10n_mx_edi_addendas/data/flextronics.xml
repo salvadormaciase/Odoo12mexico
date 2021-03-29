@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="flextronics" name="Flextronics [auto]">
+        <t t-set="folio" t-value="record._l10n_mx_get_serie_and_folio(record.number)['folio'] or ''"/>
+        <flextronics:AddendaFlextronics
+            xmlns:flextronics="http://www.flextronics.com/CFD/Addenda/Receptor"
+            companiaFlextronics="--Flextronix Company here--"
+            numeroProveedor="--Supplier Number here--"
+            t-att-ordenCompra="record.name or ''"
+            t-att-numeroFacturaProveedor="record.number"
+            t-att-packingSlip_Embarque="folio"/>
+    </template>
+
+    <record id="flextronics" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_advance" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.l10n.mx.edi.advance</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_mx_edi.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='l10n_mx_edi_certificates']" position="after">
+                <div class="row mt16 o_settings_container" id="l10n_mx_edi_advance">
+                    <div class="col-12 col-lg-6 o_setting_box" title="Configuration of advances">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Advances</span>
+                            <div class="text-muted">
+                                Parameters that will be used to create the advances automatically.
+                            </div>
+                            <div class="row">
+                                <label string="Process" for="l10n_mx_edi_advance" class="col-lg-3 o_light_label"/>
+                                <field name="l10n_mx_edi_advance"/>
+                            </div>
+                            <div class="row mt16">
+                                <label string="Product" for="l10n_mx_edi_product_advance_id" class="col-lg-3 o_light_label"/>
+                                <field name="l10n_mx_edi_product_advance_id"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

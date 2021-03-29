@@ -1,0 +1,91 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_addendas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-01 01:41+0000\n"
+"PO-Revision-Date: 2018-11-01 01:41+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "<b>Purchase Order:</b>"
+msgstr "<b>Pedido de Compra:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "<b>Reception Number:</b>"
+msgstr "<b>Número de Recepción:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "<b>Remission Number:</b>"
+msgstr "<b>Número de Remisión:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_femsa
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_femsa
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_femsa_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_femsa
+msgid "Addenda Femsa"
+msgstr "Adenda Femsa"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_femsa_reception
+msgid "Reception Number"
+msgstr "Número de Recepción"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "Set Values"
+msgstr "Establecer Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_femsa_values
+msgid "Set Values Addenda Femsa"
+msgstr "Establecer Valores Adenda Femsa"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_femsa_defaults
+msgid "Set default values for the addenda Femsa"
+msgstr "Establecer valores por defecto para la adenda Femsa"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_femsa_reception
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "The code given to the product when it arrives at stock location. This code is provided by the supplier."
+msgstr "El código asignado al producto cuando entra en almacén. Este código es suministrado por el proveedor."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "The necessary nodes for the implementation of the Addenda of Fomento Económico Mexicano, S.A.B. de C.V. (FEMSA) are:"
+msgstr "Los nodos necesarios para la implementación de la adenda de Fomento Económico Mexicano, S.A.B. de C.V. (FEMSA) son:"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "The number of the customer's purchase order. This value is taken from the invoice's field \"Reference/Description\"."
+msgstr "El número del pedido de compra del cliente. Este valor se obtiene del campo \"Referencia/Descripción\" de la factura."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_femsa_field
+msgid "Used to concatenate wizard fields"
+msgstr "Utilizado para concatenar los campos del wizard"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_femsa_view
+msgid "The sale order which this invoice comes from. This value is taken from the field \"Source Document\"."
+msgstr "El pedido de venta del cual proviene esta factura. Este valor se toma del campo \"Documento origen\"."
+

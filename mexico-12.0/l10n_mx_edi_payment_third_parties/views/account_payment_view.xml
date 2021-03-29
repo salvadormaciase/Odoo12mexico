@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="view_account_payment_inv_form_third_parts">
+        <field name="name">view.account.payment.inv.form.inh.l10n.mx</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="l10n_mx_edi_third_parts" attrs="{'invisible': [('payment_type', '!=', 'inbound')]}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_reg_payment_form_third_parts">
+        <field name="name">view.account.reg.payment.form.inh.l10n.mx</field>
+        <field name="model">account.register.payments</field>
+        <field name="inherit_id" ref="account.view_account_payment_from_invoices"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="l10n_mx_edi_third_parts" attrs="{'invisible': [('payment_type', '!=', 'inbound')]}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

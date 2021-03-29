@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_factoring
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-26 20:40+0000\n"
+"PO-Revision-Date: 2018-12-26 20:40+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_factoring
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_factoring.report_payment_document_factoring_mx
+msgid "<strong>Customer: </strong>"
+msgstr "<strong>Cliente: </strong>"
+
+#. module: l10n_mx_edi_factoring
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_factoring.report_payment_document_factoring_mx
+msgid "<strong>Vendor: </strong>"
+msgstr "<strong>Proveedor: </strong>"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model,name:l10n_mx_edi_factoring.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model.fields,field_description:l10n_mx_edi_factoring.field_account_invoice__l10n_mx_edi_factoring_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_factoring.field_account_payment__l10n_mx_edi_factoring_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_factoring.field_account_register_payments__l10n_mx_edi_factoring_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_factoring.field_res_partner__l10n_mx_edi_factoring_id
+msgid "Financial Factor"
+msgstr "Factorante Financiero"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model,name:l10n_mx_edi_factoring.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model.fields,field_description:l10n_mx_edi_factoring.field_res_partner__l10n_mx_edi_factoring
+#: model:ir.model.fields,field_description:l10n_mx_edi_factoring.field_res_users__l10n_mx_edi_factoring
+msgid "Factoring"
+msgstr "Factorante"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model,name:l10n_mx_edi_factoring.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model,name:l10n_mx_edi_factoring.model_account_register_payments
+msgid "Register Payments"
+msgstr "Registrar pagos"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model.fields,help:l10n_mx_edi_factoring.field_account_invoice__l10n_mx_edi_factoring_id
+msgid "This invoice will be paid by this Financial factoring agent."
+msgstr "Esta factura será pagada por este Factorante Financiero"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model.fields,help:l10n_mx_edi_factoring.field_res_partner__l10n_mx_edi_factoring_id
+msgid "This partner is allowed to receive payments with a financial factoring, if set the factoring will be proposed by default when receive a payment. In case the rights to collect this invoice are relinquished to this Partner. Payment Complement will be issuedon his/her/its name, if not set payments will belong to the proper partner as usual."
+msgstr "A esta empresa se le permite recibir pagos con un factorante financiero, si se selecciona un factorante, va a ser propuesto por default cuando se reciba un pago. En caso de que los derechos de cobro de esta factura se renuncien a esta Empresa. El Complemento de Pago se emitirá a su nombre, en caso contrario el pago va a ser emitido a la empresa correspondiente como es sabido."
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model.fields,help:l10n_mx_edi_factoring.field_account_payment__l10n_mx_edi_factoring_id
+#: model:ir.model.fields,help:l10n_mx_edi_factoring.field_account_register_payments__l10n_mx_edi_factoring_id
+msgid "This payment was received from this factoring."
+msgstr "Este pago fue recibido por este factorante"
+
+#. module: l10n_mx_edi_factoring
+#: model:ir.model.fields,help:l10n_mx_edi_factoring.field_res_partner__l10n_mx_edi_factoring
+#: model:ir.model.fields,help:l10n_mx_edi_factoring.field_res_users__l10n_mx_edi_factoring
+msgid "Used to identify if this partner is a factoring"
+msgstr "Usado para identificar si el cliente es un factorante financiero"
+

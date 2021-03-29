@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="zfmexico" name="ZF Mexico [auto]">
+        <t t-set="folio" t-value="record._l10n_mx_get_serie_and_folio(record.number)['folio'] or ''"/>
+        <Addenda_ZF_Detecno>
+            <Version>1.0</Version>
+            <Moneda t-esc="record.currency_id.name"/>
+            <IDFactura t-esc="folio"/>
+            <Conceptos>
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <Concepto
+                        t-att-NumPosicion="line_index + 1"
+                        t-att-NumOc="record.name or ''"
+                        t-att-cantidad="line.quantity"
+                        t-att-valorUnitario="line.price_unit"
+                        t-att-importe="line.price_total"/>
+                </t>
+            </Conceptos>
+        </Addenda_ZF_Detecno>
+    </template>
+    <record id="zfmexico" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+</odoo>

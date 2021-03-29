@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo noupdate="1">
+
+    <record id="action_validate_ct_types" model="base.automation">
+        <field name="name">Validate ct types</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+for invoice in records:
+    fld = 'invoice_line_ids.product_id.l10n_mx_edi_ct_type'
+    ct_types = set(invoice.mapped(fld)) - {False}
+    if len(ct_types) > 1:
+        raise Warning(
+            "This invoice contains products with different exchange operation types.\n"
+            "It is not possible to bill currency purchases and sales within the same invoice.")
+        </field>
+        <field name="trigger">on_write</field>
+        <field name="active" eval="True"/>
+        <field name="filter_domain">[('state', '=', 'open')]</field>
+        <field name="filter_pre_domain">[('state', '=', 'draft')]</field>
+    </record>
+
+</odoo>

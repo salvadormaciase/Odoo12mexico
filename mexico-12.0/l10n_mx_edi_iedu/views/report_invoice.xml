@@ -1,0 +1,18 @@
+<odoo>
+    <template id="report_invoice_document_iedu" inherit_id="account.report_invoice_document">
+        <xpath expr="//table[@name='invoice_line_table']" position="before">
+            <t t-set="xml" t-value="o.l10n_mx_edi_get_xml_etree()"/>
+            <t t-set="iedu" t-value="o.l10n_mx_edi_get_iedu_etree(xml)"/>
+        </xpath>
+        <xpath expr="//table[@name='invoice_line_table']/tbody//tr[1]//td[@name='account_invoice_line_name']" position="inside">
+            <t t-if="o.l10n_mx_edi_cfdi_uuid and iedu != None">
+                <br/>
+                <span>Student's name: </span><span t-esc="iedu.get('nombreAlumno', '')"/><br/>
+                <span>CURP: </span><span t-esc="iedu.get('CURP', '')"/><br/>
+                <span>Education level: </span><span t-esc="iedu.get('nivelEducativo', '')"/><br/>
+                <span>AutRVOE: </span><span t-esc="iedu.get('autRVOE', '')"/><br/>
+                <span>Version: </span><span t-esc="iedu.get('version', '')"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

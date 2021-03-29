@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_addendas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-01 01:41+0000\n"
+"PO-Revision-Date: 2018-11-01 01:41+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "<b>Payment Request:</b>"
+msgstr "<b>Solicitud de Pago:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "<b>Purchase Order:</b>"
+msgstr "<b>Pedido de Compra:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "<b>Reception Number:</b>"
+msgstr "<b>Número de Recepción:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_pepsico
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_pepsico
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_pepsico_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_pepsico
+msgid "Addenda PepsiCo"
+msgstr "Adenda PepsiCo"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_pepsico_payment_request
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "Indicates the number generated for the payment request to the services provider."
+msgstr "Indica el número generado para la solicitud de pago al proveedor de servicios."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_pepsico_reception
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "It is the reception number in the customer system."
+msgstr "Es el número de recepción en el sistema del cliente."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_pepsico_payment_request
+msgid "Payment request"
+msgstr "Solicitud de Pago"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_pepsico_reception
+msgid "Reception Number"
+msgstr "Número de Recepción"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "Set Values"
+msgstr "Establecer Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_pepsico_values
+msgid "Set Values Addenda PepsiCo"
+msgstr "Establecer Valores Adenda PepsiCo"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_pepsico_defaults
+msgid "Set default values for the addenda PepsiCo"
+msgstr "Establecer valores por defecto para la adenda PepsiCO"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "The necessary nodes for the implementation of the Addenda of PepsiCo Mexico are:"
+msgstr "Los nodos necesarios para la implementación de la adenda de PepsiCo méxico son:"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_pepsico_view
+msgid "The number of the customer's purchase order. This value is taken from the invoice's field \"Reference/Description\"."
+msgstr "El número del pedido de compra del cliente. Este valor se obtiene del campo \"Referencia/Descripción\" de la factura."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_pepsico_field
+msgid "Used to concatenate wizard fields"
+msgstr "Utilizado para concatenar los campos del wizard"
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="ir.actions.server" id="l10n_mx_edi_np_partner_other_address">
+        <field name="name">Change partner status when invoice signed</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="sequence">5</field>
+        <field name="code">
+            if record.l10n_mx_edi_pac_status == 'signed' and record.partner_id.child_ids:
+                properties = record.partner_id.child_ids.filtered(lambda r: r.type == 'other')
+                for property in properties:
+                    property.sudo().write({ 'active': False })
+        </field>
+    </record>
+    <record model="base.automation" id="l10n_mx_edi_np_set_inactive">
+        <field name="name">Set inactive when invoice signed</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="trigger">on_write</field>
+        <field name="active" eval="True"/>
+        <field name="filter_domain">[('l10n_mx_edi_pac_status', '=', 'signed')]</field>
+        <field name="action_server_id" ref="l10n_mx_edi_np.l10n_mx_edi_np_partner_other_address"/>
+    </record>
+</odoo>

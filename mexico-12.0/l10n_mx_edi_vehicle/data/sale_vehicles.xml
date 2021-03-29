@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_sale_vehicle" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__vehiculousado">"http://www.sat.gob.mx/vehiculousado" if record.company_id.l10n_mx_edi_complement_type == 'sale' and record.l10n_mx_edi_vehicle_id and record.l10n_mx_edi_vehicle_id.odometer &gt; 0 else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-if="record.company_id.l10n_mx_edi_complement_type == 'sale' and record.l10n_mx_edi_vehicle_id and record.l10n_mx_edi_vehicle_id.odometer &gt; 0">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <vehiculousado:VehiculoUsado
+                        xmlns:vehiculousado="http://www.sat.gob.mx/vehiculousado"
+                        Version="1.0"
+                        t-att-montoAdquisicion="record.l10n_mx_edi_vehicle_id.car_value"
+                        t-att-montoEnajenacion="record.amount_total"
+                        t-att-claveVehicular="record.l10n_mx_edi_vehicle_id.license_plate"
+                        t-att-marca="record.l10n_mx_edi_vehicle_id.model_id.brand_id.name"
+                        t-att-tipo="record.l10n_mx_edi_vehicle_id.model_id.name"
+                        t-att-modelo="record.l10n_mx_edi_vehicle_id.model_year"
+                        t-att-numeroMotor="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_motor"
+                        t-att-numeroSerie="record.l10n_mx_edi_vehicle_id.vin_sn"
+                        t-att-NIV="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_niv"
+                        t-att-valor="record.l10n_mx_edi_vehicle_id.residual_value">
+                        <t t-if="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing">
+                            <vehiculousado:InformacionAduanera
+                                t-att-numero="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing"
+                                t-att-fecha="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_landing_date"
+                                t-att-aduana="record.l10n_mx_edi_vehicle_id.l10n_mx_edi_aduana"/>
+                        </t>
+                    </vehiculousado:VehiculoUsado>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>

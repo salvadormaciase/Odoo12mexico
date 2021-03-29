@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_mx_edi_fiscal_legend_view_form" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.fiscal.legend.view.form</field>
+        <field name="model">l10n_mx_edi.fiscal.legend</field>
+        <field name="arch" type="xml">
+            <form name="form_fiscal_legend" string="Fiscal Legend">
+                <sheet>
+                    <group name="fiscal_legend_info">
+                        <field name="name"/>
+                        <field name="tax_provision"/>
+                        <field name="rule"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="l10n_mx_edi_fiscal_legend_view_tree" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.fiscal.legend.view.tree</field>
+        <field name="model">l10n_mx_edi.fiscal.legend</field>
+        <field name="arch" type="xml">
+            <tree name="tree_fiscal_legend">
+                <field name="name"/>
+                <field name="tax_provision"/>
+                <field name="rule"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

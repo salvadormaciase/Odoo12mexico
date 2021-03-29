@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_common" inherit_id="website.assets_common">
+        <xpath expr="//script[last()]" position="after">
+            <script type='text/javascript' src="/l10n_mx_portal/static/src/js/tours/download_zipped_cfdi_tour.js"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,174 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_cash_flow_statement_indirect_method
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 02:50+0000\n"
+"PO-Revision-Date: 2018-11-14 02:50+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_acquisition_of_ppe__intangibles
+msgid "Acquisition of PPE & Intangibles"
+msgstr "Adquisición de PPE e Intangibles."
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report,name:l10n_mx_cash_flow_statement_indirect_method.cash_flow_indirect
+#: model:ir.actions.client,name:l10n_mx_cash_flow_statement_indirect_method.account_financial_html_report_action_5
+#: model:ir.ui.menu,name:l10n_mx_cash_flow_statement_indirect_method.account_financial_html_report_menu_5
+msgid "Cash Flow Statement - Indirect Method"
+msgstr "Estado de Flujo de Efectivo - Método indirecto"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_cash_provided_by_financing_activities
+msgid "Cash Provided by (used in) Financing Activities"
+msgstr "Efectivo Provisto por (utilizado en) Actividades de Financiamiento"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_cash_provided_by_investing_activities
+msgid "Cash Provided by (used in) Investing Activities"
+msgstr "Efectivo Provisto por (utilizado en) Actividades de Inversión"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_cash_provided_by_operating_activities
+msgid "Cash Provided by (used in) Operating Activities"
+msgstr "Efectivo Provisto por (utilizado en) Actividades Operativas"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_cash_and_equivalents_at_beginning_of_period
+msgid "Cash and equivalents at beginning of period"
+msgstr "Efectivo y equivalentes al inicio del período."
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_cash_and_equivalents_at_end_of_period
+msgid "Cash and equivalents at end of period"
+msgstr "Efectivo y equivalentes al final del período."
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_depreciations_and_amortizations
+msgid "Depreciations and Amortizations"
+msgstr "Depreciaciones y Amortizaciones"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_effect_of_exchange_rates_on_cash_and_equivalents
+msgid "Effect of exchange rates on cash and equivalents"
+msgstr "Efecto de los tipos de cambio sobre el efectivo y equivalentes."
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_financing_activities
+msgid "Financing Activities"
+msgstr "Actividades de financiación"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_gains_on_fixed_assets_sales
+msgid "Gains on Sales of Long Term Assets"
+msgstr "Ganancias en Ventas de Activos a Largo Plazo"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_inventories
+msgid "Inventories"
+msgstr "Inventarios"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_investing_activities
+msgid "Investing Activities"
+msgstr "Actividades de inversión"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_loans_made_to_other_parties
+msgid "Loans made to other parties"
+msgstr "Préstamos a terceros"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_longterm_financing_issuances
+msgid "Long-term financing issuances"
+msgstr "Emisiones de financiamiento a largo plazo"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_losses_on_fixed_assets_sales
+msgid "Losses on Sales of Long Term Assets"
+msgstr "Pérdidas en Ventas de Activos a Largo Plazo"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_net_income
+msgid "Net Income"
+msgstr "Ingresos netos"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_net_increase_decrease_in_cash_and_equivalents
+msgid "Net increase (decrease) in cash and equivalents"
+msgstr "Incremento (disminución) neto en efectivo y equivalentes."
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_operating_activities
+msgid "Operating Activities"
+msgstr "Actividades de Explotación"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_other_operating_payable
+msgid "Other Operating Payable"
+msgstr "Otras Operaciones por Pagar"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_other_operating_receivable
+msgid "Other Operating Receivable"
+msgstr "Otras Cuentas por Cobrar Operativas"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_payment_of_dividents
+msgid "Payment of Dividents"
+msgstr "Pago de Dividendos"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_payment_of_principal_on_debt
+msgid "Payment of Principal on Debt"
+msgstr "Pago Principal de la Deuda"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_payments_of_interest
+msgid "Payments of Interest"
+msgstr "Pagos de Intereses"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_purchase_of_investments
+msgid "Purchase of Investments"
+msgstr "Compra de Inversiones"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_receipts_of_interest_and_dividents_on_investments
+msgid "Receipts of Interest and Dividents on Investments"
+msgstr "Recibos de Intereses y Dividendos sobre Inversiones"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_sale_of_investments
+msgid "Sale of Investments"
+msgstr "Venta de Inversiones"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_sale_of_ppe__intangibles
+msgid "Sale of PPE & Intangibles"
+msgstr "Venta de PPE e Intangibles."
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_shortterm_borrowings
+msgid "Short-term Borrowings"
+msgstr "Préstamos de Corto Plazo"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_trade_account_payable
+msgid "Trade Account Payable"
+msgstr "Cuenta por Pagar Comercial"
+
+#. module: l10n_mx_cash_flow_statement_indirect_method
+#: model:account.financial.html.report.line,name:l10n_mx_cash_flow_statement_indirect_method.cfs_im_trade_account_receivable
+msgid "Trade Account Receivable"
+msgstr "Cuenta por Cobrar Comercial"
+

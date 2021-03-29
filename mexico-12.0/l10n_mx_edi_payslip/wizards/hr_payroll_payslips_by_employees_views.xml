@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_by_employees_inherit" model="ir.ui.view">
+        <field name="name">hr.payroll.payslip.employees</field>
+        <field name="model">hr.payslip.employees</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_by_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="after">
+                <group colspan="2">
+                    <separator string="Salary Structure" colspan="2"/>
+                    <newline/>
+                    <span class="text-muted">Set a specific structure if you wish to make an extra payslip (eg: End of the year bonus). If you leave this field empty, a regular payslip will be generated for all the selected employees, based on their contracts configuration.</span>
+                    <field name="l10n_mx_edi_structure_id" nolabel="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

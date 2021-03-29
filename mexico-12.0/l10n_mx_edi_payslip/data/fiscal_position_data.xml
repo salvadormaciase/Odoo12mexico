@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record id="account_fiscal_position_02_emp" model="account.fiscal.position">
+        <field name="name">Sueldos</field>
+        <field name="l10n_mx_edi_code">02</field>
+    </record>
+    <record id="account_fiscal_position_03_emp" model="account.fiscal.position">
+        <field name="name">Jubilados</field>
+        <field name="l10n_mx_edi_code">03</field>
+    </record>
+    <record id="account_fiscal_position_04_emp" model="account.fiscal.position">
+        <field name="name">Pensionados</field>
+        <field name="l10n_mx_edi_code">04</field>
+    </record>
+    <record id="account_fiscal_position_05_emp" model="account.fiscal.position">
+        <field name="name">Asimilados Miembros Sociedades Cooperativas Produccion</field>
+        <field name="l10n_mx_edi_code">05</field>
+    </record>
+    <record id="account_fiscal_position_06_emp" model="account.fiscal.position">
+        <field name="name">Asimilados Integrantes Sociedades Asociaciones Civiles</field>
+        <field name="l10n_mx_edi_code">06</field>
+    </record>
+    <record id="account_fiscal_position_07_emp" model="account.fiscal.position">
+        <field name="name">Asimilados Miembros consejos</field>
+        <field name="l10n_mx_edi_code">07</field>
+    </record>
+    <record id="account_fiscal_position_08_emp" model="account.fiscal.position">
+        <field name="name">Asimilados comisionistas</field>
+        <field name="l10n_mx_edi_code">08</field>
+    </record>
+    <record id="account_fiscal_position_09_emp" model="account.fiscal.position">
+        <field name="name">Asimilados Honorarios</field>
+        <field name="l10n_mx_edi_code">09</field>
+    </record>
+    <record id="account_fiscal_position_10_emp" model="account.fiscal.position">
+        <field name="name">Asimilados acciones</field>
+        <field name="l10n_mx_edi_code">10</field>
+    </record>
+    <record id="account_fiscal_position_11_emp" model="account.fiscal.position">
+        <field name="name">Asimilados otros</field>
+        <field name="l10n_mx_edi_code">11</field>
+    </record>
+    <record id="account_fiscal_position_12_emp" model="account.fiscal.position">
+        <field name="name">Jubilados o Pensionados</field>
+        <field name="l10n_mx_edi_code">12</field>
+    </record>
+    <record id="account_fiscal_position_13_emp" model="account.fiscal.position">
+        <field name="name">Indemnización o Separación</field>
+        <field name="l10n_mx_edi_code">13</field>
+    </record>
+    <record id="account_fiscal_position_99_emp" model="account.fiscal.position">
+        <field name="name">Otro Regimen</field>
+        <field name="l10n_mx_edi_code">99</field>
+    </record>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="sidel" name="Sidel [auto]">
+        <t t-set="cfdi_values" t-value="record._l10n_mx_edi_create_cfdi_values()"/>
+        <requestForPaymentIdentification>
+            <orderIdentification>
+                <referenceIdentification t-esc="record.name or ''"/>
+            </orderIdentification>
+            <buyer>
+                <contactInformation>
+                    <personOrDepartmentName>
+                        <text>SIDEL DE MEXICO SA DE CV</text>
+                    </personOrDepartmentName>
+                </contactInformation>
+            </buyer>
+            <currency t-att-currencyISOCode="record.currency_id.name">
+                <rateOfChange t-esc="cfdi_values['rate'] or '1.000000'"/>
+            </currency>
+            <baseAmount>
+                <Amount t-esc="record.amount_total"/>
+            </baseAmount>
+            <payableAmount>
+                <Amount  t-esc="record.amount_total"/>
+            </payableAmount>
+        </requestForPaymentIdentification>
+    </template>
+    <record id="sidel" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+</odoo>

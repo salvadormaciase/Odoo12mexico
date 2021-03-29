@@ -1,0 +1,142 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_edi_addendas
+#
+# These translations are located here because addenda-related records are not 
+# loaded by default, and their translations are not available until addendas
+# are installed
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-01 01:41+0000\n"
+"PO-Revision-Date: 2018-11-01 01:41+0000\n"
+"Last-Translator: Luis González <lgonzalez@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "<b>Bill To:</b>"
+msgstr "<b>Facturar a:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "<b>Incoming Code:</b>"
+msgstr "<b>Código de Entrada:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "<b>Invoice Number:</b>"
+msgstr "<b>Número de Factura:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "<b>Purchase Order:</b>"
+msgstr "<b>Pedido de Compra:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "<b>SAP Code:</b>"
+msgstr "<b>Código SAP:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "<b>Ship To:</b>"
+msgstr "<b>Entregar a:</b>"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.act_window,name:l10n_mx_edi_addendas.action_addenda_nestle
+#: model:ir.model,name:l10n_mx_edi_addendas.wizard_nestle
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_nestle_field
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.invoice_addenda_nestle
+msgid "Addenda Nestle"
+msgstr "Adenda Nestlé"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "Billing address information: street, colony, zip, city and state. Such information is taken from the invoice address contact configured for the partner."
+msgstr "Información de dirección de facturación: calle, colonia, código postal, ciudad y estado. Dicha información se obtiene del contacto de dirección de facturación configurado para el cliente."
+
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "If this is a credit note, specifies which invoice this credit note comes from. This value is taken from the field \"Source Document\"."
+msgstr "Si ésta es una nota de crédito, especifica cuál factura la originó. Éste valor se obtiene del campo \"Documento origen\"."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.wizard_nestle_incoming_code
+msgid "Incoming Code"
+msgstr "Código de Entrada"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.wizard_nestle_incoming_code
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "Invoice validation code. This is applicable only for invoices, not credit notes."
+msgstr "Código de validación de la factura. Esto solo aplica para facturas, no para notas de crédito."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "Line"
+msgstr "Línea"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,field_description:l10n_mx_edi_addendas.invoice_line_sap_code
+msgid "SAP Code"
+ msgstr "Código SAP"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "Set Values"
+msgstr "Establecer Valores"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.set_addenda_nestle_values
+msgid "Set Values Addenda Nestle"
+msgstr "Establecer valores adenda Nestlé"
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.actions.server,name:l10n_mx_edi_addendas.action_addenda_nestle_defaults
+msgid "Set default values for the addenda Nestle"
+msgstr "Establecer valores por defecto para la adenda Nestlé"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "Shipping address information: street, colony, zip, city and state. Such information is taken from the shipping address contact configured for the partner."
+msgstr "Información de dirección de Entrega: calle, colonia, código postal, ciudad y estado. Dicha información se obtiene del contacto de dirección de envío configurado para el cliente."
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "The necessary nodes for the implementation of the Addenda of Nestle Mexico, S.A. De C.V. are:"
+msgstr "Los nodos necesarios para la implementación de la adenda de Nestlé México, S.A. De C.V. son:"
+
+#. module: l10n_mx_edi_addendas
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "The number of the customer's purchase order. This value is taken from the invoice's field \"Reference/Description\"."
+msgstr "El número del pedido de compra del cliente. Este valor se obtiene del campo \"Referencia/Descripción\" de la factura."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_line_sap_code
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_addendas.wizard_nestle_view
+msgid "The product's SAP code as handled by the customer. This value has to be set on each invoice line."
+msgstr "El código SAP del producto tal como lo maneja el cliente. Este valor debe configurarse en cada línea de factura."
+
+#. module: l10n_mx_edi_addendas
+#: model:ir.model.fields,help:l10n_mx_edi_addendas.invoice_nestle_field
+msgid "Used to store the field x_incoming_code"
+msgstr "Usado para almacenar el campo x_incoming_code"
+

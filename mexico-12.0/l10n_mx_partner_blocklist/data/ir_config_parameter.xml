@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record id="l10n_mx_partner_blocklist_url" model="ir.config_parameter">
+        <field name="key">l10n_mx_partner_blocklist_url</field>
+        <field name="value"></field>
+    </record>
+</odoo>

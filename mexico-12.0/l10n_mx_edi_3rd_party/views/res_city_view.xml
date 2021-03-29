@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_city_tree_inherit_3rd_party" model="ir.ui.view">
+        <field name="name">view.city.tree.inherit.3rd.party</field>
+        <field name="model">res.city</field>
+        <field name="inherit_id" ref="base_address_city.view_city_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="l10n_mx_edi_code"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

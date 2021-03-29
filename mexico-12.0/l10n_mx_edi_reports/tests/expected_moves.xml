@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PLZ:Polizas xmlns:PLZ="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    Version="1.3"
+    xsi:schemaLocation="http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo http://www.sat.gob.mx/esquemas/ContabilidadE/1_3/PolizasPeriodo/PolizasPeriodo_1_3.xsd"
+    RFC="EKU9003173C9"
+    Mes="04"
+    Anio="2018"
+    TipoSolicitud="AF"
+    Sello=""
+    noCertificado=""
+    Certificado="">
+    <PLZ:Poliza Concepto="{concept2}" Fecha="{payment_date}" NumUnIdenPol="{move2}">
+        <PLZ:Transaccion Concepto="/" DesCta="Banco" NumCta="02.01.02" Debe="225.00" Haber="0.00">
+            <PLZ:CompNal UUID_CFDI="uuid2" RFC="XEXX010101000" MontoTotal="225.00"/>
+            <PLZ:OtrMetodoPago
+                MetPagoPol="01"
+                Fecha="{payment_date}"
+                Benef="YourCompany"
+                RFC="XEXX010101000"
+                Monto="225.00"/>
+        </PLZ:Transaccion>
+        <PLZ:Transaccion Concepto="[PCSC234] Computer SC234" DesCta="Clientes nacionales" NumCta="105.01.01" Debe="0.00" Haber="225.00">
+            <PLZ:CompNal UUID_CFDI="{uuid2}" RFC="XEXX010101000" MontoTotal="225.00"/>
+            <PLZ:OtrMetodoPago
+                MetPagoPol="01"
+                Fecha="{payment_date}"
+                Benef="YourCompany"
+                RFC="XEXX010101000"
+                Monto="225.00"/>
+        </PLZ:Transaccion>
+    </PLZ:Poliza>
+    <PLZ:Poliza Concepto="{concept3}" Fecha="{payment_date}" NumUnIdenPol="{move3}">
+        <PLZ:Transaccion Concepto="CUST.IN/2018/0002" DesCta="Banco" NumCta="102.01.02" Debe="225.00" Haber="0.00">
+            <PLZ:Transferencia CtaOri="BE68539007547034" BancoOriNal="999" CtaDest="123456789012345" BancoDestNal="012" Fecha="2018-05-15" Benef="YourCompany" RFC="XEXX010101000" Monto="225.00"/>
+        </PLZ:Transaccion>
+        <PLZ:Transaccion Concepto="Pago de cliente: FV/2018/0002" DesCta="Clientes nacionales" NumCta="105.01.01" Debe="0.00" Haber="225.00">
+            <PLZ:Transferencia CtaOri="BE68539007547034" BancoOriNal="999" CtaDest="123456789012345" BancoDestNal="012" Fecha="2018-05-15" Benef="YourCompany" RFC="XEXX010101000" Monto="225.00"/>
+        </PLZ:Transaccion>
+    </PLZ:Poliza>
+    <PLZ:Poliza Concepto="{concept1}" Fecha="{date}" NumUnIdenPol="{move1}">
+        <PLZ:Transaccion Concepto="/" DesCta="Clientes nacionales" NumCta="105.01.01" Debe="450.00" Haber="0.00">
+            <PLZ:CompNal UUID_CFDI="{uuid1}" RFC="XEXX010101000" MontoTotal="450.00"/>
+        </PLZ:Transaccion>
+        <PLZ:Transaccion Concepto="[FURN_7800] Desk Combination Desk combination, black-brown: chair + desk + drawer." DesCta="Ventas y/o servicios gravados a la tasa general" NumCta="401.01.01" Debe="0.00" Haber="450.00">
+            <PLZ:CompNal UUID_CFDI="{uuid1}" RFC="XEXX010101000" MontoTotal="450.00"/>
+        </PLZ:Transaccion>
+    </PLZ:Poliza>
+</PLZ:Polizas>
