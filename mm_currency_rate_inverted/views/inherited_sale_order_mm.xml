@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="view_sale_order_custom_mm" model="ir.ui.view">
+            <field name="name">sale.order.mm.custom.form.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manual_currency_exchange_rate']" position="attributes">
+                     <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='manual_currency_exchange_rate']" position="after">
+                    <field name="mm_currency_rate_so" attrs="{'invisible': ['|',('apply_manual_currency_exchange', '=', False),('active_manual_currency_rate', '=', False)],'required':[('apply_manual_currency_exchange', '=', True)]}"/>
+                </xpath>
+            </field>
+         </record>
+	</data>
+</odoo>

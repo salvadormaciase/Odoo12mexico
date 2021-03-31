@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mm_current_rate" model="base.automation">
+        <field name="name">current rate mm</field>
+        <field name="active">1</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="base.model_res_currency_rate"/>
+        <field name="trigger">on_create_or_write</field>
+<field name="code">
+# You can filter the employees which the journals will be created by default
+# all employees can have a journal.
+# You can filter the employees which the journals will be created by default
+#algo mas
+#raise Warning(record.mm_currency_rate)
+if record and record.mm_currency_rate > 0:
+  val = record.mm_currency_rate
+  record.write({'rate': 1/val})
+</field>
+    </record>
+</odoo>
