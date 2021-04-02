@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_account_asset_category_form">
+        <field name="name">account.asset.category.form</field>
+        <field name="model">account.asset.category</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_category_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='account_depreciation_expense_id']" position="after">
+                <div>
+                    <label for="account_cogs_id" style="font-weight: bold" class="o_light_label" attrs="{'invisible': [('type','!=', 'purchase')]}"/>
+                </div>
+                <field name="account_cogs_id" nolabel="1" attrs="{'invisible': [('type','!=', 'purchase')], 'required': [('type','=', 'purchase')]}" domain="[('company_id', '=', company_id)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_asset_asset_form">
+        <field name="name">account.asset.asset.form</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='set_to_close']" position="after">
+                <button name="sale_and_set_to_close" states="open" string="Sell Asset" type="object" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//button[@name='set_to_close']" position="attributes">
+                    <attribute name="string">Dispose</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_to_draft']" position="after">
+                <button name="reopen_asset" states="close" class="oe_highlight" string="Reopen Asset" type="object"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

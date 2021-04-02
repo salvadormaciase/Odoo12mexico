@@ -1,0 +1,195 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 01:38+0000\n"
+"PO-Revision-Date: 2018-11-14 01:38+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "<span class=\"fa fa-cog\"/> Details:"
+msgstr "<span class=\"fa fa-cog\"/> Detalles:"
+
+#. module: l10n_mx_edi_reports
+#: code:addons/l10n_mx_edi_reports/models/general_ledger.py:45
+#, python-format
+msgid "Acc. Name"
+msgstr "Cuenta"
+
+#. module: l10n_mx_edi_reports
+#: code:addons/l10n_mx_edi_reports/models/general_ledger.py:44
+#, python-format
+msgid "Acc. Number"
+msgstr "No. Cuenta"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model,name:l10n_mx_edi_reports.model_account_report
+msgid "Account Report"
+msgstr "Informe financiero"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Act Audit"
+msgstr "Acto de Fiscalización"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Act Audit (AF)"
+msgstr "Acto de Fiscalización (AF)"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Attested Audit"
+msgstr "Fiscalización Compulsa"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Attested Audit (FC)"
+msgstr "Fiscalización Compulsa (FC)"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model,name:l10n_mx_edi_reports.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Línea de extracto bancario"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Compensation"
+msgstr "Compensación"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Compensation (CO)"
+msgstr "Compensación (CO)"
+
+#. module: l10n_mx_edi_reports
+#: code:addons/l10n_mx_edi_reports/models/general_ledger.py:47
+#, python-format
+msgid "Credit"
+msgstr "Haber"
+
+#. module: l10n_mx_edi_reports
+#: code:addons/l10n_mx_edi_reports/models/general_ledger.py:43
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: l10n_mx_edi_reports
+#: code:addons/l10n_mx_edi_reports/models/general_ledger.py:46
+#, python-format
+msgid "Debit"
+msgstr "Debe"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model.fields,field_description:l10n_mx_edi_reports.field_l10n_mx_general_ledger_report__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: l10n_mx_edi_reports
+#: code:addons/l10n_mx_edi_reports/models/general_ledger.py:32
+#, python-format
+msgid "Export For SAT (XML)"
+msgstr "Exportar para SAT (XML)"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.actions.client,name:l10n_mx_edi_reports.action_general_ledger
+#: model:ir.ui.menu,name:l10n_mx_edi_reports.menu_general_ledger
+msgid "General Ledger"
+msgstr "Contabilidad General"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model.fields,field_description:l10n_mx_edi_reports.field_l10n_mx_general_ledger_report__id
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Journal Entry:"
+msgstr "Asiento contable"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model,name:l10n_mx_edi_reports.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model.fields,field_description:l10n_mx_edi_reports.field_l10n_mx_general_ledger_report____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model,name:l10n_mx_edi_reports.model_l10n_mx_general_ledger_report
+msgid "Mexican General Ledger Report"
+msgstr "Reporte de Pólizas"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Order number:"
+msgstr "Número de orden:"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Order:"
+msgstr "Orden:"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model.fields,field_description:l10n_mx_edi_reports.field_account_payment__l10n_mx_edi_partner_bank_id
+#: model:ir.model.fields,field_description:l10n_mx_edi_reports.field_account_register_payments__l10n_mx_edi_partner_bank_id
+msgid "Partner Bank"
+msgstr "Cuenta de banco"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model,name:l10n_mx_edi_reports.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Procedure:"
+msgstr "Procedimiento:"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Process number:"
+msgstr "Número de trámite:"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Refund"
+msgstr "Devolución"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Refund (DE)"
+msgstr "Devolución (DE)"
+
+#. module: l10n_mx_edi_reports
+#: model:ir.model,name:l10n_mx_edi_reports.model_account_register_payments
+msgid "Register Payments"
+msgstr "Registrar pagos"
+
+#. module: l10n_mx_edi_reports
+#: code:addons/l10n_mx_edi_reports/models/general_ledger.py:166
+#, python-format
+msgid "There are more than 80 items in this list, click here to see all of them"
+msgstr "Hay más de 80 elementos en esta lista, haga clic aquí para verlos todos"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.search_template_report_details
+msgid "Type:"
+msgstr "Tipo:"
+
+#. module: l10n_mx_edi_reports
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_reports.new_line_template_general_ledger_report
+msgid "View Journal Entry"
+msgstr "Ver Asiento Contable"

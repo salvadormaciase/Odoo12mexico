@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="l10n_mx_edi_message_advance">
+        <p>This <t t-esc="self._description.lower()"/> has <span t-if="edit">modified</span><span t-if="not edit">created</span> the next invoice:
+            <t t-foreach="origin" t-as="o">
+                <a href="#" t-att-data-oe-model="o._name" t-att-data-oe-id="o.id"> <t t-esc="o.display_name"/></a><span t-if="origin.ids[-1:] != o.ids">, </span>
+            </t>
+            but that cannot be signed, please review the CFDI errors and make the conciliation manually.
+        </p>
+    </template>
+
+    <template id="l10n_mx_edi_message_advance_refund">
+        <p>This <t t-esc="self._description.lower()"/> has <span t-if="edit">modified</span><span t-if="not edit">created</span> the next customer invoices credit note:
+            <t t-foreach="origin" t-as="o">
+                <a href="#" t-att-data-oe-model="o._name" t-att-data-oe-id="o.id"> <t t-esc="o.display_name"/></a><span t-if="origin.ids[-1:] != o.ids">, </span>
+            </t>
+            because this <t t-esc="self._description.lower()"/> has an advance applied.
+        </p>
+    </template>
+
+    <template id="l10n_mx_edi_message_advance_created">
+        <p>This <t t-esc="self._description.lower()"/> has <span t-if="edit">modified</span><span t-if="not edit">created</span> the next customer invoice:
+            <t t-foreach="origin" t-as="o">
+                <a href="#" t-att-data-oe-model="o._name" t-att-data-oe-id="o.id"> <t t-esc="o.display_name"/></a><span t-if="origin.ids[-1:] != o.ids">, </span>
+            </t>
+            because this <t t-esc="self._description.lower()"/> is an advance.
+        </p>
+    </template>
+
+</odoo>

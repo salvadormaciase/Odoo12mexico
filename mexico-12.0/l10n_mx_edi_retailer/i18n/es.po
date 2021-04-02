@@ -1,0 +1,172 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#    * l10n_mx_edi_retailer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-27 00:58+0000\n"
+"PO-Revision-Date: 2018-03-27 00:58+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_retailer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_retailer.retailer
+msgid "-- Buyer's GLN here--"
+msgstr "-- GLN del comprador aquí--"
+
+#. module: l10n_mx_edi_retailer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_retailer.retailer
+msgid "-- Supplier's GLN here--"
+msgstr "-- GLN del proovedor aquí--"
+
+#. module: l10n_mx_edi_retailer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_retailer.retailer
+msgid "-- Supplier's Number here--"
+msgstr "-- Número del proovedor aquí--"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.ui.view,arch_db:l10n_mx_edi_retailer.retailer
+msgid "0.00"
+msgstr "0.00"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.ui.view,arch_db:l10n_mx_edi_retailer.retailer
+msgid "10"
+msgstr "10"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.ui.view,arch_db:l10n_mx_edi_retailer.retailer
+msgid "AA"
+msgstr "AA"
+
+#. module: l10n_mx_edi_retailer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_retailer.retailer
+msgid "AJ"
+msgstr "AJ"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model,name:l10n_mx_edi_retailer.model_l10n_mx_edi_retailer_wizard
+msgid "Complement Retailer"
+msgstr "Complemento Detallista"
+
+#. module: l10n_mx_edi_retailer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_retailer.view_l10n_mx_edi_retailer_invoice_form_inherit
+msgid "Complement retailer"
+msgstr "Complemento detallista"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_account_invoice__complement_retailer_data
+msgid "Complemento Retailer"
+msgstr "Complemento Detallista"
+
+#. module: l10n_mx_edi_retailer
+#: selection:x_l10n_mx_edi.retailer.wizard,x_status:0
+msgid "Copy"
+msgstr "Copy"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_delivery_date
+msgid "Date when the customer receive the products"
+msgstr "Fecha en que el cliente recibe los productos"
+
+#. module: l10n_mx_edi_retailer
+#: selection:x_l10n_mx_edi.retailer.wizard,x_status:0
+msgid "Delete"
+msgstr "Delete"
+
+#. module: l10n_mx_edi_retailer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_retailer.wizard_complement_retailer_view
+msgid "Delivery Note"
+msgstr "Nota de Entrega"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_special_service_type
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_special_service_type
+msgid "Discount/Charge Type"
+msgstr "Tipo de Descuento/Cargo"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_status
+msgid "Document Function"
+msgstr "Función del Documento"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_status
+msgid "Document Status"
+msgstr "Estado del Documento"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_invoice_id
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_delivery
+msgid "Number emitted by the receiver when receive the products"
+msgstr "Número emitido por el receptor cuando recibió los productos"
+
+#. module: l10n_mx_edi_retailer
+#: selection:x_l10n_mx_edi.retailer.wizard,x_status:0
+msgid "Original"
+msgstr "Original"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_pruchase_contact_name
+msgid "Purchase Contact Name"
+msgstr "Nombre del contacto de compras"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_purchase_order_date
+msgid "Purchase Order Date"
+msgstr "Fecha de la orden de compra"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_pruchase_contact_name
+msgid "Purchase contact: No. or name of the purchase contact (Department of the partner)"
+msgstr "Contacto de compras: No. o nombre del contacto de compras (Departamento del cliente)"
+
+#. module: l10n_mx_edi_retailer
+#: selection:x_l10n_mx_edi.retailer.wizard,x_status:0
+msgid "Reemplaza"
+msgstr "Reemplaza"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_delivery_date
+msgid "Reference Date"
+msgstr "Fecha de Referencia"
+
+#. module: l10n_mx_edi_retailer
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_retailer.wizard_complement_retailer_view
+msgid "Set Values"
+msgstr "Colocar Valores"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.actions.server,name:l10n_mx_edi_retailer.set_wizard_l10n_mx_edi_retailer_values
+msgid "Set Values Complement Retailer"
+msgstr "Colocar valores en complemento de detallista"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.field_account_invoice_l10n_mx_edi_retailer_status
+msgid "Used in retailer complement in the attribute \"documentStatus\" as message function."
+msgstr "Utilizado en el complemento de detallista para el atributo \"documentStatus\" como función del mensaje."
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_purchase_order_date
+msgid "The date of the purchase order to which the invoice refers."
+msgstr "Fecha de la orden de compra a la que hace referencia la factura."
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,help:l10n_mx_edi_retailer.invoice_retailer_field
+msgid "Used to concatenate fields in complement wizard"
+msgstr "Utilizado para concatenar los campos en el complemento"
+
+#. module: l10n_mx_edi_retailer
+#: model:ir.model.fields,field_description:l10n_mx_edi_retailer.field_l10n_mx_edi_retailer_wizard_delivery
+msgid "Reference Identification"
+msgstr "Identificación de referencia"

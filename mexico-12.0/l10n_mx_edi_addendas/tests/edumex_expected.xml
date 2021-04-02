@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:mmmcfdi="http://mmm.com/CFDI">
+    <mmmcfdi:Pedido>IC002</mmmcfdi:Pedido>
+</cfdi:Addenda>

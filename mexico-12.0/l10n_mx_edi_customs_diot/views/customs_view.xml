@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="l10n_mx_edi_customs_tree" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.customs.tree</field>
+        <field name="model">l10n_mx_edi.customs</field>
+        <field name="arch" type="xml">
+            <tree string="Customs">
+                <field name="display_name"/>
+                <field name="operation"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="customs_form" model="ir.ui.view">
+        <field name="name">Customs</field>
+        <field name="model">l10n_mx_edi.customs</field>
+        <field name="arch" type="xml">
+            <form string="Customs">
+                <header>
+                    <button name="approve_custom" type="object" states="draft" string="Validate" class="oe_highlight"/>
+                    <button name="revert_custom" type="object" states="confirmed" string="Revert" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box">
+                        <button name="action_open_invoices"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                            string="Invoices"
+                            type="object">
+                        </button>
+                        <button name="action_open_custom_invoice"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                            string="Customs Invoice"
+                            type="object"
+                            attrs="{'invisible': [('sat_invoice_id', '=', False)]}">
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="19 24 3420 9000104" required="True" class="oe_edit_only"/>
+                        </h1>
+                        <h1>
+                            <field name="display_name" class="oe_read_only"/>
+                        </h1>
+                        <group>
+                            <field name="rate"/>
+                        </group>
+                    </div>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="amount_total"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="date"/>
+                            <field name="operation"/>
+                            <field name="key_custom"/>
+                            <field name="regime"/>
+                        </group>
+                        <group>
+                            <field name="freight" widget="monetary"/>
+                            <field name="other_increments" widget="monetary"/>
+                            <field name="payment_date"/>
+                            <field name="sat_invoice_id" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="general" string="General">
+                            <group>
+                                <field name="invoice_ids" nolabel="1" widget="many2many" domain="[('type', '=', 'in_invoice')]" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="top">
+                                        <field name="date"/>
+                                        <field name="number"/>
+                                        <field name="partner_id"/>
+                                        <field name="state"/>
+                                        <field name="l10n_mx_edi_freight" sum="Total"/>
+                                        <field name="l10n_mx_edi_customs_base" sum="Total"/>
+                                        <field name="amount_total" sum="Total"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="l10n_mx_edi_customs_total" sum="Total"/>
+                                        <field name="company_currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="sat_partner_id"/>
+                                    <field name="journal_invoice_id"/>
+                                    <field name="journal_payment_id"/>
+                                    <field name="account_other_id"/>
+                                    <field name="account_dta_id"/>
+                                    <field name="account_igi_id"/>
+                                    <field name="account_cc_id"/>
+                                    <field name="account_other_taxes_id"/>
+                                </group>
+                                <group>
+                                    <field name="cnt"/>
+                                    <field name="dta"/>
+                                    <field name="igi"/>
+                                    <field name="iva"/>
+                                    <field name="prv"/>
+                                    <field name="cc"/>
+                                    <field name="other_taxes"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="extra_expenses" string="Extra Expenses">
+                            <group>
+                                <field name="invoice_extra_ids" nolabel="1" widget="many2many" domain="[('type', '=', 'in_invoice')]">
+                                    <tree editable="top">
+                                        <field name="date"/>
+                                        <field name="number"/>
+                                        <field name="partner_id"/>
+                                        <field name="state"/>
+                                        <field name="amount_untaxed_signed" sum="Total"/>
+                                        <field name="amount_total_company_signed" sum="Total"/>
+                                        <field name="company_currency_id" invisible="1"/>
+                                        <field name="amount_total" sum="Total"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_l10n_mx_edi_invoice_customs_form" model="ir.actions.act_window">
+        <field name="name">Customs</field>
+        <field name="res_model">l10n_mx_edi.customs</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="l10n_mx_edi_customs_tree"/>
+    </record>
+
+    <menuitem id="l10n_mx_edi_menu_invoice_customs" name="Customs" parent="account.menu_finance_payables" action="action_l10n_mx_edi_invoice_customs_form"/>
+
+</odoo>

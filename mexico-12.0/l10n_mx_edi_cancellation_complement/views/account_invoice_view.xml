@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mx_edi_cancellation_complement_invoice_form" model="ir.ui.view">
+        <field name="name">view.mx.edi.cancellation.complement.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="l10n_mx_edi.view_l10n_mx_edi_invoice_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='l10n_mx_edi_origin']" position="before">
+                <label for="l10n_mx_edi_cancellation_date" attrs="{'invisible':['|', ('l10n_mx_edi_sat_status', '!=', 'cancelled'), ('l10n_mx_edi_cancellation_date', '=', False)]}"/>
+                <div attrs="{'invisible':['|', ('l10n_mx_edi_sat_status', '!=', 'cancelled'), ('l10n_mx_edi_cancellation_date', '=', False)]}">
+                    <field name="l10n_mx_edi_cancellation_date" class="oe_inline"/>&amp;nbsp;
+                    <field name="l10n_mx_edi_cancellation_time" class="oe_inline"/>
+                </div>
+            </xpath>
+            <xpath expr="//button[@name='action_invoice_cancel']" position="attributes">
+                <attribute name="groups">l10n_mx_edi_cancellation_complement.l10n_mx_edi_show_button_cancel</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

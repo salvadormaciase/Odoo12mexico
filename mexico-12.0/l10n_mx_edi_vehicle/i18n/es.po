@@ -1,0 +1,292 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_edi_vehicle
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 01:18+0000\n"
+"PO-Revision-Date: 2018-11-14 01:18+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_01
+msgid "01 - Fifth wheel tractor"
+msgstr "01 - Tractocamiones tipo quinta rueda"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_02
+msgid "02 - Two axle trucks with a minimum weight of 11,794kg"
+msgstr "02 - Camiones unitarios de 2 ejes con peso bruto vehicular mínimo de 11,794kg"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_03
+msgid "03 - Three axle trucks with a minimum weight of 14,500kg"
+msgstr "03 - Camiones unitarios de 3 ejes con pero bruto vehicular mínimo de 14,500kg"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_04
+msgid "04 - Integral buses with a capacity of more than 30 seats"
+msgstr "04 - Autobuses integrales con capacidad de más de 30 asientos"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_05
+msgid "05 - Conventional buses with a capacity of more than 30 seats"
+msgstr "05 - Autobuses convencionales con capacidad de mas de 30 asientos"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_06
+msgid "06 - Vehicles for transportation of 15 people or more with age of more than 8 years"
+msgstr "06 - Vehículos destinados al transporte de personas de 15 pasajeros o más, con una antigüedad de mas de 8 años"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_07
+msgid "07 - Platform or chassis for integral buses for more than 30 seats"
+msgstr "07 - Plataforma o Chasís para autobuses integrales a los que se les pueda instalar más de 30 asientos"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.vehicle.tag,name:l10n_mx_edi_vehicle.fleet_vehicle_tag_08
+msgid "08 - Platform or chassis for conventional buses for more than 30 seats"
+msgstr "08 - Plataforma o Chasís para autobuses convencionales a los que se les pueda instalar más de 30 asientos"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_aduana
+msgid "Aduana"
+msgstr "Aduana"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_folio_cd
+msgid "Assign the folio provided by the SAT to this destruction"
+msgstr "Indique el folio provisto por el SAT para esta destrucción"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_serie_cd
+msgid "Assign the serie according the SAT catalog to the vehicle that was destroyed"
+msgstr "Indique la serie para el vehículo destruido de acuerdo al catalogo SAT"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_fiscal_folio
+msgid "CFDI number issued by the Authorized Destruction Center"
+msgstr "Número de CFDI emitido por el Centro Autorizado de Destrucción"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model,name:l10n_mx_edi_vehicle.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_decree_type
+msgid "Decree Type"
+msgstr "Tipo de Decreto"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_decree_type
+msgid "Decree which is going to be applicated"
+msgstr "El decreto que será aplicado"
+
+#. module: l10n_mx_edi_vehicle
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_vehicle.view_l10n_mx_edi_complement_cd_invoice_form_inherit
+#: selection:res.company,l10n_mx_edi_complement_type:0
+msgid "Destruction Certificate"
+msgstr "Certificado de Destrucción"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_fiscal_folio
+msgid "Fiscal Folio"
+msgstr "Folio Fiscal"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_folio_cd
+msgid "Folio"
+msgstr "Folio"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_circulation_no
+msgid "Folio circulation card"
+msgstr "Folio de la tarjeta de circulación"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_int_advice
+msgid "Folio number of the acknowledgment of receipt of the notice of intention to access the destruction program."
+msgstr "Número folio del acuse de recibo del aviso de intención para acceder al programa de destrucción"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_aduana
+msgid "If the vehicle destroyed was imported, indicate the aduana that was regularized the legal status in the country of the product destroyed"
+msgstr "Si el vehículo destruido era importado, indique la aduana que regularizó el estatus legal del producto destruido en el país"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_landing_date
+msgid "If the vehicle destroyed was imported, indicate the date of landing document that protect the importation"
+msgstr "Si el vehículo destruido era importado, indique la fecha del documento de desembarco que protege la importación"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_landing
+msgid "If the vehicle destroyed was imported, indicate the number of landing document that protect the importation."
+msgstr "Si el vehículo destruido era importado, indique el número del documento de desembarco que protege la importación."
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_niv
+msgid "Indicate the Vehicle identification number"
+msgstr "Indique el número de identificación del vehículo"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_circulation_no
+msgid "Indicate the folio number of the circulation card"
+msgstr "Indique el número de folio de la tarjeta de circulación"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_motor
+msgid "Indicate the motor number if is found"
+msgstr "Indique el número de motor si esta disponible"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_substitute_id
+msgid "Indicate the vehicle that is going to be replaced"
+msgstr "Indique el vehículo que será reemplazado"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_vehicle_id
+msgid "Indicate the vehicle that was destroyed if you are using the Destruction Certificate. Or the transfer vehicle if you are using the Vehicle Renew and Substitution Complement. If it is a sale of a vehicle, or using the PFIC complement, specify the vehicle."
+msgstr "Indique el vehículo que fue destruido si está usando el Certificado de Destrucción. O el vehículo transferido si está usando el Complemento de Sustitución y Renovación de Vehículos. Si es una venta de un vehículo, o está usando el complemento PFIC, especifique el vehículo."
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_vehicle_ids
+msgid "Indicate the vehicles that are going to be replaced"
+msgstr "Indique los vehículos que serán reemplazados"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_int_advice
+msgid "Intention Advise Number"
+msgstr "Número del Aviso de Intención"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model,name:l10n_mx_edi_vehicle.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_landing
+msgid "Landing"
+msgstr "Pedimento"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_landing_date
+msgid "Landing date"
+msgstr "Fecha de Entrada"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_niv
+msgid "NIV"
+msgstr "NIV"
+
+#. module: l10n_mx_edi_vehicle
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_vehicle.view_l10n_mx_edi_complement_cd_invoice_form_inherit
+msgid "Natural Person member of the coordinated"
+msgstr "Persona Física integrante de coordinados"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:res.company,l10n_mx_edi_complement_type:0
+msgid "Natural person member of the coordinated"
+msgstr "Persona Física integrante de coordinados"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_fleet_vehicle__l10n_mx_edi_motor
+msgid "No. Motor"
+msgstr "No. de Motor"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:account.invoice,l10n_mx_edi_decree_type:0
+msgid "Renovation of the motor transport vehicle park"
+msgstr "Renovación del parque vehicular del autotransporte"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:account.invoice,l10n_mx_edi_decree_type:0
+msgid "Replacement of passenger and freight motor vehicles"
+msgstr "Sustitución de vehículos de autotransporte de pasaje y carga"
+
+#. module: l10n_mx_edi_vehicle
+#: model:fleet.service.type,name:l10n_mx_edi_vehicle.l10n_mx_edi_fleet_service_extra
+msgid "Sale Extra"
+msgstr "Venta Extra"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:res.company,l10n_mx_edi_complement_type:0
+msgid "Sale of vehicles"
+msgstr "Venta de vehículos"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_complement_type
+#: model:ir.model.fields,help:l10n_mx_edi_vehicle.field_res_company__l10n_mx_edi_complement_type
+msgid "Select one of those complements if you want it to be available for invoice"
+msgstr "Seleccione uno de estos complementos si desea que este disponible en la facturación"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_serie_cd
+msgid "Serie"
+msgstr "Serie"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:account.invoice,l10n_mx_edi_serie_cd:0
+msgid "Serie A"
+msgstr "Serie A"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:account.invoice,l10n_mx_edi_serie_cd:0
+msgid "Serie B"
+msgstr "Serie B"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:account.invoice,l10n_mx_edi_serie_cd:0
+msgid "Serie C"
+msgstr "Serie C"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:account.invoice,l10n_mx_edi_serie_cd:0
+msgid "Serie D"
+msgstr "Serie D"
+
+#. module: l10n_mx_edi_vehicle
+#: selection:account.invoice,l10n_mx_edi_serie_cd:0
+msgid "Serie E"
+msgstr "Serie E"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_substitute_id
+msgid "Substitute Vehicle"
+msgstr "Vehículo Sustituido"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_vehicle_ids
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_vehicle.view_l10n_mx_edi_complement_cd_invoice_form_inherit
+msgid "Used Vehicles"
+msgstr "Vehículos Usados"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model,name:l10n_mx_edi_vehicle.model_fleet_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_vehicle_id
+msgid "Vehicle"
+msgstr "Vehículo"
+
+#. module: l10n_mx_edi_vehicle
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_account_invoice__l10n_mx_edi_complement_type
+#: model:ir.model.fields,field_description:l10n_mx_edi_vehicle.field_res_company__l10n_mx_edi_complement_type
+msgid "Vehicle Complement"
+msgstr "Complemento de Vehículo"
+
+#. module: l10n_mx_edi_vehicle
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_vehicle.view_l10n_mx_edi_complement_cd_invoice_form_inherit
+#: selection:res.company,l10n_mx_edi_complement_type:0
+msgid "Vehicle Renew and Substitution"
+msgstr "Substitución y Renovación de Vehículo"
+
+#. module: l10n_mx_edi_vehicle
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi_vehicle.view_l10n_mx_edi_complement_cd_invoice_form_inherit
+msgid "Vehicle to sale"
+msgstr "Vehículo que se venderá"

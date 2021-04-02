@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_airline" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__aerolineas">"http://www.sat.gob.mx/aerolineas" if record.invoice_line_ids.filtered(lambda r: r.product_id.l10n_mx_edi_airline_type == 'tua') else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-set="tua" t-value="record.invoice_line_ids.filtered(lambda r: r.product_id.l10n_mx_edi_airline_type == 'tua')"/>
+            <t t-if="tua">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <aerolineas:Aerolineas
+                        xmlns:aerolineas="http://www.sat.gob.mx/aerolineas"
+                        Version="1.0"
+                        t-att-TUA="tua.price_subtotal">
+                        <t t-set="extra_charges" t-value="record.invoice_line_ids.filtered(lambda r: r.product_id.l10n_mx_edi_airline_type == 'extra')"/>
+                        <t t-if="extra_charges">
+                            <aerolineas:OtrosCargos
+                                t-att-TotalCargos="sum(value.price_subtotal for value in extra_charges)">
+                                <t t-foreach="extra_charges" t-as="extra">
+                                    <aerolineas:Cargo
+                                        t-att-CodigoCargo="extra.product_id.default_code"
+                                        t-att-Importe="extra.price_subtotal"/>
+                                </t>
+                            </aerolineas:OtrosCargos>
+                        </t>
+                    </aerolineas:Aerolineas>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>

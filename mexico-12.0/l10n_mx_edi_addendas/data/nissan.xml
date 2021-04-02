@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+    <template id="nissan" name="Nissan">
+        <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+            <t t-set="partner" t-value="record.partner_shipping_id if record.fields_get(['partner_shipping_id']) else partner_id.commercial_partner_id if record.partner_id.type != 'invoice' else record.partner_id"/>
+            <t t-set="digits" t-value="record.l10n_mx_edi_partner_bank_id.acc_number or ''"/>
+            <t t-set="acc_4number" t-value="digits[-4:]"/>
+            <t t-set="sale_model" t-value="record.env.ref('sale.model_sale_order', raise_if_not_found=False)"/>
+            <t t-set="sale_id" t-value="sale_model and record.mapped('invoice_line_ids.sale_line_ids') and record.mapped('invoice_line_ids.sale_line_ids')[0].order_id or False"/>
+            <t t-set="picking_model" t-value="record.env.ref('stock.model_stock_picking', raise_if_not_found=False)"/>
+            <t t-set="stock_ids" t-value="picking_model and record.env['stock.picking'].search([('origin', '=', record.origin)], limit=1) or False"/>
+            <t t-set="values" t-value="record.x_addenda_nissan.split('|') if record.x_addenda_nissan else ['0', '0', '0', '0', '0']"/>
+            <t t-set="line_details" t-value="''.join(['{qty}|{uom}|{code}|{name}|{p_unit}|{l_total}|'.format(qty=l.quantity, uom=l.product_id.uom_id.name, code=l.product_id.default_code, name=l.name, p_unit=l.price_unit, l_total=l.price_subtotal) for l in record.invoice_line_ids])"/>
+            <t t-set="taxes" t-value="''.join(['{name}|{percent}|{total}|{total}|'.format(name=t.name, percent=t.tax_id.amount, total=t.amount) for t in record.tax_line_ids])"/>
+            <t t-set="discount" t-value="sum([(line.quantity * line.price_unit * (line.discount/100)) for line in record.invoice_line_ids]) or '0'"/>
+            <t_Ubicacion
+                t-att-noInterior="partner.street_number2 or '0'"
+                t-att-referencia="(sale_id.user_id.name if sale_id else record.user_id.name) or '0'"
+                t-att-callent="partner.street_name or '0'"
+                t-att-municent="partner.city or '0'"
+                t-att-codPosEnt="partner.zip or '0'"
+                t-att-noExterior="partner.street_number or '0'"
+                t-att-factura="'0'"
+                t-att-serie="'0'"
+                t-att-noCuenta="acc_4number or 'NO IDENTIFICADO'"
+                t-att-noPedCli="(sale_id.client_order_ref if sale_id else record.name) or '0'"
+                t-att-observacion="record.l10n_mx_edi_payment_method_id and ('FORMA DE PAGO: ' + record.l10n_mx_edi_payment_method_id.name) or ''"
+                t-att-conducto="stock_ids and stock_ids.fields_get(['carrier_id']) and stock_ids.carrier_id.name or values[3] or '0'"
+                msgfija="EL PAGO DE ESTA FACTURA ES EN UNA SOLA EXHIBICION, LUGAR DE EXPEDICION ARTEAGA CO"
+                mensaje="MATERIAL LIBRE DE OXIDO"
+                t-att-kilos="stock_ids and stock_ids.fields_get(['weight']) and '{0:.2f}'.format(stock_ids.weight) or '{0:.2f}'.format(float(values[4]))"
+                t-att-libras="stock_ids and stock_ids.fields_get(['weight']) and '{0:.2f}'.format((stock_ids.weight or 0) * 2.20462) or '{0:.2f}'.format((float(values[4])) * 2.20462)"
+                t-att-codcli="record.partner_id.ref or '0'"
+                t-att-seguro="'0'"
+                t-att-descuento="discount"
+                t-att-Moneda2="'01' if record.currency_id.name == 'MXN' else '02' if record.currency_id.name == 'USD' else '0'"
+                t-att-moneda="record.currency_id.name or '0'"
+                txmoneda="1.0000"
+                t-att-cCadena="'||2.2|{ser}|{fol}|{datetime}|343647|2010|ingreso|{p_term}|{sub_t}|{disc}|{total}|{acc_num}|{city_state}|{c_rfc}|{c_name}|{c_stree1}|{c_stree2}|{c_city}|{c_state_code}|{c_country_code}|{c_zip}|{c_r_fiscal}|{p_rfc}|{p_name}|{p_street}|{p_locality}|{p_city}|{p_state_code}|{p_country_code}|{p_zip}|{line_detail}{taxes}|'.format(
+                ser=record._l10n_mx_get_serie_and_folio(record.number).get('serie') or '',
+                fol=record._l10n_mx_get_serie_and_folio(record.number).get('folio') or '',
+                datetime='{date} {time}'.format(date=record.date_invoice, time=(record.l10n_mx_edi_time_invoice or '00:00:00')),
+                p_term=record.payment_term_id.name or '',
+                sub_t=record.amount_untaxed or 0.0,
+                disc=discount,
+                total=record.amount_total or 0.0,
+                acc_num=acc_4number or '',
+                city_state=(record.company_id.partner_id.city_id.name or '') + (', ' + record.company_id.partner_id.state_id.code or ''),
+                c_rfc=record.l10n_mx_edi_cfdi_supplier_rfc,
+                c_name=record.company_id.name,
+                c_stree1=record.company_id.partner_id.street_name or '',
+                c_stree2=record.company_id.partner_id.l10n_mx_edi_colony or '',
+                c_city=record.company_id.partner_id.city_id.name or '',
+                c_state_code=record.company_id.state_id.code or '',
+                c_country_code=record.company_id.partner_id.country_id.code or '',
+                c_zip=record.company_id.zip or '',
+                c_r_fiscal=record.company_id.partner_id.property_account_position_id.name or '',
+                p_rfc=record.l10n_mx_edi_cfdi_customer_rfc,
+                p_name=partner.name,
+                p_street=partner.street_name or '',
+                p_locality=partner.l10n_mx_edi_locality or '',
+                p_city=partner.city_id.name or '',
+                p_state_code=partner.state_id.name or '',
+                p_country_code=partner.country_id.code or '',
+                p_zip=partner.zip or '', line_detail=line_details, taxes=taxes) or '0'"
+                SHA1="b3f199ed4aac4d6f5d6fe64476f9838c2b459fbd"
+                MD5="123fa4443321653627ec6533634d9c52"/>
+            <t_InfAdicional>
+                <t t-set="inv_line_tax" t-value="{'MXN': '501', 'USD': '502'}"/>
+                <t t-set="item" t-value="1"/>
+                <t t-foreach="record.invoice_line_ids" t-as="line">
+                    <Detalle
+                        t-att-codigo="line.product_id.default_code or '0'"
+                        t-att-QUANT="line.quantity"
+                        t-att-VALORUNIT="line.price_unit"
+                        t-att-TOTAL="line.price_unit * line.quantity"
+                        t-att-DOCUMENTO="record._l10n_mx_get_serie_and_folio(record.number).get('folio', '') or '0'"
+                        t-att-SERIE="record._l10n_mx_get_serie_and_folio(record.number).get('serie', '') or '0'"
+                        t-att-noIdentificlodi="line.product_id.name or ''"
+                        t-att-descripclodi="line.name"
+                        t-att-descit="line.quantity * (line.price_unit * (line.discount or 0.0) / 100.0) or '0'"
+                        t-att-obsitem="'0'"
+                        t-att-tes="'504' if not line.invoice_line_tax_ids else inv_line_tax.get(line.invoice_id.currency_id.name)"
+                        t-att-nroran="values[0]"
+                        t-att-item="str(item).zfill(3)"
+                        t-att-ctdtar="values[1]"
+                        t-att-tarimas="values[2]"/>
+                    <t t-set="item" t-value="item + 1"/>
+                </t>
+            </t_InfAdicional>
+        </cfdi:Addenda>
+    </template>
+    <record id="nissan" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_nissan" model="ir.model">
+        <field name="name">Addenda nissan</field>
+        <field name="transient">Addenda nissan</field>
+        <field name="model">x_addenda.nissan</field>
+        <field name="info">Addend nissan documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_nissan_nroran" model="ir.model.fields">
+        <field name="name">x_nroran</field>
+        <field name="field_description">Nro Ran</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="required">1</field>
+        <field name="model_id" ref="wizard_nissan"/>
+    </record>
+    <record id="wizard_nissan_ctdtar" model="ir.model.fields">
+        <field name="name">x_ctdtar</field>
+        <field name="field_description">Qty Tarimas</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="required">1</field>
+        <field name="model_id" ref="wizard_nissan"/>
+    </record>
+    <record id="wizard_nissan_tarimas" model="ir.model.fields">
+        <field name="name">x_tarimas</field>
+        <field name="field_description">Tarimas</field>
+        <field name="ttype">char</field>
+        <field name="help"></field>
+        <field name="required">1</field>
+        <field name="model_id" ref="wizard_nissan"/>
+    </record>
+    <record id="wizard_nissan_conducto" model="ir.model.fields">
+        <field name="name">x_conducto</field>
+        <field name="field_description">Conducto</field>
+        <field name="ttype">char</field>
+        <field name="help">Used only when the information is not found in the picking.</field>
+        <field name="model_id" ref="wizard_nissan"/>
+    </record>
+    <record id="wizard_nissan_kilos" model="ir.model.fields">
+        <field name="name">x_kilos</field>
+        <field name="field_description">Kilos</field>
+        <field name="ttype">float</field>
+        <field name="help">Used only when the information is not found in the picking.</field>
+        <field name="model_id" ref="wizard_nissan"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_nissan_field" model="ir.model.fields">
+        <field name="name">x_addenda_nissan</field>
+        <field name="field_description">Addenda nissan</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate fields in addenda wizard</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Fields in company-->
+    <record id="company_nissan_field" model="ir.model.fields">
+        <field name="name">x_addenda_nissan_ref</field>
+        <field name="field_description">Supplier code</field>
+        <field name="ttype">char</field>
+        <field name="help">Supplier code for nissan</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'res.company')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_nissan_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda nissan</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.nissan'].browse(model._context['active_id'])
+# TODO: Discuss if this should be done in an internal not instead a new field.
+wizard_fields = [wizard.x_nroran, wizard.x_ctdtar, wizard.x_tarimas, wizard.x_conducto or '', str(wizard.x_kilos) or '0']
+invoice.write({'x_addenda_nissan': '|'.join(wizard_fields)})
+# raise Warning(str(model._context))
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_nissan_view" model="ir.ui.view">
+        <field name="name">x_addenda.nissan.view</field>
+        <field name="model">x_addenda.nissan</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+<p>The corresponding XML will appears with the addenda information.
+This information is taken from the fields that are explicitly included
+in the invoice, and for the case that the information is not in a specific
+field, it is necessary to fill the fields here.</p>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_nroran"/>
+                        <field name="x_ctdtar"/>
+                        <field name="x_tarimas"/>
+                    </group>
+                    <group string="Sales information">
+                        <div>
+                            <p>This information is getting from the sale order. If there's not an order related to this invoice, you can fill this information in the following invoice fields:</p>
+                            <ul>
+                                <li><b><i>Salesperson</i></b> (<b><i>referencia</i></b>): Salesperson name.</li>
+                                <li><b><i>Reference/Description</i></b> (<b><i>noPedCli</i></b>): Customer order reference.</li>
+                            </ul>
+                        </div>
+                    </group>
+                    <group string="Picking information">
+                        <div>
+                            <p>This information is gotten from the picking related to this invoice. If it's not found, you can fill these fields to complete that information.</p>
+                            <ul>
+                                <li><b><i>Carrier name</i></b> (<b><i>conducto</i></b>): Delivery way.</li>
+                                <li><b><i>Weight</i></b> (<b><i>kilos/libras</i></b>): weight in kg.</li>
+                            </ul>
+                        </div>
+                    </group>
+                    <group>
+                        <br />
+                        <field name="x_conducto"/>
+                        <field name="x_kilos"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_nissan_values"
+                    type="action" string="Set Values"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the set wizard.
+    -->
+    <record id="action_addenda_nissan" model="ir.actions.act_window">
+        <field name="name">Addenda nissan</field>
+        <field name="res_model">x_addenda.nissan</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_nissan_view"/>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_nissan" model="ir.ui.view">
+        <field name="name">account.invoice.form.nissan</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_nissan" type="action"
+                        string="Addenda nissan"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

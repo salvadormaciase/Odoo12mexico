@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_general_ledger" model="ir.actions.client">
+        <field name="name">General Ledger</field>
+        <field name="tag">account_report</field>
+        <field name="context" eval="{'model': 'l10n_mx.general.ledger.report'}" />
+    </record>
+    <menuitem id="menu_general_ledger" name="General Ledger"
+              parent="l10n_mx_reports.account_reports_legal_mexican_statements_menu"
+              sequence="100" groups="account.group_account_user"
+              action="action_general_ledger"/>
+
+    <template id="account_reports_backend" inherit_id="account_reports.account_reports_backend" active="True">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/l10n_mx_edi_reports/static/src/js/account_reports.js"></script>
+        </xpath>
+    </template>
+</odoo>

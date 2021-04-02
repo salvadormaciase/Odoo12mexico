@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="product_category_importation_tax" model="product.category">
+        <field name="name">Impuesto</field>
+        <field name="property_account_expense_categ_id" ref="l10n_mx.cuenta801_01_99"/>
+    </record>
+    <record id="product_tax_importation" model="product.product">
+        <field name="name">Tax Importation</field>
+        <field name="categ_id" ref="product_category_importation_tax"/>
+        <field name="type">service</field>
+        <field name="description">To importation of products.</field>
+        <field name="supplier_taxes_id" eval="[(6,0,[ref('tax_importation')])]"/>
+    </record>
+
+</odoo>

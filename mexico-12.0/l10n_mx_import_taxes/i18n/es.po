@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * l10n_mx_import_taxes
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-14 01:16+0000\n"
+"PO-Revision-Date: 2018-11-14 01:16+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_import_taxes
+#: model:product.category,name:l10n_mx_import_taxes.product_category_importation_tax
+msgid "Impuesto"
+msgstr ""
+
+#. module: l10n_mx_import_taxes
+#: model:ir.model.fields,field_description:l10n_mx_import_taxes.field_account_invoice_l10n_mx_edi_invoice_broker_id
+msgid "Overseas Invoice"
+msgstr "Factura Extranjera"
+
+#. module: l10n_mx_import_taxes
+#: model:product.product,name:l10n_mx_import_taxes.product_tax_importation
+#: model:product.template,name:l10n_mx_import_taxes.product_tax_importation_product_template
+msgid "Tax Importation"
+msgstr "Impuesto de Importación"
+
+#. module: l10n_mx_import_taxes
+#: model:ir.model.fields,help:l10n_mx_import_taxes.field_account_invoice_l10n_mx_edi_invoice_broker_id
+msgid "This is the source invoice upon taxes are included in this line and that were paid by the broker on behalf of the company"
+msgstr "Esta es la factura de origen sobre impuestos que se incluyen en esta línea y que fueron pagados por el agente aduanal en nombre de la compañía"
+
+#. module: l10n_mx_import_taxes
+#: model:product.product,description:l10n_mx_import_taxes.product_tax_importation
+#: model:product.template,description:l10n_mx_import_taxes.product_tax_importation_product_template
+msgid "To importation of products."
+msgstr "Para importación de productos."
+
+#. module: l10n_mx_import_taxes
+#: model:product.product,uom_name:l10n_mx_import_taxes.product_tax_importation
+#: model:product.template,uom_name:l10n_mx_import_taxes.product_tax_importation_product_template
+msgid "Unit(s)"
+msgstr "Unidad(es)"
+
+#. module: l10n_mx_import_taxes
+#: model:base.automation,name:l10n_mx_import_taxes.base_automation_create_entry_lines_for_import_taxes
+#: model:ir.actions.server,name:l10n_mx_import_taxes.base_automation_create_entry_lines_for_import_taxes_ir_actions_server
+msgid "[l10n_mx_import_taxes] Create Entry Lines on Invoice for Import Taxes"
+msgstr "[l10n_mx_import_taxes] Crear líneas de entrada en factura para impuestos de importación"
+
+#. module: l10n_mx_import_taxes
+#: model:product.product,weight_uom_name:l10n_mx_import_taxes.product_tax_importation
+#: model:product.template,weight_uom_name:l10n_mx_import_taxes.product_tax_importation_product_template
+msgid "kg"
+msgstr "kg"

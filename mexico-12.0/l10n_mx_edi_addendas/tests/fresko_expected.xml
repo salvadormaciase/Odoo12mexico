@@ -1,0 +1,113 @@
+<cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <requestForPayment type="SimpleInvoiceType" contentVersion="1.3.1" documentStructureVersion="AMC7.1" documentStatus="ORIGINAL" DeliveryDate="2019-01-02">
+      <requestForPaymentIdentification>
+        <entityType>INVOICE</entityType>
+        <uniqueCreatorIdentification>INV2019999</uniqueCreatorIdentification>
+      </requestForPaymentIdentification>
+      <specialInstruction code="AAB">
+        <text>90 Days</text>
+      </specialInstruction>
+      <specialInstruction code="ZZZ">
+        <text>CUATROCIENTOS SETENTA Y SIETE PESOS 00/100 M.N</text>
+      </specialInstruction>
+      <orderIdentification>
+          <referenceIdentification type="ON">123</referenceIdentification>
+          <ReferenceDate>2019-01-24</ReferenceDate>
+      </orderIdentification>
+      <AdditionalInformation>
+        <referenceIdentification type="DQ">123456</referenceIdentification>
+      </AdditionalInformation>
+      <buyer>
+        <gln>7505000099632</gln>
+        <contactInformation>
+          <personOrDepartmentName>
+            <text>10</text>
+          </personOrDepartmentName>
+        </contactInformation>
+      </buyer>
+      <seller>
+        <gln>0000000000000</gln>
+        <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY">00000</alternatePartyIdentification>
+      </seller>
+      <shipTo>
+          <gln>7505000099632</gln>
+          <nameAndAddress>
+               <name/>
+               <streetAddressOne/>
+               <city/>
+          </nameAndAddress>
+      </shipTo>
+      <InvoiceCreator>
+        <gln>0000000000000</gln>
+        <alternatePartyIdentification type="IA">00000</alternatePartyIdentification>
+      </InvoiceCreator>
+      <currency currencyISOCode="MXN">
+        <currencyFunction>BILLING_CURRENCY</currencyFunction>
+        <rateOfChange>1</rateOfChange>
+      </currency>
+      <paymentTerms paymentTermsEvent="DATE_OF_INVOICE" PaymentTermsRelationTime="REFERENCE_AFTER">
+        <netPayment netPaymentTermsType="BASIC_NET">
+          <paymentTimePeriod>
+            <timePeriodDue timePeriod="DAYS">
+              <value>90</value>
+            </timePeriodDue>
+          </paymentTimePeriod>
+        </netPayment>
+        <discountPayment discountType="ALLOWANCE_BY_PAYMENT_ON_TIME">
+          <percentage>0.000</percentage>
+        </discountPayment>
+      </paymentTerms>
+      <allowanceCharge settlementType="BILL_BACK" allowanceChargeType="ALLOWANCE_GLOBAL">
+        <specialServicesType>AJ</specialServicesType>
+        <monetaryAmountOrPercentage>
+          <rate base="INVOICE_VALUE">
+            <percentage>0.00</percentage>
+          </rate>
+        </monetaryAmountOrPercentage>
+      </allowanceCharge>
+      <lineItem type="SimpleInvoiceLineItemType" number="1">
+        <tradeItemIdentification>
+          <gtin>1234567890</gtin>
+        </tradeItemIdentification>
+        <alternateTradeItemIdentification type="BUYER_ASSIGNED">1234567890</alternateTradeItemIdentification>
+        <tradeItemDescriptionInformation>
+          <longText>[PCSC234] Computer SC234 17</longText>
+        </tradeItemDescriptionInformation>
+        <invoicedQuantity unitOfMeasure="U">1.0</invoicedQuantity>
+        <grossPrice>
+          <Amount>450.00</Amount>
+        </grossPrice>
+        <netPrice>
+          <Amount>450.00</Amount>
+        </netPrice>
+        <AdditionalInformation>
+          <referenceIdentification type="ON">1234567890</referenceIdentification>
+        </AdditionalInformation>
+        <totalLineAmount>
+          <grossAmount>
+            <Amount>450.00</Amount>
+          </grossAmount>
+          <netAmount>
+            <Amount>450.00</Amount>
+          </netAmount>
+        </totalLineAmount>
+      </lineItem>
+      <totalAmount>
+        <Amount>477.00</Amount>
+      </totalAmount>
+      <TotalAllowanceCharge allowanceOrChargeType="ALLOWANCE">
+        <Amount>0.00</Amount>
+      </TotalAllowanceCharge>
+      <baseAmount>
+        <Amount>450.00</Amount>
+      </baseAmount>
+      <tax type="LAC">
+          <taxPercentage>0.10</taxPercentage>
+          <taxAmount>45.00</taxAmount>
+          <taxCategory>RETENIDO</taxCategory>
+      </tax>
+      <payableAmount>
+        <Amount>477.00</Amount>
+      </payableAmount>
+    </requestForPayment>
+  </cfdi:Addenda>

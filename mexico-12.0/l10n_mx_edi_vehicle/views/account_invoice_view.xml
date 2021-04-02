@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_l10n_mx_edi_complement_cd_invoice_form_inherit" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.complement.cd.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_info']" position="inside">
+                <group>
+                    <field name="l10n_mx_edi_complement_type" invisible="1"/>
+                    <group string="Destruction Certificate" attrs="{'invisible':[('l10n_mx_edi_complement_type', '!=', 'destruction')]}">
+                        <field name="l10n_mx_edi_serie_cd"/>
+                        <field name="l10n_mx_edi_folio_cd" attrs="{'required':[('l10n_mx_edi_serie_cd','!=',False)]}"/>
+                        <field name="l10n_mx_edi_vehicle_id" attrs="{'required':[('l10n_mx_edi_serie_cd','!=',False)]}"/>
+                    </group>
+                    <group string="Vehicle Renew and Substitution" attrs="{'invisible':[('l10n_mx_edi_complement_type', '!=', 'renew')]}">
+                        <field name="l10n_mx_edi_vehicle_id"/>
+                        <field name="l10n_mx_edi_decree_type"/>
+                        <field name="l10n_mx_edi_substitute_id" attrs="{'invisible':[('l10n_mx_edi_decree_type', '!=', '02')]}"/>
+                        <separator colspan="2" string="Used Vehicles" attrs="{'invisible':[('l10n_mx_edi_decree_type', '!=', '01')]}"/>
+                        <field name="l10n_mx_edi_vehicle_ids" nolabel="1" attrs="{'invisible':[('l10n_mx_edi_decree_type', '!=', '01')]}" groups="fleet.fleet_group_user"/>
+                    </group>
+                    <group string="Vehicle to sale" attrs="{'invisible':['|', ('l10n_mx_edi_complement_type', '!=', 'sale'), ('type', '!=', 'out_invoice')]}" groups="fleet.fleet_group_user">
+                        <field name="l10n_mx_edi_vehicle_id"/>
+                    </group>
+                    <group string="Natural Person member of the coordinated" attrs="{'invisible':[('l10n_mx_edi_complement_type', '!=', 'pfic')]}">
+                        <field name="l10n_mx_edi_vehicle_id"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

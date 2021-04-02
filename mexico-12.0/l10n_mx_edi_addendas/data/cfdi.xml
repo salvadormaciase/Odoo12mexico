@@ -1,0 +1,12 @@
+<odoo>
+    <template id="cfdiv33_inherit" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[local-name()='Concepto']" position="before">
+            <t t-if="record.partner_id.l10n_mx_edi_addenda.name == 'Fresko'">
+                <t t-set="supplier_code" t-value="line.sudo().product_id.seller_ids.filtered(lambda s: s.name == record.commercial_partner_id and s.product_id == line.product_id)[:1]"/>
+            </t>
+        </xpath>
+        <xpath expr="//*[local-name()='Concepto']" position="attributes">
+            <attribute name="t-att-NoIdentificacion">supplier_code.product_code or line.product_id.barcode if supplier_code else record._get_string_cfdi(line.product_id.default_code or '')</attribute>
+        </xpath>
+    </template>
+</odoo>

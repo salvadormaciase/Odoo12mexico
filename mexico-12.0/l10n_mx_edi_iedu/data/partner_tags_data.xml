@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="iedu_level" model="res.partner.category">
+        <field name="name">IEDU Educational levels</field>
+        <field name="active" eval="False"/>
+    </record>
+    <record id="iedu_level_0" model="res.partner.category">
+        <field name="name">Preescolar</field>
+        <field name="parent_id" ref="iedu_level"/>
+    </record>
+    <record id="iedu_level_1" model="res.partner.category">
+        <field name="name">Primaria</field>
+        <field name="parent_id" ref="iedu_level"/>
+    </record>
+    <record id="iedu_level_2" model="res.partner.category">
+        <field name="name">Secundaria</field>
+        <field name="parent_id" ref="iedu_level"/>
+    </record>
+    <record id="iedu_level_3" model="res.partner.category">
+        <field name="name">Bachillerato o su equivalente</field>
+        <field name="parent_id" ref="iedu_level"/>
+    </record>
+    <record id="iedu_level_4" model="res.partner.category">
+        <field name="name">Profesional técnico</field>
+        <field name="parent_id" ref="iedu_level"/>
+    </record>
+</odoo>

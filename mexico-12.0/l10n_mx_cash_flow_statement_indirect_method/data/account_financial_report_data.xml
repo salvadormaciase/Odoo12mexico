@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CASH FLOW STATEMENT - INDIRECT METHOD -->
+
+    <record id="cash_flow_indirect" model="account.financial.html.report">
+        <field name="name">Cash Flow Statement - Indirect Method</field>
+        <field name="debit_credit" eval="False"/>
+        <field name="analytic" eval="True"/>
+        <field name="unfold_all_filter" eval="True"/>
+        <field name="show_journal_filter" eval="True"/>
+        <field name='parent_id' ref='account.account_reports_legal_statements_menu'/>
+    </record>
+
+    <record id='cfs_im_operating_activities' model='account.financial.html.report.line'>
+        <field name='name'>Operating Activities</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OP_AC</field>
+        <field name='formulas'></field>
+        <field name='domain'></field>
+        <field name='sequence' eval='10'/>
+        <field name='level' eval='1'/>
+        <field name='groupby'></field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_net_income' model='account.financial.html.report.line'>
+        <field name='name'>Net Income</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_NI</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["!", "|", "|", ("account_id.tag_ids.name", "like", "1__.%"), ("account_id.tag_ids.name", "like", "2__.%"), ("account_id.tag_ids.name", "like", "3__.%")]</field>
+        <field name='sequence' eval='20'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'></field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_depreciations_and_amortizations' model='account.financial.html.report.line'>
+        <field name='name'>Depreciations and Amortizations</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_DA</field>
+        <field name='formulas'>balance = sum.balance</field>
+        <field name='domain'>["|","|",("account_id.tag_ids.name", "like", "613%"),("account_id.tag_ids.name", "like", "614%"),("account_id.tag_ids.name", "like", "504%")]</field>
+        <field name='sequence' eval='30'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_losses_on_fixed_assets_sales' model='account.financial.html.report.line'>
+        <field name='name'>Losses on Sales of Long Term Assets</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_LSLA</field>
+        <field name='formulas'>balance = sum.balance</field>
+        <field name='domain'>[("account_id.tag_ids.name", "like", "703.%")]</field>
+        <field name='sequence' eval='40'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_gains_on_fixed_assets_sales' model='account.financial.html.report.line'>
+        <field name='name'>Gains on Sales of Long Term Assets</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_GSLA</field>
+        <field name='formulas'>balance = sum.balance</field>
+        <field name='domain'>[("account_id.tag_ids.name", "like", "704.%")]</field>
+        <field name='sequence' eval='50'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_inventories' model='account.financial.html.report.line'>
+        <field name='name'>Inventories</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_I</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>[("account_id.tag_ids.name", "like", "115.%")]</field>
+        <field name='sequence' eval='60'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_trade_account_receivable' model='account.financial.html.report.line'>
+        <field name='name'>Trade Account Receivable</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_TAR</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["|","|","|",("account_id.tag_ids.name", "like", "105%"),("account_id.tag_ids.name", "like", "206%"),("account_id.tag_ids.name", "like", "108.01%"),("account_id.tag_ids.name", "like", "108.02%")]</field>
+        <field name='sequence' eval='70'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_other_operating_receivable' model='account.financial.html.report.line'>
+        <field name='name'>Other Operating Receivable</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OOR</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["|","|","|","|","|","|",("account_id.tag_ids.name", "like", "106%"),("account_id.tag_ids.name", "like", "107%"),("account_id.tag_ids.name", "like", "108.03%"),("account_id.tag_ids.name", "like", "108.04%"),("account_id.tag_ids.name", "like", "113.%"),("account_id.tag_ids.name", "like", "118.%"),("account_id.tag_ids.name", "like", "119.%"), "!","|","|","|",("account_id.tag_ids.name", "like", "106.05%"),("account_id.tag_ids.name", "like", "106.06%"),("account_id.tag_ids.name", "like", "106.07%"),("account_id.tag_ids.name", "like", "106.08%")] </field>
+        <field name='sequence' eval='80'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_trade_account_payable' model='account.financial.html.report.line'>
+        <field name='name'>Trade Account Payable</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_TAP</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["|",("account_id.tag_ids.name", "like", "201%"),("account_id.tag_ids.name", "like", "120%")]</field>
+        <field name='sequence' eval='90'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_other_operating_payable' model='account.financial.html.report.line'>
+        <field name='name'>Other Operating Payable</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OOP</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["|","|","|","|","|","|","|","|","|",("account_id.tag_ids.name", "like", "202%"),("account_id.tag_ids.name", "like", "203%"),("account_id.tag_ids.name", "like", "205%"),("account_id.tag_ids.name", "like", "207%"),("account_id.tag_ids.name", "like", "208%"),("account_id.tag_ids.name", "like", "209%"),("account_id.tag_ids.name", "like", "213%"),("account_id.tag_ids.name", "like", "215%"),("account_id.tag_ids.name", "like", "216%"),("account_id.tag_ids.name", "like", "217%"),"!","|","|","|","|","|","|","|",("account_id.tag_ids.name", "like", "202.07%"),("account_id.tag_ids.name", "like", "202.08%"),("account_id.tag_ids.name", "like", "202.09%"),("account_id.tag_ids.name", "like", "202.10%"),("account_id.tag_ids.name", "like", "203.05%"),("account_id.tag_ids.name", "like", "203.06%"),("account_id.tag_ids.name", "like", "203.07%"),("account_id.tag_ids.name", "like", "203.08%")]</field>
+        <field name='sequence' eval='100'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_receipts_of_interest_and_dividents_on_investments' model='account.financial.html.report.line'>
+        <field name='name'>Receipts of Interest and Dividents on Investments</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_RIDI</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["|","|","|","|","|","|","|","|","|","|","|",("account_id.tag_ids.name", "like", "106.05%"),("account_id.tag_ids.name", "like", "106.06%"),("account_id.tag_ids.name", "like", "106.07%"),("account_id.tag_ids.name", "like", "106.08%"),("account_id.tag_ids.name", "like", "109.09%"),("account_id.tag_ids.name", "like", "109.10%"),("account_id.tag_ids.name", "like", "109.11%"),("account_id.tag_ids.name", "like", "109.12%"),("account_id.tag_ids.name", "like", "186.05%"),("account_id.tag_ids.name", "like", "186.06%"),("account_id.tag_ids.name", "like", "186.07%"),("account_id.tag_ids.name", "like", "186.08%")]</field>
+        <field name='sequence' eval='110'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_payments_of_interest' model='account.financial.html.report.line'>
+        <field name='name'>Payments of Interest</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_PI</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", ("account_id.tag_ids.name", "like", "202.07%"),("account_id.tag_ids.name", "like", "202.08%"),("account_id.tag_ids.name", "like", "202.09%"),("account_id.tag_ids.name", "like", "202.10%"),("account_id.tag_ids.name", "like", "203.05%"),("account_id.tag_ids.name", "like", "203.06%"),("account_id.tag_ids.name", "like", "203.07%"),("account_id.tag_ids.name", "like", "203.08%"),("account_id.tag_ids.name", "like", "252.11%"),("account_id.tag_ids.name", "like", "252.12%"),("account_id.tag_ids.name", "like", "252.13%"),("account_id.tag_ids.name", "like", "252.14%"),("account_id.tag_ids.name", "like", "253.05%"),("account_id.tag_ids.name", "like", "253.06%"),("account_id.tag_ids.name", "like", "253.07%"),("account_id.tag_ids.name", "like", "253.08%")]</field>
+        <field name='sequence' eval='120'/>
+        <field name='level' eval='3'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_cash_provided_by_operating_activities' model='account.financial.html.report.line'>
+        <field name='name'>Cash Provided by (used in) Operating Activities</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OP_AC_TOT</field>
+        <field name='formulas'>balance = CFS_NI.balance + CFS_DA.balance + CFS_LSLA.balance + CFS_GSLA.balance + CFS_I.balance + CFS_TAR.balance + CFS_OOR.balance + CFS_TAP.balance + CFS_OOP.balance + CFS_RIDI.balance + CFS_PI.balance</field>
+        <field name='domain'></field>
+        <field name='sequence' eval='130'/>
+        <field name='level' eval='0'/>
+        <field name='groupby'></field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_investing_activities' model='account.financial.html.report.line'>
+        <field name='name'>Investing Activities</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OP_IN</field>
+        <field name='formulas'></field>
+        <field name='domain'></field>
+        <field name='sequence' eval='140'/>
+        <field name='level' eval='1'/>
+        <field name='groupby'></field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_sale_of_ppe__intangibles' model='account.financial.html.report.line'>
+        <field name='name'>Sale of PPE &amp; Intangibles</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_SPPEI</field>
+        <field name='formulas'>balance = sum.credit</field>
+        <field name='domain'>["|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|",("account_id.tag_ids.name", "like", "151.%"), ("account_id.tag_ids.name", "like", "152.%"), ("account_id.tag_ids.name", "like", "153.%"), ("account_id.tag_ids.name", "like", "154.%"), ("account_id.tag_ids.name", "like", "155.%"), ("account_id.tag_ids.name", "like", "156.%"), ("account_id.tag_ids.name", "like", "157.%"), ("account_id.tag_ids.name", "like", "158.%"), ("account_id.tag_ids.name", "like", "159.%"), ("account_id.tag_ids.name", "like", "160.%"), ("account_id.tag_ids.name", "like", "161.%"), ("account_id.tag_ids.name", "like", "162.%"), ("account_id.tag_ids.name", "like", "163.%"), ("account_id.tag_ids.name", "like", "164.%"), ("account_id.tag_ids.name", "like", "165.%"), ("account_id.tag_ids.name", "like", "166.%"), ("account_id.tag_ids.name", "like", "167.%"), ("account_id.tag_ids.name", "like", "168.%"), ("account_id.tag_ids.name", "like", "169.%"), ("account_id.tag_ids.name", "like", "170.%"),]</field>
+        <field name='sequence' eval='150'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_acquisition_of_ppe__intangibles' model='account.financial.html.report.line'>
+        <field name='name'>Acquisition of PPE &amp; Intangibles</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_APPEI</field>
+        <field name='formulas'>balance = -sum.debit</field>
+        <field name='domain'>["|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|", "|",("account_id.tag_ids.name", "like", "151.%"), ("account_id.tag_ids.name", "like", "152.%"), ("account_id.tag_ids.name", "like", "153.%"), ("account_id.tag_ids.name", "like", "154.%"), ("account_id.tag_ids.name", "like", "155.%"), ("account_id.tag_ids.name", "like", "156.%"), ("account_id.tag_ids.name", "like", "157.%"), ("account_id.tag_ids.name", "like", "158.%"), ("account_id.tag_ids.name", "like", "159.%"), ("account_id.tag_ids.name", "like", "160.%"), ("account_id.tag_ids.name", "like", "161.%"), ("account_id.tag_ids.name", "like", "162.%"), ("account_id.tag_ids.name", "like", "163.%"), ("account_id.tag_ids.name", "like", "164.%"), ("account_id.tag_ids.name", "like", "165.%"), ("account_id.tag_ids.name", "like", "166.%"), ("account_id.tag_ids.name", "like", "167.%"), ("account_id.tag_ids.name", "like", "168.%"), ("account_id.tag_ids.name", "like", "169.%"), ("account_id.tag_ids.name", "like", "170.%"),]</field>
+        <field name='sequence' eval='160'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_sale_of_investments' model='account.financial.html.report.line'>
+        <field name='name'>Sale of Investments</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_SI</field>
+        <field name='formulas'>balance = sum.credit</field>
+        <field name='domain'>["|",("account_id.tag_ids.name", "like", "103.%"), ("account_id.tag_ids.name", "like", "188.%")]</field>
+        <field name='sequence' eval='170'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_purchase_of_investments' model='account.financial.html.report.line'>
+        <field name='name'>Purchase of Investments</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_PIN</field>
+        <field name='formulas'>balance = -sum.debit</field>
+        <field name='domain'>["|",("account_id.tag_ids.name", "like", "103.%"), ("account_id.tag_ids.name", "like", "188.%")]</field>
+        <field name='sequence' eval='180'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_loans_made_to_other_parties' model='account.financial.html.report.line'>
+        <field name='name'>Loans made to other parties</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_LMOP</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>["|",("account_id.tag_ids.name", "like", "104.%"), ("account_id.tag_ids.name", "like", "186.%"),"!","|","|","|",("account_id.tag_ids.name", "like", "186.05%"),("account_id.tag_ids.name", "like", "186.06%"),("account_id.tag_ids.name", "like", "186.07%"),("account_id.tag_ids.name", "like", "186.08%")]</field>
+        <field name='sequence' eval='190'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_cash_provided_by_investing_activities' model='account.financial.html.report.line'>
+        <field name='name'>Cash Provided by (used in) Investing Activities</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OP_IN_TOT</field>
+        <field name='formulas'>balance = CFS_SPPEI.balance + CFS_APPEI.balance + CFS_SI.balance + CFS_PIN.balance + CFS_LMOP.balance</field>
+        <field name='domain'></field>
+        <field name='sequence' eval='200'/>
+        <field name='level' eval='0'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_financing_activities' model='account.financial.html.report.line'>
+        <field name='name'>Financing Activities</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OP_FI</field>
+        <field name='formulas'></field>
+        <field name='domain'></field>
+        <field name='sequence' eval='210'/>
+        <field name='level' eval='1'/>
+        <field name='groupby'></field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_shortterm_borrowings' model='account.financial.html.report.line'>
+        <field name='name'>Short-term Borrowings</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_STB</field>
+        <field name='formulas'>balance = sum.credit</field>
+        <field name='domain'>[("account_id.tag_ids.name", "like", "204.%")]</field>
+        <field name='sequence' eval='220'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_longterm_financing_issuances' model='account.financial.html.report.line'>
+        <field name='name'>Long-term financing issuances</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_LTFI</field>
+        <field name='formulas'>balance = sum.credit</field>
+        <field name='domain'>["|","|","|","|","|","|","|","|","|",("account_id.tag_ids.name", "like", "251.%"), ("account_id.tag_ids.name", "like", "252.%"), ("account_id.tag_ids.name", "like", "253.%"), ("account_id.tag_ids.name", "like", "254.%"), ("account_id.tag_ids.name", "like", "255.%"), ("account_id.tag_ids.name", "like", "256.%"), ("account_id.tag_ids.name", "like", "259.%"), ("account_id.tag_ids.name", "like", "301.%"), ("account_id.tag_ids.name", "like", "302.%"), ("account_id.tag_ids.name", "like", "303.%"), "!","|","|","|","|","|","|","|",("account_id.tag_ids.name", "like", "252.11%"),("account_id.tag_ids.name", "like", "252.12%"),("account_id.tag_ids.name", "like", "252.13%"),("account_id.tag_ids.name", "like", "252.14%"),("account_id.tag_ids.name", "like", "253.05%"),("account_id.tag_ids.name", "like", "253.06%"),("account_id.tag_ids.name", "like", "253.07%"),("account_id.tag_ids.name", "like", "253.08%")]</field>
+        <field name='sequence' eval='230'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_payment_of_principal_on_debt' model='account.financial.html.report.line'>
+        <field name='name'>Payment of Principal on Debt</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_PPD</field>
+        <field name='formulas'>balance = -sum.debit</field>
+        <field name='domain'>["|","|","|","|",("account_id.tag_ids.name", "like", "204.%"),("account_id.tag_ids.name", "like", "254.%"), ("account_id.tag_ids.name", "like", "301.%"), ("account_id.tag_ids.name", "like", "302.%"), ("account_id.tag_ids.name", "like", "303.%"), ]</field>
+        <field name='sequence' eval='240'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_payment_of_dividents' model='account.financial.html.report.line'>
+        <field name='name'>Payment of Dividents</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_PD</field>
+        <field name='formulas'>balance = -sum.balance</field>
+        <field name='domain'>[("account_id.tag_ids.name", "like", "214.%")]</field>
+        <field name='sequence' eval='250'/>
+        <field name='level' eval='2'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>strict_range</field>
+    </record>
+
+    <record id='cfs_im_cash_provided_by_financing_activities' model='account.financial.html.report.line'>
+        <field name='name'>Cash Provided by (used in) Financing Activities</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_OP_FI_TOT</field>
+        <field name='formulas'>balance = CFS_STB.balance + CFS_LTFI.balance + CFS_PPD.balance + CFS_PD.balance</field>
+        <field name='domain'></field>
+        <field name='sequence' eval='260'/>
+        <field name='level' eval='0'/>
+        <field name='groupby'></field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_effect_of_exchange_rates_on_cash_and_equivalents' model='account.financial.html.report.line'>
+        <field name='name'>Effect of exchange rates on cash and equivalents</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_EXR</field>
+        <field name='formulas'>balance = sum.balance</field>
+        <field name='domain'>["|", "|", "|", "|", "|", ("account_id.tag_ids.name", "like", "701.01%"), ("account_id.tag_ids.name", "like", "701.02%"), ("account_id.tag_ids.name", "like", "701.03%"), ("account_id.tag_ids.name", "like", "702.01%"), ("account_id.tag_ids.name", "like", "702.02%"), ("account_id.tag_ids.name", "like", "702.03%")]</field>
+        <field name='sequence' eval='270'/>
+        <field name='level' eval='1'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_net_increase_decrease_in_cash_and_equivalents' model='account.financial.html.report.line'>
+        <field name='name'>Net increase (decrease) in cash and equivalents</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_NET_CASH</field>
+        <field name='formulas'>balance = CFS_OP_AC_TOT.balance + CFS_OP_IN_TOT.balance + CFS_OP_FI_TOT.balance</field>
+        <field name='domain'></field>
+        <field name='sequence' eval='280'/>
+        <field name='level' eval='0'/>
+        <field name='groupby'></field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+
+    <record id='cfs_im_cash_and_equivalents_at_beginning_of_period' model='account.financial.html.report.line'>
+        <field name='name'>Cash and equivalents at beginning of period</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_BGN_CASH</field>
+        <field name='formulas'>balance = sum.balance</field>
+        <field name='domain'>["|",("account_id.tag_ids.name", "like", "101%"),("account_id.tag_ids.name", "like", "102%")]</field>
+        <field name='sequence' eval='290'/>
+        <field name='level' eval='1'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>to_beginning_of_period</field>
+    </record>
+
+    <record id='cfs_im_cash_and_equivalents_at_end_of_period' model='account.financial.html.report.line'>
+        <field name='name'>Cash and equivalents at end of period</field>
+        <field name='financial_report_id' ref='cash_flow_indirect'/>
+        <field name='code'>CFS_END_CASH</field>
+        <field name='formulas'>balance = sum.balance</field>
+        <field name='domain'>["|",("account_id.tag_ids.name", "like", "101%"),("account_id.tag_ids.name", "like", "102%")]</field>
+        <field name='sequence' eval='300'/>
+        <field name='level' eval='1'/>
+        <field name='groupby'>account_id</field>
+        <field name='special_date_changer'>normal</field>
+    </record>
+</odoo>

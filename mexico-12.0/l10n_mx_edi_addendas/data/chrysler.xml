@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+    <template id="chrysler" name="Chrysler">
+            <t t-set="inv_type" t-value="{'out_invoice': 'FA', 'out_refund': 'CR'}"/>
+            <t t-set="values" t-value="record.x_addenda_chrysler.split('|') if record.x_addenda_chrysler else False"/>
+            <t t-set="serie_and_folio" t-value="record._l10n_mx_get_serie_and_folio(record.number)"/>
+            <factura tipoDocumento="PUA"
+                t-att-TipoDocumentoFiscal="inv_type.get(record.type)"
+                version="1.0"
+                t-att-serie="serie_and_folio['serie']"
+                t-att-folioFiscal="serie_and_folio['folio']"
+                t-att-fecha="record.date_invoice"
+                t-att-montoTotal="'{0:.2f}'.format(record.amount_total)">
+                <t t-if="values and (len(values) == 2 or len(values) == 6)">
+                    <Cancelaciones t-att-CancelaSustituye="values[-1]"/>
+                </t>
+                <moneda t-if="record.currency_id != record.company_id.currency_id"
+                    t-att-tipoCambio="'{0:.4f}'.format(record.currency_id.compute(1, record.company_id.currency_id))" t-att-tipoMoneda="record.currency_id.name"/>
+                <moneda t-if="record.currency_id == record.company_id.currency_id" t-att-tipoMoneda="record.currency_id.name"/>
+                <proveedor t-att-codigo="record.company_id.x_addenda_chrysler_ref" t-att-nombre="record.company_id.partner_id.name"/>
+                <destino t-if="'partner_shipping_id' in record.fields_get()"
+                    t-att-codigo="record.partner_shipping_id.ref" t-att-nombre="record.partner_shipping_id.name"/>
+                <nota t-if="record.comment" t-att-nota="record.comment"/>
+                <t t-if="record.type == 'out_refund' and values and len(values) >= 5">
+                    <cargosCreditos t-att-referenciaChrysler="values[1]" t-att-consecutivo="values[2]"
+                        t-att-montoLinea="values[3]" t-att-factura="values[4]"/>
+                </t>
+                <t t-set="tax" t-value="{16.0: 'V6', 11.0: 'V4', 0.0: 'V0'}"/>
+                <t t-foreach="record.tax_line_ids" t-as="tax_line">
+                    <otrosCargos t-att-codigo="tax.get(tax_line.tax_id.amount)" t-att-monto="'{0:.2f}'.format(tax_line.amount_total)"/>
+                </t>
+                <partes>
+                    <t t-set="num_part" t-value="1"/>
+                    <t t-set="unit_m" t-value="{'Unidad(es)': 'EA'}"/>
+                    <t t-foreach="record.invoice_line_ids" t-as="line">
+                        <part t-att-numero="line.name.split(' ')[0]" t-att-cantidad="'{0:.4f}'.format(line.quantity)"
+                            t-att-precioUnitario="'{0:.4f}'.format(line.price_unit)" t-att-montoDeLinea="'{0:.2f}'.format(line.price_subtotal)"
+                            t-att-unidadDeMedida="unit_m.get(line.uom_id.name)">
+                            <references t-if="values" t-att-ordenCompra="values[0]" t-att-releaseRequisicion="values[0]"
+                                t-att-ammendment="'0000' + str(num_part)"
+                                t-att-packingList="'%s%s' % (serie_and_folio['serie'], serie_and_folio['folio'])"/>
+                            <t t-set="num_part" t-value="num_part + 1"/>
+                        </part>
+                    </t>
+                </partes>
+            </factura>
+    </template>
+    <record id="chrysler" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+    <!--Wizard to set elements-->
+    <record id="wizard_chrysler" model="ir.model">
+        <field name="name">Addenda chrysler</field>
+        <field name="transient">Addenda chrysler</field>
+        <field name="model">x_addenda.chrysler</field>
+        <field name="info">Addend chrysler documentation</field>
+    </record>
+
+    <!--Fields on the wizard-->
+    <record id="wizard_chrysler_po" model="ir.model.fields">
+        <field name="name">x_po</field>
+        <field name="field_description">ordenCompra</field>
+        <field name="ttype">char</field>
+        <field name="help">Purchase order number
+        </field>
+        <field name="model_id" ref="wizard_chrysler"/>
+    </record>
+    <record id="wizard_chrysler_cancelation" model="ir.model.fields">
+        <field name="name">x_cancelation</field>
+        <field name="field_description">cancelaSustituye</field>
+        <field name="ttype">char</field>
+        <field name="help">Invoice number that it cancel and replace (Cancelaciones node)
+        </field>
+        <field name="model_id" ref="wizard_chrysler"/>
+    </record>
+    <record id="wizard_chrysler_ref" model="ir.model.fields">
+        <field name="name">x_chrysler_ref</field>
+        <field name="field_description">referenciaChrysler</field>
+        <field name="ttype">char</field>
+        <field name="help">Number of reference generated by CdM system (Cargos Créditos node)
+        </field>
+        <field name="model_id" ref="wizard_chrysler"/>
+    </record>
+    <record id="wizard_chrysler_consecutive" model="ir.model.fields">
+        <field name="name">x_consecutive</field>
+        <field name="field_description">consecutivo</field>
+        <field name="ttype">char</field>
+        <field name="help">Number of batch generated by CdM system (Cargos Créditos node)
+        </field>
+        <field name="model_id" ref="wizard_chrysler"/>
+    </record>
+    <record id="wizard_chrysler_line_amount" model="ir.model.fields">
+        <field name="name">x_amount_line</field>
+        <field name="field_description">montoLinea</field>
+        <field name="ttype">float</field>
+        <field name="help">Line amount (Cargos Créditos node)
+        </field>
+        <field name="model_id" ref="wizard_chrysler"/>
+    </record>
+    <record id="wizard_chrysler_invoice" model="ir.model.fields">
+        <field name="name">x_invoice</field>
+        <field name="field_description">factura</field>
+        <field name="ttype">char</field>
+        <field name="help">Invoice number to which the charge or the credit refers to (Cargos Créditos node)
+        </field>
+        <field name="model_id" ref="wizard_chrysler"/>
+    </record>
+    <record id="wizard_chrysler_supplier_code" model="ir.model.fields">
+        <field name="name">x_supplier_code</field>
+        <field name="field_description">Chrysler supplier code</field>
+        <field name="ttype">char</field>
+        <field name="required">1</field>
+        <field name="help">This is the code of company for Chrysler
+        </field>
+        <field name="model_id" ref="wizard_chrysler"/>
+    </record>
+
+    <!--Fields in invoice-->
+    <record id="invoice_chrysler_field" model="ir.model.fields">
+        <field name="name">x_addenda_chrysler</field>
+        <field name="field_description">Addenda chrysler</field>
+        <field name="ttype">char</field>
+        <field name="help">Used to concatenate fields in addenda wizard</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'account.invoice')]"/>
+    </record>
+
+    <!--Fields in company-->
+    <record id="company_chrysler_field" model="ir.model.fields">
+        <field name="name">x_addenda_chrysler_ref</field>
+        <field name="field_description">Supplier code</field>
+        <field name="ttype">char</field>
+        <field name="help">Supplier code for Chrysler</field>
+        <field name="model_id" model="ir.model" search="[('model', '=', 'res.company')]"/>
+    </record>
+
+    <!--Server action that will set the values on the invoice.-->
+    <record id="set_addenda_chrysler_values" model="ir.actions.server">
+        <field name="name">Set Values Addenda chrysler</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+invoice = env['account.invoice'].browse(model._context['invoice_id'])
+wizard = env['x_addenda.chrysler'].browse(model._context['active_id'])
+# TODO: Discuss if this should be done in an internal not instead a new field.
+wizard_fields = [wizard.x_po, wizard.x_chrysler_ref, wizard.x_consecutive, wizard.x_amount_line, wizard.x_invoice, wizard.x_cancelation]
+wizard_fields = [str(j) for j in wizard_fields if j != False]
+invoice.write({'x_addenda_chrysler': '|'.join(wizard_fields)})
+invoice.company_id.write({'x_addenda_chrysler_ref': wizard.x_supplier_code})
+# raise Warning(str(model._context))
+        </field>
+    </record>
+
+    <!--
+    View of the wizard itself that set the values this view need to hold all
+    the help information necessary if needed
+    -->
+    <record id="wizard_chrysler_view" model="ir.ui.view">
+        <field name="name">x_addenda.chrysler.view</field>
+        <field name="model">x_addenda.chrysler</field>
+        <field name="arch" type="xml">
+            <form>
+                <div>
+<p>When signing an invoice, the corresponding xml will appears with the addenda information. This information is taken
+from the fields that are explicitly included in the invoice, and for the case that the information is not in a specific field,
+it is necessary to fill the fields here.</p>
+<ul>
+    <li>Tag <b><i>ordenCompra</i></b> (<b><i>references</i></b> node): Purchase order number.</li>
+    <li>Tag <b><i>referenciaChrysler</i></b> (<b><i>cargosCreditos</i></b> node): Number of reference generated by CdM system.</li>
+    <li>Tag <b><i>consecutivo</i></b> (<b><i>cargosCreditos</i></b> node): Number of batch generated by CdM system.</li>
+    <li>Tag <b><i>montoLinea</i></b> (<b><i>cargosCreditos</i></b> node): Line amount.</li>
+    <li>Tag <b><i>factura</i></b> (<b><i>cargosCreditos</i></b> node): Invoice number to which the charge or the credit refers to.</li>
+    <li>Tag <b><i>cancelaSustituye</i></b> (<b><i>cancelaciones</i></b> node): Invoice number that it cancel and replace.</li>
+</ul>
+<p>For case of tag <b><i>unidadDeMedida</i></b> of the <b><i>part</i></b> node, its values were mapped in the view itself of the addenda,
+so if any change is necessary, it must be modified directly in Addenda view (modify the variable
+<i>&lt; t t-set = "unit_m" t-value = "{'Unit (s)': 'EA'}"/&gt;</i> where <i>Unit(s)</i> is the name of
+the unit of measure in ODOO and <i>EA</i> is its corresponding for Chrysler).</p>
+<p>For more information about the addenda structure, visit the following
+<a href="http://www.dfdchryslerdemexico.com.mx/addenda/PUA/PUA.XSD" target="_blank">link</a></p>
+                </div>
+                <group>
+                    <group>
+                        <field name="x_supplier_code"/>
+                        <field name="x_po"/>
+                    </group>
+                    <group string="Cancelaciones node">
+                        <field name="x_cancelation"/>
+                    </group>
+                    <group string="CargosCreditos node">
+                        <field name="x_chrysler_ref"/>
+                        <field name="x_consecutive"/>
+                        <field name="x_amount_line"/>
+                        <field name="x_invoice"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="l10n_mx_edi_addendas.set_addenda_chrysler_values"
+                    type="action" string="Set Values"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--
+    Simple action view that is called from the invoice to open the set wizard.
+    -->
+    <record id="action_addenda_chrysler" model="ir.actions.act_window">
+        <field name="name">Addenda Chrysler</field>
+        <field name="res_model">x_addenda.chrysler</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wizard_chrysler_view"/>
+    </record>
+
+    <!--
+    Put a button on the invoice itself in order to set the value for the addenda
+    -->
+    <record id="invoice_addenda_chrysler" model="ir.ui.view">
+        <field name="name">account.invoice.form.chrysler</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="l10n_mx_edi_addendas.action_addenda_chrysler" type="action"
+                        string="Addenda chrysler"
+                        context="{'invoice_id': id}"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                        />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_account_prv_cnt" model="account.account">
+        <field name="code">501.08.002</field>
+        <field name="name">PRV - CNT</field>
+        <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+    </record>
+    <record id="account_account_dta" model="account.account">
+        <field name="code">501.08.003</field>
+        <field name="name">DTA</field>
+        <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+    </record>
+    <record id="account_account_igi" model="account.account">
+        <field name="code">501.08.004</field>
+        <field name="name">IGI</field>
+        <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+    </record>
+    <record id="account_account_cc" model="account.account">
+        <field name="code">601.73.005</field>
+        <field name="name">CC</field>
+        <field name="user_type_id" ref="account.data_account_type_expenses"/>
+    </record>
+    <record id="account_other_taxes" model="account.account">
+        <field name="code">501.08.006</field>
+        <field name="name">Other Taxes</field>
+        <field name="user_type_id" ref="account.data_account_type_direct_costs"/>
+    </record>
+</odoo>

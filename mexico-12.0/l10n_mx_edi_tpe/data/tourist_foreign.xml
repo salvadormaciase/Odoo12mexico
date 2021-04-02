@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_tpe_xml">
+        <t t-set="doc" t-value="record.with_context({'lang':'es_MX'})" />
+        <t t-set="track" t-value="record.invoice_line_ids.filtered(lambda r: r.product_id.l10n_mx_edi_tpe_track)"/>
+        <t t-if="record.partner_id.country_id != record.company_id.country_id and track">
+            <t t-set="track_es" t-value="track[0].product_id.with_context({'lang':'es_MX'})"/>
+            <cfdi:Complemento
+                xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <t t-set="hour" t-value="str(int(record.l10n_mx_edi_tpe_transit_time // 1))"/>
+                <t t-set="minute" t-value="str(int((record.l10n_mx_edi_tpe_transit_time % 1) * 60))"/>
+                <tpe:TuristaPasajeroExtranjero
+                    xmlns:tpe="http://www.sat.gob.mx/TuristaPasajeroExtranjero"
+                    version="1.0"
+                    t-att-fechadeTransito="'T'.join((record.l10n_mx_edi_tpe_transit_date.strftime('%Y-%m-%d') or '', ':'.join((hour.zfill(2), minute.zfill(2))))) + ':00'"
+                    t-att-tipoTransito="dict(doc.fields_get()['l10n_mx_edi_tpe_transit_type']['selection'])[record.l10n_mx_edi_tpe_transit_type] if record.l10n_mx_edi_tpe_transit_type else None">
+                    <t t-set="identification" t-value="record.partner_id.ref.split('|') if record.partner_id.ref else []"/>
+                    <tpe:datosTransito
+                        t-att-Via="dict(track_es.fields_get()['l10n_mx_edi_tpe_track']['selection'])[track[0].product_id.l10n_mx_edi_tpe_track] or ''"
+                        t-att-TipoId="identification[0] if identification else None"
+                        t-att-NumeroId="identification[1] if identification and len(identification) &gt; 1 else None"
+                        t-att-Nacionalidad="record.partner_id.country_id.name"
+                        t-att-EmpresaTransporte="record.l10n_mx_edi_tpe_partner_id.name"
+                        t-att-IdTransporte="record.name if record.name else False"/>
+                </tpe:TuristaPasajeroExtranjero>
+            </cfdi:Complemento>
+        </t>
+    </template>
+    <template id="template_xml_tpe" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__tpe">"http://www.sat.gob.mx/TuristaPasajeroExtranjero" if record.partner_id.country_id != record.company_id.country_id and record.invoice_line_ids.filtered(lambda r: r.product_id.l10n_mx_edi_tpe_track) else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-call="l10n_mx_edi_tpe.l10n_mx_edi_tpe_xml" t-lang="es_MX"/>
+        </xpath>
+    </template>
+</odoo>

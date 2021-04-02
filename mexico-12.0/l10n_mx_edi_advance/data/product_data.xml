@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="product_product_advance" model="product.product">
+        <field name="default_code">ACT</field>
+        <field name="name">Application of Advances</field>
+        <field name="lst_price">0.0</field>
+        <field name="standard_price">0.0</field>
+        <field name="type">service</field>
+        <field name="uom_id" ref="product_uom_act"/>
+        <field name="uom_po_id" ref="product_uom_act"/>
+        <field name="l10n_mx_edi_code_sat_id" ref="l10n_mx_edi.prod_code_sat_84111506"/>
+    </record>
+</odoo>

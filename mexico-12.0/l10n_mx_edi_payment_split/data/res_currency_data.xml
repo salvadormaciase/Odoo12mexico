@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="rate_precision" model="decimal.precision">
+        <field name="name">Rate Precision</field>
+        <field name="digits">12</field>
+    </record>
+</odoo>

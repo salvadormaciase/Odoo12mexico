@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="ir.actions.server" id="l10n_mx_edi_cancel_payment_with_reversal">
+        <field name="name">Cancellation of payments with reversal moves (remove reversal moves and cancel the payment)</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="state">code</field>
+        <field name="sequence">5</field>
+        <field name="binding_model_id" ref="account.model_account_payment"/>
+        <field name="binding_type">action</field>
+        <field name="code">
+if not env.user.has_group('l10n_mx_edi_cancellation_complement.cancel_payment_with_reversal_entry'):
+  raise Warning("You have no permission to cancel payments with reversal moves")
+to_cancel = records.filtered(lambda p: p.move_line_ids.mapped('move_id.reverse_entry_id'))
+if not to_cancel:
+  raise Warning("There are no payments with reversal move")
+reversed_moves = to_cancel.mapped('move_line_ids.move_id.reverse_entry_id')
+reversed_moves.mapped('line_ids').remove_move_reconcile()
+reversed_moves.button_cancel()
+reversed_moves.unlink()
+# odoo cancel method
+for rec in to_cancel:
+  for move in rec.move_line_ids.mapped('move_id'):
+    if rec.invoice_ids:
+      move.line_ids.remove_move_reconcile()
+    move.button_cancel()
+    move.unlink()
+  rec.write({'state': 'cancelled'})
+        </field>
+    </record>
+</odoo>

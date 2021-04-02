@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_plastic_arts_antiques" inherit_id="l10n_mx_edi.cfdiv33">
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes" t-if="record.l10n_mx_edi_origin">
+            <attribute name="t-att-xmlns__obrasarte">"http://www.sat.gob.mx/arteantiguedades" if record.invoice_line_ids.mapped('product_id').filtered(lambda r: r.l10n_mx_edi_art_complement == 'eapa') else False</attribute>
+        </xpath>
+        <xpath expr="*" position="inside">
+            <t t-set="product" t-value="record.invoice_line_ids.mapped('product_id').filtered(lambda r: r.l10n_mx_edi_art_complement == 'eapa')"/>
+            <t t-if="product">
+                <cfdi:Complemento
+                    xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <obrasarte:obrasarteantiguedades
+                        xmlns:obrasarte="http://www.sat.gob.mx/arteantiguedades"
+                        Version="1.0"
+                        t-att-TipoBien="product.l10n_mx_edi_good_type"
+                        t-att-OtrosTipoBien="(product.l10n_mx_edi_other_good_type or None) if product.l10n_mx_edi_good_type == '04' else None"
+                        t-att-TituloAdquirido="product.l10n_mx_edi_acquisition"
+                        t-att-OtrosTituloAdquirido="(product.l10n_mx_edi_other_good_type or None) if product.l10n_mx_edi_acquisition == '05' else None"
+                        t-att-Subtotal="product.standard_price or None"
+                        t-att-IVA="product.l10n_mx_edi_tax_paid"
+                        t-att-FechaAdquisicion="product.l10n_mx_edi_acquisition_date"
+                        t-att-CaracterísticasDeObraoPieza="product.l10n_mx_edi_characteristic"/>
+                </cfdi:Complemento>
+            </t>
+        </xpath>
+    </template>
+</odoo>

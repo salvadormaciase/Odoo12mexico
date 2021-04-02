@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_prod_form_inh_l10n_mx_edi_eapa">
+        <field name="name">view.prod.form.inh.l10n_mx_edi.eapa</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="account.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='invoicing']" position="inside">
+                <group>
+                    <group string="Complements Plastic Arts And Antiques and Payment in Kind">
+                        <field name="l10n_mx_edi_art_complement"/>
+                        <field name="l10n_mx_edi_good_type" attrs="{'invisible':[('l10n_mx_edi_art_complement','=',False)]}"/>
+                        <field name="l10n_mx_edi_other_good_type" attrs="{'invisible':['|', ('l10n_mx_edi_art_complement','=',False),('l10n_mx_edi_good_type','!=','04')]}"/>
+                        <field name="l10n_mx_edi_acquisition" attrs="{'invisible':[('l10n_mx_edi_art_complement','!=','eapa')]}"/>
+                        <field name="l10n_mx_edi_other_good_type" attrs="{'invisible':['|', ('l10n_mx_edi_art_complement','!=','eapa'),('l10n_mx_edi_acquisition','!=','05')]}"/>
+                        <field name="l10n_mx_edi_tax_paid" attrs="{'invisible':[('l10n_mx_edi_art_complement','!=','eapa')]}"/>
+                        <field name="l10n_mx_edi_acquisition_date" attrs="{'invisible':[('l10n_mx_edi_art_complement','=',False)]}"/>
+                        <field name="l10n_mx_edi_characteristic" attrs="{'invisible':[('l10n_mx_edi_art_complement','!=','eapa')]}"/>
+                        <field name="l10n_mx_edi_pik_dimension" attrs="{'invisible': [('l10n_mx_edi_art_complement', '!=', 'pee')]}"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

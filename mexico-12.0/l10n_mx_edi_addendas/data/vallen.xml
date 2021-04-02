@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--This is the addenda-->
+    <template id="vallen" name="Vallen [auto]">
+        <requestForPayment
+            type="SimpleInvoiceType"
+            contentVersion="1.3.1"
+            documentStructureVersion="VALLEN7.1"
+            documentStatus="ORIGINAL"
+            t-att-DeliveryDate="record.date_invoice">
+            <orderIdentification>
+                <referenceIdentification type="ON" t-esc="record.name or ''"/>
+            </orderIdentification>
+            <currency
+                t-att-currencyISOCode="record.currency_id.name"/>
+        </requestForPayment>
+    </template>
+    <record id="vallen" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag">True</field>
+    </record>
+
+</odoo>
