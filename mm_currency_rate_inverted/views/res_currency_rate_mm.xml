@@ -10,8 +10,8 @@
                      <attribute name="attrs">{'readonly': [('currency_id', '=', 2)]}</attribute>
                  </xpath>
 
-                 <xpath expr="//field[@name='name']" position="after">
-                     <field name="currency_id"/>
+                  <xpath expr="//field[@name='rate']" position="before">
+                     <field name="currency_id" invisible="1"/>
                  </xpath>
 
                  <xpath expr="//field[@name='rate']" position="before">
@@ -25,5 +25,4 @@
 
 
 
-
-<!--<field name="mm_currency_rate" attrs="{'column_invisible': [('parent.currency_id', '=', 'USD')]}"/>-->
+<!--<field name="mm_currency_rate" string="Currency Rate" attrs="{'invisible': [('currency_id', '!=', 2)]}"/>-->
